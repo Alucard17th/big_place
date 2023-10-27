@@ -3,6 +3,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,13 @@ Route::get('/create-roles', function () {
     $role = Role::create(['name' => 'candidat']);
 });
 
+
+Route::get('/migrate', function () {
+    // Run the migration
+    Artisan::call('migrate');
+
+    return 'Migration completed successfully';
+});
 
 
 Auth::routes();
