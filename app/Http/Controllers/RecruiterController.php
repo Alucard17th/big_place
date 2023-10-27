@@ -42,6 +42,5 @@ class RecruiterController extends Controller
 
         $curriculums = $query->get();
         return view('recruiter.cvtheque', compact('curriculums'));
-        
     }
 }
