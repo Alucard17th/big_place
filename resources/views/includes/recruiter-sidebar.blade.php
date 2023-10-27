@@ -8,6 +8,12 @@
                         </a>
                     </li>
                     <li class="">
+                        <a href="/cv-theque"
+                            class="d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i>CVTHEQUE</span>
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="https://bigplace.fr/user/my-contact"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes contacts</span>

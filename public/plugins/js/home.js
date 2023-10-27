@@ -135,7 +135,7 @@ jQuery(function ($) {
             }
         });
         $.ajax({
-            'url': superio.routes.login,
+            'url': '/login',
             'data': {
                 'email': form.find('input[name=email]').val(),
                 'password': form.find('input[name=password]').val(),
@@ -150,6 +150,7 @@ jQuery(function ($) {
             },
             success: function (data) {
                 form.find('.icon-loading').hide();
+                window.location.href = '/';
                 if (data.error === true) {
                     if (data.messages !== undefined) {
                         for(var item in data.messages) {

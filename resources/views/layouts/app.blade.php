@@ -155,9 +155,9 @@
                         <h3>Connectez-vous sur Big Place</h3>
 
                         <!--Login Form-->
-                        <form method="post" class="bravo-form-login" action="https://bigplace.fr/login">
+                        <form method="post" class="bravo-form-login" action="/login">
                             <input type="hidden" name="redirect" value="">
-                            <input type="hidden" name="_token" value="BPs5sUCbAnYJQtx3ixxnF9Ede4G44J2Yu2cghu4D">
+                            @csrf
                             <div class="form-group">
                                 <label>Adresse e-mail</label>
                                 <input type="text" name="email" placeholder="Adresse e-mail" required>
@@ -177,7 +177,7 @@
                                         <label for="remember" class="remember"><span class="custom-checkbox"></span> Se
                                             souvenir de moi</label>
                                     </div>
-                                    <a href="https://bigplace.fr/password/reset" class="pwd">Mot de passe oublié ?</a>
+                                    <a href="/password/reset" class="pwd">Mot de passe oublié ?</a>
                                 </div>
                             </div>
 
@@ -189,7 +189,7 @@
                             </div>
                             <div class="bottom-box">
                                 <div class="text">Vous n&#039;avez pas de compte ? <a
-                                        href="https://bigplace.fr/register"
+                                        href="/register"
                                         class="bc-call-modal signup">Inscrivez-vous</a></div>
                             </div>
 

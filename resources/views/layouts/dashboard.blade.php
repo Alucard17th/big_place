@@ -119,7 +119,7 @@
 
 </head>
 
-<body data-anm=".anm" class="frontend-page user_wrap    ">
+<body data-anm=".anm" class="frontend-page user_wrap">
 
 
 
@@ -136,7 +136,7 @@
                 <div class="nav-outer">
                     <div class="logo-box">
                         <div class="logo">
-                            <a href="https://bigplace.fr">
+                            <a href="/">
                                 <img src="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" alt="Big Place">
                             </a>
                         </div>
@@ -144,18 +144,18 @@
 
                     <nav class="nav main-menu">
                         <ul class="navigation" id="navbar">
-                            <li class=" depth-0"><a target="" href="https://bigplace.fr/page/accueil">Accueil</a></li>
-                            <li class=" depth-0"><a target="" href="https://bigplace.fr/page/a-propos">A propos</a></li>
-                            <li class=" depth-0"><a target="" href="https://bigplace.fr/page/parrainage">Parrainage</a>
+                            <li class=" depth-0"><a target="" href="/">Accueil</a></li>
+                            <li class=" depth-0"><a target="" href="/a-propos">A propos</a></li>
+                            <li class=" depth-0"><a target="" href="/parrainage">Parrainage</a>
                             </li>
                             <li class=" dropdown depth-0"><a target="" href="#">Informations <i
                                         class="caret flaticon-down-arrow"></i></a>
                                 <ul class="children-menu menu-dropdown">
-                                    <li class=" depth-1"><a target="" href="https://bigplace.fr/page/faq">F.A.Q</a></li>
-                                    <li class=" depth-1"><a target="" href="https://bigplace.fr/page/actualites">Le
+                                    <li class=" depth-1"><a target="" href="/faq">F.A.Q</a></li>
+                                    <li class=" depth-1"><a target="" href="/mag">Le
                                             mag</a></li>
                                     <li class=" depth-1"><a target=""
-                                            href="https://bigplace.fr/page/support-client">Support client</a></li>
+                                            href="/support">Support client</a></li>
                                 </ul>
                             </li>
                             <li class=" depth-0"><a target="" href="/contact">Contact </a></li>
@@ -201,8 +201,8 @@
                         <div class="login-item dropmenu-right dropdown show">
                             <a href="#" class="is_login dropdown-toggle" id="dropdownMenuUser" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img class="avatar" src="https://bigplace.fr/images/avatar.png" alt="Blaze Juarez">
-                                <span class="full-name">Blaze Juarez</span>
+                                <img class="avatar" src="https://bigplace.fr/images/avatar.png" alt="{{auth()->user()->name}}">
+                                <span class="full-name">{{auth()->user()->name}}</span>
                                 <i class="flaticon-down-arrow"></i>
                             </a>
                             <ul class="dropdown-menu text-left" aria-labelledby="dropdownMenuUser">

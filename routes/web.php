@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RecruiterController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -36,17 +37,18 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/recruiter-dashboard', function () {
         return view('recruiter.dashboard');
     });
+    Route::get('/cv-theque', [RecruiterController::class, 'cvtheque'])->name('recruiter.cvtheque');
+    Route::get('/cv-theque-search', [RecruiterController::class, 'cvthequeSearch'])->name('recruiter.cvtheque.search');
+
 });
 
+// CANDIDAT
 Route::group(['middleware' => ['role:candidat']], function () {
     //
     Route::get('/candidat-dashboard', function () {
         return view('candidat.dashboard');
     });
 });
-
-
-
 
 // Create a route that will addd a auser
 Route::get('/create-roles', function () {
@@ -61,7 +63,6 @@ Route::get('/migrate', function () {
 
     return 'Migration completed successfully';
 });
-
 
 Auth::routes();
 

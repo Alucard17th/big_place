@@ -53,7 +53,12 @@
                         <i class="flaticon-down-arrow"></i>
                     </a>
                     <ul class="dropdown-menu text-left" aria-labelledby="dropdownMenuUser">
-                        <li class="menu-hr"><a href="https://bigplace.fr/user/dashboard">Tableau de bord</a></li>
+                        
+                        @role('recruiter')
+                        <li class="menu-hr"><a href="/recruiter-dashboard">Tableau de bord</a></li>
+                        @else
+                        <li class="menu-hr"><a href="/candidat-dashboard">Tableau de bord</a></li>
+                        @endrole
 
                         <li class="dropdown-divider"></li>
                         <li class="menu-hr"><a href="https://bigplace.fr/user/my-plan">Mes abonnements</a></li>
