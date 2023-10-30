@@ -116,6 +116,7 @@
     <link href="{{ asset('plugins/css/owl.carousel.css') }}" rel="stylesheet">
 
     <script src="//code.tidio.co/tzkeoku6ogisroezu2amei6mcqnb3tjm.js" async></script>
+    @stack('styles')
 
 </head>
 
@@ -340,7 +341,8 @@
             window.lazyLoadInstance = event.detail.instance;
         }, false);
         </script>
-        <script src="https://bigplace.fr/libs/jquery-3.6.0.min.js"></script>
+        <!-- <script src="https://bigplace.fr/libs/jquery-3.6.0.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
         <script src="https://bigplace.fr/libs/jquery-migrate/jquery-migrate.min.js"></script>
         <script src="https://bigplace.fr/libs/header.js"></script>
         <script>
@@ -498,6 +500,10 @@
     });
     </script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    @stack('scripts')
+    @include('sweetalert::alert')
 
 </body>
 

@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Curriculum::class, 'user_id');
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'user_id');
+    }
+
+    public function rendezvous()
+    {
+        return $this->hasMany(RendezVous::class, 'user_id');
+    }
 }

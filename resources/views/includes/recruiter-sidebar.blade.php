@@ -2,7 +2,7 @@
             <div class="sidebar-inner">
                 <ul class="navigation">
                     <li class="active">
-                        <a href="https://bigplace.fr/user/dashboard"
+                        <a href="/recruiter-dashboard"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-home"></i> Tableau de bord</span>
                         </a>
@@ -14,15 +14,21 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="https://bigplace.fr/user/my-contact"
+                        <a href="/mes-favoris"
                             class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes contacts</span>
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes Favoris</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/mes-rendez-vous"
+                            class="d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes rendez-vous</span>
                         </a>
                     </li>
                     <li class="">
                         <a href="https://bigplace.fr/user/my-contact"
                             class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes rendez-vous</span>
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes contacts</span>
                         </a>
                     </li>
                     <li class="">
