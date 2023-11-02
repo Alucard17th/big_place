@@ -1,5 +1,14 @@
 @extends('layouts.dashboard')
-
+@push('styles')
+<style>
+    #mm-0 > div.user-dashboard.bc-user-dashboard > div > div.row > div > div > div > div.widget-content > div > table > tbody > tr > td{
+        padding: 5px;
+    }
+    #mm-0 > div.user-dashboard.bc-user-dashboard > div > div.row > div > div > div > div.widget-content > div > table > thead > tr > th{
+        padding: 5px;
+    }
+</style>
+@endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">

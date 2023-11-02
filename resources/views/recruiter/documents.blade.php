@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-    .modal a.custom-close-modal {
+.modal a.custom-close-modal {
     position: absolute;
     top: -12.5px;
     right: -12.5px;
@@ -64,37 +64,41 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Ajouter aux favoris</button>
+                        <button type="button" class="btn btn-primary ml-2 mb-2 add-doc">Ajouter un Document</button>
+                           
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
+
                                 <table class="default-table manage-job-table table table-sm">
                                     <thead>
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th>
-                                            <th>Date</th>
-                                            <th>Heure</th>
-                                            <th>Status</th>
+                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
+                                            </th>
+                                            <th>Name</th>
+                                            <th>Crée le</th>
+                                            <th>Type</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($rdvs as $curriculum)
+                                        @foreach ($documents as $document)
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$curriculum->id}}"></td>
-                                            <td class="text-left">{{$curriculum->date}}</td>
-                                            <td class="text-left">{{$curriculum->heure}}</td>
-                                            <td class="text-left">{{$curriculum->status}}</td>
+                                                    value="{{$document->id}}"></td>
+                                            <td class="text-left">{{$document->name}}</td>
+                                            <td class="text-left">{{$document->created_at}}</td>
+                                            <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a type="button" class="theme-btn btn-style-one">Détails</a>
+                                                <a type="button" class="theme-btn btn-style-one">Voir</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
                                 <div class="ls-pagination">
                                 </div>
                             </div>
@@ -106,106 +110,41 @@
     </div>
 
     <!-- Modal HTML embedded directly into document -->
-    <div id="ex1" class="modal">
-       <form action="{{route('recruiter.invite.candidates')}}" method="POST">
+    <div id="doc-modal" class="modal">
+       <form action="{{route('recruiter.document.add')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <h4>Proposé des rendez-vous :</h4>
+                <h4>Ajouter un Document :</h4>
             </div>
             <div class="form-group">
-                <label for="candidate">Crénau 1</label>
-                <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                <label for="candidate">Document</label>
+                <input type="file" name="document" id="document">
             </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 2</label>
-                <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 3</label>
-                <input class="form-control mb-2" type="date" name="crenau_4_date" id="crenau_4_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_4_time" id="crenau_4_time" required>
-            </div>
+          
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit">Envoyer</button>
+                <button class="theme-btn btn-style-one upload-doc" type="submit">Enregistrer</button>
             </div>
        </form>
         <a href="#" id="close-modal">Fermer</a>
         <a href="#"  class="custom-close-modal"></a>
     </div>
-
 </div>
 @endsection
 
 @push('scripts')
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const selectAllCheckbox = document.querySelector('.checkbox-all');
-    const checkboxes = document.querySelectorAll('.checkbox-item');
-    const addToFavoritesButton = document.querySelector('.add-to-favorites');
+    const addDocButton = document.querySelector('.add-doc');
 
-    // Add an event listener to checkboxes to toggle the button visibility
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-            addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
-        });
-    });
-
-    selectAllCheckbox.addEventListener('change', function () {
-        const isChecked = selectAllCheckbox.checked;
-
-        checkboxes.forEach(function (checkbox) {
-            checkbox.checked = isChecked;
-        });
-
-        // Update the visibility of the "Ajouter aux favoris" button
-        const addToFavoritesButton = document.querySelector('.add-to-favorites');
-        addToFavoritesButton.classList.toggle('d-none', !isChecked);
-    });
-
-    $('#close-modal, .custom-close-modal').click(function() {
-    console.log('Modal Should Be Closed');
-    $.modal.close();
-});
- 
-    // Add an event listener to the "Ajouter aux favoris" button to collect values
-    addToFavoritesButton.addEventListener('click', function() {
-        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-        const selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        if (selectedValues.length > 0) {
-            // Define the data to be sent
-            const data = { selectedValues: selectedValues };
-            $("#ex1").modal({
+    addDocButton.addEventListener('click', function() {
+        $("#doc-modal").modal({
                 escapeClose: false,
                 clickClose: true,
                 showClose: false
             });
-            // Send the data using AJAX
-            // fetch('', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-            //     },
-            //     body: JSON.stringify(data),
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Handle the response, e.g., show a success message
-            //        // refresh the current page
-            //        window.location.reload();
-            //     })
-            //     .catch(error => {
-            //         // Handle errors, e.g., show an error message
-            //         console.error(error);
-            //     });
-        }
+      
     });
 });
 </script>
