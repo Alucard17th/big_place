@@ -32,7 +32,7 @@ Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])-
 Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter'])->name('register-as-recruiter');
 
 // RECRUITER
-// Route::group(['middleware' => ['role:recruiter']], function () {
+Route::group(['middleware' => ['role:recruiter']], function () {
     //
     Route::get('/recruiter-dashboard', function () {
         return view('recruiter.dashboard');
@@ -53,15 +53,15 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
     Route::post('/ma-vitrine/update', [RecruiterController::class, 'updateVitrine'])->name('recruiter.update.vitrine');
 
 
-// });
+});
 
 // CANDIDAT
-// Route::group(['middleware' => ['role:candidat']], function () {
+Route::group(['middleware' => ['role:candidat']], function () {
     //
     Route::get('/candidat-dashboard', function () {
         return view('candidat.dashboard');
     });
-// });
+});
 
 // Create a route that will addd a auser
 Route::get('/create-roles', function () {
