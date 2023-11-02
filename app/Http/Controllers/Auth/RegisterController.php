@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RegisterController extends Controller
 {
@@ -77,7 +78,9 @@ class RegisterController extends Controller
         ]);
 
         $user->assignRole($data['role']);
-
+        if($user){
+            toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);
+        }
         return $user;
     }
 }

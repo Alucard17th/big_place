@@ -198,20 +198,20 @@ $('.open-schedule-modal').click(function() {
     // get data attribute receiver email from button
     var receiverEmail = $(this).data('receiver-email');
     console.log(receiverEmail);
-    // Calendly.initInlineWidget({
-    //     url: 'https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar',
-    //     parentElement: document.getElementById('calendly-embed'),
-    //     prefill: {
-    //         name: "John Doe",
-    //         email: "john@doe2.com",
-    //     },
-    //     utm: {}
-    // });
-    // $("#ex2").modal({
-    //     escapeClose: false,
-    //     clickClose: true,
-    //     showClose: false
-    // });
+    Calendly.initInlineWidget({
+        url: 'https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar',
+        parentElement: document.getElementById('calendly-embed'),
+        prefill: {
+            name: "John Doe",
+            email: "john@doe2.com",
+        },
+        utm: {}
+    });
+    $("#ex2").modal({
+        escapeClose: false,
+        clickClose: true,
+        showClose: false
+    });
 });
 </script>
 
