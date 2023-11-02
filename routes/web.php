@@ -77,9 +77,5 @@ Route::get('/migrate', function () {
     return 'Migration completed successfully';
 });
 
-Route::get('/create-roles', function () {
-    $role = Role::create(['guard_name' => 'web', 'name' => 'candidat']);
-});
-
 Auth::routes();
 

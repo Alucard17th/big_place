@@ -77,7 +77,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        // $user->assignRole($data['role']);
+        $user->assignRole($data['role']);
         if($user){
             toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);
         }
