@@ -6,6 +6,10 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Artisan;
 
+use App\Models\Job;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\JobImport;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +24,25 @@ use Illuminate\Support\Facades\Artisan;
 // Route::get('/', function () {
 //     return view('site.home');
 // });
+Route::get('/excel-import', function () {
+    set_time_limit(0);
+    $data = json_decode(file_get_contents(storage_path('app/code_metier.json')));
+    // dd($data);
+    foreach ($data->metier as $item) {
+        print_r($item->Metier);
+        echo'<br>';
+        print_r($item->Code);
+        echo '______________________________________<br>';
+
+        $full_name = $item->Metier ?? ''; // Use an empty string as a default value if "Metier" is missing
+        $code_ogr = $item->Code;
+
+        Job::create([
+            'full_name' => $item->Metier,
+            'code_ogr' => $code_ogr
+        ]);
+    }
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/a-propos', [HomeController::class, 'about'])->name('about');
@@ -30,6 +53,7 @@ Route::get('/parrainage', [HomeController::class, 'parrainage'])->name('parraina
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])->name('register-as-candidat');
 Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter'])->name('register-as-recruiter');
+
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter']], function () {
@@ -78,4 +102,3 @@ Route::get('/migrate', function () {
 });
 
 Auth::routes();
-
