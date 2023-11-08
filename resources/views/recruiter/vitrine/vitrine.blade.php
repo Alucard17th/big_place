@@ -1,6 +1,15 @@
 @extends('layouts.dashboard')
 @push('styles')
-
+<style>
+    .vitrine-logo{
+        width: 100px;
+        height: 100px;
+    }   
+    .vitrine-photos{
+        width: 100px;
+        height: 100px;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -17,7 +26,7 @@
 
 
                         <div class="widget-content">
-                            <form action="" method="POST"
+                            <form action="{{ route('recruiter.update.vitrine') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
 
@@ -31,7 +40,7 @@
 
                                 <div class="form-group">
                                     <label for="date_creation">Date de Création</label>
-                                    <input type="text" class="form-control" name="date_creation" id="date_creation"
+                                    <input type="date" class="form-control" name="date_creation" id="date_creation"
                                         value="{{ $entreprise->date_creation }}">
                                 </div>
 
@@ -78,14 +87,25 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="photos_locaux">Photos Locaux</label>
+                                    <label for="photos_locaux">Photos</label>
                                     <input type="file" class="form-control" name="photos_locaux[]" id="photos_locaux"
                                         multiple>
+                                        @foreach (json_decode($entreprise->photos_locaux, true) ?? [] as $photo)
+                                            <img class="img-fluid vitrine-photos" src="{{ url(str_replace('public', 'storage', $photo)) }}" alt="">
+                                        @endforeach
                                 </div>
 
                                 <div class="form-group">
                                     <label for="logo">Logo</label>
                                     <input type="file" class="form-control" name="logo" id="logo">
+                                    <img class="img-fluid vitrine-logo" src="{{ url(str_replace('public', 'storage', $entreprise->logo)) }}" alt="">
+                                </div>
+
+                                
+                                <div class="form-group">
+                                    <label for="logo">Vidéo</label>
+                                    <input type="file" class="form-control" name="video" id="video">
+                                    <video width="320" height="240" controls src="{{ url(str_replace('public', 'storage', $entreprise->video)) }}">
                                 </div>
 
                                 <div class="form-group">

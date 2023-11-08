@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Mail\UserRegistered;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -75,12 +77,23 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'siret' => $data['siret'],
         ]);
 
         $user->assignRole($data['role']);
+
+        $emailDetails = [
+            'title' => 'Bienvenue sur Big Place, votre plateforme de recrutement', 
+            'body' => 'Votre inscription est effectuée avec succès.',
+        ];
+
+        Mail::to($user->email)->send(new UserRegistered($emailDetails));
+
         if($user){
             toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);
         }
+
         return $user;
     }
+
 }

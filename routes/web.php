@@ -65,8 +65,8 @@ Route::group(['middleware' => ['role:candidat']], function () {
 
 // Create a route that will addd a auser
 Route::get('/create-roles', function () {
-    $role = Role::create(['name' => 'recruiter']);
-    $role = Role::create(['name' => 'candidat']);
+    $role = Role::create(['name' => 'recruiter', 'guard_name' => 'web']);
+    $role = Role::create(['name' => 'candidat', 'guard_name' => 'web']);
 });
 
 

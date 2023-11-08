@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Curriculum;
 use App\Models\Favorite;
 use App\Models\RendezVous;
+use App\Models\Entreprise;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +47,22 @@ class RecruiterController extends Controller
         }
 
         $curriculums = $query->get();
+
+        // Calculate percentage match for each curriculum
+        $searchCriteria = array_filter($searchTerm);
+        foreach ($curriculums as $curriculum) {
+            $matchingFields = 0;
+            foreach ($searchCriteria as $field => $value) {
+                if (str_contains(strtolower($curriculum->$field), strtolower($value))) {
+                    $matchingFields++;
+                }
+            }
+            $percentageMatch = count($searchCriteria) > 0 ? ($matchingFields / count($searchCriteria)) * 100 : 0;
+           
+            $curriculum->percentageMatch = $percentageMatch;
+        }
+        dd($curriculums);
+
         return view('recruiter.cvtheque', compact('curriculums'));
     }
 
@@ -81,31 +98,6 @@ class RecruiterController extends Controller
 
     public function inviteCandidates(Request $request){
         $participants = json_decode($request->selectedValues);
-        foreach($participants as $participant){
-            $rdv_1 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_1_date,
-                'heure' => $request->crenau_1_time,
-                'status' => 'En attente'
-            ]);
-    
-            $rdv_2 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_2_date,
-                'heure' => $request->crenau_2_time,
-                'status' => 'En attente'
-            ]);
-    
-            $rdv_3 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_3_date,
-                'heure' => $request->crenau_3_time,
-                'status' => 'En attente'
-            ]);
-        }
 
         $creneau = [
             [
@@ -123,20 +115,54 @@ class RecruiterController extends Controller
                         Pour convenir à votre emploi du temps, nous vous proposons trois créneaux horaires disponibles pour votre entretien. Veuillez examiner les options ci-dessous et nous faire part de votre choix préféré :';
         
         $confirmationUrl = '';
+
         $emailDetails = [
             'title' => 'Proposition rendez-vous',
             'body' => $message_body,
-            'creneau' => $creneau
+            'creneau' => $creneau,
+            'confirmationUrl' => $confirmationUrl
         ];
-        
-        Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
-        // // Send Emails TO all the participant 
-        // foreach($participants as $participant){
-            
-        // }
 
+        foreach($participants as $participant){
+            $rdv_1 = RendezVous::create([
+                'user_id' => auth()->user()->id,
+                'participant' => $participant,
+                'date' => $request->crenau_1_date,
+                'heure' => $request->crenau_1_time,
+                'status' => 'En attente',
+                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+            ]);
+    
+            $rdv_2 = RendezVous::create([
+                'user_id' => auth()->user()->id,
+                'participant' => $participant,
+                'date' => $request->crenau_2_date,
+                'heure' => $request->crenau_2_time,
+                'status' => 'En attente',
+                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+            ]);
+    
+            $rdv_3 = RendezVous::create([
+                'user_id' => auth()->user()->id,
+                'participant' => $participant,
+                'date' => $request->crenau_3_date,
+                'heure' => $request->crenau_3_time,
+                'status' => 'En attente',
+                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+            ]);
+
+            
+            // Send Emails TO all the participant 
+            
+            Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
+        }
+
+       
         toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
-        // return json success
+
         return response()->json([
             'status' => 'success',
         ]);
@@ -201,5 +227,70 @@ class RecruiterController extends Controller
         $user = auth()->user();
         $entreprise = $user->entreprise->first();
         return view('recruiter.vitrine.vitrine', compact('entreprise'));
+    }
+
+    public function updateVitrine(Request $request){
+        $user = auth()->user();
+        $user->entreprise()->update([
+            'nom_entreprise' => $request->nom_entreprise,
+            'date_creation' => $request->date_creation,
+            'domiciliation' => $request->domiciliation,
+            'siege_social' => $request->siege_social,
+            'valeurs_fortes' => $request->valeurs_fortes,
+            'nombre_implementations' => $request->nombre_implementations,
+            'effectif' => $request->effectif,
+            'fondateurs' => $request->fondateurs,
+            'chiffre_affaire' => $request->chiffre_affaire
+        ]);
+
+        $userId = auth()->user()->id;
+        $entreprise = Entreprise::where('user_id', $userId)->first();
+
+        if($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('public/' . $userId, $fileName);
+            $entreprise->logo = $filePath;
+        }
+
+        if($request->hasFile('video')) {
+            $file = $request->file('video');
+            $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('public/' . $userId, $fileName);
+            $entreprise->video = $filePath;
+        }
+
+        if ($request->hasFile('photos_locaux')) {
+            $photosLocaux = $entreprise->photos_locaux;
+            if (!is_array($photosLocaux)) {
+                $photosLocaux = [];
+            }
+            $newFilePaths = [];
+
+            foreach ($request->file('photos_locaux') as $file) {
+                $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $filePath = $file->storeAs('public/' . $userId, $fileName);
+                
+                $newFilePaths[] = $filePath;
+                echo '<br>';
+                print_r ($fileName);
+            }
+            // Merge the new file paths into the existing JSON array
+            $photosLocaux = array_merge($photosLocaux, $newFilePaths);
+
+            // Set the updated JSON array back to the model
+            $entreprise->photos_locaux = $photosLocaux;
+            
+            $entreprise->save();
+        }
+
+        dd($request->file('photos_locaux'));
+
+        $entreprise->save();
+        $user->save();
+
+        toast('La vitrine a bien été mise a jour','success')->autoClose(5000);
+
+        return redirect()->back();
     }
 }

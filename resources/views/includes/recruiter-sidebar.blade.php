@@ -25,12 +25,6 @@
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes rendez-vous</span>
                         </a>
                     </li>
-                    <li class="{{ Str::contains(Request::url(), 'mes-contacts') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
-                            class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes contacts</span>
-                        </a>
-                    </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-taches') ? 'active' : '' }}">
                         <a href="/user/my-contact"
                             class="d-flex justify-content-between align-items-center">

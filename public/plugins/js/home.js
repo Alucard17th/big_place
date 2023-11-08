@@ -192,6 +192,7 @@ jQuery(function ($) {
                 'company': form.find('input[name=company]').val(),
                 'phone': form.find('input[name=phone]').val(),
                 'role': form.find('input[name=_role]').val(),
+                'siret': form.find('input[name=siret]').val(),
                 'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
             },
             'type': 'POST',

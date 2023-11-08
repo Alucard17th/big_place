@@ -1,12 +1,13 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-    #mm-0 > div.user-dashboard.bc-user-dashboard > div > div.row > div > div > div > div.widget-content > div > table > tbody > tr > td{
-        padding: 5px;
-    }
-    #mm-0 > div.user-dashboard.bc-user-dashboard > div > div.row > div > div > div > div.widget-content > div > table > thead > tr > th{
-        padding: 5px;
-    }
+#mm-0>div.user-dashboard.bc-user-dashboard>div>div.row>div>div>div>div.widget-content>div>table>tbody>tr>td {
+    padding: 5px;
+}
+
+#mm-0>div.user-dashboard.bc-user-dashboard>div>div.row>div>div>div>div.widget-content>div>table>thead>tr>th {
+    padding: 5px;
+}
 </style>
 @endpush
 @section('content')
@@ -27,45 +28,39 @@
 
                             <div class="chosen-outer">
                                 <form method="get" class="default-form form-inline"
-                                    action="{{route('recruiter.cvtheque.search')}}">
-                                    <!--Tabs Box-->
-                                    <!-- <div class="form-group mb-0 mr-1">
-                                        <select class="form-control" name="order_by" onchange="this.form.submit()">
-                                            <option value="">Trier par</option>
-                                            <option value="newest">Nouveau</option>
-                                            <option value="oldest">Ancien</option>
-                                        </select>
-                                    </div> -->
+                                    action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="metier_recherche" placeholder="métier/poste" value=""
-                                            class="form-control mb-2">
+                                        <input type="text" name="metier_recherche" placeholder="métier/poste"
+                                            value="{{ request('metier_recherche') }}" class="form-control mb-2">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="ville_domiciliation" placeholder="ville" value=""
-                                            class="form-control mb-2">
+                                        <input type="text" name="ville_domiciliation" placeholder="ville"
+                                            value="{{ request('ville_domiciliation') }}" class="form-control mb-2">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="annees_experience" placeholder="année d'exp." value=""
-                                            class="form-control mb-2">
+                                        <input type="text" name="annees_experience" placeholder="année d'exp."
+                                            value="{{ request('annees_experience') }}" class="form-control mb-2">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="niveau_etudes" placeholder="niveau d'études" value=""
-                                            class="form-control mb-2">
+                                        <input type="text" name="niveau_etudes" placeholder="niveau d'études"
+                                            value="{{ request('niveau_etudes') }}" class="form-control mb-2">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
                                         <input type="text" name="pretentions_salariales" placeholder="niveau de salaire"
-                                            value="" class="form-control">
+                                            value="{{ request('pretentions_salariales') }}" class="form-control">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="valeur" placeholder="valeur" value=""
-                                            class="form-control">
+                                        <input type="text" name="valeur" placeholder="valeur"
+                                            value="{{ request('valeur') }}" class="form-control">
                                     </div>
                                     <button type="submit" class="theme-btn btn-style-one">Chercher</button>
                                 </form>
+
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Ajouter aux favoris</button>
+                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Ajouter aux
+                            favoris</button>
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
@@ -74,7 +69,8 @@
                                 <table class="default-table manage-job-table table table-sm">
                                     <thead>
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th>
+                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
+                                            </th>
                                             <th>Nom</th>
                                             <th>Ville</th>
                                             <th>Niveau</th>
@@ -168,10 +164,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    selectAllCheckbox.addEventListener('change', function () {
+    selectAllCheckbox.addEventListener('change', function() {
         const isChecked = selectAllCheckbox.checked;
 
-        checkboxes.forEach(function (checkbox) {
+        checkboxes.forEach(function(checkbox) {
             checkbox.checked = isChecked;
         });
 
@@ -189,22 +185,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (selectedValues.length > 0) {
             // Define the data to be sent
-            const data = { selectedValues: selectedValues };
+            const data = {
+                selectedValues: selectedValues
+            };
 
             // Send the data using AJAX
             fetch('{{ route('recruiter.cvtheque.add.favorite') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-                },
-                body: JSON.stringify(data),
-            })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+                        },
+                        body: JSON.stringify(data),
+                    })
                 .then(response => response.json())
                 .then(data => {
                     // Handle the response, e.g., show a success message
-                   // refresh the current page
-                   window.location.reload();
+                    // refresh the current page
+                    window.location.reload();
                 })
                 .catch(error => {
                     // Handle errors, e.g., show an error message

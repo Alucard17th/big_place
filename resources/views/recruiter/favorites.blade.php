@@ -120,6 +120,21 @@
             <div class="form-group">
                 <h4>Proposé des rendez-vous :</h4>
             </div>
+           
+                <label for="candidate">Type du rendez-vous</label>
+                <div class="form-check d-flex align-items-center">
+                    <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel" checked>
+                    <label class="form-check-label ml-4" for="is_type_presentiel">
+                        Présentiel
+                    </label>
+                </div>
+                <div class="form-check form-check d-flex align-items-center">
+                        <input class="form-check-input" type="checkbox" value="" name="is_type_distanciel" id="is_type_distanciel">
+                        <label class="form-check-label ml-4" for="is_type_distanciel">
+                            Distanciel
+                        </label>
+                </div>
+            <hr>
             <div class="form-group">
                 <label for="candidate">Crénau 1</label>
                 <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
@@ -209,38 +224,48 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function sendRdv(selectedValues) {
-        if (selectedValues.length > 0) {
-            // Create a FormData object to store the form data
-            const formData = new FormData();
+        if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
+            if (selectedValues.length > 0) {
+                // Create a FormData object to store the form data
+                const formData = new FormData();
 
-            // Add the form fields to the formData
-            formData.append('crenau_1_date', document.getElementById('crenau_1_date').value);
-            formData.append('crenau_1_time', document.getElementById('crenau_1_time').value);
-            formData.append('crenau_2_date', document.getElementById('crenau_2_date').value);
-            formData.append('crenau_2_time', document.getElementById('crenau_2_time').value);
-            formData.append('crenau_3_date', document.getElementById('crenau_3_date').value);
-            formData.append('crenau_3_time', document.getElementById('crenau_3_time').value);
-            formData.append('selectedValues', JSON.stringify(selectedValues));
+                // Add the form fields to the formData
+                formData.append('crenau_1_date', document.getElementById('crenau_1_date').value);
+                formData.append('crenau_1_time', document.getElementById('crenau_1_time').value);
+                formData.append('crenau_2_date', document.getElementById('crenau_2_date').value);
+                formData.append('crenau_2_time', document.getElementById('crenau_2_time').value);
+                formData.append('crenau_3_date', document.getElementById('crenau_3_date').value);
+                formData.append('crenau_3_time', document.getElementById('crenau_3_time').value);
 
-            // Send the data using AJAX
-            fetch('{{ route('recruiter.invite.candidates') }}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-                },
-                body: formData, // Use formData as the body
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response, e.g., show a success message
-                    // refresh the current page
-                    window.location.reload();
+                formData.append('is_type_presentiel', document.getElementById('is_type_presentiel').checked);
+                formData.append('is_type_distanciel', document.getElementById('is_type_distanciel').checked);
+
+                formData.append('selectedValues', JSON.stringify(selectedValues));
+
+                // Send the data using AJAX
+                fetch('{{ route('recruiter.invite.candidates') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+                    },
+                    body: formData, // Use formData as the body
                 })
-                .catch(error => {
-                    // Handle errors, e.g., show an error message
-                    console.error(error);
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response, e.g., show a success message
+                        // refresh the current page
+                        // window.location.reload();
+                    })
+                    .catch(error => {
+                        // Handle errors, e.g., show an error message
+                        console.error(error);
+                    });
+            }
+        }else {
+            // Show an error message to inform the user to select at least one checkbox
+            alert('Veuillez choisir au moins un type de RDV');
         }
+        
     }
 
 

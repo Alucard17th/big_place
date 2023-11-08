@@ -1,39 +1,34 @@
 <?php
 
-namespace Database\Factories;
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
-class UserFactory extends Factory
+class UserSeeder extends Seeder
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
+    public function run()
     {
-        return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ];
-    }
+    // Create and assign roles to users
+        $superAdmin = User::factory()->create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@mail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        $superAdmin->assignRole('super_admin');
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        $admin->assignRole('admin');
+
+        $manager = User::factory()->create([
+            'name' => 'Manager',
+            'email' => 'manager@mail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        $manager->assignRole('manager');
     }
 }
+
