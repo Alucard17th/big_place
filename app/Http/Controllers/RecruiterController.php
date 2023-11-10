@@ -64,7 +64,6 @@ class RecruiterController extends Controller
            
             $curriculum->percentageMatch = $percentageMatch;
         }
-        dd($curriculums);
 
         return view('recruiter.cvtheque', compact('curriculums'));
     }
