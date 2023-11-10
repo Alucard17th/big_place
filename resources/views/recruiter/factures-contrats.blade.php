@@ -30,7 +30,7 @@
                     <div class="tabs-box">
                         <div class="widget-title">
                         </div>
-                        <button type="button" class="btn btn-primary ml-2 mb-2 add-doc">Ajouter un Document</button>
+                        <!-- <button type="button" class="btn btn-primary ml-2 mb-2 add-doc">Ajouter un Document</button> -->
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -57,6 +57,7 @@
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a type="button" class="theme-btn btn-style-one">Voir</a>
+                                                <a type="button" class="theme-btn btn-style-one">Télécharger</a>
                                             </td>
                                         </tr>
                                         @endforeach
