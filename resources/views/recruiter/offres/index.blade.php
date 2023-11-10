@@ -40,6 +40,8 @@
                                     </div>
                                     <button type="submit" class="theme-btn btn-style-one">Ajouter</button>
                                 </form> -->
+                                <a href="{{route('recruiter.offers.create')}}" class="theme-btn btn-style-one">Ajouter une offre</a>
+
                             </div>
                         </div>
 
