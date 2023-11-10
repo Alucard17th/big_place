@@ -9,6 +9,6 @@ class Job extends Model
 {
     use HasFactory;
 
-    protected $fillable  = ['code_ogr', 'name'];
+    protected $fillable  = ['code_ogr', 'full_name'];
 
 }

@@ -26,19 +26,19 @@
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-taches') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-taches"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes tâches</span>
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-evenements') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-evenements"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes évènements</span>
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-offres-emploi') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-offres"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes offres d'emploi</span>
                         </a>
@@ -74,7 +74,7 @@
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-factures') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-factures-et-contrats"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes factures et contrats</span>
                         </a>

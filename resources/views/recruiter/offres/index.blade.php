@@ -20,7 +20,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Mes Offres d'emplois</h3>
+            <h3>Mes Offres d'emploi</h3>
             <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
         </div>
         <div class="row">
@@ -30,42 +30,18 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <h4>Recherche Par:</h4>
-
                             <div class="chosen-outer">
-                                <form method="get" class="default-form form-inline"
-                                    action="{{route('recruiter.cvtheque.search')}}">
+                                <!-- <form method="post" class="default-form form-inline"
+                                    action="{{route('recruiter.task.add')}}">
+                                    @csrf
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="metier_recherche" placeholder="métier/poste" value=""
-                                            class="form-control mb-2">
+                                        <input type="text" name="task_title" placeholder="Ajouter une tâche" value=""
+                                            class="form-control mb-2" required>
                                     </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="ville_domiciliation" placeholder="ville" value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="annees_experience" placeholder="année d'exp." value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="niveau_etudes" placeholder="niveau d'études" value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="pretentions_salariales" placeholder="niveau de salaire"
-                                            value="" class="form-control">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="valeur" placeholder="valeur" value=""
-                                            class="form-control">
-                                    </div>
-                                    <button type="submit" class="theme-btn btn-style-one">Chercher</button>
-                                </form>
+                                    <button type="submit" class="theme-btn btn-style-one">Ajouter</button>
+                                </form> -->
                             </div>
                         </div>
-
-                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Ajouter aux
-                            favoris</button>
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
@@ -74,37 +50,38 @@
                                 <table class="default-table manage-job-table table table-sm">
                                     <thead>
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
-                                            </th>
-                                            <th>Date</th>
-                                            <th>Heure</th>
-                                            <th>Status</th>
+                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
+                                            </th> -->
+                                            <th>Nom projet</th>
+                                            <th>Titre poste</th>
+                                            <th>Date de début</th>
+                                            <th>Ville</th>
+                                            <th>Type du contrat</th>
+                                            <th>Salaire Brut</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($rdvs as $rdv)
+                                        @foreach ($offers as $offer)
                                         <tr>
-                                            <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$rdv->id}}"></td>
-                                            <td class="text-left">{{$rdv->date}}</td>
-                                            <td class="text-left">{{$rdv->heure}}</td>
-                                            <td class="text-left">{{$rdv->status}}</td>
+                                            <!-- <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$offer->id}}"></td> -->
+                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->job_title}}</td>
+                                            <td class="text-left">{{$offer->start_date}}</td>
+                                            <td class="text-left">{{$offer->location_city}}</td>
+                                            <td class="text-left">{{$offer->contract_type}}</td>
+                                            <td class="text-left">{{$offer->brut_salary}}</td>
+                                            
                                             <td class="text-left">
-                                                <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                 </a>
-                                                <button class="theme-btn p-2 bg-dark text-white open-schedule-modal"
-                                                    data-receiver-email="{{getUserEmailById($rdv->participant)}}">
-                                                    <i class="las la-calendar"></i>
-                                                    <!-- Planifier RDV -->
-                                                </button>
-                                                <button class="theme-btn p-2 bg-dark text-white add-comment-modal"
-                                                    data-rdv-id="{{$rdv->id}}">
-                                                    <i class="las la-comment"></i>
-                                                    <!-- Commentaire -->
-                                                </button>
+                                                <a href="" type="button" class="theme-btn p-2 bg-dark text-white">
+                                                    <!-- Détails -->
+                                                    <i class="las la-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -172,11 +149,6 @@
         <a href="#" class="custom-close-modal"></a>
     </div>
 
-
-    <button class="btn btn-primary" id="open-schedule-modal">Schedule</button>
-    <div id="ex2" class="modal">
-        <div id="calendly-embed" style="min-width:320px;height:700px;"></div>
-    </div>
 
     <!-- <div class="calendly-inline-widget" data-url="https://calendly.com/bigplace?hide_gdpr_banner=1"
         style="min-width:320px;height:630px;"></div>

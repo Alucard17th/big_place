@@ -20,7 +20,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Mes documents</h3>
+            <h3>Mes Factures et Contrats</h3>
             <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
         </div>
         <div class="row">
@@ -28,14 +28,9 @@
                 <!-- Ls widget -->
                 <div class="ls-widget">
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
                         <div class="widget-title">
-                           
                         </div>
-
                         <button type="button" class="btn btn-primary ml-2 mb-2 add-doc">Ajouter un Document</button>
-                           
-
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -80,10 +75,17 @@
 
     <!-- Modal HTML embedded directly into document -->
     <div id="doc-modal" class="modal">
-       <form action="{{route('recruiter.document.add')}}" method="POST" enctype="multipart/form-data">
+       <form action="{{route('recruiter.factures.and.contracts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <h4>Ajouter un Document :</h4>
+            </div>
+            <div class="form-group">
+                <label for="name">Type du Document</label>
+                <select name="type" id="type" class="form-control">
+                    <option value="facture">Facture</option>
+                    <option value="contrat">Contrat</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="candidate">Document</label>

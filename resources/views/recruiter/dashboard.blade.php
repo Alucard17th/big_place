@@ -2,8 +2,8 @@
 @push('styles')
 <style>
 .dashboard-big-img {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
 }
 
 .dashboard-small-img {
@@ -59,7 +59,7 @@
         <div class="row">
             <div class="col-6 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Calendrier</span>
-                <a href="#" class="dashboard-link">
+                <a href="/mon-calendrier" class="dashboard-link">
                     <img class="img-fluid dashboard-big-img" src="{{asset('/plugins/images/dashboard/calendar.jpg')}}"
                         alt="">
                 </a>
@@ -83,21 +83,21 @@
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Mes tâches</span>
-                <a href="#" class="dashboard-link">
+                <a href="/mes-taches" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-taches.png')}}" alt="">
                 </a>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Mes évènements / Jobdatings</span>
-                <a href="#" class="dashboard-link">
+                <a href="/mes-evenements" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
                 </a>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Mes offres d'emploi</span>
-                <a href="/mes-offres-emploi" class="dashboard-link">
+                <a href="/mes-offres" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-offres.jpg')}}" alt="">
                 </a>
@@ -145,7 +145,7 @@
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Mes factures et contrats</span>
-                <a href="#" class="dashboard-link">
+                <a href="/mes-factures-et-contrats" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-factures-contrats.jpg')}}" alt="">
                 </a>
@@ -263,6 +263,10 @@
         <a href="#" class="custom-close-modal"></a>
     </div>
 
+    <div id="calendar-modal" class="modal" style="height:100vh; width:100vw;">
+        <div id='calendar-item'></div>
+    </div>
+
 </div>
 @endsection
 
@@ -270,6 +274,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('#search-btn');
+   
 
     searchBtn.addEventListener('click', function() {
         $("#ex1").modal({
@@ -278,6 +283,8 @@ document.addEventListener('DOMContentLoaded', function() {
             showClose: false
         });
     })
+
+    
 })
 </script>
 @endpush

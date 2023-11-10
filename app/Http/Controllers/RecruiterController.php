@@ -7,6 +7,10 @@ use App\Models\Curriculum;
 use App\Models\Favorite;
 use App\Models\RendezVous;
 use App\Models\Entreprise;
+use App\Models\Task;
+use App\Models\Offre;
+use App\Models\Job;
+use App\Models\Event;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
@@ -14,12 +18,11 @@ use Illuminate\Support\Facades\Storage;
 
 class RecruiterController extends Controller
 {
-    //
+    // CV THEQUE
     public function cvtheque(){
         $curriculums = Curriculum::all();
         return view('recruiter.cvtheque', compact('curriculums'));
     }
-
     public function cvthequeSearch(Request $request){
         $searchTerm = $request->all();
 
@@ -66,6 +69,7 @@ class RecruiterController extends Controller
         return view('recruiter.cvtheque', compact('curriculums'));
     }
 
+    // FAVORIS
     public function cvthequeAddFavorite(Request $request){
         // create or update Favorite based on the auth user id as user_id in Favorite model
         $favorite = Favorite::where('user_id', auth()->user()->id)->first();
@@ -86,7 +90,6 @@ class RecruiterController extends Controller
         ]);
         // return redirect()->back();
     }
-
     public function myFavorites(){
         $user = auth()->user();
         $user->favorites();
@@ -95,7 +98,6 @@ class RecruiterController extends Controller
         
         return view('recruiter.favorites', compact('favorites'));
     }
-
     public function inviteCandidates(Request $request){
         $participants = json_decode($request->selectedValues);
 
@@ -154,12 +156,9 @@ class RecruiterController extends Controller
                 'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
             ]);
 
-            
             // Send Emails TO all the participant 
-            
             Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
         }
-
        
         toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
 
@@ -168,23 +167,23 @@ class RecruiterController extends Controller
         ]);
     }
 
+    // RDV
     public function myRdv(){
         $user = auth()->user();
         $rdvs = $user->rendezvous;
         return view('recruiter.rendez-vous.rendez-vous', compact('rdvs'));
     }
-
     public function seeMyRdv($id){
         $rdv = RendezVous::find($id);
         return view('recruiter.rendez-vous.edit', compact('rdv'));
     }
 
+    // DOCUMENTS
     public function myDocuments(){
         $user = auth()->user();
-        $documents = $user->documents;
+        $documents = $user->documents()->where('type', 'document')->get();
         return view('recruiter.documents', compact('documents'));
     }
-
     public function addDocument(Request $request){
         // Get the user ID, assuming you have authentication in place
         $user = auth()->user();
@@ -201,14 +200,14 @@ class RecruiterController extends Controller
 
         $user->documents()->create([
             'name' => $fileName,
-            'file' => $filePath
+            'file' => $filePath,
+            'type' => 'document',
         ]);
 
         toast('Votre document a bien été ajouté','success')->autoClose(5000);
 
         return redirect()->back();
     }
-
     public function addCommentaire(Request $request){
         $rdv = RendezVous::find($request->rdv_id);
         $rdv->commentaire = $request->commentaire;
@@ -218,17 +217,12 @@ class RecruiterController extends Controller
         return redirect()->back();
     }
 
-    public function myJobOffers(){
-
-        return view('recruiter.offres.offres');
-    }
-
+    // VITRINE
     public function myVitrine(){
         $user = auth()->user();
         $entreprise = $user->entreprise->first();
         return view('recruiter.vitrine.vitrine', compact('entreprise'));
     }
-
     public function updateVitrine(Request $request){
         $user = auth()->user();
         $user->entreprise()->update([
@@ -284,13 +278,240 @@ class RecruiterController extends Controller
             $entreprise->save();
         }
 
-        dd($request->file('photos_locaux'));
-
         $entreprise->save();
         $user->save();
 
         toast('La vitrine a bien été mise a jour','success')->autoClose(5000);
 
         return redirect()->back();
+    }
+
+    // TASKS
+    public function myTasks(){
+        $tasks = Task::all();
+        return view('recruiter.taches.index', compact('tasks'));
+    }
+    public function addTask(Request $request){
+        $task = new Task();
+        $task->title = $request->task_title;
+        $task->description = '';
+        $task->completed = false;
+        $task->user_id = auth()->user()->id;
+        $task->save();
+
+        toast('Tâche ajoutée','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+
+    public function seeMyTask($id){
+        $task = Task::find($id);
+        return view('recruiter.taches.edit', compact('task'));
+    }
+    public function updateTask(Request $request){
+        $task = Task::find($request->task_id);
+        $task->title = $request->nom_task;
+        $task->description = $request->description;
+        $task->completed = $request->status;
+        $task->due_date = $request->date_fin;
+        $task->save();
+        toast('Tâche modifiée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function deleteTask($id){
+        $task = Task::find($id);
+        $task->delete();
+        toast('Tâche supprimée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+
+    // OFFERS
+    public function myOffers(){
+        $user = auth()->user();
+        $offers = $user->offers;
+        return view('recruiter.offres.index', compact('offers'));
+    }
+    public function myOffersCreate(){
+        return view('recruiter.offres.create');
+    }
+    public function addOffer(Request $request){
+        $offer = new Offre();
+        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->job_title = $request->input('job_title');
+        $offer->start_date = $request->input('start_date');
+        $offer->location_city = $request->input('location_city');
+        $offer->location_postal_code = $request->input('location_postal_code');
+        $offer->location_address = $request->input('location_address');
+        $offer->rome_code = $request->input('rome_code');
+        $offer->contract_type = $request->input('contract_type');
+        $offer->work_schedule = $request->input('work_schedule');
+        $offer->weekly_hours = json_encode($request->input('weekly_hours'));
+        $offer->experience_level = json_encode($request->input('experience_level'));
+        $offer->desired_languages = json_encode($request->input('desired_languages'));
+        $offer->education_level = json_encode($request->input('education_level'));
+        $offer->brut_salary = $request->input('brut_salary');
+        $offer->industry_sector = json_encode($request->input('industry_sector'));
+        $offer->benefits = $request->input('benefits');
+        $offer->publication_date = $request->input('publication_date');
+        $offer->unpublish_date = $request->input('unpublish_date');
+        $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
+        $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->user_id = auth()->user()->id;
+        $offer->save();
+
+        toast('Offre ajoutée','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+    public function myOffersEdit($id){
+        $offer = Offre::find($id);
+        return view('recruiter.offres.edit', compact('offer'));
+    }
+    public function updateOffer(Request $request){
+        $offer = Offre::find($request->offer_id);
+        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->job_title = $request->input('job_title');
+        $offer->start_date = $request->input('start_date');
+        $offer->location_city = $request->input('location_city');
+        $offer->location_postal_code = $request->input('location_postal_code');
+        $offer->location_address = $request->input('location_address');
+        $offer->rome_code = $request->input('rome_code');
+        $offer->contract_type = $request->input('contract_type');
+        $offer->work_schedule = $request->input('work_schedule');
+        $offer->weekly_hours = json_encode($request->input('weekly_hours'));
+        $offer->experience_level = json_encode($request->input('experience_level'));
+        $offer->desired_languages = json_encode($request->input('desired_languages'));
+        $offer->education_level = json_encode($request->input('education_level'));
+        $offer->brut_salary = $request->input('brut_salary');
+        $offer->industry_sector = json_encode($request->input('industry_sector'));
+        $offer->benefits = $request->input('benefits');
+        $offer->publication_date = $request->input('publication_date');
+        $offer->unpublish_date = $request->input('unpublish_date');
+        $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
+        $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->save();
+
+        toast('Offre modifiée','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+    public function myOffersDelete($id){
+        $offer = Offre::find($id);
+        $offer->delete();
+        toast('Offre supprimée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function getRomeCodes(){
+        $romes = Job::all();
+        // get only jobs where code_ogr is not null or empty
+        $romes = $romes->whereNotNull('code_ogr')
+        ->where('code_ogr', '!=', '')
+        ->where('code_ogr', '!=', ' ')
+        ->whereNotNull('full_name')
+        ->pluck('code_ogr', 'full_name');
+        
+        return response()->json($romes);
+    }
+
+    // EVENTS 
+    public function myEvents(){
+        $user = auth()->user();
+        $events = $user->events;
+        return view('recruiter.events.index', compact('events'));
+    }
+    public function myEventsStore(Request $request){
+        // Create a new event instance
+        $event = new Event([
+            'organizer_name' => $request->input('organizer_name'),
+            'job_position' => $request->input('job_position'),
+            'participants_count' => $request->input('participants_count'),
+            'event_address' => $request->input('event_address'),
+            'free_entry' => $request->has('free_entry'),
+            'digital_badge_download' => $request->input('digital_badge_download'),
+            'required_documents' => $request->input('required_documents'),
+            'event_date' => $request->input('event_date'),
+            'event_hour' => $request->input('event_hour'),
+            'user_id' => auth()->user()->id, // Assuming you have authentication
+        ]);
+
+        // Save the event to the database
+        $event->save();
+
+        toast('Evenement ajouté','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+    public function myEventsEdit($id){
+        $event = Event::find($id);
+        return view('recruiter.events.edit', compact('event'));
+    }
+    public function myEventsUpdate(Request $request){
+        $event = Event::find($request->event_id);
+        $event->organizer_name = $request->input('organizer_name');
+        $event->job_position = $request->input('job_position');
+        $event->participants_count = $request->input('participants_count');
+        $event->event_address = $request->input('event_address');
+        $event->free_entry = $request->has('free_entry');
+        $event->digital_badge_download = $request->input('digital_badge_download');
+        $event->required_documents = $request->input('required_documents');
+        $event->event_date = $request->input('event_date');
+        $event->event_hour = $request->input('event_hour');
+        $event->save();
+
+        toast('Evenement modifié','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+    public function myEventsDelete($id){
+        $event = Event::find($id);
+        $event->delete();
+        toast('Evenement supprimé','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function getUserEvents(){
+        $user = auth()->user();
+        $events = $user->events;
+        return response()->json($events);
+    }
+
+    // FACTURE ET CONTRAT
+    public function myFacturesAndContracts(){
+        $user = auth()->user();
+        $documents = $user->documents()
+        ->where('type', 'facture')
+        ->orWhere('type', 'contrat')
+        ->get();
+        return view('recruiter.factures-contrats', compact('documents'));
+    }
+    public function addFactureOrContract(Request $request){
+        // Get the user ID, assuming you have authentication in place
+        $user = auth()->user();
+        $userId = auth()->user()->id;
+
+        // Get the uploaded file
+        $file = $request->file('document');
+
+        // Generate a unique filename
+        $fileName = $userId . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the user's directory within the storage/app/public directory
+        $filePath = $file->storeAs('public/' . $userId, $fileName);
+
+        $user->documents()->create([
+            'name' => $fileName,
+            'file' => $filePath,
+            'type' => $request->type,
+        ]);
+
+        toast('Votre document a bien été ajouté','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+
+    // CALENDRIER
+    public function myCalendar(){
+        $user = auth()->user();
+        $events = $user->events;
+        return view('recruiter.calendrier', compact('events'));
     }
 }

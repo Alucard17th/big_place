@@ -73,4 +73,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Entreprise::class, 'user_id');
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'user_id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'user_id');
+    }
 }

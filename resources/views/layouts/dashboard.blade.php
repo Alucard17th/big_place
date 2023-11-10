@@ -367,7 +367,7 @@
         <script src="https://bigplace.fr/libs/select2/js/select2.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/bootstrap.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/jquery.fancybox.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/jquery.modal.min.js"></script>
+        <!-- <script src="https://bigplace.fr/module/superio/js/jquery.modal.min.js"></script> -->
         <script src="https://bigplace.fr/module/superio/js/mmenu.polyfills.js"></script>
         <script src="https://bigplace.fr/module/superio/js/mmenu.js"></script>
         <script src="https://bigplace.fr/module/superio/js/appear.js"></script>
