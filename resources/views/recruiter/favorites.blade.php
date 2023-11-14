@@ -73,14 +73,11 @@
                                 <table class="default-table manage-job-table table table-sm">
                                     <thead>
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th>
+                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
+                                            <th></th>
                                             <th>Nom</th>
                                             <th>Ville</th>
                                             <th>Niveau</th>
-                                            <!-- <th>Niveau d'études</th> -->
-                                            <!-- <th>Métier recherché</th>
-                                            <th>Prétentions salariales</th>
-                                            <th>Années d’expérience</th> -->
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -139,16 +136,19 @@
                 <label for="candidate">Crénau 1</label>
                 <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
                 <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                <p id="creanuea_1_msg" class="text-danger"></p>
             </div>
             <div class="form-group">
                 <label for="candidate">Crénau 2</label>
                 <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
                 <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
+                <p id="creanuea_2_msg" class="text-danger"></p>
             </div>
             <div class="form-group">
                 <label for="candidate">Crénau 3</label>
                 <input class="form-control mb-2" type="date" name="crenau_3_date" id="crenau_3_date" required>
                 <input class="form-control mb-2" type="time" name="crenau_3_time" id="crenau_3_time" required>
+                <p id="creanuea_3_msg" class="text-danger"></p>
             </div>
 
             <div class="form-group">
@@ -169,26 +169,40 @@ document.addEventListener('DOMContentLoaded', function() {
     const checkboxes = document.querySelectorAll('.checkbox-item');
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
     const createRendezVousButton = document.querySelector('.create-rdv');
+    const maxAllowedChecked = 3;
+
+    const creanuea_1_msg = document.querySelector('#creanuea_1_msg');
+    const creanuea_2_msg = document.querySelector('#creanuea_2_msg');
+    const creanuea_3_msg = document.querySelector('#creanuea_3_msg');
+
     let selectedCandidates = [];
     // Add an event listener to checkboxes to toggle the button visibility
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
             const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+
+            if (checkedCheckboxes.length > maxAllowedChecked) {
+                // If the limit is exceeded, uncheck the last checkbox checked
+                this.checked = false;
+            }
+
+            // Update the visibility of the "Ajouter aux favoris" button
+            const addToFavoritesButton = document.querySelector('.add-to-favorites');
             addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
         });
     });
 
-    selectAllCheckbox.addEventListener('change', function () {
-        const isChecked = selectAllCheckbox.checked;
+    // selectAllCheckbox.addEventListener('change', function () {
+    //     const isChecked = selectAllCheckbox.checked;
 
-        checkboxes.forEach(function (checkbox) {
-            checkbox.checked = isChecked;
-        });
+    //     checkboxes.forEach(function (checkbox) {
+    //         checkbox.checked = isChecked;
+    //     });
 
-        // Update the visibility of the "Ajouter aux favoris" button
-        const addToFavoritesButton = document.querySelector('.add-to-favorites');
-        addToFavoritesButton.classList.toggle('d-none', !isChecked);
-    });
+    //     // Update the visibility of the "Ajouter aux favoris" button
+    //     const addToFavoritesButton = document.querySelector('.add-to-favorites');
+    //     addToFavoritesButton.classList.toggle('d-none', !isChecked);
+    // });
 
     $('#close-modal, .custom-close-modal').click(function() {
         console.log('Modal Should Be Closed');
@@ -254,7 +268,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     .then(data => {
                         // Handle the response, e.g., show a success message
                         // refresh the current page
-                        // window.location.reload();
+                    
+                        creanuea_1_msg.innerHTML = '';
+                        creanuea_2_msg.innerHTML = '';
+                        creanuea_3_msg.innerHTML = '';
+                        for (const key in data.errors) {
+                            if (data.errors.hasOwnProperty(key)) {
+                                const errorMessage = data.errors[key];
+                                const element = document.querySelector(`#creanuea_${parseInt(key) + 1}_msg`);
+                                if (element) {
+                                    // Update the inner HTML of the corresponding element
+                                    element.innerHTML = 'Erreur: ' + errorMessage;
+                                }
+                            }
+                        }
+
                     })
                     .catch(error => {
                         // Handle errors, e.g., show an error message

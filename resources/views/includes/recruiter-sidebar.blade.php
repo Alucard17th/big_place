@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-formations') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-formations"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes formations proposées</span>
                         </a>

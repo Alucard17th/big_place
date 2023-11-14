@@ -99,6 +99,41 @@ class RecruiterController extends Controller
     }
     public function inviteCandidates(Request $request){
         $participants = json_decode($request->selectedValues);
+        $errors = [];
+
+         
+        $existingRendezVous = RendezVous::where('date', $request->crenau_2_date)
+        ->where('heure', $request->crenau_2_time)
+        ->first();
+        if ($existingRendezVous) {
+            // Collect error for this index
+            $errors[0] = 'Il existe déjà un rendez-vous à cette date et heure';
+        }
+        // check if there is a Rendez-Vous already created with one of the creneau date and time selected in the request 
+        $existingRendezVous = RendezVous::where('date', $request->crenau_1_date)
+        ->where('heure', $request->crenau_1_time)
+        ->first();
+        if ($existingRendezVous) {
+            // Collect error for this index
+            $errors[1] = 'Il existe déjà un rendez-vous à cette date et heure';
+        }
+       
+
+        $existingRendezVous = RendezVous::where('date', $request->crenau_3_date)
+        ->where('heure', $request->crenau_3_time)
+        ->first();
+        if ($existingRendezVous) {
+            // Collect error for this index
+            $errors[2] = 'Il existe déjà un rendez-vous à cette date et heure';
+        }
+
+        if (!empty($errors)) {
+            // Handle errors, for example, return a response with error messages
+            return response()->json([
+                'status' => 'error',
+                'errors' => $errors,
+            ]);
+        }
 
         $creneau = [
             [
@@ -344,8 +379,8 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = $request->input('work_schedule');
-        $offer->weekly_hours = json_encode($request->input('weekly_hours'));
-        $offer->experience_level = json_encode($request->input('experience_level'));
+        $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->experience_level = $request->input('experience_level');
         $offer->desired_languages = json_encode($request->input('desired_languages'));
         $offer->education_level = json_encode($request->input('education_level'));
         $offer->brut_salary = $request->input('brut_salary');
@@ -469,8 +504,8 @@ class RecruiterController extends Controller
     }
     public function getUserEvents(){
         $user = auth()->user();
-        $events = $user->events;
-        return response()->json($events);
+        $rdvs = $user->rendezvous;
+        return response()->json($rdvs);
     }
 
     // FACTURE ET CONTRAT
@@ -512,5 +547,37 @@ class RecruiterController extends Controller
         $user = auth()->user();
         $events = $user->events;
         return view('recruiter.calendrier', compact('events'));
+    }
+
+    // FORMATIONS
+    public function myFormations(){
+        $user = auth()->user();
+        $formations = $user->formations;
+        return view('recruiter.formations.index', compact('formations'));
+    }
+    public function myFormationsCreate(){
+        return view('recruiter.formations.create');
+    }
+    
+    public function addFormation(Request $request){
+        $user = auth()->user();
+        $user->formations()->create([
+            'job_title' => $request->job_title,
+            'training_duration' => $request->training_duration,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'cdi_at_hiring' => $request->cdi_at_hiring,
+            'skills_acquired' => $request->skills_acquired,
+            'work_location' => $request->work_location,
+            'open_positions' => $request->open_positions,
+            'registration_deadline' => $request->registration_deadline,
+            'upload_documents' => json_encode($request->upload_documents),
+            'status' => $request->status,
+            'user_id' => auth()->user()->id
+        ]);
+
+        toast('Formation ajoutée','success')->autoClose(5000);
+
+        return redirect()->back();
     }
 }

@@ -203,32 +203,5 @@
 @endsection
 
 @push('scripts')
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    // fetch data from laravel route 
-    $.ajax({
-        url: "{{ route('getRomeCodes') }}",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            // for (const job in data) {
-            //     const fullName = job;
-            //     const codeOgr = data[job];
-            //     console.log(`Full Name: ${fullName}, Code OGR: ${codeOgr}`);
-            // }
 
-            const autocompleteSource = Object.entries(data).map(([fullName, codeOgr]) => {
-                return `${codeOgr} - ${fullName}`;
-            });
-
-            $( "#code_rome" ).autocomplete({
-                source: autocompleteSource
-            });
-        },
-        error: function (data) {
-            console.log('Error:', data);
-        }
-
-    })
-</script>
 @endpush

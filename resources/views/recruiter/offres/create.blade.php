@@ -29,6 +29,12 @@
                                     <input type="text" class="form-control" id="job_title" name="job_title">
                                 </div>
 
+                                  <!-- Field: Code ROME -->
+                                <div class="form-group">
+                                    <label for="rome_code">Code ROME (permettant des suggestions)</label>
+                                    <input type="text" class="form-control" name="rome_code" id="rome_code">
+                                </div>
+
                                 <!-- Field: Date de prise de poste souhaitée -->
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
@@ -53,12 +59,6 @@
                                     <label for="location_address">Adresse complète</label>
                                     <input type="text" class="form-control" id="location_address"
                                         name="location_address">
-                                </div>
-
-                                <!-- Field: Code ROME -->
-                                <div class="form-group">
-                                    <label for="rome_code">Code ROME (permettant des suggestions)</label>
-                                    <input type="text" class="form-control" name="rome_code" id="rome_code">
                                 </div>
 
                                 <!-- Field: Type de contrat -->
@@ -88,7 +88,7 @@
                                 <!-- Field: Temps de travail -->
                                 <div class="form-group">
                                     <label for="weekly_hours">Temps de travail (choix multiple)</label>
-                                    <select class="form-control" id="weekly_hours" name="weekly_hours[]" multiple>
+                                    <select class="form-control" id="weekly_hours" name="weekly_hours">
                                         <option value="35H">35H</option>
                                         <option value="39H">39H</option>
                                         <option value="Autre">Autre</option>
@@ -97,9 +97,8 @@
 
                                 <!-- Field: Niveau d’expérience -->
                                 <div class="form-group">
-                                    <label for="experience_level">Niveau d’expérience (choix multiple)</label>
-                                    <select class="form-control" id="experience_level" name="experience_level[]"
-                                        multiple>
+                                    <label for="experience_level">Niveau d’expérience</label>
+                                    <select class="form-control" id="experience_level" name="experience_level">
                                         <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
                                         <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
                                         <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>

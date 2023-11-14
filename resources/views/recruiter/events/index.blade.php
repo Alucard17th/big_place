@@ -102,59 +102,59 @@
             @csrf
             <!-- Field: Organizer Name -->
             <div class="form-group">
-                <label for="organizer_name">Organizer Name</label>
+                <label for="organizer_name">Nom d'Organisateur</label>
                 <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
             </div>
 
             <!-- Field: Job Position -->
             <div class="form-group">
-                <label for="job_position">Job Position</label>
+                <label for="job_position">Poste souhaité</label>
                 <input type="text" class="form-control" id="job_position" name="job_position" required>
             </div>
 
             <!-- Field: Participants Count -->
             <div class="form-group">
-                <label for="participants_count">Participants Count</label>
+                <label for="participants_count">Limite de participants</label>
                 <input type="number" class="form-control" id="participants_count" name="participants_count" required>
             </div>
 
             <!-- Field: Event Address -->
             <div class="form-group">
-                <label for="event_address">Event Address</label>
+                <label for="event_address">Adresse</label>
                 <input type="text" class="form-control" id="event_address" name="event_address" required>
             </div>
 
             <!-- Field: Free Entry -->
-            <div class="form-check">
+            <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
-                <label class="form-check-label" for="free_entry">Free Entry</label>
+                <label class="form-check-label" for="free_entry">Gratuit</label>
             </div>
 
             <!-- Field: Digital Badge Download -->
             <div class="form-group">
-                <label for="digital_badge_download">Digital Badge Download</label>
+                <label for="digital_badge_download">Badge Digital</label>
                 <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
             </div>
 
             <!-- Field: Required Documents -->
             <div class="form-group">
-                <label for="required_documents">Required Documents</label>
+                <label for="required_documents">Documents requis</label>
                 <input type="text" class="form-control" id="required_documents" name="required_documents">
             </div>
 
             <!-- Field: Event Date -->
             <div class="form-group">
-                <label for="event_date">Event Date</label>
+                <label for="event_date">Date</label>
                 <input type="date" class="form-control" id="event_date" name="event_date" required>
             </div>
 
             <!-- Field: Event Hour -->
             <div class="form-group">
-                <label for="event_hour">Event Hour</label>
+                <label for="event_hour">Heure</label>
                 <input type="time" class="form-control" id="event_hour" name="event_hour" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Event</button>
+            <button type="submit" class="btn btn-primary">Créer</button>
         </form>
 
         <a href="#" class="custom-close-modal"></a>

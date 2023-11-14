@@ -111,11 +111,22 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::post('/mes-evenements/update', [RecruiterController::class, 'myEventsUpdate'])->name('recruiter.events.update');
     Route::get('/mes-evenements/delete/{id}', [RecruiterController::class, 'myEventsDelete'])->name('recruiter.events.delete');
     Route::get('/getEvents', [RecruiterController::class, 'getUserEvents'])->name('getUserEvents');
+
+    Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');
+    Route::get('/mes-evenements/cancel/{id}', [RecruiterController::class, 'myEventsCancel'])->name('recruiter.events.cancel');
     
     // Factures And Contracts
     Route::get('/mes-factures-et-contrats', [RecruiterController::class, 'myFacturesAndContracts'])->name('recruiter.factures.and.contracts');
     Route::post('/mes-factures-et-contrats/create', [RecruiterController::class, 'addFactureOrContract'])->name('recruiter.factures.and.contracts.store');
 
+    // FORMATIONS 
+    Route::get('/mes-formations', [RecruiterController::class, 'myFormations'])->name('recruiter.formation');
+    Route::get('/mes-formations/create', [RecruiterController::class, 'myFormationsCreate'])->name('recruiter.formation.create');
+    Route::post('/formation/add', [RecruiterController::class, 'addFormation'])->name('recruiter.formation.add');
+    Route::get('/mes-formations/edit/{id}', [RecruiterController::class, 'myFormationsEdit'])->name('recruiter.formation.edit');
+    Route::post('/formation/update', [RecruiterController::class, 'updateFormation'])->name('recruiter.formation.update');
+    Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
+   
     // CALENDRIER
     Route::get('/mon-calendrier', [RecruiterController::class, 'myCalendar'])->name('recruiter.calendrier');
 

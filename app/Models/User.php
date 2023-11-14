@@ -83,4 +83,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class, 'user_id');
     }
+
+    public function formations()
+    {
+        return $this->hasMany(Formation::class, 'user_id');
+    }
 }
