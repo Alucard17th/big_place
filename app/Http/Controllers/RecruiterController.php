@@ -561,6 +561,32 @@ class RecruiterController extends Controller
     
     public function addFormation(Request $request){
         $user = auth()->user();
+
+        // if ($request->hasFile('photos_locaux')) {
+        //     $photosLocaux = $entreprise->photos_locaux;
+        //     if (!is_array($photosLocaux)) {
+        //         $photosLocaux = [];
+        //     }
+        //     $newFilePaths = [];
+
+        //     foreach ($request->file('photos_locaux') as $file) {
+        //         $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $filePath = $file->storeAs('public/' . $userId, $fileName);
+                
+        //         $newFilePaths[] = $filePath;
+        //         echo '<br>';
+        //         print_r ($fileName);
+        //     }
+        //     // Merge the new file paths into the existing JSON array
+        //     $photosLocaux = array_merge($photosLocaux, $newFilePaths);
+
+        //     // Set the updated JSON array back to the model
+        //     $entreprise->photos_locaux = $photosLocaux;
+            
+        //     $entreprise->save();
+        // }
+
+
         $user->formations()->create([
             'job_title' => $request->job_title,
             'training_duration' => $request->training_duration,
