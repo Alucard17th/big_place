@@ -126,9 +126,20 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/mes-formations/edit/{id}', [RecruiterController::class, 'myFormationsEdit'])->name('recruiter.formation.edit');
     Route::post('/formation/update', [RecruiterController::class, 'updateFormation'])->name('recruiter.formation.update');
     Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
-   
+    
+    // EMAILS 
+    Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
+    Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
+
+    // STATS
+    Route::get('/mes-stats', [RecruiterController::class, 'stats'])->name('recruiter.stats');
+
     // CALENDRIER
     Route::get('/mon-calendrier', [RecruiterController::class, 'myCalendar'])->name('recruiter.calendrier');
+
+    // CANDIDATURE
+    Route::get('/mes-candidatures', [RecruiterController::class, 'myCandidatures'])->name('recruiter.candidatures');
+    Route::post('/mes-candidatures/update-status', [RecruiterController::class, 'updateCandidatureStatus'])->name('recruiter.candidature.updateStatus');
 
 });
 

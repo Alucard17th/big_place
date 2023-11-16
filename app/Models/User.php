@@ -88,4 +88,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Formation::class, 'user_id');
     }
+
+    public function emails()
+    {
+        return $this->hasMany(Email::class, 'user_id');
+    }
+
+    public function candidatures()
+    {
+        return $this->hasMany(Candidature::class, 'user_id');
+    }
 }

@@ -9,6 +9,21 @@ class Formation extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'job_title',
+        'training_duration',
+        'start_date',
+        'end_date',
+        'cdi_at_hiring',
+        'skills_acquired',
+        'work_location',
+        'open_positions' ,
+        'registration_deadline',
+        'upload_documents',
+        'status',
+        'user_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

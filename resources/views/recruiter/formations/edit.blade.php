@@ -13,39 +13,94 @@
                 <div class="ls-widget">
                     <div class="tabs-box">
                         <div class="widget-content">
-                            <form action="{{ route('recruiter.task.update') }}" method="POST"
+                            <form action="{{ route('recruiter.formation.update') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
-
-                                <input type="hidden" name="task_id" value="{{ $task->id }}">
-
+                                <input type="hidden" name="id" value="{{ $formation->id }}">
+                                <!-- Field: Nom du poste -->
                                 <div class="form-group">
-                                    <label for="nom_task">Nom tâches</label>
-                                    <input type="text" class="form-control" name="nom_task" id="nom_task"
-                                        value="{{ $task->title }}">
+                                    <label for="job_title">Nom du poste</label>
+                                    <input type="text" class="form-control" id="job_title" name="job_title" value="{{ $formation->job_title }}">
+                                </div>
+
+                                <!-- Field: Durée de formation -->
+                                <div class="form-group">
+                                    <label for="training_duration">Durée de formation</label>
+                                    <input type="text" class="form-control" id="training_duration"
+                                        name="training_duration" value="{{ $formation->training_duration }}">
+                                </div>
+
+                                <!-- Field: Date de démarrage de la formation -->
+                                <div class="form-group">
+                                    <label for="start_date">Date de démarrage de la formation</label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ $formation->start_date }}">
+                                </div>
+
+                                <!-- Field: Date de fin de la formation -->
+                                <div class="form-group">
+                                    <label for="end_date">Date de fin de la formation</label>
+                                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $formation->end_date }}">
+                                </div>
+
+                                <!-- Mention CDI à l’embauche -->
+                                <div class="form-group form-inline">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="cdi_at_hiring"
+                                            name="cdi_at_hiring" {{ $formation->cdi_at_hiring == 1 ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="cdi_at_hiring">Mention CDI à
+                                            l’embauche</label>
+                                    </div>
+                                </div>
+
+                                <!-- Field: Compétences acquises à la fin de la formation -->
+                                <div class="form-group">
+                                    <label for="skills_acquired">Compétences acquises à la fin de la formation</label>
+                                    <textarea class="form-control" id="skills_acquired" name="skills_acquired"
+                                        rows="3">{{ $formation->skills_acquired }}</textarea>
+                                </div>
+
+                                <!-- Field: Lieu de prise de poste -->
+                                <div class="form-group">
+                                    <label for="work_location">Lieu de prise de poste</label>
+                                    <input type="text" class="form-control" id="work_location" name="work_location" value="{{ $formation->work_location }}">
+                                </div>
+
+                                <!-- Field: Nombre de postes ouverts -->
+                                <div class="form-group">
+                                    <label for="open_positions">Nombre de postes ouverts</label>
+                                    <input type="number" class="form-control" id="open_positions" name="open_positions" value="{{ $formation->open_positions }}">
+                                </div>
+
+                                <!-- Field: Date de fin d’inscription pour les candidats -->
+                                <div class="form-group">
+                                    <label for="registration_deadline">Date de fin d’inscription pour les
+                                        candidats</label>
+                                    <input type="date" class="form-control" id="registration_deadline"
+                                        name="registration_deadline" value="{{ $formation->registration_deadline }}">
+                                </div>
+
+                                <!-- Field: Téléverser des documents -->
+                                <div class="form-group">
+                                    <label for="uploaded_documents">Téléverser des documents</label>
+                                    <input type="file" class="form-control-file" id="uploaded_documents"
+                                        name="uploaded_documents[]" multiple>
+                                        @foreach (json_decode($formation->uploaded_documents, true) ?? [] as $document)
+                                        <li>
+                                            <a href="{{ url(str_replace('public', 'storage', $document)) }}" target="_blank">{{ pathinfo($document, PATHINFO_BASENAME) }}</a>
+                                        </li>
+                                        @endforeach
+                                </div>
+
+                                <!-- Fermer les inscriptions si besoin. -->
+                                <div class="form-group form-inline">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="status" name="status" {{ $formation->status == 'on' ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="status">Formation Ouverte</label>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" name="description" id="description" cols="30" rows="6">{{ $task->description }}</textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                        <select class="form-control" name="status" id="status">
-                                            <option value="0" @if($task->completed == '0') selected @endif>En cours</option>
-                                            <option value="1" @if($task->completed == '1') selected @endif>Terminée</option>
-                                        </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="date_fin">Date de fin</label>
-                                    <input type="date" class="form-control" name="date_fin" id="date_fin"
-                                        value="{{ $task->due_date }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Enregistrer</button>
+                                    <button class="theme-btn btn-style-one" type="submit">Modifier</button>
                                 </div>
                             </form>
                         </div>

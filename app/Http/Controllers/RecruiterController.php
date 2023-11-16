@@ -11,6 +11,9 @@ use App\Models\Task;
 use App\Models\Offre;
 use App\Models\Job;
 use App\Models\Event;
+use App\Models\Formation;
+use App\Models\Email;
+use App\Models\Candidature;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
@@ -192,6 +195,13 @@ class RecruiterController extends Controller
 
             // Send Emails TO all the participant 
             Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
+
+            $email = Email::create([
+                'user_id' => auth()->user()->id,
+                'subject' => 'Rendez-vous',
+                'message' => $message_body,
+                'receiver_id' => $participant,
+            ]);
         }
        
         toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
@@ -300,8 +310,6 @@ class RecruiterController extends Controller
                 $filePath = $file->storeAs('public/' . $userId, $fileName);
                 
                 $newFilePaths[] = $filePath;
-                echo '<br>';
-                print_r ($fileName);
             }
             // Merge the new file paths into the existing JSON array
             $photosLocaux = array_merge($photosLocaux, $newFilePaths);
@@ -337,7 +345,6 @@ class RecruiterController extends Controller
 
         return redirect()->back();
     }
-
     public function seeMyTask($id){
         $task = Task::find($id);
         return view('recruiter.taches.edit', compact('task'));
@@ -558,52 +565,117 @@ class RecruiterController extends Controller
     public function myFormationsCreate(){
         return view('recruiter.formations.create');
     }
-    
     public function addFormation(Request $request){
         $user = auth()->user();
-
-        // if ($request->hasFile('photos_locaux')) {
-        //     $photosLocaux = $entreprise->photos_locaux;
-        //     if (!is_array($photosLocaux)) {
-        //         $photosLocaux = [];
-        //     }
-        //     $newFilePaths = [];
-
-        //     foreach ($request->file('photos_locaux') as $file) {
-        //         $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //         $filePath = $file->storeAs('public/' . $userId, $fileName);
-                
-        //         $newFilePaths[] = $filePath;
-        //         echo '<br>';
-        //         print_r ($fileName);
-        //     }
-        //     // Merge the new file paths into the existing JSON array
-        //     $photosLocaux = array_merge($photosLocaux, $newFilePaths);
-
-        //     // Set the updated JSON array back to the model
-        //     $entreprise->photos_locaux = $photosLocaux;
-            
-        //     $entreprise->save();
-        // }
-
-
-        $user->formations()->create([
+        $formation = $user->formations()->create([
             'job_title' => $request->job_title,
             'training_duration' => $request->training_duration,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'cdi_at_hiring' => $request->cdi_at_hiring,
+            'cdi_at_hiring' => $request->cdi_at_hiring == 'on' ? true : false,
             'skills_acquired' => $request->skills_acquired,
             'work_location' => $request->work_location,
             'open_positions' => $request->open_positions,
             'registration_deadline' => $request->registration_deadline,
-            'upload_documents' => json_encode($request->upload_documents),
+            // 'upload_documents' => json_encode($request->upload_documents),
             'status' => $request->status,
-            'user_id' => auth()->user()->id
         ]);
+
+        if ($request->hasFile('uploaded_documents')) {
+            $newFilePaths = [];
+            foreach ($request->file('uploaded_documents') as $file) {
+                $fileName = $user->id . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $filePath = $file->storeAs('public/' . $user->id, $fileName);
+                $newFilePaths[] = $filePath;
+            }
+            // Set the updated JSON array back to the model
+            $formation->uploaded_documents = $newFilePaths;
+            $formation->save();
+        }
 
         toast('Formation ajoutée','success')->autoClose(5000);
 
         return redirect()->back();
+    }
+    public function myFormationsEdit($id){
+        $formation = Formation::find($id);
+        return view('recruiter.formations.edit', compact('formation'));
+    }
+    public function updateFormation(Request $request){
+        $user = auth()->user();
+        $formation = Formation::find($request->id);
+        $formation->update([
+            'job_title' => $request->job_title,
+            'training_duration' => $request->training_duration,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'cdi_at_hiring' => $request->cdi_at_hiring == 'on' ? true : false,
+            'skills_acquired' => $request->skills_acquired,
+            'work_location' => $request->work_location,
+            'open_positions' => $request->open_positions,
+            'registration_deadline' => $request->registration_deadline,
+            'status' => $request->status,
+        ]);
+
+        if ($request->hasFile('uploaded_documents')) {
+            $photosLocaux = $formation->uploaded_documents;
+            // if (!is_array($photosLocaux)) {
+            //     $photosLocaux = [];
+            // }
+            $newFilePaths = [];
+
+            foreach ($request->file('uploaded_documents') as $file) {
+                $fileName = $user->id . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $filePath = $file->storeAs('public/' . $user->id, $fileName);
+                
+                $newFilePaths[] = $filePath;
+            }
+            // Merge the new file paths into the existing JSON array
+            $photosLocaux = array_merge(json_decode($photosLocaux), $newFilePaths);
+          
+            // Set the updated JSON array back to the model
+            $formation->uploaded_documents = $photosLocaux;
+            
+            $formation->save();
+        }
+
+        toast('Formation mise à jour','success')->autoClose(5000);
+
+        return redirect()->back();
+    }
+
+    // MAILS
+    public function myMails(){
+        $user = auth()->user();
+        $emails = $user->emails;
+        return view('recruiter.emails.index', compact('emails'));
+    }
+    public function getMyMail(Request $request){
+        $email = Email::find($request->id);
+        return response()->json($email);
+    }
+
+    // STATS
+    public function stats(){
+        $user = auth()->user();
+        $rdvs = $user->rendezvous->count();
+        $canceledRdvs = 555;
+        $moyenneDureeRecrutement = 555;
+        $dureeSusbcription = 555;
+        return view('recruiter.stats.index', compact('rdvs', 'moyenneDureeRecrutement', 'dureeSusbcription', 'canceledRdvs'));
+    }
+
+    // CANDIDATURE
+    public function myCandidatures(){
+        $user = auth()->user();
+        $candidatures = $user->candidatures;
+        return view('recruiter.candidatures.index', compact('candidatures'));
+    }
+    public function updateCandidatureStatus(Request $request){
+        $candidature  = Candidature::find($request->candidatureId);
+        $candidature->status = $request->status;
+        $candidature->save();
+        
+        return response()->json($candidature);
     }
 }

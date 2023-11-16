@@ -61,8 +61,8 @@
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes formations proposées</span>
                         </a>
                     </li>
-                    <li class="{{ Str::contains(Request::url(), 'mes-emails') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                    <li class="{{ Str::contains(Request::url(), 'mes-mails') ? 'active' : '' }}">
+                        <a href="/mes-mails"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes emails</span>
                         </a>
@@ -80,7 +80,7 @@
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-statistiques') ? 'active' : '' }}">
-                        <a href="/user/my-contact"
+                        <a href="/mes-stats"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes statistiques</span>
                         </a>
