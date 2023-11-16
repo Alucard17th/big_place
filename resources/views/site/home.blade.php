@@ -53,7 +53,7 @@
                 <div class="image-column col-lg-5 col-md-12">
                     <div class="image-box">
                         <figure class="main-image anm" data-wow-delay="1000ms" data-speed-x="2" data-speed-y="2">
-                            <img src="https://bigplace.fr/uploads/0000/1/2023/06/01/banner-img-2.png"
+                            <img src="{{ asset('plugins/images/banner-img-2.png') }}"
                                 alt="banner image">
                         </figure>
                     </div>
@@ -107,12 +107,12 @@
                 <!-- Image Column -->
                 <div class="image-column col-lg-6 col-md-12 col-sm-12">
                     <figure class="image-box wow fadeInLeft">
-                        <img src="https://bigplace.fr/uploads/0000/22/2023/07/08/des-fonctionnalites-essentielles-2.jpg"
+                        <img src="{{ asset('plugins/images/des-fonctionnalites-essentielles-2.jpg') }}"
                             alt="about">
                     </figure>
                     <!-- Count Employers -->
                     <div class="applicants-list app-list-2 wow fadeInUp">
-                        <img src="https://bigplace.fr/uploads/0000/1/2023/06/20/rechercher-un-candidat-3.jpg"
+                        <img src="{{ asset('plugins/images/rechercher-un-candidat-3.jpg') }}"
                             class="img-option" alt="img">
                     </div>
                 </div>
@@ -136,12 +136,12 @@
                 <!-- Image Column -->
                 <div class="image-column col-lg-6 col-md-12 col-sm-12 order-2">
                     <figure class="image wow fadeInright">
-                        <img src="https://bigplace.fr/uploads/0000/22/2023/07/08/un-espace-tout-en-un-big-place-3.jpg"
+                        <img src="{{ asset('plugins/images/un-espace-tout-en-un-big-place-3.jpg') }}"
                             alt="about image">
                     </figure>
                     <!-- Count Employers -->
                     <div class="count-employers wow fadeInUp">
-                        <img src="https://bigplace.fr/uploads/0000/1/2023/07/05/rechercher-un-candidat-91.png"
+                        <img src="{{ asset('plugins/images/rechercher-un-candidat-91.png') }}"
                             class="img-option" alt="img">
                     </div>
                 </div>
@@ -200,12 +200,12 @@
                 <!-- Image Column -->
                 <div class="image-column col-lg-6 col-md-12 col-sm-12">
                     <figure class="image-box wow fadeInLeft">
-                        <img src="https://bigplace.fr/uploads/0000/22/2023/07/08/moteur-de-recherche-dv.jpg"
+                        <img src="{{ asset('plugins/images/moteur-de-recherche-dv.jpg') }}"
                             alt="about">
                     </figure>
                     <!-- Count Employers -->
                     <div class="applicants-list app-list-2 wow fadeInUp">
-                        <img src="https://bigplace.fr/uploads/0000/1/2023/06/20/rechercher-un-candidat-7.png"
+                        <img src="{{ asset('plugins/images/rechercher-un-candidat-7.png') }}"
                             class="img-option" alt="img">
                     </div>
                 </div>
@@ -269,7 +269,7 @@
             <div class="row">
                 <div class="image-column col-lg-6 col-md-12 col-sm-12">
                     <div class="inner-column">
-                        <figure class="image"><img src="https://bigplace.fr/uploads/demo/general/about-style-9.png"
+                        <figure class="image"><img src="{{ asset('plugins/images/about-style-9.png') }}"
                                 alt="">
                         </figure>
                         <!-- Count Employers -->
@@ -318,7 +318,7 @@
                 <div class="image-column col-lg-6 col-md-12 col-sm-12 order-2">
                     <div class="inner-column">
                         <figure class="image"><img
-                                src="https://bigplace.fr/uploads/0000/1/2023/06/10/employeur-bigplace.png" alt="">
+                                src="{{ asset('plugins/images/employeur-bigplace.png') }}" alt="">
                         </figure>
                         <!-- Count Employers -->
                         <div class="count-employers wow fadeInUp">
@@ -402,7 +402,7 @@
 </section>
 <!-- End About Section -->
     <section class="call-to-action-two"
-        style="background-image: url(https://bigplace.fr/uploads/demo/general/banner-layout-9.jpg) !important;">
+        style="background-image: url({{ asset('plugins/images/banner-layout-9.jpg') }}) !important;">
         <div class="auto-container">
             <div class="sec-title light text-center">
                 <h2>Profitez d&#039;une expérience unique et inscrivez-vous gratuitement !</h2>
@@ -431,44 +431,44 @@
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/01/distritel.jpg" alt="DISTRITEL">
+                            src="{{ asset('plugins/images/distritel.jpg') }}" alt="DISTRITEL">
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/01/tryptic.jpg" alt="TRYPTIC">
+                            src="{{ asset('plugins/images/tryptic.jpg') }}" alt="TRYPTIC">
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/01/18201.jpg" alt="SUITE1820">
+                            src="{{ asset('plugins/images/18201.jpg') }}" alt="SUITE1820">
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/01/crea.jpg" alt="EasyDrop">
+                            src="{{ asset('plugins/images/crea.jpg') }}" alt="EasyDrop">
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/01/expertsoft.jpg" alt="Expersoft">
+                            src="{{ asset('plugins/images/expertsoft.jpg') }}" alt="Expersoft">
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <a href="MVF Solutions"> <img class="img-fluid d-inline-block w-auto"
-                                src="https://bigplace.fr/uploads/0000/1/2023/06/01/mvf1.png" alt="">
+                                src="{{ asset('plugins/images/mvf1.png') }}" alt="">
                         </a>
                     </figure>
                 </li>
                 <li class="slide-item">
                     <figure class="image-box">
                         <img class="img-fluid d-inline-block w-auto"
-                            src="https://bigplace.fr/uploads/0000/1/2023/06/10/tonton.jpg" alt="Tonton J&#039;achète">
+                            src="{{ asset('plugins/images/tonton.jpg') }}" alt="Tonton J&#039;achète">
                     </figure>
                 </li>
             </ul>
@@ -477,7 +477,7 @@
     <section class="jobseeker-section">
         <div class="outer-box">
             <div class="image-column">
-                <figure class="image"><img src="https://bigplace.fr/uploads/0000/1/2023/06/01/place-de-recrutement.jpg"
+                <figure class="image"><img src="{{ asset('plugins/images/place-de-recrutement.jpg') }}"
                         alt="">
                 </figure>
             </div>
@@ -504,7 +504,7 @@
         </div>
     </section>
     <section class="testimonial-section style-two alternate"
-        style="background-image: url(https://bigplace.fr/uploads/demo/general/testimonials-9.png);">
+        style="background-image: url({{ asset('plugins/images/testimonials-9.png') }});">
         <div class="auto-container">
             <div class="sec-title text-center light">
                 <h2>Nos clients parlent de nous.</h2>
@@ -522,7 +522,7 @@
                                 que je recherchais ! Bravo à Big place je recommande ! </div>
                             <div class="info-box">
                                 <div class="thumb"><img
-                                        src="https://bigplace.fr/uploads/0000/1/2023/06/01/18201-150.jpg"
+                                        src="{{ asset('plugins/images/18201-150.jpg') }}"
                                         alt="Khadija F."></div>
                                 <h4 class="name">Khadija F.</h4>
                                 <span class="designation">Fondatrice Suite 1820</span>
@@ -542,7 +542,7 @@
                             </div>
                             <div class="info-box">
                                 <div class="thumb"><img
-                                        src="https://bigplace.fr/uploads/0000/1/2023/06/01/distritel-150.jpg"
+                                        src="{{ asset('plugins/images/distritel-150.jpg') }}"
                                         alt="Franck D."></div>
                                 <h4 class="name">Franck D.</h4>
                                 <span class="designation">Responsable RH Distritel</span>
@@ -560,7 +560,7 @@
 
                             </div>
                             <div class="info-box">
-                                <div class="thumb"><img src="https://bigplace.fr/uploads/0000/1/2023/06/20/mvf.jpg"
+                                <div class="thumb"><img src="{{ asset('plugins/images/mvf.jpg') }}"
                                         alt="Pierre M."></div>
                                 <h4 class="name">Pierre M.</h4>
                                 <span class="designation">Responsable opérationnel</span>
@@ -575,7 +575,7 @@
         <div class="outer-box">
             <div class="image-column">
                 <figure class="image">
-                    <img src="https://bigplace.fr/uploads/0000/1/2023/06/01/visio-recrutement.jpg" alt="">
+                    <img src="{{ asset('plugins/images/visio-recrutement.jpg') }}" alt="">
                 </figure>
             </div>
             <div class="content-column">
@@ -602,9 +602,9 @@
     </section>
     <section class="testimonial-section-two">
         <div class="container-fluid">
-            <div class="testimonial-left"><img src="https://bigplace.fr/module/superio/images/testimonial-left.png"
+            <div class="testimonial-left"><img src="{{ asset('plugins/images/testimonial-left.png') }}"
                     alt=""></div>
-            <div class="testimonial-right"><img src="https://bigplace.fr/module/superio/images/testimonial-right.png"
+            <div class="testimonial-right"><img src="{{ asset('plugins/images/testimonial-right.png') }}"
                     alt=""></div>
             <!-- Sec Title -->
             <div class="sec-title text-center">

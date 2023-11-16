@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="aVo9Gw6vkpD9fX3OmfuBxxfZwLM1t7RGudMqypcr">
-    <link rel="icon" type="image/png" href="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('plugins/images/logo.png') }}" />
 
     <title>Tableau de bord - Big Place</title>
     <meta name="description"
@@ -138,7 +138,7 @@
                     <div class="logo-box">
                         <div class="logo">
                             <a href="/">
-                                <img src="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" alt="Big Place">
+                                <img src="{{ asset('plugins/images/logo.png') }}" alt="Big Place">
                             </a>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
             <div class="mobile-header">
                 <div class="logo">
                     <a href="https://bigplace.fr">
-                        <img src="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" alt="Big Place">
+                        <img src="{{ asset('plugins/images/logo.png') }}" alt="Big Place">
                     </a>
                 </div>
 
@@ -325,10 +325,14 @@
             @include('includes.candidat-sidebar')
         @endrole
 
-        <link rel="stylesheet" href="https://bigplace.fr/libs/flags/css/flag-icon.min.css">
+        <!-- <link rel="stylesheet" href="https://bigplace.fr/libs/flags/css/flag-icon.min.css"> -->
+        <link rel="stylesheet" href="{{ asset('plugins/css/flags/css/flag-icon.min.css') }}">
 
-        <script src="https://bigplace.fr/libs/lazy-load/intersection-observer.js"></script>
-        <script async src="https://bigplace.fr/libs/lazy-load/lazyload.min.js"></script>
+        <!-- <script src="https://bigplace.fr/libs/lazy-load/intersection-observer.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/lazy-load/intersection-observer.js') }}"></script>
+        <!-- <script async src="https://bigplace.fr/libs/lazy-load/lazyload.min.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/lazy-load/lazyload.min.js') }}"></script>
+
         <script>
         // Set the options to make LazyLoad self-initialize
         window.lazyLoadOptions = {
@@ -342,49 +346,84 @@
         }, false);
         </script>
         <!-- <script src="https://bigplace.fr/libs/jquery-3.6.0.min.js"></script> -->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-        <script src="https://bigplace.fr/libs/jquery-migrate/jquery-migrate.min.js"></script>
-        <script src="https://bigplace.fr/libs/header.js"></script>
+
+        <!-- <script src="https://bigplace.fr/libs/jquery-migrate/jquery-migrate.min.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/jquery-migrate/jquery-migrate.min.js') }}"></script>
+
+        <!-- <script src="https://bigplace.fr/libs/header.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/header.js') }}"></script>
+
+
         <script>
         $(document).on('ready', function() {
             $.superioHeader.init($('#header'));
         });
         </script>
-        <script src="https://bigplace.fr/libs/lodash.min.js"></script>
+        <!-- <script src="https://bigplace.fr/libs/lodash.min.js"></script>
         <script src="https://bigplace.fr/libs/vue/vue.min.js"></script>
         <script src="https://bigplace.fr/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://bigplace.fr/libs/bootbox/bootbox.min.js"></script>
-        <script src="https://bigplace.fr/libs/tinymce/js/tinymce/tinymce.min.js"></script>
+        <script src="https://bigplace.fr/libs/tinymce/js/tinymce/tinymce.min.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/lodash.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/vue/vue.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/bootbox/bootbox.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
         <script src="https://bigplace.fr/module/media/js/browser.js?_ver=1.2.3"></script>
-
-
         <script src="https://bigplace.fr/js/functions.js?_ver=1.2.3"></script>
-
         <script src="https://bigplace.fr/module/superio/js/popper.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/jquery-ui.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/chosen.min.js"></script>
-        <script src="https://bigplace.fr/libs/select2/js/select2.min.js"></script>
+
+        <script src="{{ asset('module/media/js/browser.js?_ver=1.2.3') }}"></script>
+        <script src="{{ asset('plugins/js/libs/lodash.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/popper.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/chosen.min.js') }}"></script>
+
+        <!-- <script src="https://bigplace.fr/libs/select2/js/select2.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/bootstrap.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/jquery.fancybox.js"></script>
-        <!-- <script src="https://bigplace.fr/module/superio/js/jquery.modal.min.js"></script> -->
-        <script src="https://bigplace.fr/module/superio/js/mmenu.polyfills.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/mmenu.js"></script>
+        <script src="https://bigplace.fr/module/superio/js/jquery.fancybox.js"></script> -->
+        <!-- <script src="https://bigplace.fr/module/superio/js/jquery.modal.min.js"></script> DELETED -->
+        <!-- <script src="https://bigplace.fr/module/superio/js/mmenu.polyfills.js"></script> -->
+
+        <script src="{{ asset('plugins/js/libs/select2/js/select2.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/jquery.fancybox.js') }}"></script>
+        <script src="{{ asset('module/superio/js/mmenu.polyfills.js') }}"></script>
+
+
+        <!-- <script src="https://bigplace.fr/module/superio/js/mmenu.js"></script>
         <script src="https://bigplace.fr/module/superio/js/appear.js"></script>
         <script src="https://bigplace.fr/module/superio/js/anm.min.js"></script>
         <script src="https://bigplace.fr/module/superio/js/owl.js"></script>
         <script src="https://bigplace.fr/module/superio/js/wow.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/script.js?_ver=1.2.3"></script>
+        <script src="https://bigplace.fr/module/superio/js/script.js?_ver=1.2.3"></script> -->
 
-        <script src="https://bigplace.fr/libs/pusher.min.js"></script>
-        <script src="https://bigplace.fr/js/home.js?_ver=1.2.3"></script>
+        <script src="{{ asset('module/superio/js/mmenu.js') }}"></script>
+        <script src="{{ asset('module/superio/js/appear.js') }}"></script>
+        <script src="{{ asset('module/superio/js/anm.min.js') }}"></script>
+        <script src="{{ asset('module/superio/js/owl.js') }}"></script>
+        <script src="{{ asset('module/superio/js/wow.js') }}"></script>
+        <script src="{{ asset('module/superio/js/script.js') }}?_ver=1.2.3"></script>
 
+        <!-- <script src="https://bigplace.fr/libs/pusher.min.js"></script>
+        <script src="https://bigplace.fr/js/home.js?_ver=1.2.3"></script> -->
 
+        <script src="{{ asset('plugins/js/libs/pusher.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/home.js') }}?_ver=1.2.3"></script>
 
-
-        <script src="https://bigplace.fr/libs/chart_js/Chart.min.js"></script>
+        <!-- <script src="https://bigplace.fr/libs/chart_js/Chart.min.js"></script>
         <script src="https://bigplace.fr/libs/daterange/moment.min.js"></script>
-        <script src="https://bigplace.fr/libs/daterange/daterangepicker.min.js?_ver=2.2"></script>
+        <script src="https://bigplace.fr/libs/daterange/daterangepicker.min.js?_ver=2.2"></script> -->
+
+        <script src="{{ asset('plugins/js/libs/chart_js/Chart.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/daterange/moment.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/libs/daterange/daterangepicker.min.js') }}?_ver=2.2"></script>
+
         <script>
         var ctx = document.getElementById('earning_chart').getContext('2d');
 

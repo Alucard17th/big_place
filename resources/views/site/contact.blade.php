@@ -175,7 +175,7 @@
                         <div class="footer-column about-widget">
                             <div class="logo">
                                 <a href="https://bigplace.fr">
-                                    <img src="https://application.bigplace.fr/images/logo.png" alt="logo footer">
+                                    <img src="{{ asset('plugins/images/logo.png') }}" alt="logo footer">
                                 </a>
                             </div>
                             <p class="phone-num"><span>Contactez-nous</span><a href="tel:+33612378777"> Tél. :

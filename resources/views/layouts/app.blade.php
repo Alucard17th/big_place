@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" href="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('plugins/images/logo.png') }}" />
 
     <title>Big Place</title>
     <meta name="description"
@@ -119,17 +119,14 @@
     }
     </style>
 
-    <link href="https://bigplace.fr/custom-css" rel="stylesheet">
+    <!-- <link href="https://bigplace.fr/custom-css" rel="stylesheet"> -->
+    <link href="{{ asset('plugins/css/custom-css.css') }}" rel="stylesheet">
 
     <script src="//code.tidio.co/tzkeoku6ogisroezu2amei6mcqnb3tjm.js" async></script>
-
-
 
 </head>
 
 <body data-anm=".anm" class="frontend-page page   ">
-
-
 
     <div class="bravo_wrap page-wrapper">
         <!-- Preloader -->
@@ -321,10 +318,12 @@
             <div class="message-box warning"></div>
         </div>
 
-        <link rel="stylesheet" href="https://bigplace.fr/libs/flags/css/flag-icon.min.css">
-
-        <script src="https://bigplace.fr/libs/lazy-load/intersection-observer.js"></script>
-        <script async src="https://bigplace.fr/libs/lazy-load/lazyload.min.js"></script>
+        <!-- <link rel="stylesheet" href="https://bigplace.fr/libs/flags/css/flag-icon.min.css"> -->
+        <link rel="stylesheet" href="{{ asset('plugins/css/flags/css/flag-icon.min.css') }}">
+        <!-- <script src="https://bigplace.fr/libs/lazy-load/intersection-observer.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/lazy-load/intersection-observer.js') }}"></script>
+        <!-- <script async src="https://bigplace.fr/libs/lazy-load/lazyload.min.js"></script> -->
+        <script src="{{ asset('plugins/js/libs/lazy-load/lazyload.min.js') }}"></script>
         <script>
         // Set the options to make LazyLoad self-initialize
         window.lazyLoadOptions = {
@@ -354,8 +353,8 @@
         <script src="{{ asset('plugins/js/libs/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
 
-        <script src="https://bigplace.fr/js/functions.js?_ver=1.2.3"></script>
-
+        <!-- <script src="https://bigplace.fr/js/functions.js?_ver=1.2.3"></script> -->
+        <script src="{{ asset('plugins/js/functions.js') }}"></script>
 
         <script src="{{ asset('plugins/js/popper.min.js') }}"></script>
         <script src="{{ asset('plugins/js/jquery-ui.min.js') }}"></script>

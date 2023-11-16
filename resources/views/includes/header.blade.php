@@ -6,7 +6,7 @@
             <div class="logo-box">
                 <div class="logo">
                     <a href="https://bigplace.fr">
-                        <img src="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" alt="Big Place">
+                        <img src="{{ asset('plugins/images/logo.png') }}" alt="Big Place">
                     </a>
                 </div>
             </div>
@@ -95,7 +95,7 @@
     <div class="mobile-header">
         <div class="logo">
             <a href="https://bigplace.fr">
-                <img src="https://bigplace.fr/uploads/0000/1/2023/05/28/logo.png" alt="Big Place">
+                <img src="{{ asset('plugins/images/logo.png') }}" alt="Big Place">
             </a>
         </div>
 
