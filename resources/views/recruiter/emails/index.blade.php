@@ -20,6 +20,11 @@
     cursor: pointer;
 }
 
+.email-item-received:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
 #inbox-btn.active{
     background-color: #f5f5f5;
 }
@@ -98,13 +103,21 @@
                                 <div class="row sent" style="display: none">
                                     <div class="col-4">
                                         <ul>
-                                           XXXX
+                                            @foreach($receivedEmails as $email)
+                                            <li class="email-item-received" data-id="{{$email->id}}">
+                                                <div class="d-flex justify-content-between py-2 border-bottom">
+                                                    <span>{{getUserById($email->user_id)->name}}</span>
+                                                    <span>{{$email->subject}} </span>
+                                                    <span>{{$email->created_at}}</span>
+                                                </div>
+                                            </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div class="col-8">
                                         <div class="email-container">
-                                            <h1 id="email-title"></h1>
-                                            <p id="email-content"></p>
+                                            <h1 id="email-title-received"></h1>
+                                            <p id="email-content-received"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -138,6 +151,21 @@ $(document).ready(function() {
             success: function(data) {
                 $('#email-title').text(data.subject);
                 $('#email-content').text(data.message);
+            }
+        })
+    })
+
+    $('.email-item-received').on('click', function() {
+        var emailId = $(this).data('id');
+        $.ajax({
+            url: "{{route('recruiter.email.show')}}",
+            type: "GET",
+            data: {
+                id: emailId
+            },
+            success: function(data) {
+                $('#email-title-received').text(data.subject);
+                $('#email-content-received').text(data.message);
             }
         })
     })

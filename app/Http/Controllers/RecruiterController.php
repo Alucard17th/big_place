@@ -648,7 +648,8 @@ class RecruiterController extends Controller
     public function myMails(){
         $user = auth()->user();
         $emails = $user->emails;
-        return view('recruiter.emails.index', compact('emails'));
+        $receivedEmails = Email::where('receiver_id', $user->id)->get();
+        return view('recruiter.emails.index', compact('emails', 'receivedEmails'));
     }
     public function getMyMail(Request $request){
         $email = Email::find($request->id);
