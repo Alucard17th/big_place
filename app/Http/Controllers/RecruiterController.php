@@ -658,11 +658,16 @@ class RecruiterController extends Controller
     // STATS
     public function stats(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous->count();
-        $canceledRdvs = 555;
+       
+        $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
+        $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
+
+        $offresByMetier = $user->offers->groupBy('rome_code')->map->count();
+   
         $moyenneDureeRecrutement = 555;
+
         $dureeSusbcription = 555;
-        return view('recruiter.stats.index', compact('rdvs', 'moyenneDureeRecrutement', 'dureeSusbcription', 'canceledRdvs'));
+        return view('recruiter.stats.index', compact('doneRdvs','refusedRdvs', 'offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
     }
 
     // CANDIDATURE
