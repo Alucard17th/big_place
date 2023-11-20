@@ -1,5 +1,10 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+.select2-selection--single {
+    padding: 10px 18px 10px 18px !important;
+} 
+</style>
 @endpush
 
 @section('content')
@@ -25,13 +30,13 @@
 
                                 <!-- Field: Intitulé du poste recherché -->
                                 <div class="form-group">
-                                    <label for="job_title">Intitulé du poste recherché (laisser le champ libre)</label>
+                                    <label for="job_title">Intitulé du poste recherché</label>
                                     <input type="text" class="form-control" id="job_title" name="job_title">
                                 </div>
 
                                   <!-- Field: Code ROME -->
                                 <div class="form-group">
-                                    <label for="rome_code">Code ROME (permettant des suggestions)</label>
+                                    <label for="rome_code">Code ROME</label>
                                     <input type="text" class="form-control" name="rome_code" id="rome_code">
                                 </div>
 
@@ -44,12 +49,11 @@
 
                                 <!-- Field: Localisation du poste (Ville et Code postal) -->
                                 <div class="form-group">
-                                    <label for="location_city">Ville de la localisation du poste (obligatoire)</label>
+                                    <label for="location_city">Ville de la localisation du poste</label>
                                     <input type="text" class="form-control" id="location_city" name="location_city" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="location_postal_code">Code postal de la localisation du poste
-                                        (obligatoire)</label>
+                                    <label for="location_postal_code">Code postal de la localisation du poste</label>
                                     <input type="text" class="form-control" id="location_postal_code"
                                         name="location_postal_code" required>
                                 </div>
@@ -63,7 +67,7 @@
 
                                 <!-- Field: Type de contrat -->
                                 <div class="form-group">
-                                    <label for="contract_type">Type de contrat (CDD, CDI, INTERIM)</label>
+                                    <label for="contract_type">Type de contrat</label>
                                     <select class="form-control" id="contract_type" name="contract_type">
                                         <option value="CDD">CDD</option>
                                         <option value="CDI">CDI</option>
@@ -73,7 +77,7 @@
 
                                 <!-- Field: Horaires de travail -->
                                 <div class="form-group">
-                                    <label for="work_schedule">Horaires de travail (choix multiple)</label>
+                                    <label for="work_schedule">Horaires de travail</label>
                                     <select class="form-control" id="work_schedule" name="work_schedule">
                                         <option value="Temps plein">Temps plein</option>
                                         <option value="Temps partiel">Temps partiel</option>
@@ -87,7 +91,7 @@
 
                                 <!-- Field: Temps de travail -->
                                 <div class="form-group">
-                                    <label for="weekly_hours">Temps de travail (choix multiple)</label>
+                                    <label for="weekly_hours">Temps de travail</label>
                                     <select class="form-control" id="weekly_hours" name="weekly_hours">
                                         <option value="35H">35H</option>
                                         <option value="39H">39H</option>
@@ -108,7 +112,7 @@
 
                                 <!-- Field: Langues souhaitées -->
                                 <div class="form-group">
-                                    <label for="desired_languages">Langues souhaitées (choix multiple)</label>
+                                    <label for="desired_languages">Langues souhaitées</label>
                                     <select class="form-control" id="desired_languages" name="desired_languages[]"
                                         multiple>
                                         <option value="Anglais">Anglais</option>
@@ -123,8 +127,8 @@
 
                                 <!-- Field: Niveau d’éducation -->
                                 <div class="form-group">
-                                    <label for="education_level">Niveau d’éducation (choix multiple)</label>
-                                    <select class="form-control" id="education_level" name="education_level[]" multiple>
+                                    <label for="education_level">Niveau d’éducation</label>
+                                    <select class="form-control" id="education_level" name="education_level">
                                         <option value="CAP / BEP">CAP / BEP</option>
                                         <option value="Bac">Bac</option>
                                         <option value="Bac + 2">Bac + 2</option>
@@ -135,15 +139,14 @@
 
                                 <!-- Field: Salaire Brut -->
                                 <div class="form-group">
-                                    <label for="gross_salary">Salaire Brut (laisser un champ vide pour permettre à
-                                        l’entreprise d’indiquer le salaire)</label>
+                                    <label for="gross_salary">Salaire Brut (ke)</label>
                                     <input type="text" class="form-control" id="gross_salary" name="brut_salary">
                                 </div>
 
                                 <!-- Field: Secteur d’activité -->
                                 <div class="form-group">
-                                    <label for="industry_sector">Secteur d’activité (choix multiple)</label>
-                                    <select class="form-control" id="industry_sector" name="industry_sector[]" multiple>
+                                    <label for="industry_sector">Secteur d’activité</label>
+                                    <select class="form-control" id="industry_sector" name="industry_sector">
                                         <option value="Agroalimentaire">Agroalimentaire</option>
                                         <option value="Banque / Assurance">Banque / Assurance</option>
                                         <!-- Add other options based on your needs -->
@@ -152,8 +155,7 @@
 
                                 <!-- Field: Avantages proposés -->
                                 <div class="form-group">
-                                    <label for="benefits">Avantages proposés (laisser un grand champ libre pour
-                                        permettre de rédiger plusieurs lignes)</label>
+                                    <label for="benefits">Avantages proposés</label>
                                     <textarea class="form-control" id="benefits" name="benefits" rows="3"></textarea>
                                 </div>
 

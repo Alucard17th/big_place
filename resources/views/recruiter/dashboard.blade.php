@@ -118,7 +118,7 @@
         <div class="row mt-5">
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                 <span class="mb-3">Mes candidatures</span>
-                <a href="#" class="dashboard-link">
+                <a href="/mes-candidatures" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-candidatures.jpg')}}" alt="">
                 </a>

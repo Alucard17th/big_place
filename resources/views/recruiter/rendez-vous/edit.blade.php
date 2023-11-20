@@ -27,40 +27,56 @@
                 <!-- Ls widget -->
                 <div class="ls-widget">
                     <div class="tabs-box">
-                      
-                     
+
+
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tr>
-                                                <td>Invité</td>
-                                                <td>{{ getUserById($rdv->participant)->name }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td>{{ $rdv->date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Heure</td>
-                                                <td>{{ $rdv->heure }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Status</td>
-                                                <td>{{ $rdv->status }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Commentaire</td>
-                                                <td>{{ $rdv->commentaire }}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                            <form action="{{route('recruiter.rendez-vous.update')}}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="rdv_id" value="{{$rdv->id}}">
+
+                                <div class="form-group">
+                                    <label for="date">Invité</label>
+                                    <input type="text" class="form-control" id="date"
+                                        name="date" value="{{ getUserById($rdv->participant)->name }}" disabled>
                                 </div>
-                            </div>
+
+                                <!-- Field: Nom du projet ou de la campagne -->
+                                <div class="form-group">
+                                    <label for="date">Date</label>
+                                    <input type="date" class="form-control" id="date"
+                                        name="date" value="{{ $rdv->date }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="heure">Heure</label>
+                                    <input type="time" class="form-control" id="heure"
+                                        name="heure" value="{{ $rdv->heure }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="En attente" {{ $rdv->status == 'En attente' ? 'selected' : '' }}>En attente</option>
+                                        <option value="Accepté" {{ $rdv->status == 'Accepté' ? 'selected' : '' }}>Accepté</option>
+                                        <option value="Refusé" {{ $rdv->status == 'Refusé' ? 'selected' : '' }}>Refusé</option>
+                                        <option value="Termine" {{ $rdv->status == 'Termine' ? 'selected' : '' }}>Termine</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="commentaire">Commentaire</label>
+                                    <textarea name="commentaire" class="form-control" id="commentaire" cols="30" rows="6">{{ $rdv->commentaire }}</textarea>
+                                   
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="theme-btn btn-style-one" type="submit">Enregistrer</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -74,7 +90,6 @@
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-})
+document.addEventListener('DOMContentLoaded', function() {})
 </script>
 @endpush

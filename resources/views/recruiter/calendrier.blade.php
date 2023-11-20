@@ -41,19 +41,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   let rdvs = [];
   // fetch events from a laravel route using ajax
   await $.ajax({
-    url: "{{ route('getUserEvents') }}",
+    url: "{{ route('getUserRdvs') }}",
     type: 'GET',
     dataType: 'json',
     success: function(data) {
-    //   calendar.addEventSource(data);
-    console.log('Events fetched successfully', data);
-
+    console.log('RDVS fetched successfully', data);
         data.forEach(function(event) {
-            // calendar.addEvent(event);
             rdvs.push({
                 title: 'Rendez vous le : ' + event.date,
                 start: event.date + 'T' + event.heure,
-
+                backgroundColor: 'pink',
+                borderColor: 'pink',
             });
         })
     },
@@ -61,6 +59,48 @@ document.addEventListener('DOMContentLoaded', async function() {
       console.log('Error fetching events');
     }
   })
+
+  await $.ajax({
+    url: "{{ route('getUserEvents') }}",
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+    console.log('EVENTS fetched successfully', data);
+        data.forEach(function(event) {
+            rdvs.push({
+                title: 'Evènement le : ' + event.event_date,
+                start: event.event_date + 'T' + event.event_hour,
+                backgroundColor: 'red',
+                borderColor: 'red',
+            });
+        })
+    },
+    error: function() {
+      console.log('Error fetching events');
+    }
+  })
+
+  await $.ajax({
+    url: "{{ route('getUserFormations') }}",
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+    console.log('Formations fetched successfully', data);
+        data.forEach(function(event) {
+            rdvs.push({
+                title: 'Formation le : ' + event.start_date,
+                start: event.start_date,
+                backgroundColor: 'green',
+                borderColor: 'green',
+            });
+        })
+    },
+    error: function() {
+      console.log('Error fetching events');
+    }
+  })
+
+  
 
   console.log('Events', rdvs);
 
@@ -72,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
-    events : rdvs
+    events : rdvs,
     // events: [
     //   {
     //     title: 'All Day Event',
@@ -120,7 +160,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     //     url: 'https://google.com/',
     //     start: '2023-09-28'
     //   }
-    // ]
+    // ],
+    eventClick: function(info) {
+        alert('Event: ' + info.event.title);
+        alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+        alert('View: ' + info.view.type);
+
+        // change the border color just for fun
+        // info.el.style.borderColor = 'red';
+    }
   });
 
   calendar.render();

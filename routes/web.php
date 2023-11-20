@@ -75,6 +75,8 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/ma-vitrine', [RecruiterController::class, 'myVitrine'])->name('recruiter.vitrine');
     Route::get('/mes-rendez-vous', [RecruiterController::class, 'myRdv'])->name('recruiter.rendez-vous');
     Route::get('/mon-rendez-vous/{id}', [RecruiterController::class, 'seeMyRdv'])->name('recruiter.rendez-vous.see');
+    Route::post('/mon-rendez-vous/update', [RecruiterController::class, 'updateMyRdv'])->name('recruiter.rendez-vous.update');
+
     Route::get('/mes-documents', [RecruiterController::class, 'myDocuments'])->name('recruiter.documents');
     Route::get('/mes-taches', [RecruiterController::class, 'myTasks'])->name('recruiter.tasks');
     Route::get('/ma-taches/{id}', [RecruiterController::class, 'seeMyTask'])->name('recruiter.tache.see');
@@ -110,6 +112,8 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/mes-evenements/edit/{id}', [RecruiterController::class, 'myEventsEdit'])->name('recruiter.events.edit');
     Route::post('/mes-evenements/update', [RecruiterController::class, 'myEventsUpdate'])->name('recruiter.events.update');
     Route::get('/mes-evenements/delete/{id}', [RecruiterController::class, 'myEventsDelete'])->name('recruiter.events.delete');
+    Route::get('/getRdvs', [RecruiterController::class, 'getUserRdvs'])->name('getUserRdvs');
+    Route::get('/getFormations', [RecruiterController::class, 'getUserFormations'])->name('getUserFormations');
     Route::get('/getEvents', [RecruiterController::class, 'getUserEvents'])->name('getUserEvents');
 
     Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');

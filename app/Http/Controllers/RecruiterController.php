@@ -43,7 +43,8 @@ class RecruiterController extends Controller
             $query->where('metier_recherche', 'like', '%' . $searchTerm['metier_recherche'] . '%');
         }
         if (!empty($searchTerm['ville_domiciliation'])) {
-            $query->where('ville_domiciliation', 'like', '%' . $searchTerm['ville_domiciliation'] . '%');
+            $query->where('ville_domiciliation', 'like', '%' . $searchTerm['ville_domiciliation'] . '%')
+            ->orWhere('address', 'like', '%' . $searchTerm['ville_domiciliation'] . '%');
         }
         if (!empty($searchTerm['annees_experience'])) {
             $query->where('annees_experience', 'like', '%' . $searchTerm['annees_experience'] . '%');
@@ -54,8 +55,13 @@ class RecruiterController extends Controller
         if (!empty($searchTerm['pretentions_salariales'])) {
             $query->where('pretentions_salariales', 'like', '%' . $searchTerm['pretentions_salariales'] . '%');
         }
+        // if (!empty($searchTerm['valeur'])) {
+        //     $query->where('valeurs->valeur', 'like', '%' . $searchTerm['valeur'] . '%');
+        // }
         if (!empty($searchTerm['valeur'])) {
-            $query->where('valeurs->valeur', 'like', '%' . $searchTerm['valeur'] . '%');
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhereJsonContains('valeurs', $searchTerm['valeur']);
+            });
         }
 
         $curriculums = $query->get();
@@ -229,6 +235,18 @@ class RecruiterController extends Controller
     public function seeMyRdv($id){
         $rdv = RendezVous::find($id);
         return view('recruiter.rendez-vous.edit', compact('rdv'));
+    }
+    public function updateMyRdv(Request $request){
+        $rdv = RendezVous::find($request->rdv_id);
+        $rdv->date = $request->date;
+        $rdv->heure = $request->heure;
+        $rdv->status = $request->status;
+        $rdv->commentaire = $request->commentaire;
+        $rdv->save();
+
+        toast('Votre rendez-vous a bien été mis a jour','success')->autoClose(5000);
+
+        return redirect()->back();
     }
 
     // DOCUMENTS
@@ -518,10 +536,20 @@ class RecruiterController extends Controller
         toast('Evenement supprimé','success')->autoClose(5000);
         return redirect()->back();
     }
-    public function getUserEvents(){
+    public function getUserRdvs(){
         $user = auth()->user();
         $rdvs = $user->rendezvous;
         return response()->json($rdvs);
+    }
+    public function getUserFormations(){
+        $user = auth()->user();
+        $formations = $user->formations;
+        return response()->json($formations);
+    }
+    public function getUserEvents(){
+        $user = auth()->user();
+        $events = $user->events;
+        return response()->json($events);
     }
 
     // FACTURE ET CONTRAT

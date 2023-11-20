@@ -6,7 +6,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Ma Tâche</h3>
+            <h3>Ma Evènement</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -35,6 +35,12 @@
                                 <div class="form-group">
                                     <label for="participants_count">Limite de participants</label>
                                     <input type="number" class="form-control" id="participants_count" name="participants_count" required value="{{ $event->participants_count }}">
+                                </div>
+
+                                <!-- Field: Participants Count -->
+                                <div class="form-group">
+                                    <label for="registered_participants">Participants inscrits</label>
+                                    <input type="number" class="form-control" id="registered_participants" name="registered_participants" required value="{{ $event->registered_participants }}" disabled>
                                 </div>
 
                                 <!-- Field: Event Address -->

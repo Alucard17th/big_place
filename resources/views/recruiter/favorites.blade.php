@@ -30,37 +30,7 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <h4>Recherche Par:</h4>
-
                             <div class="chosen-outer">
-                                <form method="get" class="default-form form-inline"
-                                    action="{{route('recruiter.cvtheque.search')}}">
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="metier_recherche" placeholder="métier/poste" value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="ville_domiciliation" placeholder="ville" value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="annees_experience" placeholder="année d'exp." value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="niveau_etudes" placeholder="niveau d'études" value=""
-                                            class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="pretentions_salariales" placeholder="niveau de salaire"
-                                            value="" class="form-control">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="valeur" placeholder="valeur" value=""
-                                            class="form-control">
-                                    </div>
-                                    <button type="submit" class="theme-btn btn-style-one">Chercher</button>
-                                </form>
                             </div>
                         </div>
 

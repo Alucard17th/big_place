@@ -50,8 +50,30 @@
                                             value="{{ request('pretentions_salariales') }}" class="form-control">
                                     </div>
                                     <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="valeur" placeholder="valeur"
-                                            value="{{ request('valeur') }}" class="form-control">
+                                        <select name="valeur" id="values_select" class="form-control" multiple>
+                                            <option value="Le respect">Le respect</option>
+                                            <option value="L’adaptabilité">L’adaptabilité</option>
+                                            <option value="la considération">la considération</option>
+                                            <option value="l’altruisme">l’altruisme</option>
+                                            <option value="l’assertivité">l’assertivité</option>
+                                            <option value="l'entraide">l'entraide</option>
+                                            <option value="la solidarité">la solidarité</option>
+                                            <option value="l'écoute">l'écoute</option>
+                                            <option value="la bienveillance">la bienveillance</option>
+                                            <option value="l'empathie">l'empathie</option>
+                                            <option value="la créativité">la créativité</option>
+                                            <option value="la justice">la justice</option>
+                                            <option value="la tolérance">la tolérance</option>
+                                            <option value="l’équité">l’équité</option>
+                                            <option value="l’honnêteté">l’honnêteté</option>
+                                            <option value="la responsabilité">la responsabilité</option>
+                                            <option value="la loyauté">la loyauté</option>
+                                            <option value="la détermination">la détermination</option>
+                                            <option value="la persévérance">la persévérance</option>
+                                            <option value="la rigueur">la rigueur</option>
+                                            <option value="la générosité">la générosité</option>
+                                            <option value="la stabilité">la stabilité</option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="theme-btn btn-style-one">Chercher</button>
                                 </form>
@@ -155,7 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectAllCheckbox = document.querySelector('.checkbox-all');
     const checkboxes = document.querySelectorAll('.checkbox-item');
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
-
+   
+    $("#values_select").select2({
+    });
+    
     // Add an event listener to checkboxes to toggle the button visibility
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
