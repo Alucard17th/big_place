@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="ls-widget">
+                <div class="ls-widget pt-5">
                     <div class="tabs-box">
                         <div class="widget-content">
                             <form action="{{route('recruiter.offer.add')}}" method="POST" enctype="multipart/form-data">
@@ -204,30 +204,39 @@
 @push('scripts')
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-    // fetch data from laravel route 
-    $.ajax({
-        url: "{{ route('getRomeCodes') }}",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            // for (const job in data) {
-            //     const fullName = job;
-            //     const codeOgr = data[job];
-            //     console.log(`Full Name: ${fullName}, Code OGR: ${codeOgr}`);
-            // }
+    // when document is 
+    $(document).ready(function () {
+        $.ajax({
+            url: "{{ route('getRomeCodes') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                const autocompleteSource = Object.entries(data).map(([fullName, codeOgr]) => {
+                    return `${codeOgr} - ${fullName}`;
+                });
 
-            const autocompleteSource = Object.entries(data).map(([fullName, codeOgr]) => {
-                return `${codeOgr} - ${fullName}`;
-            });
+                $( "#code_rome" ).autocomplete({
+                    source: autocompleteSource
+                });
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        })
 
-            $( "#code_rome" ).autocomplete({
-                source: autocompleteSource
-            });
-        },
-        error: function (data) {
-            console.log('Error:', data);
-        }
+        $("#desired_languages").select2({
+        });
+
+        $("#education_level").select2({
+        });
+
+        $("#industry_sector").select2({
+        });
+
+        $("#selected_jobboards").select2({
+        });
 
     })
+    
 </script>
 @endpush

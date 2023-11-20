@@ -20,7 +20,13 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class RecruiterController extends Controller
-{
+{   
+
+    // DASHBOARD
+    public function dashboard(){
+        $jobs = Job::all();
+        return view('recruiter.dashboard', compact('jobs'));
+    }
     // CV THEQUE
     public function cvtheque(){
         $curriculums = Curriculum::all();
@@ -75,8 +81,11 @@ class RecruiterController extends Controller
     public function cvthequeAddFavorite(Request $request){
         // create or update Favorite based on the auth user id as user_id in Favorite model
         $favorite = Favorite::where('user_id', auth()->user()->id)->first();
+        // dd(json_decode($favorite->favorites), $request->selectedValues);
         if ($favorite) {
-            $favorite->favorites = json_encode($request->selectedValues);
+            // update favorite
+            $favsMerged = array_merge( json_decode($favorite->favorites), $request->selectedValues);
+            $favorite->favorites = $favsMerged;
             $favorite->save();
         }else{
             $favorite = new Favorite();

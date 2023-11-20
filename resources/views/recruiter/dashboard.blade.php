@@ -21,6 +21,17 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 }
+
+.select2-container {
+    width: 100% !important;
+}
+.select2-search__field{
+    padding-left: 5px;
+}
+.select2-selection--single{
+    height: 35px !important;
+    padding: 0px 18px 0px 10px !important;
+}
 </style>
 @endpush
 
@@ -226,34 +237,70 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form-group mb-1">
-                        <input type="text" name="metier_recherche" placeholder="métier/poste" value=""
-                            class="form-control mb-2">
+                        <label for="metier_recherche">Métier / Code Rome</label>
+                        <select name="metier_recherche" id="metier_recherche" class="form-control">
+                            @foreach($jobs as $job)
+                                <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>    
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group mb-1">
-                        <input type="text" name="ville_domiciliation" placeholder="ville" value=""
+                        <label for="ville_domiciliation">Ville</label>
+                        <input type="text" name="ville_domiciliation" value=""
                             class="form-control mb-2">
                     </div>
                 </div>
 
                 <div class="col-6">
-
                     <div class="form-group mb-1">
-                        <input type="text" name="annees_experience" placeholder="année d'exp." value=""
+                        <label for="annees_experience">Année d'exp.</label>
+                        <input type="number" name="annees_experience" value=""
                             class="form-control mb-2">
                     </div>
                     <div class="form-group mb-1">
-                        <input type="text" name="niveau_etudes" placeholder="niveau d'études" value=""
-                            class="form-control mb-2">
+                        <label for="niveau_etudes">Niveau d'études</label>
+                        <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                            <option value="CAP / BEP">CAP / BEP</option>
+                            <option value="Bac">Bac</option>
+                            <option value="Bac + 2">Bac + 2</option>
+                            <option value="Bac + 4">Bac + 4</option>
+                            <option value="Bac + 5 et plus">Bac + 5 et plus</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group mb-1">
-                        <input type="text" name="pretentions_salariales" placeholder="niveau de salaire" value=""
+                        <label for="pretentions_salariales">Prétentions salariales</label>
+                        <input type="text" name="pretentions_salariales" value=""
                             class="form-control">
                     </div>
                     <div class="form-group mb-1">
-                        <input type="text" name="valeur" placeholder="valeur" value="" class="form-control">
+                        <label for="values_select">Valeurs</label>
+                        <select name="valeur" id="values_select" class="form-control" multiple>
+                            <option value="Le respect">Le respect</option>
+                            <option value="L’adaptabilité">L’adaptabilité</option>
+                            <option value="la considération">la considération</option>
+                            <option value="l’altruisme">l’altruisme</option>
+                            <option value="l’assertivité">l’assertivité</option>
+                            <option value="l'entraide">l'entraide</option>
+                            <option value="la solidarité">la solidarité</option>
+                            <option value="l'écoute">l'écoute</option>
+                            <option value="la bienveillance">la bienveillance</option>
+                            <option value="l'empathie">l'empathie</option>
+                            <option value="la créativité">la créativité</option>
+                            <option value="la justice">la justice</option>
+                            <option value="la tolérance">la tolérance</option>
+                            <option value="l’équité">l’équité</option>
+                            <option value="l’honnêteté">l’honnêteté</option>
+                            <option value="la responsabilité">la responsabilité</option>
+                            <option value="la loyauté">la loyauté</option>
+                            <option value="la détermination">la détermination</option>
+                            <option value="la persévérance">la persévérance</option>
+                            <option value="la rigueur">la rigueur</option>
+                            <option value="la générosité">la générosité</option>
+                            <option value="la stabilité">la stabilité</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -283,6 +330,15 @@ document.addEventListener('DOMContentLoaded', function() {
             showClose: false
         });
     })
+
+    $("#values_select").select2({
+    });
+
+    $("#niveau_etudes").select2({
+    });
+
+    $("#metier_recherche").select2({
+    });
 
     
 })

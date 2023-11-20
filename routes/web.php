@@ -64,10 +64,10 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter']], function () {
+    // DASHBOARD
+    Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
+
     //
-    Route::get('/recruiter-dashboard', function () {
-        return view('recruiter.dashboard');
-    });
     Route::get('/cv-theque', [RecruiterController::class, 'cvtheque'])->name('recruiter.cvtheque');
     Route::get('/cv-theque-search', [RecruiterController::class, 'cvthequeSearch'])->name('recruiter.cvtheque.search');
     Route::get('/mes-favoris', [RecruiterController::class, 'myFavorites'])->name('recruiter.favorites');
