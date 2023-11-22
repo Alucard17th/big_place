@@ -14,6 +14,7 @@ use App\Models\Event;
 use App\Models\Formation;
 use App\Models\Email;
 use App\Models\Candidature;
+use App\Models\History;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
@@ -79,6 +80,17 @@ class RecruiterController extends Controller
            
             $curriculum->percentageMatch = $percentageMatch;
         }
+
+        // Create search History model with the request data
+        $history = new History();
+        $history->user_id = auth()->user()->id;
+        $history->metier_recherche = $searchTerm['metier_recherche'];
+        $history->annees_experience = $searchTerm['annees_experience'];
+        $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
+        $history->niveau_etudes = $searchTerm['niveau_etudes'];
+        $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
+        $history->valeurs = json_encode($searchTerm);
+        $history->save();
 
         return view('recruiter.cvtheque', compact('curriculums'));
     }
@@ -209,7 +221,7 @@ class RecruiterController extends Controller
             ]);
 
             // Send Emails TO all the participant 
-            Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
+            // Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
 
             $email = Email::create([
                 'user_id' => auth()->user()->id,
@@ -219,7 +231,7 @@ class RecruiterController extends Controller
             ]);
         }
        
-        toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
+        // toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
 
         return response()->json([
             'status' => 'success',
@@ -382,6 +394,7 @@ class RecruiterController extends Controller
         $task->description = $request->description;
         $task->completed = $request->status;
         $task->due_date = $request->date_fin;
+        $task->start_date = $request->date_debut;
         $task->save();
         toast('Tâche modifiée','success')->autoClose(5000);
         return redirect()->back();
@@ -616,6 +629,7 @@ class RecruiterController extends Controller
             'registration_deadline' => $request->registration_deadline,
             // 'upload_documents' => json_encode($request->upload_documents),
             'status' => $request->status,
+            'max_participants' => $request->max_participants
         ]);
 
         if ($request->hasFile('uploaded_documents')) {
@@ -652,6 +666,7 @@ class RecruiterController extends Controller
             'open_positions' => $request->open_positions,
             'registration_deadline' => $request->registration_deadline,
             'status' => $request->status,
+            'max_participants' => $request->max_participants
         ]);
 
         if ($request->hasFile('uploaded_documents')) {
@@ -720,5 +735,10 @@ class RecruiterController extends Controller
         $candidature->save();
         
         return response()->json($candidature);
+    }
+
+    // HISTORIQUE DE RECHERCHE
+    public function getSearchHistory(){
+        return view('recruiter.history.index');
     }
 }

@@ -34,7 +34,7 @@
                     <li class="{{ Str::contains(Request::url(), 'mes-evenements') ? 'active' : '' }}">
                         <a href="/mes-evenements"
                             class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes évènements</span>
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes évènemements</span>
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mes-offres-emploi') ? 'active' : '' }}">
@@ -83,6 +83,12 @@
                         <a href="/mes-stats"
                             class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mes statistiques</span>
+                        </a>
+                    </li>
+                    <li class="{{ Str::contains(Request::url(), 'historique') ? 'active' : '' }}">
+                        <a href="/historique"
+                            class="d-flex justify-content-between align-items-center">
+                            <span class="d-flex align-items-center"><i class="la la-envelope"></i> Mon historiques des recherches</span>
                         </a>
                     </li>
                     <li class="{{ Str::contains(Request::url(), 'mon-compte-admin') ? 'active' : '' }}">

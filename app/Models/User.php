@@ -98,4 +98,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Candidature::class, 'user_id');
     }
+
+    public function history()
+    {
+        return $this->hasMany(History::class, 'user_id');
+    }
 }

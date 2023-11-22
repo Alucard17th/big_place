@@ -124,6 +124,11 @@
             <div class="form-group">
                 <button class="theme-btn btn-style-one create-rdv" type="button">Envoyer</button>
             </div>
+            <div class="form-group">
+                <div class="alert alert-success alert-dismissible" style="display: none;">
+                    <p id="success-msg">Vos invitations ont bien été envoyées.</p>
+                </div>
+            </div>
        </form>
         <a href="#" id="close-modal">Fermer</a>
         <a href="#"  class="custom-close-modal"></a>
@@ -252,6 +257,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 }
                             }
                         }
+
+                        console.log(data.status);
+                            if(data.status == 'success'){
+                                $('.alert-success').show();
+                            }
 
                     })
                     .catch(error => {

@@ -100,7 +100,7 @@
                 </a>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <span class="mb-3">Mes évènements / Jobdatings</span>
+                <span class="mb-3">Mes évènemements</span>
                 <a href="/mes-evenements" class="dashboard-link">
                     <img class="img-fluid dashboard-small-img"
                         src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
@@ -245,7 +245,7 @@
                         </select>
                     </div>
                     <div class="form-group mb-1">
-                        <label for="ville_domiciliation">Ville</label>
+                        <label for="ville_domiciliation">Ville / Département</label>
                         <input type="text" name="ville_domiciliation" value=""
                             class="form-control mb-2">
                     </div>

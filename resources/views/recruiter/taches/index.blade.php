@@ -54,6 +54,7 @@
                                             </th> -->
                                             <th>Tâches</th>
                                             <th>Status</th>
+                                            <th>Date de début</th>
                                             <th>Date de fin</th>
                                             <th>Actions</th>
                                         </tr>
@@ -71,6 +72,7 @@
                                                 <span class="badge badge-success">Termine</span>
                                                 @endif
                                             </td>
+                                            <td class="text-left">{{$task->start_date}}</td>
                                             <td class="text-left">{{$task->due_date}}</td>
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">

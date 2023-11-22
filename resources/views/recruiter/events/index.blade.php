@@ -20,7 +20,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Mes évènemements / jobdatings</h3>
+            <h3>Mes évènemements</h3>
             <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
         </div>
         <div class="row">

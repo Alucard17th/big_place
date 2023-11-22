@@ -39,6 +39,12 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="date_debut">Date de début</label>
+                                    <input type="date" class="form-control" name="date_debut" id="date_debut"
+                                        value="{{ $task->start_date }}">
+                                </div>
+
+                                <div class="form-group">
                                     <label for="date_fin">Date de fin</label>
                                     <input type="date" class="form-control" name="date_fin" id="date_fin"
                                         value="{{ $task->due_date }}">

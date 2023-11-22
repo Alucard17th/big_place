@@ -20,7 +20,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Mes Formations</h3>
+            <h3>Historiques des recherches</h3>
             <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
         </div>
         <div class="row">
@@ -30,10 +30,7 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer">
-                                <a href="{{route('recruiter.formation.create')}}"
-                                    class="theme-btn btn-style-one">Ajouter</a>
-                            </div>
+                           
                         </div>
 
                         <!-- TABLE AND GRID VIEW -->

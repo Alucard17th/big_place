@@ -145,6 +145,8 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/mes-candidatures', [RecruiterController::class, 'myCandidatures'])->name('recruiter.candidatures');
     Route::post('/mes-candidatures/update-status', [RecruiterController::class, 'updateCandidatureStatus'])->name('recruiter.candidature.updateStatus');
 
+    // HISTORIQUE
+    Route::get('/historique', [RecruiterController::class, 'getSearchHistory'])->name('recruiter.historique');
 });
 
 // CANDIDAT

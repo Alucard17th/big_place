@@ -6,7 +6,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Ma Tâche</h3>
+            <h3>Nouvelle Formation</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -39,6 +39,12 @@
                                 <div class="form-group">
                                     <label for="end_date">Date de fin de la formation</label>
                                     <input type="date" class="form-control" id="end_date" name="end_date">
+                                </div>
+
+                                <!-- Field: Max Participant de la formation -->
+                                <div class="form-group">
+                                    <label for="max_participants">Nombre max de participants</label>
+                                    <input type="number" class="form-control" id="max_participants" name="max_participants">
                                 </div>
 
                                 <!-- Mention CDI à l’embauche -->
