@@ -126,7 +126,7 @@
             </div>
             <div class="form-group">
                 <div class="alert alert-success alert-dismissible" style="display: none;">
-                    <p id="success-msg">Vos invitations ont bien été envoyées.</p>
+                    <p id="success-msg">Les créneaux de rendez-vous pour le(s) candidat(s) retenu(s) ont été transmis avec succès.</p>
                 </div>
             </div>
        </form>

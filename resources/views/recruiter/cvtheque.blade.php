@@ -25,57 +25,95 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <h4>Recherche Par:</h4>
-
                             <div class="chosen-outer">
                                 <form method="get" class="default-form form-inline"
                                     action="{{ route('recruiter.cvtheque.search') }}">
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="metier_recherche" placeholder="métier/poste"
-                                            value="{{ request('metier_recherche') }}" class="form-control mb-2">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                            <select name="metier_recherche" id="metier_recherche" class="form-control">
+                                                <option value="" selected>Métier / Code Rome</option>
+                                                @foreach($jobs as $job)
+                                                    <option value="{{$job->id}}" @if(request('metier_recherche') == $job->id) selected @endif>{{$job->id}} - {{$job->full_name}}</option>    
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                                <input type="text" name="ville_domiciliation" placeholder="Ville / département"
+                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                                <select class="form-control" id="annees_experience" name="annees_experience">
+                                                    <option value=""  selected>Année d'exp.</option>
+                                                    <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
+                                                    <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
+                                                    <option value="Confirmé (5 -10 ans)" @if(request('annees_experience') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
+                                                    <option value="Sénior (+ 10 ans)" @if(request('annees_experience') == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                                                        <option value=""  selected>Niveau d'études</option>
+                                                        <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                        <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
+                                                        <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
+                                                        <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
+                                                        <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                                <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
+                                                    value="{{ request('pretentions_salariales') }}" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="form-group mb-0 mr-1">
+                                                <select name="valeur[]" id="values_select" class="form-control" multiple>
+                                                    <option value="Le respect" @if(request()->has('valeur') && in_array("Le respect", request('valeur'))) selected @endif>Le respect</option>
+                                                    <option value="L’adaptabilité" @if(request()->has('valeur') && in_array("L’adaptabilité", request('valeur'))) selected @endif>L’adaptabilité</option>
+                                                    <option value="la considération" @if(request()->has('valeur') && in_array("la considération", request('valeur'))) selected @endif>la considération</option>
+                                                    <option value="l’altruisme" @if(request()->has('valeur') && in_array("l’altruisme", request('valeur'))) selected @endif>l’altruisme</option>
+                                                    <option value="l’assertivité" @if(request()->has('valeur') && in_array("l’assertivité", request('valeur'))) selected @endif>l’assertivité</option>
+                                                    <option value="l’entraide" @if(request()->has('valeur') && in_array("l’entraide", request('valeur'))) selected @endif>l’entraide</option>
+                                                    <option value="la solidarité" @if(request()->has('valeur') && in_array("la solidarité", request('valeur'))) selected @endif>la solidarité</option>
+                                                    <option value="l’écoute" @if(request()->has('valeur') && in_array("l’écoute", request('valeur'))) selected @endif>l’écoute</option>
+                                                    <option value="la bienveillance" @if(request()->has('valeur') && in_array("la bienveillance", request('valeur'))) selected @endif>la bienveillance</option>
+                                                    <option value="l’empathie" @if(request()->has('valeur') && in_array("l’empathie", request('valeur'))) selected @endif>lempathie</option>
+                                                    <option value="la créativité" @if(request()->has('valeur') && in_array("la détermination", request('valeur'))) selected @endif>la créativité</option>
+                                                    <option value="la justice" @if(request()->has('valeur') && in_array("la justice", request('valeur'))) selected @endif>la justice</option>
+                                                    <option value="la tolérance" @if(request()->has('valeur') && in_array("la tolérance", request('valeur'))) selected @endif>la tolérance</option>
+                                                    <option value="l’équité" @if(request()->has('valeur') && in_array("l’équité", request('valeur'))) selected @endif>l’équité</option>
+                                                    <option value="l’honnêteté" @if(request()->has('valeur') && in_array("l’honnêteté", request('valeur'))) selected @endif>l’honnêteté</option>
+                                                    <option value="la responsabilité" @if(request()->has('valeur') && in_array("la responsité", request('valeur'))) selected @endif>la responsabilité</option>
+                                                    <option value="la loyauté" @if(request()->has('valeur') && in_array("la loyalsex", request('valeur'))) selected @endif>la loyauté</option>
+                                                    <option value="la détermination" @if(request()->has('valeur') && in_array("la détermination", request('valeur'))) selected @endif>la détermination</option>
+                                                    <option value="la persévérance" @if(request()->has('valeur') && in_array("la persévérance", request('valeur'))) selected @endif>la persévérance</option>
+                                                    <option value="la rigueur" @if(request()->has('valeur') && in_array("la rigueur", request('valeur'))) selected @endif>la rigueur</option>
+                                                    <option value="la générosité" @if(request()->has('valeur') && in_array("la générosité", request('valeur'))) selected @endif>la générosité</option>
+                                                    <option value="la stabilité" @if(request()->has('valeur') && in_array("la stabilité", request('valeur'))) selected @endif>la stabilité</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="ville_domiciliation" placeholder="ville"
-                                            value="{{ request('ville_domiciliation') }}" class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="annees_experience" placeholder="année d'exp."
-                                            value="{{ request('annees_experience') }}" class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="niveau_etudes" placeholder="niveau d'études"
-                                            value="{{ request('niveau_etudes') }}" class="form-control mb-2">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="pretentions_salariales" placeholder="niveau de salaire"
-                                            value="{{ request('pretentions_salariales') }}" class="form-control">
-                                    </div>
-                                    <div class="form-group mb-0 mr-1">
-                                        <select name="valeur" id="values_select" class="form-control" multiple>
-                                            <option value="Le respect">Le respect</option>
-                                            <option value="L’adaptabilité">L’adaptabilité</option>
-                                            <option value="la considération">la considération</option>
-                                            <option value="l’altruisme">l’altruisme</option>
-                                            <option value="l’assertivité">l’assertivité</option>
-                                            <option value="l'entraide">l'entraide</option>
-                                            <option value="la solidarité">la solidarité</option>
-                                            <option value="l'écoute">l'écoute</option>
-                                            <option value="la bienveillance">la bienveillance</option>
-                                            <option value="l'empathie">l'empathie</option>
-                                            <option value="la créativité">la créativité</option>
-                                            <option value="la justice">la justice</option>
-                                            <option value="la tolérance">la tolérance</option>
-                                            <option value="l’équité">l’équité</option>
-                                            <option value="l’honnêteté">l’honnêteté</option>
-                                            <option value="la responsabilité">la responsabilité</option>
-                                            <option value="la loyauté">la loyauté</option>
-                                            <option value="la détermination">la détermination</option>
-                                            <option value="la persévérance">la persévérance</option>
-                                            <option value="la rigueur">la rigueur</option>
-                                            <option value="la générosité">la générosité</option>
-                                            <option value="la stabilité">la stabilité</option>
-                                        </select>
-                                    </div>
+                                   
+                                  <div class="form-group mt-2">
                                     <button type="submit" class="theme-btn btn-style-one">Chercher</button>
+                                  </div>
+                                   
                                 </form>
 
                             </div>
@@ -179,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
    
     $("#values_select").select2({
+        placeholder: "Valeurs",
     });
     
     // Add an event listener to checkboxes to toggle the button visibility

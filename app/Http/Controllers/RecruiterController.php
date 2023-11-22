@@ -31,7 +31,8 @@ class RecruiterController extends Controller
     // CV THEQUE
     public function cvtheque(){
         $curriculums = Curriculum::all();
-        return view('recruiter.cvtheque', compact('curriculums'));
+        $jobs = Job::all();
+        return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
     public function cvthequeSearch(Request $request){
         $searchTerm = $request->all();
@@ -89,10 +90,12 @@ class RecruiterController extends Controller
         $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
         $history->niveau_etudes = $searchTerm['niveau_etudes'];
         $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
-        $history->valeurs = json_encode($searchTerm);
+        $history->valeurs = json_encode($searchTerm['valeur']);
         $history->save();
 
-        return view('recruiter.cvtheque', compact('curriculums'));
+        $jobs = Job::all();
+
+        return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
 
     // FAVORIS
@@ -739,6 +742,7 @@ class RecruiterController extends Controller
 
     // HISTORIQUE DE RECHERCHE
     public function getSearchHistory(){
-        return view('recruiter.history.index');
+        $history = auth()->user()->history;
+        return view('recruiter.history.index', compact('history'));
     }
 }

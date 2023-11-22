@@ -68,7 +68,7 @@
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>
                                                 @else
-                                                <span class="badge badge-success">Termine</span>
+                                                <span class="badge badge-success">Terminé</span>
                                                 @endif
                                             </td>
                                             <td class="text-left">{{$task->due_date}}</td>

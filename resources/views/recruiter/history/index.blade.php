@@ -32,7 +32,7 @@
                         <div class="widget-title">
                            
                         </div>
-
+           
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -40,38 +40,41 @@
                                 <table class="default-table manage-job-table table table-sm">
                                     <thead>
                                         <tr>
-                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
-                                            </th> -->
-                                            <th>Titre</th>
-                                            <th>Status</th>
-                                            <th>Date de fin</th>
-                                            <th>Max Participants</th>
-                                            <th>Actions</th>
+                                            <th>Lien vers la recherche</th>
+                                            <th>Recherche</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($formations as $formation)
+                                        @foreach($history as $search)
                                         <tr>
-                                            <td>{{$formation->job_title}}</td>
                                             <td>
-                                                @if($formation->status == 1)
-                                                <span class="badge badge-success">Ouverte</span>
-                                                @else
-                                                <span class="badge badge-danger">Ferme</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$formation->registration_deadline}}</td>
-                                            <td>{{$formation->max_participants}}</td>
-                                            <td>
-                                                <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="theme-btn btn-style-one p-1 custom-btn">
-                                                    <i class="las la-edit"></i>
-                                                </a>
-                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="theme-btn btn-style-one p-1 custom-btn">
-                                                    <i class="las la-trash"></i>
-                                                </a>
-                                            </td>
+                                                <a href="{{ route('recruiter.cvtheque.search', [
+                                                    'metier_recherche' => $search->metier_recherche ? $search->metier_recherche : '',
+                                                    'ville_domiciliation' => $search->ville_domiciliation ? $search->ville_domiciliation : '',
+                                                    'annees_experience' => $search->annees_experience ? $search->annees_experience : '',
+                                                    'niveau_etudes' => $search->niveau_etudes ? $search->niveau_etudes : '',
+                                                    'pretentions_salariales' => $search->pretentions_salariales ? $search->pretentions_salariales : '',
+                                                    'valeur' => $search->valeurs ? json_decode($search->valeurs) : [], // Assuming $search->valeur is an array
+                                                ]) }}">Voir</a>
+                                           </td>
+                                           <td class="d-flex justify-content-center align-items-start flex-column">
+                                                <span class="badge badge-secondary mb-1">Metier :{{$search->metier_recherche}}</span>
+                                                <span class="badge badge-secondary mb-1">Années d'expérience :{{$search->annees_experience}}</span>
+                                                <span class="badge badge-secondary mb-1">Ville / Département :{{$search->ville_domiciliation}}</span>
+                                                <span class="badge badge-secondary mb-1">Niveau d'etudes :{{$search->niveau_etudes}}</span>
+                                                <span class="badge badge-secondary">Prétentions salariales :{{$search->pretentions_salariales}}</span>
+                                                <span class="badge badge-secondary">Valeurs :
+                                                    @if(is_array(json_decode($search->valeurs)))
+                                                    @foreach(json_decode($search->valeurs) as $value)
+                                                        {{str_replace('1', ".", print_r($value))}}
+                                                    @endforeach
+                                                    @endif
+                                                </span>
+                                           </td>
                                         </tr>
                                         @endforeach
+
+                                       
                                     </tbody>
                                 </table>
                                 <div class="ls-pagination">

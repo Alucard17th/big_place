@@ -62,8 +62,8 @@
                                     <select name="status" id="status" class="form-control">
                                         <option value="En attente" {{ $rdv->status == 'En attente' ? 'selected' : '' }}>En attente</option>
                                         <option value="Accepté" {{ $rdv->status == 'Accepté' ? 'selected' : '' }}>Accepté</option>
-                                        <option value="Refusé" {{ $rdv->status == 'Refusé' ? 'selected' : '' }}>Refusé</option>
-                                        <option value="Termine" {{ $rdv->status == 'Termine' ? 'selected' : '' }}>Termine</option>
+                                        <option value="Annulé" {{ $rdv->status == 'Annulé' ? 'selected' : '' }}>Annulé</option>
+                                        <option value="Termine" {{ $rdv->status == 'Termine' ? 'selected' : '' }}>Terminé</option>
                                     </select>
                                 </div>
 
