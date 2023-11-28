@@ -18,14 +18,35 @@
 .custom-btn{
     background-color : #ff8b00;
 }
+
+input, select{
+    height:45px !important;
+    padding-top: 10px !important;
+    width: 100% !important;
+}
+.select2-selection--multiple {
+    max-height: 45px !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: 14px;
+    background: #f0f5f7 !important;
+}
+.select2-search__field{
+    padding: 0px 18px 10px 20px !important;
+}
 </style>
 @endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Rendez-vous</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+    <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                        <i class="las la-arrow-left" style="font-size:38px"></i>
+                    </a>
+                <h3>Mes Rendez-vous</h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -34,7 +55,52 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer">
+                            <div class="chosen-outer search-container">
+                                <form method="get" class="default-form form-inline"
+                                    action="{{ route('recruiter.cvtheque.search') }}">
+                                    <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <select name="type" id="type" class="form-control">
+                                                        <option value=""  selected>Type de rendez-vous</option>
+                                                        <option value="Visio">Visio</option>
+                                                        <option value="Physique">Physique</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <input type="date" name="date" id="date" class="form-control w-100">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 mt-3">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <select name="category" id="category" class="form-control">
+                                                        <option value=""  selected>Catégorie</option>
+                                                        <option value="a_venir">A venir</option>
+                                                        <option value="passé">Passé</option>
+                                                        <option value="annulé">Annulé</option>
+                                                        <option value="en_attente">En Attente</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                           
+                                    </div>
+                                   
+                                  <div class="form-group mt-3">
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
+                                  </div>
+                                   
+                                </form>
                             </div>
                         </div>
 
@@ -45,40 +111,44 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
+                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""> -->
                                             </th>
-                                            <th>Date</th>
-                                            <th>Heure</th>
-                                            <th>Status</th>
+                                            <th>Nom du candidat</th>
+                                            <th>Type</th>
+                                            <th>Date de rendez-vous</th>
+                                            <th>Catégorie</th>
+                                            <th>Commentaire</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($rdvs as $rdv)
                                         <tr>
-                                            <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$rdv->id}}"></td>
-                                            <td class="text-left">{{$rdv->date}}</td>
-                                            <td class="text-left">{{$rdv->heure}}</td>
+                                            <!-- <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$rdv->id}}"></td> -->
+                                            <td class="text-left">{{getUserById($rdv->participant)->name}}</td>
+                                            <td class="text-left">{{$rdv->is_type_presentiel}} - {{$rdv->is_type_distanciel}}</td>
+                                            <td class="text-left">{{$rdv->date}} à {{$rdv->heure}}</td>
                                             <td class="text-left">{{$rdv->status}}</td>
+                                            <td class="text-left">{{$rdv->commentaire}}</td>
                                             <td class="text-left">
-                                                <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="theme-btn p-2 text-white custom-btn">
+                                                <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
+                                                    Modifier
                                                 </a>
-                                                <button class="theme-btn p-2 text-white open-schedule-modal custom-btn"
-                                                    data-receiver-email="{{getUserEmailById($rdv->participant)}}">
-                                                    <i class="las la-calendar"></i>
-                                                    <!-- Planifier RDV -->
-                                                </button>
-                                                <button class="theme-btn p-2 text-white add-comment-modal custom-btn"
+                                                <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-four">
+                                                    <!-- Détails -->
+                                                    <i class="las la-trash"></i>
+                                                    Annuler
+                                                </a>
+                                                <!-- <button class="theme-btn p-2 text-white add-comment-modal custom-btn"
                                                     data-rdv-id="{{$rdv->id}}">
                                                     <i class="las la-comment"></i>
-                                                    <!-- Commentaire -->
-                                                </button>
+                                                </button> -->
                                             </td>
                                         </tr>
                                         @endforeach
@@ -92,37 +162,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal HTML embedded directly into document -->
-    <div id="ex1" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <h4>Proposé des rendez-vous :</h4>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 1</label>
-                <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 2</label>
-                <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 3</label>
-                <input class="form-control mb-2" type="date" name="crenau_4_date" id="crenau_4_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_4_time" id="crenau_4_time" required>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
     </div>
 
     <!-- Modal HTML embedded directly into document -->
@@ -146,44 +185,11 @@
         <a href="#" class="custom-close-modal"></a>
     </div>
 
-
-    <button class="btn btn-primary" id="open-schedule-modal">Schedule</button>
-    <div id="ex2" class="modal">
-        <div id="calendly-embed" style="min-width:320px;height:700px;"></div>
-    </div>
-
-    <!-- <div class="calendly-inline-widget" data-url="https://calendly.com/bigplace?hide_gdpr_banner=1"
-        style="min-width:320px;height:630px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script> -->
-
-    <!-- <button onclick="Calendly.showPopupWidget('https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar');return false;" class="sqs-block-button-element--medium sqs-block-button-element">Register</button> -->
-
 </div>
 @endsection
 
 @push('scripts')
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-<script>
-$('.open-schedule-modal').click(function() {
-    // get data attribute receiver email from button
-    var receiverEmail = $(this).data('receiver-email');
-    console.log(receiverEmail);
-    Calendly.initInlineWidget({
-        url: 'https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar',
-        parentElement: document.getElementById('calendly-embed'),
-        prefill: {
-            name: "John Doe",
-            email: "john@doe2.com",
-        },
-        utm: {}
-    });
-    $("#ex2").modal({
-        escapeClose: false,
-        clickClose: true,
-        showClose: false
-    });
-});
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -227,78 +233,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error(error);
             });
     })
+
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": false,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
 })
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const selectAllCheckbox = document.querySelector('.checkbox-all');
-    const checkboxes = document.querySelectorAll('.checkbox-item');
-    const addToFavoritesButton = document.querySelector('.add-to-favorites');
-
-    // Add an event listener to checkboxes to toggle the button visibility
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-            addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
-        });
-    });
-
-    selectAllCheckbox.addEventListener('change', function() {
-        const isChecked = selectAllCheckbox.checked;
-
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = isChecked;
-        });
-
-        // Update the visibility of the "Ajouter aux favoris" button
-        const addToFavoritesButton = document.querySelector('.add-to-favorites');
-        addToFavoritesButton.classList.toggle('d-none', !isChecked);
-    });
-
-    $('#close-modal, .custom-close-modal').click(function() {
-        console.log('Modal Should Be Closed');
-        $.modal.close();
-    });
-
-    // Add an event listener to the "Ajouter aux favoris" button to collect values
-    addToFavoritesButton.addEventListener('click', function() {
-        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-        const selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        if (selectedValues.length > 0) {
-            // Define the data to be sent
-            const data = {
-                selectedValues: selectedValues
-            };
-            $("#ex1").modal({
-                escapeClose: false,
-                clickClose: true,
-                showClose: false
-            });
-            // Send the data using AJAX
-            // fetch('', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-            //     },
-            //     body: JSON.stringify(data),
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Handle the response, e.g., show a success message
-            //        // refresh the current page
-            //        window.location.reload();
-            //     })
-            //     .catch(error => {
-            //         // Handle errors, e.g., show an error message
-            //         console.error(error);
-            //     });
-        }
-    });
+$('#close-modal, .custom-close-modal').click(function() {
+    console.log('Modal Should Be Closed');
+    $.modal.close();
 });
 </script>
 @endpush

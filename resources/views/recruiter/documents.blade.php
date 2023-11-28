@@ -19,9 +19,14 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes documents</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                    <i class="las la-arrow-left" style="font-size:38px"></i>
+                </a>
+                <h3>Mes documents</h3>
+            </div>
+            <a href="#" class="theme-btn btn-style-one bg-header-btn add-doc">+ Ajouter une document</a>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -30,19 +35,14 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                           
                         </div>
-
-                        <button type="button" class="btn btn-primary ml-2 mb-2 add-doc">Ajouter un Document</button>
-                           
-
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
 
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
@@ -61,7 +61,21 @@
                                             <td class="text-left">{{$document->created_at}}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a type="button" class="theme-btn btn-style-one">Voir</a>
+                                                <a href="" type="button" class="bg-btn-three">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Aperçu
+                                                </a>
+                                                <a href="" type="button" class="bg-btn-five">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Télécharger
+                                                </a>
+                                                <a href="" type="button" class="bg-btn-four">
+                                                    <!-- Détails -->
+                                                    <i class="las la-trash"></i>
+                                                    Supprimer
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -113,7 +127,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 clickClose: true,
                 showClose: false
             });
-      
+    });
+
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
     });
 });
 </script>

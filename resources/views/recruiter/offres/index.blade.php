@@ -19,9 +19,14 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Offres d'emploi</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                        <i class="las la-arrow-left" style="font-size:38px"></i>
+                    </a>
+                <h3>Mes offres d'emploi</h3>
+            </div>
+            <a href="{{route('recruiter.offers.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Ajouter une offre</a>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -31,17 +36,6 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer">
-                                <!-- <form method="post" class="default-form form-inline"
-                                    action="{{route('recruiter.task.add')}}">
-                                    @csrf
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="task_title" placeholder="Ajouter une tâche" value=""
-                                            class="form-control mb-2" required>
-                                    </div>
-                                    <button type="submit" class="theme-btn btn-style-one">Ajouter</button>
-                                </form> -->
-                                <a href="{{route('recruiter.offers.create')}}" class="theme-btn btn-style-one">Ajouter une offre</a>
-
                             </div>
                         </div>
 
@@ -49,7 +43,7 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
+                                <table class="table table-sm table-bordered" id="data-table">
                                     <thead>
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
@@ -76,13 +70,15 @@
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             
                                             <td class="text-left">
-                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
+                                                    Modifier
                                                 </a>
-                                                <a href="" type="button" class="theme-btn p-2 bg-dark text-white">
+                                                <a href="" type="button" class="bg-btn-four mt-3">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
+                                                    Supprimer
                                                 </a>
                                             </td>
                                         </tr>
@@ -232,72 +228,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const selectAllCheckbox = document.querySelector('.checkbox-all');
-    const checkboxes = document.querySelectorAll('.checkbox-item');
-    const addToFavoritesButton = document.querySelector('.add-to-favorites');
-
-    // Add an event listener to checkboxes to toggle the button visibility
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-            addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
-        });
-    });
-
-    selectAllCheckbox.addEventListener('change', function() {
-        const isChecked = selectAllCheckbox.checked;
-
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = isChecked;
-        });
-
-        // Update the visibility of the "Ajouter aux favoris" button
-        const addToFavoritesButton = document.querySelector('.add-to-favorites');
-        addToFavoritesButton.classList.toggle('d-none', !isChecked);
-    });
-
-    $('#close-modal, .custom-close-modal').click(function() {
-        console.log('Modal Should Be Closed');
-        $.modal.close();
-    });
-
-    // Add an event listener to the "Ajouter aux favoris" button to collect values
-    addToFavoritesButton.addEventListener('click', function() {
-        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-        const selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        if (selectedValues.length > 0) {
-            // Define the data to be sent
-            const data = {
-                selectedValues: selectedValues
-            };
-            $("#ex1").modal({
-                escapeClose: false,
-                clickClose: true,
-                showClose: false
-            });
-            // Send the data using AJAX
-            // fetch('', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-            //     },
-            //     body: JSON.stringify(data),
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Handle the response, e.g., show a success message
-            //        // refresh the current page
-            //        window.location.reload();
-            //     })
-            //     .catch(error => {
-            //         // Handle errors, e.g., show an error message
-            //         console.error(error);
-            //     });
-        }
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
     });
 });
 </script>

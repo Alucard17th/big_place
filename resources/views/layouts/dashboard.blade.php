@@ -18,11 +18,11 @@
         href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="https://bigplace.fr/libs/daterange/daterangepicker.css">
+    <!-- <link rel="stylesheet" type="text/css" href="https://bigplace.fr/libs/daterange/daterangepicker.css">
     <link rel="stylesheet" type="text/css" href="https://bigplace.fr/libs/select2/css/select2.min.css">
     <link href="https://bigplace.fr/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://bigplace.fr/libs/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://bigplace.fr/dist/frontend/css/notification.css" rel="newest stylesheet">
+    <link href="https://bigplace.fr/dist/frontend/css/notification.css" rel="newest stylesheet"> -->
 
     <!-- Stylesheets -->
     <link href="{{ asset('plugins/css/font.css') }}" rel="stylesheet">
@@ -31,12 +31,12 @@
     <link href="{{ asset('plugins/css/responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('plugins/css/app.css?_ver=1.2.3') }}" rel="stylesheet">
    
-    <link href="https://bigplace.fr/dist/frontend/module/user/css/user.css" rel="stylesheet">
+    <!-- <link href="https://bigplace.fr/dist/frontend/module/user/css/user.css" rel="stylesheet"> -->
 
     <script>
     var superio = {
-        url: 'https://bigplace.fr',
-        url_root: 'https://bigplace.fr',
+        url: 'http://127.0.0.1:8000',
+        url_root: 'http://127.0.0.1:8000',
         booking_decimals: 2,
         thousand_separator: '.',
         decimal_separator: ',',
@@ -47,10 +47,10 @@
         map_provider: 'gmap',
         map_gmap_key: '',
         routes: {
-            login: 'https://bigplace.fr/login',
-            register: 'https://bigplace.fr/register',
-            checkout: 'https://bigplace.fr/booking/doCheckout',
-            applyJob: 'https://bigplace.fr/job/apply-job'
+            login: 'http://127.0.0.1:8000/login',
+            register: 'http://127.0.0.1:8000/register',
+            checkout: 'http://127.0.0.1:8000/booking/doCheckout',
+            applyJob: 'http://127.0.0.1:8000/job/apply-job'
         },
         module: {
             job: '',
@@ -58,9 +58,9 @@
         currentUser: 75,
         isAdmin: 0,
         rtl: 0,
-        markAsRead: 'https://bigplace.fr/user/markAsRead',
-        markAllAsRead: 'https://bigplace.fr/user/markAllAsRead',
-        loadNotify: 'https://bigplace.fr/user/notifications',
+        markAsRead: 'http://127.0.0.1:8000/user/markAsRead',
+        markAllAsRead: 'http://127.0.0.1:8000/user/markAllAsRead',
+        loadNotify: 'http://127.0.0.1:8000/user/notifications',
         pusher_api_key: '9b894690e7e854880031',
         pusher_cluster: 'eu',
     };
@@ -116,21 +116,20 @@
     <link href="{{ asset('plugins/css/owl.carousel.css') }}" rel="stylesheet">
 
     <script src="//code.tidio.co/tzkeoku6ogisroezu2amei6mcqnb3tjm.js" async></script>
+
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.css" rel="stylesheet">
+    
     @stack('styles')
 
 </head>
 
 <body data-anm=".anm" class="frontend-page user_wrap">
-
-
-
     <div class="page-wrapper dashboard mm-page mm-slideout bravo_wrap">
         <!-- Preloader -->
-
         <!-- Header Span -->
         <span class="header-span"></span>
         <!-- Main Header-->
-        <header class="main-header normal header-shaddow">
+        <header class="main-header normal header-shaddow fixed-header">
             <!-- Main box -->
             <div class="main-box">
                 <!--Nav Outer -->
@@ -325,12 +324,10 @@
             @include('includes.candidat-sidebar')
         @endrole
 
-        <!-- <link rel="stylesheet" href="https://bigplace.fr/libs/flags/css/flag-icon.min.css"> -->
+       
         <link rel="stylesheet" href="{{ asset('plugins/css/flags/css/flag-icon.min.css') }}">
 
-        <!-- <script src="https://bigplace.fr/libs/lazy-load/intersection-observer.js"></script> -->
         <script src="{{ asset('plugins/js/libs/lazy-load/intersection-observer.js') }}"></script>
-        <!-- <script async src="https://bigplace.fr/libs/lazy-load/lazyload.min.js"></script> -->
         <script src="{{ asset('plugins/js/libs/lazy-load/lazyload.min.js') }}"></script>
 
         <script>
@@ -345,14 +342,9 @@
             window.lazyLoadInstance = event.detail.instance;
         }, false);
         </script>
-        <!-- <script src="https://bigplace.fr/libs/jquery-3.6.0.min.js"></script> -->
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-
-        <!-- <script src="https://bigplace.fr/libs/jquery-migrate/jquery-migrate.min.js"></script> -->
         <script src="{{ asset('plugins/js/libs/jquery-migrate/jquery-migrate.min.js') }}"></script>
-
-        <!-- <script src="https://bigplace.fr/libs/header.js"></script> -->
         <script src="{{ asset('plugins/js/libs/header.js') }}"></script>
 
 
@@ -361,124 +353,91 @@
             $.superioHeader.init($('#header'));
         });
         </script>
-        <!-- <script src="https://bigplace.fr/libs/lodash.min.js"></script>
-        <script src="https://bigplace.fr/libs/vue/vue.min.js"></script>
-        <script src="https://bigplace.fr/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://bigplace.fr/libs/bootbox/bootbox.min.js"></script>
-        <script src="https://bigplace.fr/libs/tinymce/js/tinymce/tinymce.min.js"></script> -->
-        <script src="{{ asset('plugins/js/libs/lodash.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/vue/vue.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/bootbox/bootbox.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 
-        <script src="https://bigplace.fr/module/media/js/browser.js?_ver=1.2.3"></script>
-        <script src="https://bigplace.fr/js/functions.js?_ver=1.2.3"></script>
-        <script src="https://bigplace.fr/module/superio/js/popper.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/jquery-ui.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/chosen.min.js"></script>
-
-        <script src="{{ asset('module/media/js/browser.js?_ver=1.2.3') }}"></script>
+        <script src="{{ asset('plugins/js/browser.js?_ver=1.2.3') }}"></script>
         <script src="{{ asset('plugins/js/libs/lodash.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/popper.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/chosen.min.js') }}"></script>
-
-        <!-- <script src="https://bigplace.fr/libs/select2/js/select2.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/bootstrap.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/jquery.fancybox.js"></script> -->
-        <!-- <script src="https://bigplace.fr/module/superio/js/jquery.modal.min.js"></script> DELETED -->
-        <!-- <script src="https://bigplace.fr/module/superio/js/mmenu.polyfills.js"></script> -->
+        <script src="{{ asset('plugins/js/popper.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/chosen.min.js') }}"></script>
 
         <script src="{{ asset('plugins/js/libs/select2/js/select2.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/jquery.fancybox.js') }}"></script>
-        <script src="{{ asset('module/superio/js/mmenu.polyfills.js') }}"></script>
+        <script src="{{ asset('plugins/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/jquery.fancybox.js') }}"></script>
+        <script src="{{ asset('plugins/js/mmenu.polyfills.js') }}"></script>
 
-
-        <!-- <script src="https://bigplace.fr/module/superio/js/mmenu.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/appear.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/anm.min.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/owl.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/wow.js"></script>
-        <script src="https://bigplace.fr/module/superio/js/script.js?_ver=1.2.3"></script> -->
-
-        <script src="{{ asset('module/superio/js/mmenu.js') }}"></script>
-        <script src="{{ asset('module/superio/js/appear.js') }}"></script>
-        <script src="{{ asset('module/superio/js/anm.min.js') }}"></script>
-        <script src="{{ asset('module/superio/js/owl.js') }}"></script>
-        <script src="{{ asset('module/superio/js/wow.js') }}"></script>
-        <script src="{{ asset('module/superio/js/script.js') }}?_ver=1.2.3"></script>
-
-        <!-- <script src="https://bigplace.fr/libs/pusher.min.js"></script>
-        <script src="https://bigplace.fr/js/home.js?_ver=1.2.3"></script> -->
+        <script src="{{ asset('plugins/js/mmenu.js') }}"></script>
+        <script src="{{ asset('plugins/js/appear.js') }}"></script>
+        <script src="{{ asset('plugins/js/anm.min.js') }}"></script>
+        <script src="{{ asset('plugins/js/owl.js') }}"></script>
+        <script src="{{ asset('plugins/js/wow.js') }}"></script>
+        <script src="{{ asset('plugins/js/script.js') }}?_ver=1.2.3"></script>
 
         <script src="{{ asset('plugins/js/libs/pusher.min.js') }}"></script>
         <script src="{{ asset('plugins/js/home.js') }}?_ver=1.2.3"></script>
-
-        <!-- <script src="https://bigplace.fr/libs/chart_js/Chart.min.js"></script>
-        <script src="https://bigplace.fr/libs/daterange/moment.min.js"></script>
-        <script src="https://bigplace.fr/libs/daterange/daterangepicker.min.js?_ver=2.2"></script> -->
 
         <script src="{{ asset('plugins/js/libs/chart_js/Chart.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/daterange/moment.min.js') }}"></script>
         <script src="{{ asset('plugins/js/libs/daterange/daterangepicker.min.js') }}?_ver=2.2"></script>
 
         <script>
-        var ctx = document.getElementById('earning_chart').getContext('2d');
+        // var ctx = document.getElementById('earning_chart').getContext('2d');
 
-        window.myMixedChart = new Chart(ctx, {
-            type: 'line',
-            data: views_chart_data,
-            options: {
-                layout: {
-                    padding: 10,
-                },
+        // window.myMixedChart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: views_chart_data,
+        //     options: {
+        //         layout: {
+        //             padding: 10,
+        //         },
 
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: false
-                },
+        //         legend: {
+        //             display: false
+        //         },
+        //         title: {
+        //             display: false
+        //         },
 
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: false
-                        },
-                        gridLines: {
-                            borderDash: [6, 10],
-                            color: "#d8d8d8",
-                            lineWidth: 1,
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: false
-                        },
-                        gridLines: {
-                            display: false
-                        },
-                    }],
-                },
+        //         scales: {
+        //             yAxes: [{
+        //                 scaleLabel: {
+        //                     display: false
+        //                 },
+        //                 gridLines: {
+        //                     borderDash: [6, 10],
+        //                     color: "#d8d8d8",
+        //                     lineWidth: 1,
+        //                 },
+        //                 ticks: {
+        //                     beginAtZero: true,
+        //                 }
+        //             }],
+        //             xAxes: [{
+        //                 scaleLabel: {
+        //                     display: false
+        //                 },
+        //                 gridLines: {
+        //                     display: false
+        //                 },
+        //             }],
+        //         },
 
-                tooltips: {
-                    backgroundColor: '#333',
-                    titleFontSize: 13,
-                    titleFontColor: '#fff',
-                    bodyFontColor: '#fff',
-                    bodyFontSize: 13,
-                    displayColors: false,
-                    xPadding: 10,
-                    yPadding: 10,
-                    intersect: false
-                }
-            }
-        });
+        //         tooltips: {
+        //             backgroundColor: '#333',
+        //             titleFontSize: 13,
+        //             titleFontColor: '#fff',
+        //             bodyFontColor: '#fff',
+        //             bodyFontSize: 13,
+        //             displayColors: false,
+        //             xPadding: 10,
+        //             yPadding: 10,
+        //             intersect: false
+        //         }
+        //     }
+        // });
 
         var start = moment().startOf('week');
         var end = moment();
@@ -541,6 +500,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script>
+
     @stack('scripts')
     @include('sweetalert::alert')
 

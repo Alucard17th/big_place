@@ -5,7 +5,8 @@
     position: absolute;
     top: -12.5px;
     right: -12.5px;
-    display: block;
+    /* display: block; */
+    display: none;
     width: 30px;
     height: 30px;
     text-indent: -9999px;
@@ -14,14 +15,35 @@
     background-position: center center;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
 }
+
+input, select{
+    height:45px !important;
+    padding-top: 10px !important;
+}
+.select2-selection--multiple {
+    max-height: 45px !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: 14px;
+    background: #f0f5f7 !important;
+}
+.select2-search__field{
+    padding: 0px 18px 10px 20px !important;
+}
 </style>
 @endpush
+
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Favoris</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                        <i class="las la-arrow-left" style="font-size:38px"></i>
+                    </a>
+                <h3>Mes Favoris</h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -30,25 +52,72 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer">
+                            <div class="chosen-outer search-container">
+                                <form method="get" class="default-form form-inline"
+                                    action="{{ route('recruiter.cvtheque.search') }}">
+                                    <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <input type="text" name="address" id="address" class="form-control" placeholder="Adresse">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <select name="status" id="status" class="form-control">
+                                                        <option value=""  selected>Status Rendez-vous</option>
+                                                        <option value="Envoyé">Envoyé</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 mt-3">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                                                        <option value=""  selected>Niveau d'études</option>
+                                                        <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                        <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
+                                                        <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
+                                                        <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
+                                                        <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                           
+                                    </div>
+                                   
+                                  <div class="form-group mt-3">
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
+                                  </div>
+                                   
+                                </form>
+
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Prendre un rendez-vous</button>
+                        <button type="button" class="bg-btn-three ml-2 mb-2 d-none add-to-favorites">Prendre un rendez-vous</button>
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th></th>
                                             <th>Nom</th>
                                             <th>Ville</th>
                                             <th>Niveau</th>
-                                            <th>Actions</th>
+                                            <th>Etat</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -59,12 +128,11 @@
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
-                                            <!-- <td class="text-left">{{$curriculum->niveau_etudes}}</td> -->
-                                            <!-- <td class="text-left">{{$curriculum->metier_recherche}}</td>
-                                            <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
-                                            <td class="text-left">{{$curriculum->annees_experience}}</td> -->
+                                            <td class="text-left">XXX</td>
+                                            
                                             <td class="text-left">
-                                                <a type="button" class="theme-btn btn-style-one">Détails</a>
+                                                <a type="button" class="bg-btn-three">Proposez un rendez-vous</a>
+                                                <a type="button" class="bg-btn-four">Annuler le rendez-vous</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -84,45 +152,68 @@
     <div id="ex1" class="modal">
        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
             @csrf
-            <div class="form-group">
-                <h4>Proposé des rendez-vous :</h4>
+            <div class="form-group d-flex align-items-center justify-content-between">
+                <h4 class="text-dark">Détails de rendez-vous :</h4>
+                <a href="#" id="close-modal"><i class="las la-times" style="font-size: 30px;"></i></a>
             </div>
            
-                <label for="candidate">Type du rendez-vous</label>
-                <div class="form-check d-flex align-items-center">
-                    <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel" checked>
-                    <label class="form-check-label ml-4" for="is_type_presentiel">
-                        Présentiel
-                    </label>
-                </div>
-                <div class="form-check form-check d-flex align-items-center">
-                        <input class="form-check-input" type="checkbox" value="" name="is_type_distanciel" id="is_type_distanciel">
-                        <label class="form-check-label ml-4" for="is_type_distanciel">
-                            Distanciel
-                        </label>
-                </div>
-            <hr>
+            <label for="candidate" class="text-dark">Type du rendez-vous</label>
+            <div class="form-check d-flex align-items-center">
+                <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel" checked>
+                <label class="form-check-label ml-4" for="is_type_presentiel">
+                    Présentiel
+                </label>
+            </div>
+            <div class="form-check form-check d-flex align-items-center">
+                <input class="form-check-input" type="checkbox" value="" name="is_type_distanciel" id="is_type_distanciel">
+                <label class="form-check-label ml-4" for="is_type_distanciel">
+                    Distanciel
+                </label>
+            </div>
+
+            <hr style="padding: 0px 0;background-color: rgb(0 0 0);">
+
             <div class="form-group">
-                <label for="candidate">Crénau 1</label>
-                <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                <label for="candidate" class="text-dark">Crénau 1:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                    </div>
+                </div>
                 <p id="creanuea_1_msg" class="text-danger"></p>
             </div>
+
             <div class="form-group">
-                <label for="candidate">Crénau 2</label>
-                <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
+                <label for="candidate" class="text-dark">Crénau 2:</label>
+                <div class="row">
+                    <div class="col-6">
+                    <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
+                    </div>
+                    <div class="col-6">
+                    <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
+                    </div>
+                </div>
                 <p id="creanuea_2_msg" class="text-danger"></p>
             </div>
+
             <div class="form-group">
-                <label for="candidate">Crénau 3</label>
-                <input class="form-control mb-2" type="date" name="crenau_3_date" id="crenau_3_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_3_time" id="crenau_3_time" required>
+                <label for="candidate" class="text-dark">Crénau 3:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input class="form-control mb-2" type="date" name="crenau_3_date" id="crenau_3_date" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control mb-2" type="time" name="crenau_3_time" id="crenau_3_time" required>
+                    </div>
+                </div>
                 <p id="creanuea_3_msg" class="text-danger"></p>
             </div>
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one create-rdv" type="button">Envoyer</button>
+                <button class="theme-btn btn-style-one create-rdv px-5 py-3" type="button" style="font-size: 16px">Envoyer</button>
             </div>
             <div class="form-group">
                 <div class="alert alert-success alert-dismissible" style="display: none;">
@@ -130,7 +221,7 @@
                 </div>
             </div>
        </form>
-        <a href="#" id="close-modal">Fermer</a>
+        
         <a href="#"  class="custom-close-modal"></a>
     </div>
 
@@ -276,7 +367,23 @@ document.addEventListener('DOMContentLoaded', function() {
         
     }
 
-
+    // new DataTable('#data-table');
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": false,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
     
 });
 </script>

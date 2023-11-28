@@ -19,9 +19,14 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Formations</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                        <i class="las la-arrow-left" style="font-size:38px"></i>
+                    </a>
+                <h3>Mes Formations</h3>
+            </div>
+            <a href="{{route('recruiter.formation.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Ajouter une formation</a>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -30,47 +35,56 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer">
+                            <!-- <div class="chosen-outer">
                                 <a href="{{route('recruiter.formation.create')}}"
                                     class="theme-btn btn-style-one">Ajouter</a>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th> -->
-                                            <th>Titre</th>
-                                            <th>Status</th>
-                                            <th>Date de fin</th>
-                                            <th>Max Participants</th>
+                                            <th>Nom du poste</th>
+                                            <th>Durée de Formation</th>
+                                            <th>Période de la formation</th>
+                                            <th>CDI à l'embauche</th>
+                                            <th>Compétences acquises</th>
+                                            <th>Postes Ouverts</th>
+                                            <th>Nombre d'inscrits</th>
+                                            <th>Lieu</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($formations as $formation)
+                                        @php
+                                            $startDate = \Carbon\Carbon::parse($formation->start_date);
+                                            $endDate = \Carbon\Carbon::parse($formation->end_date);
+                                            $durationInDays = $startDate->diffInDays($endDate);
+                                        @endphp
                                         <tr>
                                             <td>{{$formation->job_title}}</td>
-                                            <td>
-                                                @if($formation->status == 1)
-                                                <span class="badge badge-success">Ouverte</span>
-                                                @else
-                                                <span class="badge badge-danger">Ferme</span>
-                                                @endif
-                                            </td>
-                                            <td>{{$formation->registration_deadline}}</td>
-                                            <td>{{$formation->max_participants}}</td>
-                                            <td>
-                                                <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="theme-btn btn-style-one p-1 custom-btn">
+                                            <td>{{$durationInDays}}</td>
+                                            <td>{{$formation->start_date}} - {{$formation->end_date}}</td>
+                                            <td>{{$formation->cdi_at_hiring}}</td>
+                                            <td>{{$formation->skills_acquired}}</td>
+                                            <td>{{$formation->open_positions}}</td>
+                                            <td>XXX</td>
+                                            <td>{{$formation->work_location}}</td>
+                                            <td class="text-left d-flex flex-column" style="width:8vw;">
+                                                <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="bg-btn-three">
                                                     <i class="las la-edit"></i>
+                                                    Modifier
                                                 </a>
-                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="theme-btn btn-style-one p-1 custom-btn">
+                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-3">
                                                     <i class="las la-trash"></i>
+                                                    Fermer
                                                 </a>
                                             </td>
                                         </tr>
@@ -92,5 +106,25 @@
 @endsection
 
 @push('scripts')
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+})
+</script>
 @endpush

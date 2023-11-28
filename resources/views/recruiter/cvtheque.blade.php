@@ -8,14 +8,36 @@
 #mm-0>div.user-dashboard.bc-user-dashboard>div>div.row>div>div>div>div.widget-content>div>table>thead>tr>th {
     padding: 5px;
 }
+
+input, select{
+    height:45px !important;
+    padding-top: 10px !important;
+}
+.select2-selection--multiple {
+    max-height: 45px !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: 14px;
+    background: #f0f5f7 !important;
+}
+.select2-search__field{
+    padding: 0px 18px 10px 20px !important;
+}
 </style>
 @endpush
+
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>CVTHEQUE</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">  
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                    <i class="las la-arrow-left" style="font-size:38px"></i>
+                </a>
+                <h3>CVTHEQUE</h3>
+            </div>
+            <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -24,8 +46,7 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <h4>Recherche Par:</h4>
-                            <div class="chosen-outer">
+                            <div class="chosen-outer search-container">
                                 <form method="get" class="default-form form-inline"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row">
@@ -50,7 +71,7 @@
                                         <div class="col-4">
                                             <div class="form-group mb-0 mr-1">
                                                 <select class="form-control" id="annees_experience" name="annees_experience">
-                                                    <option value=""  selected>Année d'exp.</option>
+                                                    <option value=""  selected>Année d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
                                                     <option value="Confirmé (5 -10 ans)" @if(request('annees_experience') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
@@ -110,8 +131,8 @@
                                         </div>
                                     </div>
                                    
-                                  <div class="form-group mt-2">
-                                    <button type="submit" class="theme-btn btn-style-one">Chercher</button>
+                                  <div class="form-group mt-3">
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
                                   </div>
                                    
                                 </form>
@@ -126,19 +147,16 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
                                             <th>Nom</th>
                                             <th>Ville</th>
+                                            <th>Années d’expérience</th>
                                             <th>Niveau</th>
-                                            <!-- <th>Niveau d'études</th> -->
-                                            <!-- <th>Métier recherché</th>
-                                            <th>Prétentions salariales</th>
-                                            <th>Années d’expérience</th> -->
-                                            <th>Actions</th>
+                                            <th>Niveau de salaire</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -148,59 +166,19 @@
                                                     value="{{$curriculum->id}}"></td>
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
+                                            <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
-                                            <!-- <td class="text-left">{{$curriculum->niveau_etudes}}</td> -->
-                                            <!-- <td class="text-left">{{$curriculum->metier_recherche}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
-                                            <td class="text-left">{{$curriculum->annees_experience}}</td> -->
-                                            <td class="text-left">
-                                                <a type="button" class="theme-btn btn-style-one">Détails</a>
-                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 <div class="ls-pagination">
+                                   
                                 </div>
                             </div>
                         </div>
 
-                        <!-- GRID VIEW -->
-                        <div class="">
-                            <div class="row gy-5 px-2">
-                                @foreach($curriculums as $curriculum)
-                                <div class="col-4 mb-3">
-                                    <div class="card" style="height: 250px;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$curriculum->nom}} {{$curriculum->prenom}}</h5>
-                                            <p class="card-text px-2">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <bold>Ville:</bold>{{$curriculum->ville_domiciliation}}
-                                                </li>
-                                                <li>
-                                                    <bold>Niveau:</bold> {{$curriculum->niveau}}
-                                                </li>
-                                                <li>
-                                                    <bold>Niveau d'études:</bold> {{$curriculum->niveau_etudes}}
-                                                </li>
-                                                <li>
-                                                    <bold>Métier:</bold> {{$curriculum->metier_recherche}}
-                                                </li>
-                                                <li>
-                                                    <bold>Prétentions salariales:</bold>
-                                                    {{$curriculum->pretentions_salariales}}
-                                                </li>
-                                            </ul>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                            <div class="ls-pagination">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -218,6 +196,24 @@ document.addEventListener('DOMContentLoaded', function() {
    
     $("#values_select").select2({
         placeholder: "Valeurs",
+    });
+
+    // new DataTable('#data-table');
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": false,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
     });
     
     // Add an event listener to checkboxes to toggle the button visibility

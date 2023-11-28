@@ -2705,7 +2705,7 @@ Main Header
 }
 
 .main-header.fixed-header {
-    position: fixed;
+    /* position: fixed; */
     background: #ffffff;
     -webkit-box-shadow: 0 0 10px rgba(0,0,0,.10);
     box-shadow: 0 0 10px rgba(0,0,0,.10);

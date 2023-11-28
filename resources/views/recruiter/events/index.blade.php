@@ -5,7 +5,8 @@
     position: absolute;
     top: -12.5px;
     right: -12.5px;
-    display: block;
+    /* display: block; */
+    display: none;
     width: 30px;
     height: 30px;
     text-indent: -9999px;
@@ -16,12 +17,18 @@
 }
 </style>
 @endpush
+
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes évènemements</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                        <i class="las la-arrow-left" style="font-size:38px"></i>
+                    </a>
+                <h3>Mes évènemements / jobdatings</h3>
+            </div>
+            <button class="theme-btn btn-style-one bg-header-btn" id="add-event">+ J'organise un nouvel évènemement</button>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -30,34 +37,29 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer">
-                                <button type="button" id="add-event" class="theme-btn btn-style-one">Créer un évènement</button>
-                            </div>
+                           
                         </div>
 
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
                                         <tr>
-                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
-                                            </th> -->
                                             <th>Organisateur</th>
                                             <th>Poste</th>
                                             <th>N° Participants</th>
                                             <th>Adresse</th>
                                             <th>Entrée gratuite</th>
                                             <th>Date - Heure</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($events as $event)
                                         <tr>
-                                            <!-- <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$event->id}}"></td> -->
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->participants_count}}</td>
@@ -70,15 +72,16 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
+                                            <td class="text-left">XXX</td>
                                             
                                             <td class="text-left">
-                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="theme-btn p-2 bg-dark text-white">
-                                                    <!-- Détails -->
+                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three">
                                                     <i class="las la-edit"></i>
+                                                    Modifier
                                                 </a>
-                                                <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="theme-btn p-2 bg-dark text-white">
-                                                    <!-- Détails -->
+                                                <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2">
                                                     <i class="las la-trash"></i>
+                                                    Supprimer
                                                 </a>
                                             </td>
                                         </tr>
@@ -100,69 +103,94 @@
     <div id="ex1" class="modal">
        <form action="{{ route('recruiter.events.store') }}" method="POST">
             @csrf
-            <!-- Field: Organizer Name -->
-            <div class="form-group">
-                <label for="organizer_name">Nom d'Organisateur</label>
-                <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
+            <div class="form-group d-flex align-items-center justify-content-between">
+                <h4 class="text-dark">J'organise un nouvel évènement</h4>
+                <a href="#" id="close-modal"><i class="las la-times" style="font-size: 30px;"></i></a>
             </div>
 
-            <!-- Field: Job Position -->
-            <div class="form-group">
-                <label for="job_position">Poste souhaité</label>
-                <input type="text" class="form-control" id="job_position" name="job_position" required>
+            <div class="row">
+                <div class="col-6">
+                    <!-- Field: Organizer Name -->
+                    <div class="form-group">
+                        <label class="text-dark" for="organizer_name">Organisateur</label>
+                        <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <!-- Field: Job Position -->
+                    <div class="form-group">
+                        <label class="text-dark" for="job_position">Poste</label>
+                        <input type="text" class="form-control" id="job_position" name="job_position" required>
+                    </div>
+                </div>
             </div>
 
-            <!-- Field: Participants Count -->
-            <div class="form-group">
-                <label for="participants_count">Limite de participants</label>
-                <input type="number" class="form-control" id="participants_count" name="participants_count" required>
+            <div class="row">
+                <div class="col-6">
+                    <!-- Field: Event Date -->
+                    <div class="form-group">
+                        <label class="text-dark" for="event_date">Date</label>
+                        <input type="date" class="form-control" id="event_date" name="event_date" required>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <!-- Field: Event Hour -->
+                    <div class="form-group">
+                        <label class="text-dark" for="event_hour">Heure</label>
+                        <input type="time" class="form-control" id="event_hour" name="event_hour" required>
+                    </div>
+                </div>
             </div>
 
-            <!-- Field: Event Address -->
+              <!-- Field: Event Address -->
             <div class="form-group">
-                <label for="event_address">Adresse</label>
+                <label class="text-dark" for="event_address">Adresse</label>
                 <input type="text" class="form-control" id="event_address" name="event_address" required>
             </div>
 
-            <!-- Field: Free Entry -->
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
-                <label class="form-check-label" for="free_entry">Gratuit</label>
+            <div class="row">
+                <div class="col-6">
+                    <!-- Field: Free Entry -->
+                    <div>
+                        <label class="text-dark" for="participants_count">Entrée</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
+                        <label class="form-check-label" for="free_entry">Gratuit</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <!-- Field: Participants Count -->
+                    <div class="form-group">
+                        <label class="text-dark" for="participants_count">Limite de participants</label>
+                        <input type="number" class="form-control" id="participants_count" name="participants_count" required>
+                    </div>
+                </div>
             </div>
 
-            <!-- Field: Digital Badge Download -->
-            <div class="form-group">
-                <label for="digital_badge_download">Badge Digital</label>
-                <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
+            <div class="row">
+                <div class="col-6">
+                    <!-- Field: Digital Badge Download -->
+                    <div class="form-group">
+                        <label class="text-dark" for="digital_badge_download">Badge Digital</label>
+                        <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <!-- Field: Required Documents -->
+                    <div class="form-group">
+                        <label class="text-dark" for="required_documents">Documents requis</label>
+                        <input type="text" class="form-control" id="required_documents" name="required_documents">
+                    </div>
+                </div>
             </div>
 
-            <!-- Field: Required Documents -->
-            <div class="form-group">
-                <label for="required_documents">Documents requis</label>
-                <input type="text" class="form-control" id="required_documents" name="required_documents">
-            </div>
-
-            <!-- Field: Event Date -->
-            <div class="form-group">
-                <label for="event_date">Date</label>
-                <input type="date" class="form-control" id="event_date" name="event_date" required>
-            </div>
-
-            <!-- Field: Event Hour -->
-            <div class="form-group">
-                <label for="event_hour">Heure</label>
-                <input type="time" class="form-control" id="event_hour" name="event_hour" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Créer</button>
+            <button type="submit" class="theme-btn btn-style-one create-rdv px-5 py-3">Créer l'événement</button>
         </form>
 
         <a href="#" class="custom-close-modal"></a>
     </div>
-
    
-
-
 </div>
 @endsection
 
@@ -182,6 +210,24 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#close-modal, .custom-close-modal').click(function() {
         console.log('Modal Should Be Closed');
         $.modal.close();
+    });
+
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
     });
 })
 </script>

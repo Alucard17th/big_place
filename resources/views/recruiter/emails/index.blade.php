@@ -25,26 +25,63 @@
     cursor: pointer;
 }
 
-#inbox-btn.active{
-    background-color: #f5f5f5;
-}
-#sent-btn.active{
+#inbox-btn.active {
     background-color: #f5f5f5;
 }
 
-.email-container{
+#sent-btn.active {
+    background-color: #f5f5f5;
+}
+
+.email-container {
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 10px;
+}
+
+#data-table-inbox_paginate{
+    text-align: left !important;
+}
+#data-table-sent_paginate{
+    text-align: left !important;
+}
+
+#data-table-inbox_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-inbox_previous{
+    margin-right: 10px;
+}
+#data-table-inbox_next{
+    margin-left: 10px;
+}
+
+#data-table-sent_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-sent_previous{
+    margin-right: 10px;
+}
+#data-table-sent_next{
+    margin-left: 10px;
+}
+.paginate_button {
+    margin-left: 10px;
 }
 </style>
 @endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Tâches</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+        <div class="upper-title-box d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                    <i class="las la-arrow-left" style="font-size:38px"></i>
+                </a>
+                <h3>Mes emails</h3>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -54,15 +91,6 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer">
-                                <form method="post" class="default-form form-inline"
-                                    action="{{route('recruiter.task.add')}}">
-                                    @csrf
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="task_title" placeholder="Ajouter une tâche" value=""
-                                            class="form-control mb-2" required>
-                                    </div>
-                                    <button type="submit" class="theme-btn btn-style-one">Ajouter</button>
-                                </form>
                             </div>
                         </div>
 
@@ -71,12 +99,55 @@
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
 
-                                <div class="col-12 pb-3">
+                                <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
                                     <button type="button" class="btn" id="sent-btn">Message Envoyés</button>
                                 </div>
+                                
+                                <div class="inbox">
+                                    <table class="table table-sm table-bordered" id="data-table-inbox">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($emails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}}</td>
+                                                <td>{{$email->created_at}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                <div class="row inbox">
+                                <div class="sent" style="display: none">
+                                    <table class="table table-sm table-bordered" id="data-table-sent">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($receivedEmails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{$email->created_at}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                              
+
+                                <!-- <div class="row inbox">
 
                                     <div class="col-4">
                                         <ul>
@@ -120,7 +191,7 @@
                                             <p id="email-content-received"></p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <div class="ls-pagination">
@@ -186,6 +257,42 @@ $(document).ready(function() {
         // remove active class from inbox button
         $('#inbox-btn').removeClass('active');
     })
+
+    $('#data-table-inbox').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-sent').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "Rechercher :",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
 })
 </script>
 @endpush

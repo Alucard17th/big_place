@@ -147,6 +147,9 @@ Route::group(['middleware' => ['role:recruiter']], function () {
 
     // HISTORIQUE
     Route::get('/historique', [RecruiterController::class, 'getSearchHistory'])->name('recruiter.historique');
+
+    // COMPTE ADMINISTRATEUR
+    Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');
 });
 
 // CANDIDAT

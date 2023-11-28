@@ -10,22 +10,22 @@
 	}
 
 	//Update Header Style and Scroll to Top
-	function headerStyle() {
-		if($('.main-header').length){
-			var windowpos = $(window).scrollTop();
-			var siteHeader = $('.main-header');
-			var scrollLink = $('.scroll-to-top');
-			var sticky_header = $('.main-header');
-			if (windowpos > 1) {
-				siteHeader.addClass('fixed-header animated slideInDown');
-				scrollLink.fadeIn(300);
-			} else{
-				siteHeader.removeClass('fixed-header animated slideInDown');
-				scrollLink.fadeOut(300);
-			}
-		}
-	}
-	headerStyle();
+	// function headerStyle() {
+	// 	if($('.main-header').length){
+	// 		var windowpos = $(window).scrollTop();
+	// 		var siteHeader = $('.main-header');
+	// 		var scrollLink = $('.scroll-to-top');
+	// 		var sticky_header = $('.main-header');
+	// 		if (windowpos > 1) {
+	// 			siteHeader.addClass('fixed-header animated slideInDown');
+	// 			scrollLink.fadeIn(300);
+	// 		} else{
+	// 			siteHeader.removeClass('fixed-header animated slideInDown');
+	// 			scrollLink.fadeOut(300);
+	// 		}
+	// 	}
+	// }
+	// headerStyle();
 
 
 	//sticky-header Hide Show

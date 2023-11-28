@@ -2,91 +2,162 @@
 @push('styles')
 <style>
 .modal a.custom-close-modal {
-    position: absolute;
-    top: -12.5px;
-    right: -12.5px;
-    display: block;
-    width: 30px;
-    height: 30px;
-    text-indent: -9999px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
+position: absolute;
+top: -12.5px;
+right: -12.5px;
+display: block;
+width: 30px;
+height: 30px;
+text-indent: -9999px;
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center center;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
+}
+
+.table-outer {
+overflow-x: hidden !important;
 }
 </style>
 @endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
-    <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Mes Tâches</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Ls widget -->
-                <div class="ls-widget">
-                    <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer">
-                                <form method="post" class="default-form form-inline"
-                                    action="{{route('recruiter.task.add')}}">
-                                    @csrf
-                                    <div class="form-group mb-0 mr-1">
-                                        <input type="text" name="task_title" placeholder="Ajouter une tâche" value=""
-                                            class="form-control mb-2" required>
+<div class="dashboard-outer">
+<div class="upper-title-box d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center justify-content-center">
+        <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+            <i class="las la-arrow-left" style="font-size:38px"></i>
+        </a>
+        <h3>Mon compte administateur</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ls-widget">
+            <div class="tabs-box">
+                <!-- SEARCH FORM -->
+                <div class="widget-title d-flex justify-content-between">
+                    <div class="chosen-outer">
+                        <h3 class="text-dark">Informations de l'entreprise</h3>
+                    </div>
+                    <a href="" class="theme-btn-one btn-one ml-4" id="toggle-1"><i class="las la-angle-down"
+                            style="font-size:24px;color:#000;"></i></a>
+                </div>
+                <!-- TABLE AND GRID VIEW -->
+                <div class="widget-content" id="toggleElement-1">
+                    <!-- TABLE VIEW -->
+                    <div class="table-outer">
+                        <div class="col-12">
+                            <div class="row align-items-center pt-4 pb-5">
+                                <div class="col-2">
+                                    <img class="img-fluid vitrine-logo" src="" alt="">
+
+                                </div>
+                                <div class="col-10">
+                                    <div>
+                                        <a href="" type="button" class="bg-btn-three">
+                                            <!-- Détails -->
+                                            <i class="las la-edit"></i>
+                                            Changer
+                                        </a>
+                                        <a href="" type="button" class="bg-btn-four">
+                                            <!-- Détails -->
+                                            <i class="las la-trash"></i>
+                                            Supprimer
+                                        </a>
                                     </div>
-                                    <button type="submit" class="theme-btn btn-style-one">Ajouter</button>
-                                </form>
+                                    <div class="py-3">
+                                        <span class="text-dark">Taille recommandée: Largeur 300px X Hauteur
+                                            300px</span>
+                                    </div>
+                                    <input type="file" class="form-control d-none" name="logo" id="logo">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- TABLE AND GRID VIEW -->
-                        <div class="widget-content">
-                            <!-- TABLE VIEW -->
-                            <div class="table-outer">
-                                <table class="default-table manage-job-table table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
-                                            </th> -->
-                                            <th>Tâches</th>
-                                            <th>Status</th>
-                                            <th>Date de fin</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($tasks as $task)
-                                        <tr>
-                                            <!-- <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$task->id}}"></td> -->
-                                            <td class="text-left">{{$task->title}}</td>
-                                            <td class="text-left">
-                                                @if($task->completed == '0')
-                                                <span class="badge badge-danger">En cours</span>
-                                                @else
-                                                <span class="badge badge-success">Terminé</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-left">{{$task->due_date}}</td>
-                                            <td class="text-left">
-                                                <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">
-                                                    <!-- Détails -->
-                                                    <i class="las la-edit"></i>
-                                                </a>
-                                                <a href="{{route('recruiter.task.delete', $task->id)}}" type="button" class="theme-btn p-2 bg-dark text-white">
-                                                    <!-- Détails -->
-                                                    <i class="las la-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="ls-pagination">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-dark" for="nom_entreprise">Nom Entreprise</label>
+                                    <input type="text" class="form-control" name="nom_entreprise"
+                                        id="nom_entreprise" value="">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-dark" for="siege_social">Siège Social
+                                        (domiciliation)</label>
+                                    <input type="text" class="form-control" name="siege_social"
+                                        id="siege_social" value="">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-dark" for="siege_social">Email</label>
+                                    <input type="text" class="form-control" name="siege_social"
+                                        id="siege_social" value="">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="text-dark" for="siege_social">Fonction</label>
+                                    <input type="text" class="form-control" name="siege_social"
+                                        id="siege_social" value="">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ls-widget">
+            <div class="tabs-box">
+                <!-- SEARCH FORM -->
+                <div class="widget-title d-flex justify-content-between">
+                    <div class="chosen-outer">
+                        <h3 class="text-dark">Modification du mot de passe</h3>
+                    </div>
+                    <a href="" class="theme-btn-one btn-one ml-4" id="toggle-2"><i class="las la-angle-down"
+                            style="font-size:24px;color:#000;"></i></a>
+                </div>
+                <!-- TABLE AND GRID VIEW -->
+                <div class="widget-content" id="toggleElement-2">
+                    <!-- TABLE VIEW -->
+                    <div class="table-outer">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="nom_entreprise">Mot de passe actuel</label>
+                                    <input type="password" class="form-control" name="nom_entreprise"
+                                        id="nom_entreprise" value="">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="nom_entreprise">Nouveau mot de passe</label>
+                                    <input type="password" class="form-control" name="nom_entreprise"
+                                        id="nom_entreprise" value="">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="nom_entreprise">Confirmation du nouveau mot de
+                                        passe</label>
+                                    <input type="password" class="form-control" name="nom_entreprise"
+                                        id="nom_entreprise" value="">
                                 </div>
                             </div>
                         </div>
@@ -95,207 +166,95 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal HTML embedded directly into document -->
-    <div id="ex1" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <h4>Proposé des rendez-vous :</h4>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 1</label>
-                <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 2</label>
-                <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 3</label>
-                <input class="form-control mb-2" type="date" name="crenau_4_date" id="crenau_4_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_4_time" id="crenau_4_time" required>
-            </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ls-widget">
+            <div class="tabs-box">
+                <!-- SEARCH FORM -->
+                <div class="widget-title d-flex justify-content-between">
+                    <div class="chosen-outer">
+                        <h3 class="text-dark">Gestion des membres</h3>
 
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit">Envoyer</button>
+                    </div>
+                    <div class="d-flex ">
+                        <a href="" class="theme-btn btn-style-one bg-btn-smaller">+ Ajouter un membre</a>
+                        <a href="" class="theme-btn-one btn-one ml-4" id="toggle-3"><i class="las la-angle-down"
+                                style="font-size:24px;color:#000;"></i></a>
+                    </div>
+                </div>
+                <!-- TABLE AND GRID VIEW -->
+                <div class="widget-content" id="toggleElement-3">
+                    <!-- TABLE VIEW -->
+                    <div class="table-outer">
+                        <div class="ls-pagination">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
+        </div>
     </div>
+</div>
 
-    <!-- Modal HTML embedded directly into document -->
-    <div id="commentaire-modal" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <h4>Ajouter un Commentaire :</h4>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ls-widget">
+            <div class="tabs-box">
+                <!-- SEARCH FORM -->
+                <div class="widget-title d-flex justify-content-between">
+                    <div class="chosen-outer">
+                        <h3 class="text-dark">Supression</h3>
+                    </div>
+                    <a href="" class="theme-btn-one btn-one ml-4" id="toggle-4"><i class="las la-angle-down"
+                            style="font-size:24px;color:#000;"></i></a>
+                </div>
+                <!-- TABLE AND GRID VIEW -->
+                <div class="widget-content" id="toggleElement-4">
+                    <!-- TABLE VIEW -->
+                    <div class="table-outer">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="text-dark" for="nom_entreprise">Mot de passe actuel</label>
+                                    <input type="password" class="form-control" name="nom_entreprise"
+                                        id="nom_entreprise" value="">
+                                </div>
+                                <div class="text-dark my-1 py-1">Cela supprimera votre compte</div>
+                                <button class="bg-btn-four mt-3" type="submit">Supprimer mon compte</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <input type="hidden" name="rdv_id" id="rdv_id">
-            <div class="form-group">
-                <label for="candidate">Commentaire </label>
-                <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="10"></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="button" id="create-comment">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
+        </div>
     </div>
-
-
-    <!-- <div class="calendly-inline-widget" data-url="https://calendly.com/bigplace?hide_gdpr_banner=1"
-        style="min-width:320px;height:630px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script> -->
-
-    <!-- <button onclick="Calendly.showPopupWidget('https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar');return false;" class="sqs-block-button-element--medium sqs-block-button-element">Register</button> -->
 
 </div>
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-<script>
-$('.open-schedule-modal').click(function() {
-    // get data attribute receiver email from button
-    var receiverEmail = $(this).data('receiver-email');
-    console.log(receiverEmail);
-    // Calendly.initInlineWidget({
-    //     url: 'https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar',
-    //     parentElement: document.getElementById('calendly-embed'),
-    //     prefill: {
-    //         name: "John Doe",
-    //         email: "john@doe2.com",
-    //     },
-    //     utm: {}
-    // });
-    // $("#ex2").modal({
-    //     escapeClose: false,
-    //     clickClose: true,
-    //     showClose: false
-    // });
-});
-</script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const openModalCommentBtns = document.querySelectorAll('.add-comment-modal');
-    const createCommentBtn = document.querySelector('#create-comment');
+    $("#toggle-1").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-1").toggle();
+    })
 
-    openModalCommentBtns.forEach(function(button) {
-        button.addEventListener('click', function() {
-            $("#commentaire-modal").modal({
-                escapeClose: false,
-                clickClose: true,
-                showClose: false
-            });
-            $('#rdv_id').val($(this).data('rdv-id'));
-            document.getElementById('commentaire').value = '';
-        });
-    });
+    $("#toggle-2").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-2").toggle();
+    })
 
-    $('#create-comment').click(function() {
-        // Send the data 
-        const data = {
-            commentaire: document.getElementById('commentaire').value,
-            rdv_id: $('#rdv_id').val()
-        }
-        fetch('{{ route('recruiter.commentaire.add') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-                    },
-                    body: JSON.stringify(data),
-                })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response, e.g., show a success message
-                // refresh the current page
-                //    window.location.reload();
-            })
-            .catch(error => {
-                // Handle errors, e.g., show an error message
-                console.error(error);
-            });
+    $("#toggle-3").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-3").toggle();
+    })
+
+    $("#toggle-4").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-4").toggle();
     })
 })
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const selectAllCheckbox = document.querySelector('.checkbox-all');
-    const checkboxes = document.querySelectorAll('.checkbox-item');
-    const addToFavoritesButton = document.querySelector('.add-to-favorites');
-
-    // Add an event listener to checkboxes to toggle the button visibility
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-            addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
-        });
-    });
-
-    selectAllCheckbox.addEventListener('change', function() {
-        const isChecked = selectAllCheckbox.checked;
-
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = isChecked;
-        });
-
-        // Update the visibility of the "Ajouter aux favoris" button
-        const addToFavoritesButton = document.querySelector('.add-to-favorites');
-        addToFavoritesButton.classList.toggle('d-none', !isChecked);
-    });
-
-    $('#close-modal, .custom-close-modal').click(function() {
-        console.log('Modal Should Be Closed');
-        $.modal.close();
-    });
-
-    // Add an event listener to the "Ajouter aux favoris" button to collect values
-    addToFavoritesButton.addEventListener('click', function() {
-        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-        const selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        if (selectedValues.length > 0) {
-            // Define the data to be sent
-            const data = {
-                selectedValues: selectedValues
-            };
-            $("#ex1").modal({
-                escapeClose: false,
-                clickClose: true,
-                showClose: false
-            });
-            // Send the data using AJAX
-            // fetch('', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-            //     },
-            //     body: JSON.stringify(data),
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Handle the response, e.g., show a success message
-            //        // refresh the current page
-            //        window.location.reload();
-            //     })
-            //     .catch(error => {
-            //         // Handle errors, e.g., show an error message
-            //         console.error(error);
-            //     });
-        }
-    });
-});
 </script>
 @endpush

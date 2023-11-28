@@ -30,7 +30,9 @@ class RecruiterController extends Controller
     }
     // CV THEQUE
     public function cvtheque(){
-        $curriculums = Curriculum::all();
+        $user = auth()->user();
+       
+        $curriculums = Curriculum::where('user_id', $user->id)->get();
         $jobs = Job::all();
         return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
@@ -124,7 +126,6 @@ class RecruiterController extends Controller
     }
     public function myFavorites(){
         $user = auth()->user();
-        $user->favorites();
         $favoriteIds = json_decode($user->favorites()->pluck('favorites')->first(), true);
         $favorites = Curriculum::whereIn('id', $favoriteIds)->get();
         
@@ -744,5 +745,11 @@ class RecruiterController extends Controller
     public function getSearchHistory(){
         $history = auth()->user()->history;
         return view('recruiter.history.index', compact('history'));
+    }
+
+    // COMPTE ADMINISTRATEUR
+    public function adminAccount(){
+        $user = auth()->user();
+        return view('recruiter.account.index', compact('user'));
     }
 }
