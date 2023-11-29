@@ -2043,7 +2043,7 @@ h6 {
 
 .search-container{
     background: #e6edff;
-    padding: 10px;
+    padding: 30px;
 }
 
 .bg-btn{
@@ -2064,6 +2064,22 @@ h6 {
     border-radius:50px;
     font-size: 15px;
 }
+.bg-btn-visio{
+    border: 1px solid #5e9fc3;
+    padding: 2px 15px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: #f2f7fa;
+    color: #217bac !important;
+}
+.bg-btn-physic{
+    border: 1px solid #7d41dd;
+    padding: 2px 15px;
+    font-weight: 500;
+    border-radius: 5px;
+    background-color: #f0edf6;
+    color: #7d41dd !important;
+}
 
 /* Move pagination to the right */
 .dataTables_wrapper .dataTables_length {
@@ -2075,4 +2091,44 @@ h6 {
     float: left;
     text-align: left;
 }
+
+label > input[type=search]{
+    width: 45vw !important;
+    height: 40px !important;
+    background: #f2f2f2 !important;
+    border-radius: 5px !important;
+    padding-left: 30px !important;
+    padding-top: 0px !important;
+}
+label > i{
+    padding-left: 15px !important;
+    padding-top: 12px !important;
+    padding-right: 15px !important;
+    color: black;
+}
+
+#data-table_length > label{
+    color: #000 !important;
+}
+
+.paginate_button.next,
+.paginate_button.previous {
+    display:none;
+}
+
+.paginate_button {
+    padding: 1px 8px !important;
+}
+
+.paginate_button.current{
+    border: 1px solid #5e9fc3;
+    border-radius: 5px;
+}
+
+.paging_simple_numbers{
+    margin-top: 25px !important;
+}
+
+
+
  /* NRD STYLES END */

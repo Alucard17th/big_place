@@ -174,4 +174,8 @@ Route::get('/migrate', function () {
     return 'Migration completed successfully';
 });
 
+Route::get('/phpinfo', function() {
+    phpinfo();
+});
+
 Auth::routes();

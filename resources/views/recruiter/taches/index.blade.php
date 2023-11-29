@@ -218,20 +218,7 @@ $('.open-schedule-modal').click(function() {
     // get data attribute receiver email from button
     var receiverEmail = $(this).data('receiver-email');
     console.log(receiverEmail);
-    // Calendly.initInlineWidget({
-    //     url: 'https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar',
-    //     parentElement: document.getElementById('calendly-embed'),
-    //     prefill: {
-    //         name: "John Doe",
-    //         email: "john@doe2.com",
-    //     },
-    //     utm: {}
-    // });
-    // $("#ex2").modal({
-    //     escapeClose: false,
-    //     clickClose: true,
-    //     showClose: false
-    // });
+    
 });
 </script>
 
@@ -285,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
    // new DataTable('#data-table');
    $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
-        "searching": false,
+        "searching": true,
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -295,10 +282,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 "next": "Suivant",
                 "previous": "Précédent",
             },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
+    $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
 
    
 });

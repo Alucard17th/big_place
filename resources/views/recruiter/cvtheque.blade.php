@@ -201,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // new DataTable('#data-table');
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
-        "searching": false,
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -211,10 +210,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 "next": "Suivant",
                 "previous": "Précédent",
             },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
+    $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
     
     // Add an event listener to checkboxes to toggle the button visibility
     checkboxes.forEach(function(checkbox) {

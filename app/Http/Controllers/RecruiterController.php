@@ -19,6 +19,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use RahulHaque\Filepond\Facades\Filepond;
 
 class RecruiterController extends Controller
 {   
@@ -311,57 +312,97 @@ class RecruiterController extends Controller
         return view('recruiter.vitrine.vitrine', compact('entreprise'));
     }
     public function updateVitrine(Request $request){
+        // dd($request->all());
+
+        // if ($request->has('video')) {
+        //     $fileInfos = Filepond::field($request->video)->moveTo('/uploads/images/cars_DEF');
+        //     dd($fileInfos);
+        //     // $images_paths[] = Str::replace('/uploads', '/storage/uploads', $fileInfos['location']);
+        // }
         $user = auth()->user();
-        $user->entreprise()->update([
-            'nom_entreprise' => $request->nom_entreprise,
-            'date_creation' => $request->date_creation,
-            'domiciliation' => $request->domiciliation,
-            'siege_social' => $request->siege_social,
-            'valeurs_fortes' => $request->valeurs_fortes,
-            'nombre_implementations' => $request->nombre_implementations,
-            'effectif' => $request->effectif,
-            'fondateurs' => $request->fondateurs,
-            'chiffre_affaire' => $request->chiffre_affaire
-        ]);
+        // $user->entreprise()->update([
+        //     'nom_entreprise' => $request->nom_entreprise,
+        //     'date_creation' => $request->date_creation,
+        //     'domiciliation' => $request->domiciliation,
+        //     'siege_social' => $request->siege_social,
+        //     'valeurs_fortes' => $request->valeurs_fortes,
+        //     'nombre_implementations' => $request->nombre_implementations,
+        //     'effectif' => $request->effectif,
+        //     'fondateurs' => $request->fondateurs,
+        //     'chiffre_affaire' => $request->chiffre_affaire
+        // ]);
 
         $userId = auth()->user()->id;
         $entreprise = Entreprise::where('user_id', $userId)->first();
 
-        if($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('public/' . $userId, $fileName);
-            $entreprise->logo = $filePath;
+        // if($request->hasFile('logo')) {
+        //     $file = $request->file('logo');
+        //     $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //     $filePath = $file->storeAs('public/' . $userId, $fileName);
+        //     $entreprise->logo = $filePath;
+        // }    
+        if($request->has('cover')) {
+            $fileInfos = Filepond::field($request->cover)->moveTo('/uploads/'.$userId.'/cover_'.uniqid());
+            $entreprise->cover = $fileInfos['location'];
         }
 
-        if($request->hasFile('video')) {
-            $file = $request->file('video');
-            $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('public/' . $userId, $fileName);
-            $entreprise->video = $filePath;
+        if($request->has('logo')) {
+            $fileInfos = Filepond::field($request->logo)->moveTo('/uploads/'.$userId.'/logo_'.uniqid());
+            $entreprise->logo = $fileInfos['location'];
         }
 
-        if ($request->hasFile('photos_locaux')) {
+        if($request->has('video')) {
+            $fileInfos = Filepond::field($request->video)->moveTo('/uploads/'.$userId.'/video_'.uniqid());
+            // dd($fileInfos['location']);
+            $entreprise->video = $fileInfos['location'];
+        }
+
+        if ($request->has('photos_locaux')) {
             $photosLocaux = $entreprise->photos_locaux;
             if (!is_array($photosLocaux)) {
                 $photosLocaux = [];
             }
             $newFilePaths = [];
 
-            foreach ($request->file('photos_locaux') as $file) {
-                $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $filePath = $file->storeAs('public/' . $userId, $fileName);
-                
-                $newFilePaths[] = $filePath;
+            foreach ($request->photos_locaux as $file) {
+                $fileInfos = Filepond::field($file)->moveTo('/uploads/'.$userId.'/image_'.uniqid());
+                $newFilePaths[] = $fileInfos['location'];
             }
             // Merge the new file paths into the existing JSON array
             $photosLocaux = array_merge($photosLocaux, $newFilePaths);
-
             // Set the updated JSON array back to the model
             $entreprise->photos_locaux = $photosLocaux;
-            
             $entreprise->save();
         }
+
+        // if($request->hasFile('video')) {
+        //     $file = $request->file('video');
+        //     $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //     $filePath = $file->storeAs('public/' . $userId, $fileName);
+        //     $entreprise->video = $filePath;
+        // }
+
+        // if ($request->hasFile('photos_locaux')) {
+        //     $photosLocaux = $entreprise->photos_locaux;
+        //     if (!is_array($photosLocaux)) {
+        //         $photosLocaux = [];
+        //     }
+        //     $newFilePaths = [];
+
+        //     foreach ($request->file('photos_locaux') as $file) {
+        //         $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        //         $filePath = $file->storeAs('public/' . $userId, $fileName);
+                
+        //         $newFilePaths[] = $filePath;
+        //     }
+        //     // Merge the new file paths into the existing JSON array
+        //     $photosLocaux = array_merge($photosLocaux, $newFilePaths);
+
+        //     // Set the updated JSON array back to the model
+        //     $entreprise->photos_locaux = $photosLocaux;
+            
+        //     $entreprise->save();
+        // }
 
         $entreprise->save();
         $user->save();

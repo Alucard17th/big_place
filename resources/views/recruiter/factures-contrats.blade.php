@@ -212,11 +212,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 "next": "Suivant",
                 "previous": "Précédent",
             },
-            "search": "Rechercher :",
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
+    $('#data-table-facture_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
 
     $('#data-table-contrat').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
@@ -230,11 +234,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 "next": "Suivant",
                 "previous": "Précédent",
             },
-            "search": "Rechercher :",
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
+    $('#data-table-contrat_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+
 });
 </script>
 @endpush

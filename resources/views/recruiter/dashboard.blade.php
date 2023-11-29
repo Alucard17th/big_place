@@ -68,10 +68,9 @@
             <div class="col-8 px-2">
                 <div class="card">
                     <div class="card-body">
-                        <canvas id="myChart" width="400" height="400"></canvas>
+                        <canvas id="myChart" ></canvas>
                     </div>
                 </div>
-                
             </div>
 
             <div class="col-4 px-2">
@@ -153,116 +152,165 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                    <h4>Calendrier</h4>
+                    <h4 class="text-dark mb-3">Calendrier</h4>
                         <div id='calendar-item'></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-rendez-vous" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-rdvs.png')}}"
-                        alt="">
-                </a>
-                <span class="mb-3">Mes rendez-vous</span>
+        <div class="icons" id="icons">
+            <div class="row mt-5">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-rendez-vous">
+                                <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-rdvs.png')}}"
+                                    alt="">
+                            </a>
+                            <span class="pt-4 mb-3 text-dark">Mes rendez-vous</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-taches">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-taches.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes tâches</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-evenements">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes évènemements / jobdatings</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-offres">
+                                <img class="img-fluid dashboard-small-img"
+                            src="{{asset('/plugins/images/dashboard/mes-offres.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes offres d'emploi</span>
+                        </a>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-taches" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-taches.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes tâches</span>
+
+            <div class="row mt-5">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-candidatures">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-candidatures.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes candidatures</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/ma-vitrine">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/ma-vitrine.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Ma vitrine entreprise</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="#">
+                                <img class="img-fluid dashboard-small-img"
+                            src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="#">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes emails</span>
+                                </a>
+                        </div>
+                    </div>
+                   
+                </div>
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-evenements" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes évènemements / jobdatings</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-offres" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-offres.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes offres d'emploi</span>
+
+            <div class="row mt-5">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-documents">
+                                <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-docs.png')}}"
+                                    alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes documents</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-factures-et-contrats">
+                                <img class="img-fluid dashboard-small-img"
+                                src="{{asset('/plugins/images/dashboard/mes-factures-contrats.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes factures et contrats</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="#">
+                                <img class="img-fluid dashboard-small-img"
+                                src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes statistiques</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="#">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mon-compte.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes compte administrateur</span>
+                                </a>
+                        </div>
+                    </div>
+                   
+                </div>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-candidatures" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-candidatures.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes candidatures</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/ma-vitrine" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/ma-vitrine.png')}}" alt="">
-                </a>
-                <span class="mb-3">Ma vitrine entreprise</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="#" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes formations proposées</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="#" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes emails</span>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-documents" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-docs.png')}}"
-                        alt="">
-                </a>
-                <span class="mb-3">Mes documents</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="/mes-factures-et-contrats" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-factures-contrats.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes factures et contrats</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="#" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes statistiques</span>
-            </div>
-            <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                <a href="#" class="dashboard-link">
-                    <img class="img-fluid dashboard-small-img"
-                        src="{{asset('/plugins/images/dashboard/mon-compte.png')}}" alt="">
-                </a>
-                <span class="mb-3">Mes compte administrateur</span>
-            </div>
-        </div>
-
     </div>
-
-   
 </div>
 @endsection
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
- 
     $("#values_select").select2({
         placeholder: "Valeurs attendues",
     });
@@ -273,10 +321,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/lang-all.js"></script>
+<script src="{{asset('plugins/js/locales-all.global.min.js')}}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
   var calendarEl = document.getElementById('calendar-item');
-
   let rdvs = [];
   // fetch events from a laravel route using ajax
   await $.ajax({
@@ -339,55 +387,66 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   })
 
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridWeek',
-    initialDate: '2023-09-07',
+  var today = new Date(); // Get current date
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    var initialLocaleCode = 'fr';
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+    height: '400px',
+    initialView: 'timeGridWeek',
+    initialDate: today,
     headerToolbar: {
       left: 'prev,today,next',
       right: 'title',
-      center: 'dayGridDay,dayGridWeek' 
+      center: 'timeGridDay,timeGridWeek' 
     },
     events : rdvs,
-    lang: 'ar',
+    locale: initialLocaleCode,
     eventClick: function(info) {
         alert('Event: ' + info.event.title);
         alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
         alert('View: ' + info.view.type);
+    },
+    slotLabelFormat: {
+        hour: 'numeric',
+        minute: '2-digit',
+        omitZeroMinute: false,
+        hour12: false // Change to true if you want 12-hour format
     }
   });
 
   calendar.render();
 
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [2, 9, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(245, 247, 252, 1)'
-            ],
-            borderColor: [
-                'rgba(12, 145, 253, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [2, 9, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(245, 247, 252, 1)'
+                ],
+                borderColor: [
+                    'rgba(12, 145, 253, 1)'
+                ],
+                borderWidth: 1
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
         }
-    }
+    });
 });
-});
-
-
-
 </script>
 @endpush

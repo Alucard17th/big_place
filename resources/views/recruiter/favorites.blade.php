@@ -31,6 +31,15 @@ input, select{
 .select2-search__field{
     padding: 0px 18px 10px 20px !important;
 }
+
+.bg-btn-visio.active{
+    background-color: #ff8b00; /* Change to your desired active background color */
+    color: white !important; /* Change to your desired active text color */
+}
+.bg-btn-physic.active{
+    background-color: #ff8b00; /* Change to your desired active background color */
+    color: white !important; /* Change to your desired active text color */
+}
 </style>
 @endpush
 
@@ -89,8 +98,6 @@ input, select{
                                                     </select>
                                                 </div>
                                             </div>
-
-                                           
                                     </div>
                                    
                                   <div class="form-group mt-3">
@@ -158,17 +165,25 @@ input, select{
             </div>
            
             <label for="candidate" class="text-dark">Type du rendez-vous</label>
-            <div class="form-check d-flex align-items-center">
-                <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel" checked>
+            <div class="form-check align-items-center d-none">
+                <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel">
                 <label class="form-check-label ml-4" for="is_type_presentiel">
                     Présentiel
                 </label>
+                
             </div>
-            <div class="form-check form-check d-flex align-items-center">
+            <div class="form-check form-check d-none align-items-center">
                 <input class="form-check-input" type="checkbox" value="" name="is_type_distanciel" id="is_type_distanciel">
                 <label class="form-check-label ml-4" for="is_type_distanciel">
                     Distanciel
                 </label>
+            </div>
+
+            <div class="form-group">
+                <div class="choices d-flex">
+                    <button type="button" class="bg-btn-visio mr-2 d-flex align-items-center"><i class="las la-video mr-2" style="font-size: 24px;"></i>Proposer Rdv visio</button>
+                    <button type="button" class="bg-btn-physic mr-2">Proposer Rdv physique</button>
+                </div>
             </div>
 
             <hr style="padding: 0px 0;background-color: rgb(0 0 0);">
@@ -370,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // new DataTable('#data-table');
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
-        "searching": false,
+        "searching": true,
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -380,9 +395,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 "next": "Suivant",
                 "previous": "Précédent",
             },
-            // Add other language customization options if needed
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
         },
         // "pagingType": "full_numbers",
+    });
+
+    $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+     // Initially hide checkboxes
+     $('.form-check').hide();
+
+     $('.bg-btn-visio').click(function() {
+        $('#is_type_distanciel').prop('checked', function(i, value) {
+            return !value; // Toggle the checked property
+        });
+        $('.bg-btn-visio').toggleClass('active');
+    });
+
+    $('.bg-btn-physic').click(function() {
+        $('#is_type_presentiel').prop('checked', function(i, value) {
+            return !value; // Toggle the checked property
+        });
+        $('.bg-btn-physic').toggleClass('active');
     });
     
 });
