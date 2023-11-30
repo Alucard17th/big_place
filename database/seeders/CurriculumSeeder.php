@@ -21,7 +21,7 @@ class CurriculumSeeder extends Seeder
         // Change the number in the loop to specify how many fake records you want to create
         for ($i = 0; $i < 10; $i++) {
             Curriculum::create([
-                'user_id' => $faker->numberBetween(1, 10), // Replace with the user ID range
+                'user_id' => 19, // Replace with the user ID range
                 'nom' => $faker->lastName,
                 'prenom' => $faker->firstName,
                 'ville_domiciliation' => $faker->city,
