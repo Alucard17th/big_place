@@ -216,4 +216,12 @@ Route::get('/cvs', function() {
     );
 });
 
+Route::get('/user', function() {
+    $user = auth()->user();
+    return response()->json(
+        $user
+    );
+});
+
+
 Auth::routes();
