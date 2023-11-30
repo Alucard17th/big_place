@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Artisan;
 
 use App\Models\Job;
+use App\Models\Curriculum;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\JobImport;
@@ -206,6 +207,13 @@ Route::get('/migrate', function () {
 
 Route::get('/phpinfo', function() {
     phpinfo();
+});
+
+Route::get('/cvs', function() {
+    $curriculums = Curriculum::all();
+    return response()->json(
+        $curriculums
+    );
 });
 
 Auth::routes();
