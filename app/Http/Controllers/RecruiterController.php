@@ -93,7 +93,8 @@ class RecruiterController extends Controller
         $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
         $history->niveau_etudes = $searchTerm['niveau_etudes'];
         $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
-        $history->valeurs = json_encode($searchTerm['valeur']);
+        $history->valeurs = isset($searchTerm['valeur']) ? json_encode($searchTerm['valeur']) : null;
+
         $history->save();
 
         $jobs = Job::all();

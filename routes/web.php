@@ -1,6 +1,15 @@
 <?php
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecruiterController;
+
+use App\Http\Controllers\Candidat\CandidatController;
+use App\Http\Controllers\Candidat\CurriculumController;
+use App\Http\Controllers\Candidat\FavoritesController;
+use App\Http\Controllers\Candidat\RendezVousController;
+use App\Http\Controllers\Candidat\CandidatureController;
+use App\Http\Controllers\Candidat\EmailController;
+use App\Http\Controllers\Candidat\DocumentController;
+
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -152,13 +161,34 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');
 });
 
+Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect');
+Route::post('/mon-curriculum', [CurriculumController::class, 'curriculumStore'])->name('candidat.curriculum.store');
+Route::post('/mon-curriculum/cv/store', [CurriculumController::class, 'saveCvFile'])->name('candidat.cv.store');
 // CANDIDAT
-Route::group(['middleware' => ['role:candidat']], function () {
-    //
-    Route::get('/candidat-dashboard', function () {
-        return view('candidat.dashboard');
-    });
+Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function () {
+
+    Route::get('/candidat-dashboard', [CandidatController::class, 'dashboard'])->name('candidat.dashboard');
+    Route::get('/candidat-favoris', [FavoritesController::class, 'favoris'])->name('candidat.favoris');
+    Route::get('/candidat-rdvs', [RendezVousController::class, 'rdvs'])->name('candidat.rdvs');
+    Route::get('/candidat-candidatures', [CandidatureController::class, 'candidatures'])->name('candidat.candidatures');
+    Route::get('/candidat-emails', [EmailController::class, 'emails'])->name('candidat.emails');
+    Route::get('/candidat-documents', [DocumentController::class, 'documents'])->name('candidat.documents');
+    
+    // TODO
+    Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
+    Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
+    Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
+    Route::get('/candidat-formation', [FormationController::class, 'formation'])->name('candidat.formation');
+    Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
+
+    
+    // JSON 
+    Route::get('/getCandidatRdvs', [CandidatController::class, 'getCandidatRdvs'])->name('getCandidatRdvs');
+    Route::get('/getCandidatEvents', [CandidatController::class, 'getCandidatEvents'])->name('getCandidatEvents');
+    Route::get('/getCandidatFormations', [CandidatController::class, 'getCandidatFormations'])->name('getCandidatFormations');
+
 });
+
 
 // Create a route that will addd a auser
 Route::get('/create-roles', function () {
