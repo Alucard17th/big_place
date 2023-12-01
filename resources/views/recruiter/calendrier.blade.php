@@ -34,6 +34,8 @@
 
 @push('scripts')
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<script src="{{asset('plugins/js/locales-all.global.min.js')}}"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', async function() {
   var calendarEl = document.getElementById('calendar-item');
@@ -103,15 +105,22 @@ document.addEventListener('DOMContentLoaded', async function() {
   
 
   console.log('Events', rdvs);
+  var today = new Date(); // Get current date
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
 
+    today = yyyy + '-' + mm + '-' + dd;
+  var initialLocaleCode = 'fr';
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    initialDate: '2023-09-07',
+    initialDate: today,
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
+    locale: initialLocaleCode,
     events : rdvs,
     // events: [
     //   {

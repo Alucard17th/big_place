@@ -51,6 +51,13 @@
     height: 300px !important;
 }
 
+#annees_experience{
+    width:244.5px !important;
+    height: 48px !important;
+    border-radius: 8px;
+    border: 1px solid #1C1C1E7A;
+    padding : 7px 8px 5px 16px; 
+}
 
 </style>
 @endpush
@@ -59,8 +66,8 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Bonjour, {{auth()->user()->name}} !</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+            <h3 class="dashboard-title">Bonjour, <bold class="dashboard-user-name">{{auth()->user()->name}}</bold> !</h3>
+            <div class="text dashboard-sub">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
         </div>
 
         <div class="row">
@@ -68,7 +75,8 @@
             <div class="col-8 px-2">
                 <div class="card">
                     <div class="card-body">
-                        <canvas id="myChart" ></canvas>
+                        <h4 class="text-dark dashboard-card-title">Nombre de vues de votre profil</h4>
+                        <canvas id="myChart" class="px-2 pt-2"></canvas>
                     </div>
                 </div>
             </div>
@@ -76,6 +84,7 @@
             <div class="col-4 px-2">
                 <div class="card">
                     <div class="card-body">
+                    <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
                     <form method="get" class="" action="{{route('recruiter.cvtheque.search')}}">
                         <div class="row">
                             <div class="col-12">
@@ -135,7 +144,7 @@
 
                             <div class="col-6">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="annees_experience" value="" class="form-control mb-2" placeholder="Années d'expérience">
+                                    <input type="number" name="annees_experience" id="annees_experience"  value="" class="form-control mb-2" placeholder="Années d'expérience">
                                 </div>
                             </div>
 
@@ -152,8 +161,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                    <h4 class="text-dark mb-3">Calendrier</h4>
-                        <div id='calendar-item'></div>
+                    <h4 class="text-dark dashboard-card-title">Calendrier</h4>
+                        <div id='calendar-item' class="mt-5"></div>
                     </div>
                 </div>
             </div>
@@ -234,7 +243,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="#">
+                            <a href="/mes-formations">
                                 <img class="img-fluid dashboard-small-img"
                             src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
@@ -245,7 +254,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="#">
+                            <a href="/mes-mails">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes emails</span>
@@ -282,7 +291,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="#">
+                            <a href="/mes-stats">
                                 <img class="img-fluid dashboard-small-img"
                                 src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes statistiques</span>
@@ -293,7 +302,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="#">
+                            <a href="/compte-administrateur">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mon-compte.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes compte administrateur</span>
@@ -337,8 +346,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             rdvs.push({
                 title: 'Rendez vous le : ' + event.date,
                 start: event.date + 'T' + event.heure,
-                backgroundColor: 'pink',
-                borderColor: 'pink',
+                backgroundColor: '#e7f6fd',
+                borderColor: '#e7f6fd',
+                textColor: '#0369A1',
+                classNames: ['event-visio']
             });
         })
     },
@@ -387,7 +398,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   })
 
-  var today = new Date(); // Get current date
+    var today = new Date(); // Get current date
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
     var yyyy = today.getFullYear();
@@ -396,6 +407,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     var initialLocaleCode = 'fr';
     var calendar = new FullCalendar.Calendar(calendarEl, {
     height: '400px',
+    width: '100%',
     initialView: 'timeGridWeek',
     initialDate: today,
     headerToolbar: {

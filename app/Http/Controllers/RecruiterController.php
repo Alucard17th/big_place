@@ -420,10 +420,12 @@ class RecruiterController extends Controller
     }
     public function addTask(Request $request){
         $task = new Task();
-        $task->title = $request->task_title;
-        $task->description = '';
+        $task->title = $request->name;
+        $task->description = $request->description;
         $task->completed = false;
         $task->user_id = auth()->user()->id;
+        $task->start_date = $request->start_date;
+        $task->due_date = $request->end_date;
         $task->save();
 
         toast('Tâche ajoutée','success')->autoClose(5000);

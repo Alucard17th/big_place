@@ -138,8 +138,9 @@ input, select{
                                             <td class="text-left">XXX</td>
                                             
                                             <td class="text-left">
-                                                <a type="button" class="bg-btn-three">Proposez un rendez-vous</a>
-                                                <a type="button" class="bg-btn-four">Annuler le rendez-vous</a>
+                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
+                                                <br>
+                                                <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -198,7 +199,7 @@ input, select{
                         <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
                     </div>
                 </div>
-                <p id="creanuea_1_msg" class="text-danger"></p>
+                <p id="creanuea_1_msg" class="text-danger" style="font-size:18px;"></p>
             </div>
 
             <div class="form-group">
@@ -211,7 +212,7 @@ input, select{
                     <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
                     </div>
                 </div>
-                <p id="creanuea_2_msg" class="text-danger"></p>
+                <p id="creanuea_2_msg" class="text-danger" style="font-size:18px;"></p>
             </div>
 
             <div class="form-group">
@@ -224,7 +225,7 @@ input, select{
                         <input class="form-control mb-2" type="time" name="crenau_3_time" id="crenau_3_time" required>
                     </div>
                 </div>
-                <p id="creanuea_3_msg" class="text-danger"></p>
+                <p id="creanuea_3_msg" class="text-danger" style="font-size:18px;"></p>
             </div>
 
             <div class="form-group">
@@ -255,6 +256,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const creanuea_1_msg = document.querySelector('#creanuea_1_msg');
     const creanuea_2_msg = document.querySelector('#creanuea_2_msg');
     const creanuea_3_msg = document.querySelector('#creanuea_3_msg');
+
+    const proposezRendezVousButton = $('.proposez-rdv');
 
     let selectedCandidates = [];
     // Add an event listener to checkboxes to toggle the button visibility
@@ -313,14 +316,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    
+
+    proposezRendezVousButton.on('click', function() {
+        event.preventDefault();
+        const cvidValue = $(this).data('cvid');
+        $("#ex1").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+
+        selectedCandidates.push(cvidValue);
+    })
+
     createRendezVousButton.addEventListener('click', function(event) {
         event.preventDefault();
+        console.log('kjhds')
         sendRdv(selectedCandidates);
     })
 
     function sendRdv(selectedValues) {
         if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
-            if (selectedValues.length > 0) {
+            
                 // Create a FormData object to store the form data
                 const formData = new FormData();
 
@@ -374,7 +392,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Handle errors, e.g., show an error message
                         console.error(error);
                     });
-            }
         }else {
             // Show an error message to inform the user to select at least one checkbox
             alert('Veuillez choisir au moins un type de RDV');

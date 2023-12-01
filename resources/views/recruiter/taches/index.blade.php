@@ -31,6 +31,7 @@ input, select{
                     </a>
                 <h3>Mes Tâches</h3>
             </div>
+            <button class="theme-btn btn-style-one bg-header-btn" id="add-task">+ Ajouter une tâche</button>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -122,7 +123,7 @@ input, select{
                                                 <span class="badge badge-success">Terminé</span>
                                                 @endif
                                             </td>
-                                            <td class="text-left">{{$task->description}}</td>
+                                            <td class="text-left">{{Str::limit($task->description, $limit = 30, $end = '...')}}</td>
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
@@ -151,122 +152,91 @@ input, select{
 
     <!-- Modal HTML embedded directly into document -->
     <div id="ex1" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
+        <form action="{{route('recruiter.task.add')}}" method="POST">
             @csrf
+            <h4 class="text-dark mb-3">Ajouter une tâche</h4>
+
             <div class="form-group">
-                <h4>Proposé des rendez-vous :</h4>
+                <label class="text-dark" for="candidate">Nom de tâche</label>
+                <input class="form-control mb-2" type="text" name="name" id="name" required>
             </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 1</label>
-                <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 2</label>
-                <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Crénau 3</label>
-                <input class="form-control mb-2" type="date" name="crenau_4_date" id="crenau_4_date" required>
-                <input class="form-control mb-2" type="time" name="crenau_4_time" id="crenau_4_time" required>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="text-dark" for="candidate">Date début</label>
+                        <input class="form-control mb-2" type="date" name="start_date" id="start_date" required>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="text-dark" for="candidate">Date fin</label>
+                        <input class="form-control mb-2" type="date" name="end_date" id="end_date" required>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit">Envoyer</button>
+                <label class="text-dark" for="candidate">Status</label>
+                <select class="form-control" name="status" id="status">
+                    <option value="0" selected="">En cours</option>
+                    <option value="1">Terminée</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="text-dark" for="candidate">Description</label>
+                <textarea name="description" id="description" cols="30" rows="5" class="form-control mb-2"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit">Créer la tâche</button>
             </div>
         </form>
-        <a href="#" id="close-modal">Fermer</a>
+       
         <a href="#" class="custom-close-modal"></a>
     </div>
-
-    <!-- Modal HTML embedded directly into document -->
-    <div id="commentaire-modal" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <h4>Ajouter un Commentaire :</h4>
-            </div>
-            <input type="hidden" name="rdv_id" id="rdv_id">
-            <div class="form-group">
-                <label for="candidate">Commentaire </label>
-                <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="10"></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="button" id="create-comment">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
-    </div>
-
-
-    <!-- <div class="calendly-inline-widget" data-url="https://calendly.com/bigplace?hide_gdpr_banner=1"
-        style="min-width:320px;height:630px;"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script> -->
-
-    <!-- <button onclick="Calendly.showPopupWidget('https://calendly.com/embed-demo-customer-success/tips-and-tricks-webinar');return false;" class="sqs-block-button-element--medium sqs-block-button-element">Register</button> -->
-
+   
 </div>
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-<script>
-$('.open-schedule-modal').click(function() {
-    // get data attribute receiver email from button
-    var receiverEmail = $(this).data('receiver-email');
-    console.log(receiverEmail);
-    
-});
-</script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const openModalCommentBtns = document.querySelectorAll('.add-comment-modal');
-    const createCommentBtn = document.querySelector('#create-comment');
-
-    openModalCommentBtns.forEach(function(button) {
-        button.addEventListener('click', function() {
-            $("#commentaire-modal").modal({
+    $('#add-task').click(function() {
+        // Send the data 
+        $("#ex1").modal({
                 escapeClose: false,
                 clickClose: true,
                 showClose: false
             });
-            $('#rdv_id').val($(this).data('rdv-id'));
-            document.getElementById('commentaire').value = '';
-        });
-    });
-
-    $('#create-comment').click(function() {
-        // Send the data 
-        const data = {
-            commentaire: document.getElementById('commentaire').value,
-            rdv_id: $('#rdv_id').val()
-        }
-        fetch('{{ route('recruiter.commentaire.add') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-                    },
-                    body: JSON.stringify(data),
-                })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response, e.g., show a success message
-                // refresh the current page
-                //    window.location.reload();
-            })
-            .catch(error => {
-                // Handle errors, e.g., show an error message
-                console.error(error);
-            });
+        // fetch('{{ route('recruiter.commentaire.add') }}', {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+        //             },
+        //             body: JSON.stringify(data),
+        //         })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Handle the response, e.g., show a success message
+        //         // refresh the current page
+        //         //    window.location.reload();
+        //     })
+        //     .catch(error => {
+        //         // Handle errors, e.g., show an error message
+        //         console.error(error);
+        //     });
     })
+
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
 })
 </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
    // new DataTable('#data-table');
@@ -290,9 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
-
-
-   
 });
 </script>
 @endpush

@@ -27,6 +27,12 @@
                             src="{{asset('/plugins/images/recruiter-sidebar/rdvs.png')}}" alt=""> Mes rendez-vous</span>
                 </a>
             </li>
+            <li class="{{ Str::contains(Request::url(), 'mon-calendrier') ? 'active' : '' }}">
+                <a href="/mon-calendrier" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-2"
+                            src="{{asset('/plugins/images/recruiter-sidebar/tasks.png')}}" alt=""> Mon Calendrier</span>
+                </a>
+            </li>
             <li class="{{ Str::contains(Request::url(), 'mes-taches') ? 'active' : '' }}">
                 <a href="/mes-taches" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-2"

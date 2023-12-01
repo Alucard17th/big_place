@@ -49,7 +49,8 @@
                                         <tr>
                                             <th>Organisateur</th>
                                             <th>Poste</th>
-                                            <th>N° Participants</th>
+                                            <th>N° Max de Participants</th>
+                                            <th>Participants Inscrits</th>
                                             <th>Adresse</th>
                                             <th>Entrée gratuite</th>
                                             <th>Date - Heure</th>
@@ -63,6 +64,7 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->participants_count}}</td>
+                                            <td class="text-left">{{$event->registered_participants}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)
@@ -79,7 +81,7 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2">
+                                                <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
@@ -232,6 +234,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    function confirmDelete(url) {
+        var result = window.confirm("Are you sure you want to delete?");
+        if (result) {
+            window.location.href = url;
+        }
+    }
 
 })
 </script>

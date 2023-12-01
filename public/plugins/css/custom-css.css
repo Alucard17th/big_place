@@ -1,7 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Outfit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 body {
     color: #004f5d;
     font-weight: 500;
 }
+
+
+h4{
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    
+}
+
+.dashboard-title{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400 !important;
+    font-size: 30px !important;
+    line-height: 41px !important;
+    /* identical to box height, or 137% */
+    color: #202124 !important;
+}
+.dashboard-sub{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 24px;
+    /* identical to box height, or 126% */
+    color: rgba(0, 0, 0, 0.5);
+}
+.dashboard-user-name{
+    font-weight:600;
+}
+.dashboard-sub{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 400 !important;
+    font-size: 19px !important;
+    line-height: 24px !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    margin-top: 10px !important;
+}
+.dashboard-card-title{
+    /* Nombre de vues de votre profil */
+    width: 569px;
+    height: 28px;
+
+    /* H4/regular */
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    /* identical to box height, or 117% */
+
+    /* Light/Text/Primary */
+    color: #1C1C1E;
+
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+/*CALENDAR*/
+#calendar-item .fc-button-primary, .fc-today-button{
+    background-color: #F4F4F5 ;
+    border:0px;
+    color: #18181B;
+}
+.fc-today-button{
+    color: #18181B !important;
+}
+.fc-timeGridWeek-button, .fc-timeGridDay-button{
+    width: 122.68px !important;
+    height: 38.92px !important;
+    border-radius: 10.9204px !important;
+    font-family: 'Inter' !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    /* white */
+    color: #71717A !important;
+    margin-left: 10px !important;
+}
+.fc-button-active{
+    background-color: #302EA7 !important;
+    color: #FFFFFF !important;
+}
+#calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr:nth-child(1){
+    display: none;
+}
+.event-visio{
+    border-left: 4px solid #0EA5E9 !important;
+}
+
 
 .work-section {
     position: relative;
@@ -777,8 +877,8 @@ padding: 40px 0px 1px 0px !important;
     left: 0;
     bottom: 0;
     height: calc(100%);
-    width: 255px;
-    padding-top: 120px;
+    width: 272px;
+    padding:120px 8px 8px 8px;
     background: #ffffff;
     overflow: auto;
     -webkit-transition: all 300ms ease;
