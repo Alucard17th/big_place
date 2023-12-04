@@ -129,7 +129,7 @@
         <!-- Header Span -->
         <span class="header-span"></span>
         <!-- Main Header-->
-        <header class="main-header normal header-shaddow fixed-header">
+        <header class="main-header normal header-shaddow fixed-header" style="position: fixed;">
             <!-- Main box -->
             <div class="main-box">
                 <!--Nav Outer -->

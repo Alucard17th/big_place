@@ -874,11 +874,13 @@ padding: 40px 0px 1px 0px !important;
 
 .user-sidebar {
     position: fixed;
+    top: 130px;
     left: 0;
     bottom: 0;
-    height: calc(100%);
+    /* height: calc(100%); */
+    height: 512px;
     width: 272px;
-    padding:120px 8px 8px 8px;
+    padding:0px 0px 8px 0px;
     background: #ffffff;
     overflow: auto;
     -webkit-transition: all 300ms ease;
@@ -1274,7 +1276,7 @@ hr {
 }
 
 .user-sidebar::-webkit-scrollbar-thumb {
-    background: #22218cbd !important; /* Change to the desired color */
+    background: #22218c !important; /* Change to the desired color */
     border-radius: 6px !important; /* Optional: round corners */
 }
 

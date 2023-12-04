@@ -13,17 +13,43 @@ input, select{
     height:45px !important;
     padding-top: 10px !important;
 }
-.select2-selection--multiple {
+.select2-selection--single{
     max-height: 45px !important;
     border: 1px solid #dae1e7 !important;
     border-radius: 3px;
     box-shadow: none;
     font-size: 14px;
-    background: #f0f5f7 !important;
+    background: #fff !important;
+    padding: 8px 15px 0px 20px !important;
+    width: 22vw;
+}
+.select2-selection--multiple {
+    height: 45px !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: 14px;
+    background: #fff !important;
+    width: 22vw;
 }
 .select2-search__field{
     padding: 0px 18px 10px 20px !important;
+    height: 37px !important;
 }
+
+#search-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.form-group input, .form-group select{
+    height: 45px ;
+    background: #fff !important;
+}
+
 </style>
 @endpush
 
@@ -50,7 +76,7 @@ input, select{
                                 <form method="get" class="default-form form-inline"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                             <select name="metier_recherche" id="metier_recherche" class="form-control">
                                                 <option value="" selected>Métier / Code Rome</option>
@@ -61,14 +87,14 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="ville_domiciliation" placeholder="Ville / département"
+                                                <input type="text" name="ville_domiciliation" id="ville_domiciliation" placeholder="Ville / département"
                                                     value="{{ request('ville_domiciliation') }}" class="form-control mb-2">
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select class="form-control" id="annees_experience" name="annees_experience">
                                                     <option value=""  selected>Année d'expérience</option>
@@ -80,7 +106,7 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                     <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                                         <option value=""  selected>Niveau d'études</option>
@@ -93,16 +119,16 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
                                                     value="{{ request('pretentions_salariales') }}" class="form-control">
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <select name="valeur[]" id="values_select" class="form-control" multiple>
+                                                <select name="valeur[]" id="values_select" class="" multiple>
                                                     <option value="Le respect" @if(request()->has('valeur') && in_array("Le respect", request('valeur'))) selected @endif>Le respect</option>
                                                     <option value="L’adaptabilité" @if(request()->has('valeur') && in_array("L’adaptabilité", request('valeur'))) selected @endif>L’adaptabilité</option>
                                                     <option value="la considération" @if(request()->has('valeur') && in_array("la considération", request('valeur'))) selected @endif>la considération</option>
@@ -132,7 +158,7 @@ input, select{
                                     </div>
                                    
                                   <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
                                   </div>
                                    
                                 </form>
@@ -197,6 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#values_select").select2({
         placeholder: "Valeurs",
     });
+    $("#niveau_etudes").select2({});
+    $("#metier_recherche").select2({});
 
     // new DataTable('#data-table');
     $('#data-table').DataTable({

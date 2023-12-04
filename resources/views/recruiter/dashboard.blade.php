@@ -7,8 +7,19 @@
 }
 
 .dashboard-small-img {
-    width: 100%;
-    height: 150px;
+    /* width: 100%; */
+    /* height: 150px; */
+   
+}
+
+#icons > div > div > div > div > a{
+    position: relative;
+    bottom: 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top:30px;
 }
 
 .dashboard-link img {
@@ -31,18 +42,64 @@
 }
 
 .select2-selection--single {
+    margin: 0 !important;
+    width: 100% !important;
     height: 35px !important;
-    padding: 0px 18px 0px 10px !important;
+    padding: .330rem .70rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+.select2-selection--multiple{
+    margin: 0 !important;
+    width: 100% !important;
+    height: 35px !important;
+    /* padding: .3rem .70rem !important; */
+    padding-top:2px;
+    padding-left:6px;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #8f959b !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
 }
 
-.select2-selection--multiple {
+#select2-metier_recherche-container{
+    padding-left: 25px !important;
+}
+#ville_domiciliation{
+    padding-left: 40px !important;
+}
+.select2-search__field{
+    color:#8f959b !important;
+}
+.select2-selection__rendered{
+    color:#8f959b !important;
+    padding-left:18px;
+}
+
+/* .select2-selection--multiple {
     max-height: 35px !important;
     padding: 0px 18px 0px 10px !important;
     border: 1px solid #dae1e7 !important;
     border-radius: 3px;
     box-shadow: none;
     font-size: 14px;
-}
+} */
 
 .card{
     height: 100% !important;
@@ -52,11 +109,26 @@
 }
 
 #annees_experience{
-    width:244.5px !important;
+    /* width:244.5px !important;
     height: 48px !important;
     border-radius: 8px;
     border: 1px solid #1C1C1E7A;
-    padding : 7px 8px 5px 16px; 
+    padding : 7px 8px 5px 16px;  */
+}
+
+#search-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.fc-col-header-cell-cushion{
+    color:#000000 !important;
+}
+.fc-timegrid-slot-label-cushion {
+    color:#000000 !important;
 }
 
 </style>
@@ -72,7 +144,7 @@
 
         <div class="row">
 
-            <div class="col-8 px-2">
+            <div class="col-7 px-2">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="text-dark dashboard-card-title">Nombre de vues de votre profil</h4>
@@ -81,14 +153,16 @@
                 </div>
             </div>
 
-            <div class="col-4 px-2">
+            <div class="col-5 px-2">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
                     <form method="get" class="" action="{{route('recruiter.cvtheque.search')}}">
-                        <div class="row">
+                        <div class="row no-gutters">
                             <div class="col-12">
                                 <div class="form-group mb-2">
+                                    <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
+                                    style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                     <select name="metier_recherche" id="metier_recherche" class="form-control">
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
@@ -96,13 +170,15 @@
                                     </select>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département">
+                                    <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt="" 
+                                    style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
+                                    <input type="text" name="ville_domiciliation" id="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département">
                                 </div>
                                 <div class="form-group mb-2">
                                     <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales">
                                 </div>
                                 <div class="form-group mb-2">
-                                    <select name="valeur[]" id="values_select" class="form-control" multiple>
+                                    <select name="valeur[]" id="values_select" class="" multiple>
                                         <option value="Le respect">Le respect</option>
                                         <option value="L'adaptabilité">L'adaptabilité</option>
                                         <option value="la considération">la considération</option>
@@ -129,7 +205,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 pr-1">
                                 <div class="form-group mb-2">
                                     <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                         <option value="" selected>Niveau d'études</option>
@@ -142,14 +218,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 pl-1">
                                 <div class="form-group mb-2">
                                     <input type="number" name="annees_experience" id="annees_experience"  value="" class="form-control mb-2" placeholder="Années d'expérience">
                                 </div>
                             </div>
 
                         </div>
-                        <button type="submit" class="theme-btn btn-style-one my-2">Chercher</button>
+                        <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3" id="search-btn">Chercher</button>
                     </form>
                     </div>
                 </div>
@@ -169,7 +245,7 @@
         </div>
 
         <div class="icons" id="icons">
-            <div class="row mt-5">
+            <div class="row mt-5 gx-0 gy-0">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -412,7 +488,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     initialDate: today,
     headerToolbar: {
       left: 'prev,today,next',
-      right: 'title',
+      right: '',
       center: 'timeGridDay,timeGridWeek' 
     },
     events : rdvs,
@@ -444,18 +520,48 @@ document.addEventListener('DOMContentLoaded', async function() {
                     'rgba(245, 247, 252, 1)'
                 ],
                 borderColor: [
-                    'rgba(12, 145, 253, 1)'
+                    '#0049FC'
                 ],
-                borderWidth: 1
+                borderWidth: 3
             }]
         },
         options: {
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero:true
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)",
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0)",
                     }
                 }]
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 6
+                            }
+                        }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+                    }
+                }
+            },
+            layout: {
+                padding: 10
             }
         }
     });
