@@ -56,19 +56,22 @@ input, select{
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">  
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                </a>
-                <h3>CVTHEQUE</h3>
-            </div>
-            <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
-        </div>
+       
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
+
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
+                        <div class="d-flex align-items-center justify-content-center">  
+                            <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                                <i class="las la-arrow-left" style="font-size:38px"></i>
+                            </a>
+                            <h3>CVTHEQUE</h3>
+                        </div>
+                        <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
+                    </div>
+
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
@@ -166,7 +169,7 @@ input, select{
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary ml-2 mb-2 d-none add-to-favorites">Ajouter aux
+                        <button type="button" class="btn-style-one bg-btn px-0 mb-2 ml-2 d-none add-to-favorites">Ajouter aux
                             favoris</button>
 
                         <!-- TABLE AND GRID VIEW -->

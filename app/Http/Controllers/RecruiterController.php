@@ -461,7 +461,8 @@ class RecruiterController extends Controller
         return view('recruiter.offres.index', compact('offers'));
     }
     public function myOffersCreate(){
-        return view('recruiter.offres.create');
+        $jobs = Job::all();
+        return view('recruiter.offres.create', compact('jobs'));
     }
     public function addOffer(Request $request){
         $offer = new Offre();

@@ -144,16 +144,8 @@
 
         <div class="row">
 
-            <div class="col-7 px-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="text-dark dashboard-card-title">Nombre de vues de votre profil</h4>
-                        <canvas id="myChart" class="px-2 pt-2"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-5 px-2">
+        
+        <div class="col-5 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -230,6 +222,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-7 px-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-dark dashboard-card-title">Nombre de vues de votre profil</h4>
+                        <canvas id="myChart" class="px-2 pt-2"></canvas>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
 

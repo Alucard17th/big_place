@@ -82,6 +82,9 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                <a href="" class="bg-btn-eight mt-3">
+                                                    Suspendre
+                                                </a>
                                                 <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-3">
                                                     <i class="las la-trash"></i>
                                                     Fermer

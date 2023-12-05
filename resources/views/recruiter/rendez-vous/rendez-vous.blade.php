@@ -20,18 +20,43 @@
 input, select{
     height:45px !important;
     padding-top: 10px !important;
-    width: 100% !important;
 }
-.select2-selection--multiple {
+.select2-selection--single{
     max-height: 45px !important;
     border: 1px solid #dae1e7 !important;
     border-radius: 3px;
     box-shadow: none;
     font-size: 14px;
-    background: #f0f5f7 !important;
+    background: #fff !important;
+    padding: 8px 15px 0px 20px !important;
+    width: 22vw;
+}
+.select2-selection--multiple {
+    height: 45px !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px;
+    box-shadow: none;
+    font-size: 14px;
+    background: #fff !important;
+    width: 22vw;
 }
 .select2-search__field{
     padding: 0px 18px 10px 20px !important;
+    height: 37px !important;
+}
+
+#search-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.form-group input, .form-group select{
+    height: 45px ;
+    background: #fff !important;
+    width: 22vw;
 }
 #data-table_length > label > select{
     width: auto !important;
@@ -41,51 +66,63 @@ input, select{
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-    <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                        <i class="las la-arrow-left" style="font-size:38px"></i>
-                    </a>
-                <h3>Mes Rendez-vous</h3>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
+                <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                    <div class="d-flex align-items-center justify-content-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
+                                    <i class="las la-arrow-left" style="font-size:38px"></i>
+                                </a>
+                            <h3>Mes Rendez-vous</h3>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer search-container">
                                 <form method="get" class="default-form form-inline"
                                     action="{{ route('recruiter.cvtheque.search') }}">
-                                    <div class="row">
-                                            <div class="col-4">
+                                    <div class="row w-100">
+                                            <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
                                                     <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
                                                 </div>
                                             </div>
 
-                                            <div class="col-4">
+                                            <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
                                                     <select name="type" id="type" class="form-control">
-                                                        <option value=""  selected>Type de rendez-vous</option>
+                                                        <option value="" selected>Type de rendez-vous</option>
                                                         <option value="Visio">Visio</option>
                                                         <option value="Physique">Physique</option>
                                                     </select>
                                                 </div>
                                             </div>
 
-                                            <div class="col-4">
+                                            <div class="col-4 px-1">
+                                                <div class="form-group mb-0 mr-1">
+                                                    <select name="status" id="status" class="form-control">
+                                                        <option value="" selected>Status</option>
+                                                        <option value="En attente">En attente</option>
+                                                        <option value="Annulé">Annulé</option>
+                                                        <option value="Effectué">Effectué</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4 px-1 mt-3">
                                                 <div class="form-group mb-0 mr-1">
                                                     <input type="date" name="date" id="date" class="form-control w-100">
                                                 </div>
                                             </div>
 
-                                            <div class="col-4 mt-3">
+                                            <div class="col-4 px-1 mt-3">
                                                 <div class="form-group mb-0 mr-1">
                                                     <select name="category" id="category" class="form-control">
-                                                        <option value=""  selected>Catégorie</option>
+                                                        <option value="" selected>Catégorie</option>
                                                         <option value="a_venir">A venir</option>
                                                         <option value="passé">Passé</option>
                                                         <option value="annulé">Annulé</option>
@@ -98,7 +135,7 @@ input, select{
                                     </div>
                                    
                                   <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
                                   </div>
                                    
                                 </form>
@@ -118,7 +155,7 @@ input, select{
                                             <th>Nom du candidat</th>
                                             <th>Type</th>
                                             <th>Date de rendez-vous</th>
-                                            <th>Catégorie</th>
+                                            <th>Status</th>
                                             <th>Commentaire</th>
                                             <th>Actions</th>
                                         </tr>
@@ -127,7 +164,13 @@ input, select{
                                         @foreach ($rdvs as $rdv)
                                         <tr>
                                             <td class="text-left">{{getUserById($rdv->participant)->name}}</td>
-                                            <td class="text-left">{{$rdv->is_type_presentiel}} - {{$rdv->is_type_distanciel}}</td>
+                                            <td class="text-left">
+                                                @if($rdv->is_type_distanciel)
+                                                    Visio
+                                                @else
+                                                    Physique
+                                                @endif
+                                            </td>
                                             <td class="text-left">{{$rdv->date}} à {{$rdv->heure}}</td>
                                             <td class="text-left">{{$rdv->status}}</td>
                                             <td class="text-left">{{$rdv->commentaire}}</td>
