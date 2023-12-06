@@ -38,7 +38,6 @@ Route::get('/excel-import', function () {
     set_time_limit(0);
     $data = json_decode(file_get_contents(storage_path('app/code_metier.json')));
     // dd($data);
-    $count = 0;
     foreach ($data->metier as $item) {
         print_r($item->Metier);
         echo'<br>';
@@ -53,11 +52,7 @@ Route::get('/excel-import', function () {
             'code_ogr' => $item->Code
         ]);
         
-        $count++;
 
-        if ($count >= 10) {
-            break;
-        }
     }
 });
 

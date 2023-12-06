@@ -19,19 +19,23 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                        <i class="las la-arrow-left" style="font-size:38px"></i>
-                    </a>
-                <h3>Mes Formations</h3>
-            </div>
-            <a href="{{route('recruiter.formation.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Ajouter une formation</a>
-        </div>
+        
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes formations proposées</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                            <a href="{{route('recruiter.formation.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Ajouter une formation</a>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
@@ -52,7 +56,7 @@
                                             </th> -->
                                             <th>Nom du poste</th>
                                             <th>Durée de Formation</th>
-                                            <th>Période de la formation</th>
+                                            <th>Période de formation</th>
                                             <th>CDI à l'embauche</th>
                                             <th>Compétences acquises</th>
                                             <th>Postes Ouverts</th>
@@ -72,7 +76,13 @@
                                             <td>{{$formation->job_title}}</td>
                                             <td>{{$durationInDays}}</td>
                                             <td>{{$formation->start_date}} - {{$formation->end_date}}</td>
-                                            <td>{{$formation->cdi_at_hiring}}</td>
+                                            <td>
+                                                @if($formation->cdi_at_hiring == 1)
+                                                    Oui
+                                                @else
+                                                    Non
+                                                @endif
+                                            </td>
                                             <td>{{$formation->skills_acquired}}</td>
                                             <td>{{$formation->open_positions}}</td>
                                             <td>XXX</td>
@@ -82,10 +92,15 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="" class="bg-btn-eight mt-3">
+                                                <a href="" type="button" class="bg-btn-nine mt-2" style="padding-left:8px !important;padding-right:8px !important;">
+                                                    <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
-                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-3">
+                                                <a href="" type="button" class="bg-btn-seven mt-2" style="padding-left:6px !important;padding-right:6px !important;">
+                                                    <i class="las la-download"></i>
+                                                    Documents
+                                                </a>
+                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-2">
                                                     <i class="las la-trash"></i>
                                                     Fermer
                                                 </a>

@@ -40,6 +40,62 @@
     margin-right: 5px;
 }
 
+#vitrine-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#vitrine-form > div > label, #vitrine-form > div.row > div > div > label, #vitrine-form > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#vitrine-btn{
+    background: #0369A1 !important;
+    border-radius: 50px !important;
+    font-family: 'Jost' !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 20px !important;
+    line-height: 20px !important;
+    color: #FFFFFF !important;
+    padding: 20px 75px !important;
+}
+
+.info-text{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2D3748;
+}
+
+.filepond--drop-label{
+    /* Button/btn-basic */
+    box-sizing: border-box;
+    background: rgba(3, 105, 161, 0.05);
+    border: 2.05px dashed #0369A1;
+    border-radius: 13.7593px;
+}
+.filepond--drop-label label{
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+    color: #0369A1;
+}
+.filepond--drop-label i{
+    color: #0369A1;
+}
+
 </style>
 @endpush
 
@@ -48,24 +104,28 @@
     <div class="dashboard-outer">
         <div class="upper-title-box d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                </a>
                 <h3>Ma vitrine entreprise</h3>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                    <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                    Retour
+                </a>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ls-widget">
-                    <div class="tabs-box p-3">
+                    <div class="tabs-box p-4">
                         <h3 class="text-dark">Fiche entreprise</h3>
                         <div class="widget-content">
-                            <form action="{{ route('recruiter.update.vitrine') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('recruiter.update.vitrine') }}" method="POST" enctype="multipart/form-data" 
+                                id="vitrine-form">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 align-items-center justify-content-center py-4">
                                         @if(!isset($entreprise))
-                                        <img src="https://placehold.co/900X200" alt="" style="border-radius: 15px">
+                                        <img src="https://placehold.co/900X313" alt="" style="border-radius: 15px">
                                         @else
                                         <img src="{{ 'storage'.$entreprise->cover }}" alt="" style="border-radius: 15px; width: 900px; height: 200px">
                                         @endif
@@ -85,19 +145,19 @@
                                             </div>
                                             <div class="col-10">
                                                 <div>
-                                                    <a href="" id="change-logo" type="button" class="bg-btn-three">
+                                                    <a href="" id="change-logo" type="button" class="bg-btn-three border-0">
                                                         <!-- Détails -->
-                                                        <i class="las la-edit"></i>
+                                                        <i class="las la-sync"></i>
                                                         Changer
                                                     </a>
-                                                    <a href="" id="delete-logo" type="button" class="bg-btn-four">
+                                                    <a href="" id="delete-logo" type="button" class="bg-btn-four border-0">
                                                         <!-- Détails -->
                                                         <i class="las la-trash"></i>
                                                         Supprimer
                                                     </a>
                                                 </div>
-                                                <div class="py-3">
-                                                    <span class="text-dark">Taille recommandée: Largeur 300px X Hauteur
+                                                <div class="pt-1 pb-3">
+                                                    <span class="text-dark info-text">Taille recommandée: Largeur 300px X Hauteur
                                                         300px</span>
                                                 </div>
                                                 <input type="file" class="" name="logo" id="logo">
@@ -190,14 +250,14 @@
                                     <div class="col-12 my-4">
                                         <label class="text-dark" for="video">Vidéo</label>
                                         <input type="file" name="video" id="video" acceptedFileTypes={['video/*']}>
-                                        <video width="320" height="240" controls
-                                            src="{{ isset($entreprise) ? 'storage/'. $entreprise->video : '' }}">
+                                        <!-- <video width="320" height="240" controls
+                                            src="{{ isset($entreprise) ? 'storage/'. $entreprise->video : '' }}"> -->
                                     </div>
 
 
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <button type="submit" id="submit" class="btn btn-primary">Enregistrer</button>
+                                            <button type="submit" class="btn btn-primary" id="vitrine-btn">Enregistrer</button>
                                         </div>
                                     </div>
 
@@ -282,14 +342,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const pond_photos = FilePond.create(photos_locaux,{
         files: newArray.map(url => ({ source: 'storage' + url })),
-        labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
+        labelIdle: '<i class="las la-image"></i>Ajouter des images',
     });
 
     const pond_video = FilePond.create(video,{
         maxFileSize: '100MB',
         chunkUploads: true,
         files:'storage' + videoUrl,
-        labelIdle: 'Glissez votre vidéo ici ou <span class="filepond--label-action">Parcourir</span>',
+        labelIdle: '<i class="las la-video"></i>Ajouter une vidéo',
     });
     pond_video.on('processfile', (error, file) => {
         if (error) {

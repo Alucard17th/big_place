@@ -6,8 +6,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Mon Calendrier</h3>
-            <div class="text">Simplifiez votre processus de recrutement et accélérez vos embauches</div>
+            <h3>Calendrier</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">

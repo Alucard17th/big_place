@@ -15,6 +15,16 @@ h4{
     
 }
 
+.upper-title-box h3{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 30px !important;
+    line-height: 41px !important;
+    /* identical to box height, or 137% */
+    color: #202124 !important;
+}
+
 .dashboard-title{
     font-family: 'Jost';
     font-style: normal;
@@ -2137,6 +2147,27 @@ h6 {
     font-weight: 500;
     color: #ff8b00;
 }
+.bg-btn-nine{
+    padding: 2px 15px;
+    background: rgba(30, 148, 0, 0.05);
+    border: 1px solid #1E9400;
+    border-radius: 6.71186px;
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 500;
+    color: #1E9400;
+}
+
+.bg-back-btn{
+    padding: 2px 25px;
+    background: rgba(255, 140, 0, 0.1);
+    border: 1px solid #FF8C00;
+    border-radius: 50px;
+    color: #FF8C00;
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 500;
+}
 
 
 #data-table tbody td{
@@ -2233,6 +2264,10 @@ label > i{
     color: #000 !important;
 }
 
+.paging_simple_numbers{
+    margin-bottom:  25px !important;
+}
+
 .paginate_button.next,
 .paginate_button.previous {
     display:none;
@@ -2251,6 +2286,11 @@ label > i{
     margin-top: 25px !important;
 }
 
+input[type=checkbox]:checked:before {
+    display: none !important;
+}
 
-
+.copyright-text, #mm-0{
+    background-color: #cae7f642 !important;
+}
  /* NRD STYLES END */

@@ -1,21 +1,55 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+    #add-formation-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#add-formation-form > div > label, #add-formation-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#add-formation-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+</style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Nouvelle Formation</h3>
-        </div>
+       
         <div class="row">
             <div class="col-lg-12">
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Ajouter une formation</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <div class="widget-content">
-                            <h4 class="py-4 text-dark">Ajouter une formation</h4>
                             <form action="{{ route('recruiter.formation.add') }}" method="POST"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="add-formation-form">
                                 @csrf
 
                                 <div class="row">
@@ -139,7 +173,7 @@
                                 </div>
 
                                 <div class="form-group mt-3">
-                                    <button class="theme-btn btn-style-one py-3 px-5" type="submit">Ajouter la formation</button>
+                                    <button class="theme-btn btn-style-one py-3 px-5" type="submit" id="add-formation-btn">Ajouter la formation</button>
                                 </div>
                             </form>
                         </div>

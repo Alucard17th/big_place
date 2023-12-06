@@ -88,10 +88,13 @@ input, select{
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
                         <div class="d-flex align-items-center justify-content-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                                </a>
                             <h3>Mes Favoris</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
                         </div>
                     </div>
                     <div class="tabs-box">

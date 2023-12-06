@@ -71,12 +71,15 @@ input, select{
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
-                <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
-                    <div class="d-flex align-items-center justify-content-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                                </a>
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
                             <h3>Mes Rendez-vous</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -105,7 +108,8 @@ input, select{
                                             <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
                                                     <select name="status" id="status" class="form-control">
-                                                        <option value="" selected>Status</option>
+                                                        <option value="" selected>Statut</option>
+                                                        <option value="A venir">A venir</option>
                                                         <option value="En attente">En attente</option>
                                                         <option value="Annulé">Annulé</option>
                                                         <option value="Effectué">Effectué</option>
@@ -155,7 +159,7 @@ input, select{
                                             <th>Nom du candidat</th>
                                             <th>Type</th>
                                             <th>Date de rendez-vous</th>
-                                            <th>Status</th>
+                                            <th>Statut</th>
                                             <th>Commentaire</th>
                                             <th>Actions</th>
                                         </tr>
@@ -178,7 +182,7 @@ input, select{
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
-                                                    Modifier
+                                                    Editer
                                                 </a>
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-four">
                                                     <!-- Détails -->

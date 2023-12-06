@@ -15,25 +15,64 @@
     background-position: center center;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
 }
+
+#add-event-form  input, #add-event-form select{
+    width:100%;
+}
+#ex1{
+    background: #f8f8f8;
+    max-width: 100%;
+    width:600px;
+    padding: 50px;
+}
+#add-event-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#add-event-form > div > label, #add-event-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#add-event-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
 </style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                        <i class="las la-arrow-left" style="font-size:38px"></i>
-                    </a>
-                <h3>Mes évènemements / jobdatings</h3>
-            </div>
-            <button class="theme-btn btn-style-one bg-header-btn" id="add-event">+ J'organise un nouvel évènemement</button>
-        </div>
+        
+
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes évènemements / jobdatings</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                            <button class="theme-btn btn-style-one bg-header-btn" id="add-event">+ J'organise un nouvel évènemement</button>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
@@ -77,9 +116,21 @@
                                             <td class="text-left">XXX</td>
                                             
                                             <td class="text-left">
-                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three">
+                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
+                                                </a>
+                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-nine mt-2">
+                                                    <i class="las la-braille"></i>
+                                                    Suspendre
+                                                </a>
+                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-eight mt-2">
+                                                    <i class="las la-times"></i>
+                                                    Annuler
+                                                </a>
+                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-seven mt-2">
+                                                    <i class="las la-download"></i>
+                                                    Documents
                                                 </a>
                                                 <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
                                                     <i class="las la-trash"></i>
@@ -103,7 +154,7 @@
 
     <!-- Modal HTML embedded directly into document -->
     <div id="ex1" class="modal">
-       <form action="{{ route('recruiter.events.store') }}" method="POST">
+       <form action="{{ route('recruiter.events.store') }}" method="POST" id="add-event-form">
             @csrf
             <div class="form-group d-flex align-items-center justify-content-between">
                 <h4 class="text-dark">J'organise un nouvel évènement</h4>
@@ -187,7 +238,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="theme-btn btn-style-one create-rdv px-5 py-3">Créer l'événement</button>
+            <button type="submit" class="theme-btn btn-style-one create-rdv px-5 py-3" id="add-event-btn">Créer l'événement</button>
         </form>
 
         <a href="#" class="custom-close-modal"></a>

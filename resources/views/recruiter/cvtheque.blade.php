@@ -64,12 +64,15 @@ input, select{
 
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
                         <div class="d-flex align-items-center justify-content-center">  
-                            <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                                <i class="las la-arrow-left" style="font-size:38px"></i>
-                            </a>
                             <h3>CVTHEQUE</h3>
                         </div>
-                        <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                            <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
+                        </div>
                     </div>
 
                     <div class="tabs-box">

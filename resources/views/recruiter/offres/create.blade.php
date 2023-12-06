@@ -41,6 +41,36 @@
     box-shadow: none !important;
     font-size: 14px !important;
 }
+
+
+#add-offer-form  input, #add-offer-form select{
+    width:100%;
+}
+
+#add-offer-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#add-offer-form > div > label, #add-offer-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#add-offer-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
 </style>
 @endpush
 
@@ -55,7 +85,7 @@
                 <div class="ls-widget pt-5">
                     <div class="tabs-box">
                         <div class="widget-content">
-                            <form action="{{route('recruiter.offer.add')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('recruiter.offer.add')}}" method="POST" enctype="multipart/form-data" id="add-offer-form"> 
                                 @csrf
                                 <!-- Field: Nom du projet ou de la campagne -->
                                 <div class="form-group">
@@ -189,8 +219,33 @@
                                     <label for="industry_sector">Secteur d’activité</label>
                                     <select class="form-control" id="industry_sector" name="industry_sector">
                                         <option value="Agroalimentaire">Agroalimentaire</option>
+                                        <option value="Automobile / Services">Automobile / Services</option>
                                         <option value="Banque / Assurance">Banque / Assurance</option>
-                                        <!-- Add other options based on your needs -->
+                                        <option value="Bois / Papier / Carton / Imprimerie">Bois / Papier / Carton / Imprimerie</option>
+                                        <option value="BTP / Matériaux de construction">BTP / Matériaux de construction</option>
+                                        <option value="Chimie / Parachimie">Chimie / Parachimie</option>
+                                        <option value="Commerce / Négoce / Distribution">Commerce / Négoce / Distribution</option>
+                                        <option value="Édition / Communication / Multimédia">Édition / Communication / Multimédia</option>
+                                        <option value="Électronique / Électricité">Électronique / Électricité</option>
+                                        <option value="Évènementiel">Évènementiel</option>
+                                        <option value="Études et conseils">Études et conseils</option>
+                                        <option value="Hôtellerie / Restauration">Hôtellerie / Restauration</option>
+                                        <option value="Industrie">Industrie</option>
+                                        <option value="Ingénierie">Ingénierie</option>
+                                        <option value="Informatique / Télécoms / Réseaux">Informatique / Télécoms / Réseaux</option>
+                                        <option value="Machines et équipements / Automobile">Machines et équipements / Automobile</option>
+                                        <option value="Métallurgie / Travail du métal">Métallurgie / Travail du métal</option>
+                                        <option value="Plastique / Caoutchouc">Plastique / Caoutchouc</option>
+                                        <option value="Propreté">Propreté</option>
+                                        <option value="Production et services">Production et services</option>
+                                        <option value="Santé">Santé</option>
+                                        <option value="Services aux entreprises">Services aux entreprises</option>
+                                        <option value="Technologie de l'information">Technologie de l'information</option>
+                                        <option value="Télécommunications / Presse">Télécommunications / Presse</option>
+                                        <option value="Textile / Habillement / Chaussure / Maroquineries">Textile / Habillement / Chaussure / Maroquineries</option>
+                                        <option value="Transports / Logistique">Transports / Logistique</option>
+                                        <option value="Travaux publics">Travaux publics</option>
+                                        <option value="Autres">Autres</option>
                                     </select>
                                 </div>
 
@@ -244,7 +299,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Enregistrer</button>
+                                    <button class="theme-btn btn-style-one" type="submit" id="add-offer-btn">Enregistrer</button>
                                 </div>
                             </form>
                         </div>

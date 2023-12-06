@@ -6,7 +6,7 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Ma Tâche</h3>
+            <h3>Modifier ma formation</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
