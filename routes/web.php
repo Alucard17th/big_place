@@ -34,6 +34,7 @@ use App\Imports\JobImport;
 // Route::get('/', function () {
 //     return view('site.home');
 // });
+
 Route::get('/excel-import', function () {
     set_time_limit(0);
     $data = json_decode(file_get_contents(storage_path('app/code_metier.json')));
