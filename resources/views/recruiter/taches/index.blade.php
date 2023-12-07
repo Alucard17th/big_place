@@ -323,6 +323,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#name').on('input', function () {
+        // Trigger DataTable search on the "Nom du candidat" column
+        $('#data-table').DataTable().columns(0).search(this.value).draw();
+    });
+    $('#start').on('input', function () {
+        // Trigger DataTable search on the "Nom du candidat" column
+        $('#data-table').DataTable().columns(1).search(this.value).draw();
+    });
+    $('#end').on('input', function () {
+        // Trigger DataTable search on the "Nom du candidat" column
+        $('#data-table').DataTable().columns(2).search(this.value).draw();
+    });
+    $('#status').on('change', function () {
+        // Get the DataTable instance
+        var dataTable = $('#data-table').DataTable();
+
+        // Define a custom search function for exact match
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var selectedValue = $('#status').val().trim().toLowerCase();
+            var columnValue = data[3].toLowerCase(); // Assuming "Statut" is the fourth column
+
+            // Perform an exact match
+            return selectedValue === '' || columnValue === selectedValue;
+        });
+
+        // Trigger DataTable search and draw
+        dataTable.draw();
+
+        // Remove the custom search function after the search
+        $.fn.dataTable.ext.search.pop();
+    });
+    
+
 });
 </script>
 @endpush

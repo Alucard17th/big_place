@@ -61,6 +61,14 @@ input, select{
 #data-table_length > label > select{
     width: auto !important;
 }
+
+#create-comment{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
 </style>
 @endpush
 @section('content')
@@ -109,10 +117,10 @@ input, select{
                                                 <div class="form-group mb-0 mr-1">
                                                     <select name="status" id="status" class="form-control">
                                                         <option value="" selected>Statut</option>
-                                                        <option value="A venir">A venir</option>
                                                         <option value="En attente">En attente</option>
+                                                        <option value="A venir">A venir</option>
+                                                        <option value="Terminé">Terminé</option>
                                                         <option value="Annulé">Annulé</option>
-                                                        <option value="Effectué">Effectué</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -122,20 +130,6 @@ input, select{
                                                     <input type="date" name="date" id="date" class="form-control w-100">
                                                 </div>
                                             </div>
-
-                                            <div class="col-4 px-1 mt-3">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <select name="category" id="category" class="form-control">
-                                                        <option value="" selected>Catégorie</option>
-                                                        <option value="a_venir">A venir</option>
-                                                        <option value="passé">Passé</option>
-                                                        <option value="annulé">Annulé</option>
-                                                        <option value="en_attente">En Attente</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                           
                                     </div>
                                    
                                   <div class="form-group mt-3">
@@ -189,10 +183,11 @@ input, select{
                                                     <i class="las la-trash"></i>
                                                     Annuler
                                                 </a>
-                                                <!-- <button class="theme-btn p-2 text-white add-comment-modal custom-btn"
+                                                <button class="bg-btn-five add-comment-modal mt-2"
                                                     data-rdv-id="{{$rdv->id}}">
                                                     <i class="las la-comment"></i>
-                                                </button> -->
+                                                    Commentaire
+                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -290,11 +285,60 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#name').on('input', function () {
+        // Trigger DataTable search on the "Nom du candidat" column
+        $('#data-table').DataTable().columns(0).search(this.value).draw();
+    });
+    $('#type').on('change', function () {
+        // Get the DataTable instance
+        var dataTable = $('#data-table').DataTable();
+
+        // Define a custom search function for exact match
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var selectedValue = $('#type').val().trim().toLowerCase();
+            var columnValue = data[1].toLowerCase(); // Assuming "Type" is the second column
+
+            // Perform an exact match
+            return selectedValue === '' || columnValue === selectedValue;
+        });
+
+        // Trigger DataTable search and draw
+        dataTable.draw();
+
+        // Remove the custom search function after the search
+        $.fn.dataTable.ext.search.pop();
+    });
+    $('#status').on('change', function () {
+        // Get the DataTable instance
+        var dataTable = $('#data-table').DataTable();
+
+        // Define a custom search function for exact match
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var selectedValue = $('#status').val().trim().toLowerCase();
+            var columnValue = data[3].toLowerCase(); // Assuming "Statut" is the fourth column
+
+            // Perform an exact match
+            return selectedValue === '' || columnValue === selectedValue;
+        });
+
+        // Trigger DataTable search and draw
+        dataTable.draw();
+
+        // Remove the custom search function after the search
+        $.fn.dataTable.ext.search.pop();
+    });
+    $('#date').on('input', function () {
+        // Trigger DataTable search on the "Nom du candidat" column
+        $('#data-table').DataTable().columns(2).search(this.value).draw();
+    });
+   
 
 })
 </script>

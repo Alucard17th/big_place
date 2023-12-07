@@ -156,6 +156,9 @@ Route::group(['middleware' => ['role:recruiter']], function () {
 
     // COMPTE ADMINISTRATEUR
     Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');
+
+    //TCHAT 
+    Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
 });
 
 Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect');

@@ -172,11 +172,11 @@ input, select{
                                             <div class="form-group mb-0 mt-2 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                                     <option value=""  selected>Niveau d'études</option>
-                                                    <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                    <option value="CAP/BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                     <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
-                                                    <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
-                                                    <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
-                                                    <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                    <option value="Bac+2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
+                                                    <option value="Bac+4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
+                                                    <option value="Bac+5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -205,7 +205,7 @@ input, select{
                                             <th></th>
                                             <th>Nom</th>
                                             <th>Ville</th>
-                                            <th>Niveau</th>
+                                            <th>Niveau d'études</th>
                                             <th>Etat</th>
                                             <th>Action</th>
                                         </tr>
@@ -217,14 +217,14 @@ input, select{
                                                     value="{{$curriculum->id}}"></td>
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
-                                            <td class="text-left">{{$curriculum->niveau}}</td>
+                                            <td class="text-left">{{$curriculum->niveau_etudes}}</td>
                                             <td class="text-left">XXX</td>
                                             
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <br>
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->
-                                                <a type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
+                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -317,7 +317,7 @@ input, select{
             </div>
             <div class="form-group">
                 <div class="alert alert-success alert-dismissible" style="display: none;">
-                    <p id="success-msg">Les créneaux de rendez-vous pour le(s) candidat(s) retenu(s) ont été transmis avec succès.</p>
+                    <p id="success-msg">Les créneaux de rendez-vous pour le(s) candidat(s) ont été transmis avec succès.</p>
                 </div>
             </div>
        </form>
@@ -500,11 +500,42 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
         },
         // "pagingType": "full_numbers",
     });
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#name').on('input', function () {
+        // Trigger DataTable search on the "Nom" column
+        $('#data-table').DataTable().columns(1).search(this.value).draw();
+    });
+    $('#address').on('input', function () {
+        // Trigger DataTable search on the "Nom" column
+        $('#data-table').DataTable().columns(2).search(this.value).draw();
+    });
+    $('#niveau_etudes').on('change', function () {
+        // Get the DataTable instance
+        var dataTable = $('#data-table').DataTable();
+
+        // Define a custom search function for exact match
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var selectedValue = $('#niveau_etudes').val().trim().toLowerCase();
+            var columnValue = data[3].toLowerCase(); // Assuming "Niveau d'études" is the fourth column
+
+            // Perform an exact match
+            return selectedValue === '' || columnValue === selectedValue;
+        });
+
+        // Trigger DataTable search and draw
+        dataTable.draw();
+
+        // Remove the custom search function after the search
+        $.fn.dataTable.ext.search.pop();
+    });
+
+
 
      // Initially hide checkboxes
      $('.form-check').hide();

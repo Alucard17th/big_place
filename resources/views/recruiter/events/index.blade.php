@@ -128,10 +128,10 @@
                                                     <i class="las la-times"></i>
                                                     Annuler
                                                 </a>
-                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-seven mt-2">
+                                                <!-- <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-seven mt-2">
                                                     <i class="las la-download"></i>
                                                     Documents
-                                                </a>
+                                                </a> -->
                                                 <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     $('#close-modal, .custom-close-modal').click(function() {
-        console.log('Modal Should Be Closed');
         $.modal.close();
     });
 

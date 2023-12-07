@@ -20,6 +20,7 @@ use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use RahulHaque\Filepond\Facades\Filepond;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RecruiterController extends Controller
 {   
@@ -573,7 +574,11 @@ class RecruiterController extends Controller
     }
     public function myEventsEdit($id){
         $event = Event::find($id);
-        return view('recruiter.events.edit', compact('event'));
+       
+        // $qrcode = QrCode::generate('Make me into a QrCode!');
+        $qrcode = QrCode::size(100)
+        ->generate("EventID:{$event->id}, Organizer:{$event->organizer_name}, Date:{$event->event_date}, Time:{$event->event_hour}");
+        return view('recruiter.events.edit', compact('event', 'qrcode'));
     }
     public function myEventsUpdate(Request $request){
         $event = Event::find($request->event_id);
@@ -796,5 +801,10 @@ class RecruiterController extends Controller
     public function adminAccount(){
         $user = auth()->user();
         return view('recruiter.account.index', compact('user'));
+    }
+
+    // CHAT
+    public function chat(){
+        return view('recruiter.chat.index');
     }
 }
