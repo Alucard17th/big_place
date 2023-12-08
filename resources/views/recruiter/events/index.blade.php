@@ -222,13 +222,13 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
+                <!-- <div class="col-6"> -->
                     <!-- Field: Digital Badge Download -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="text-dark" for="digital_badge_download">Badge Digital</label>
                         <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
                 <div class="col-6">
                     <!-- Field: Required Documents -->
                     <div class="form-group">
