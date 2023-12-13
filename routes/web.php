@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecruiterController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\Candidat\CurriculumController;
@@ -69,7 +70,7 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
 
 
 // RECRUITER
-Route::group(['middleware' => ['role:recruiter']], function () {
+Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
 
@@ -82,6 +83,7 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/mes-rendez-vous', [RecruiterController::class, 'myRdv'])->name('recruiter.rendez-vous');
     Route::get('/mon-rendez-vous/{id}', [RecruiterController::class, 'seeMyRdv'])->name('recruiter.rendez-vous.see');
     Route::post('/mon-rendez-vous/update', [RecruiterController::class, 'updateMyRdv'])->name('recruiter.rendez-vous.update');
+    Route::get('/mon-rendez-vous-cancel/{id}', [RecruiterController::class, 'cancelMyRdv'])->name('recruiter.rendez-vous.cancel');
 
     Route::get('/mes-documents', [RecruiterController::class, 'myDocuments'])->name('recruiter.documents');
     Route::get('/mes-taches', [RecruiterController::class, 'myTasks'])->name('recruiter.tasks');
@@ -118,12 +120,13 @@ Route::group(['middleware' => ['role:recruiter']], function () {
     Route::get('/mes-evenements/edit/{id}', [RecruiterController::class, 'myEventsEdit'])->name('recruiter.events.edit');
     Route::post('/mes-evenements/update', [RecruiterController::class, 'myEventsUpdate'])->name('recruiter.events.update');
     Route::get('/mes-evenements/delete/{id}', [RecruiterController::class, 'myEventsDelete'])->name('recruiter.events.delete');
+    
+    Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');
+    Route::get('/mes-evenements/cancel/{id}', [RecruiterController::class, 'myEventsCancel'])->name('recruiter.events.cancel');
+    
     Route::get('/getRdvs', [RecruiterController::class, 'getUserRdvs'])->name('getUserRdvs');
     Route::get('/getFormations', [RecruiterController::class, 'getUserFormations'])->name('getUserFormations');
     Route::get('/getEvents', [RecruiterController::class, 'getUserEvents'])->name('getUserEvents');
-
-    Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');
-    Route::get('/mes-evenements/cancel/{id}', [RecruiterController::class, 'myEventsCancel'])->name('recruiter.events.cancel');
     
     // Factures And Contracts
     Route::get('/mes-factures-et-contrats', [RecruiterController::class, 'myFacturesAndContracts'])->name('recruiter.factures.and.contracts');
@@ -156,7 +159,10 @@ Route::group(['middleware' => ['role:recruiter']], function () {
 
     // COMPTE ADMINISTRATEUR
     Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');
-
+    
+    // USERS
+    Route::post('/compte-administrateur/create-user', [AdminController::class, 'createUser'])->name('recruiter.user.create');
+    
     //TCHAT 
     Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
 });
@@ -192,8 +198,12 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
 // Create a route that will addd a auser
 Route::get('/create-roles', function () {
-    $role = Role::create(['name' => 'recruiter', 'guard_name' => 'web']);
-    $role = Role::create(['name' => 'candidat', 'guard_name' => 'web']);
+    // $role = Role::create(['name' => 'recruiter', 'guard_name' => 'web']);
+    // $role = Role::create(['name' => 'candidat', 'guard_name' => 'web']);
+
+    $role = Role::create(['name' => 'limited', 'guard_name' => 'web']);
+    $role = Role::create(['name' => 'restricted', 'guard_name' => 'web']);
+
 });
 
 

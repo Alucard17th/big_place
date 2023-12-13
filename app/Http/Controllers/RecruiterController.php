@@ -15,6 +15,8 @@ use App\Models\Formation;
 use App\Models\Email;
 use App\Models\Candidature;
 use App\Models\History;
+use App\Models\User;
+use App\Models\Document;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use Illuminate\Support\Facades\Mail;
@@ -33,8 +35,16 @@ class RecruiterController extends Controller
     // CV THEQUE
     public function cvtheque(){
         $user = auth()->user();
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $curriculums = Curriculum::where('user_id', $user->id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $curriculums = Curriculum::where('user_id', $entreprise->user_id)->get();
+        }
        
-        $curriculums = Curriculum::where('user_id', $user->id)->get();
         $jobs = Job::all();
         return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
@@ -129,9 +139,9 @@ class RecruiterController extends Controller
     }
     public function myFavorites(){
         $user = auth()->user();
-        $favoriteIds = json_decode($user->favorites()->pluck('favorites')->first(), true);
+        // $favoriteIds = json_decode($user->favorites()->pluck('favorites')->first(), true);
+        $favoriteIds = json_decode($user->favorites->pluck('favorites')->first(), true) ?? [];
         $favorites = Curriculum::whereIn('id', $favoriteIds)->get();
-        
         return view('recruiter.favorites', compact('favorites'));
     }
     public function inviteCandidates(Request $request){
@@ -267,6 +277,14 @@ class RecruiterController extends Controller
 
         return redirect()->back();
     }
+    public function cancelMyRdv($id){
+        $rdv = RendezVous::find($id);
+        $rdv->status = 'Annulé';
+        $rdv->save();
+
+        toast('Rendez-vous annule','success')->autoClose(5000);
+        return redirect()->back();
+    }
 
     // DOCUMENTS
     public function myDocuments(){
@@ -314,13 +332,6 @@ class RecruiterController extends Controller
         return view('recruiter.vitrine.vitrine', compact('entreprise'));
     }
     public function updateVitrine(Request $request){
-        // dd($request->all());
-
-        // if ($request->has('video')) {
-        //     $fileInfos = Filepond::field($request->video)->moveTo('/uploads/images/cars_DEF');
-        //     dd($fileInfos);
-        //     // $images_paths[] = Str::replace('/uploads', '/storage/uploads', $fileInfos['location']);
-        // }
         $user = auth()->user();
         // $user->entreprise()->update([
         //     'nom_entreprise' => $request->nom_entreprise,
@@ -334,16 +345,26 @@ class RecruiterController extends Controller
         //     'chiffre_affaire' => $request->chiffre_affaire
         // ]);
 
+        $user->entreprise()->updateOrCreate(
+            ['user_id' => $user->id], // Assuming 'user_id' is the foreign key linking the user and entreprise tables
+            [
+                'nom_entreprise' => $request->nom_entreprise,
+                'date_creation' => $request->date_creation,
+                'domiciliation' => $request->domiciliation,
+                'siege_social' => $request->siege_social,
+                'valeurs_fortes' => $request->valeurs_fortes,
+                'nombre_implementations' => $request->nombre_implementations,
+                'effectif' => $request->effectif,
+                'fondateurs' => $request->fondateurs,
+                'chiffre_affaire' => $request->chiffre_affaire
+            ]
+        );
+
         $userId = auth()->user()->id;
         $entreprise = Entreprise::where('user_id', $userId)->first();
 
-        // if($request->hasFile('logo')) {
-        //     $file = $request->file('logo');
-        //     $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //     $filePath = $file->storeAs('public/' . $userId, $fileName);
-        //     $entreprise->logo = $filePath;
-        // }    
-        if($request->has('cover')) {
+      
+        if($request->has('cover') && $request->cover != null) {
             $fileInfos = Filepond::field($request->cover)->moveTo('/uploads/'.$userId.'/cover_'.uniqid());
             $entreprise->cover = $fileInfos['location'];
         }
@@ -377,35 +398,6 @@ class RecruiterController extends Controller
             $entreprise->save();
         }
 
-        // if($request->hasFile('video')) {
-        //     $file = $request->file('video');
-        //     $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //     $filePath = $file->storeAs('public/' . $userId, $fileName);
-        //     $entreprise->video = $filePath;
-        // }
-
-        // if ($request->hasFile('photos_locaux')) {
-        //     $photosLocaux = $entreprise->photos_locaux;
-        //     if (!is_array($photosLocaux)) {
-        //         $photosLocaux = [];
-        //     }
-        //     $newFilePaths = [];
-
-        //     foreach ($request->file('photos_locaux') as $file) {
-        //         $fileName = $userId . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-        //         $filePath = $file->storeAs('public/' . $userId, $fileName);
-                
-        //         $newFilePaths[] = $filePath;
-        //     }
-        //     // Merge the new file paths into the existing JSON array
-        //     $photosLocaux = array_merge($photosLocaux, $newFilePaths);
-
-        //     // Set the updated JSON array back to the model
-        //     $entreprise->photos_locaux = $photosLocaux;
-            
-        //     $entreprise->save();
-        // }
-
         $entreprise->save();
         $user->save();
 
@@ -416,7 +408,9 @@ class RecruiterController extends Controller
 
     // TASKS
     public function myTasks(){
-        $tasks = Task::all();
+        // $tasks = Task::all();
+        $user = auth()->user();
+        $tasks = $user->tasks;
         return view('recruiter.taches.index', compact('tasks'));
     }
     public function addTask(Request $request){
@@ -458,7 +452,16 @@ class RecruiterController extends Controller
     // OFFERS
     public function myOffers(){
         $user = auth()->user();
-        $offers = $user->offers;
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $offers = Offre::where('user_id', $user->id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $offers = Offre::where('user_id', $entreprise->user_id)->get();
+        }
+        
         return view('recruiter.offres.index', compact('offers'));
     }
     public function myOffersCreate(){
@@ -496,7 +499,8 @@ class RecruiterController extends Controller
     }
     public function myOffersEdit($id){
         $offer = Offre::find($id);
-        return view('recruiter.offres.edit', compact('offer'));
+        $jobs = Job::all();
+        return view('recruiter.offres.edit', compact('offer', 'jobs'));
     }
     public function updateOffer(Request $request){
         $offer = Offre::find($request->offer_id);
@@ -547,7 +551,16 @@ class RecruiterController extends Controller
     // EVENTS 
     public function myEvents(){
         $user = auth()->user();
-        $events = $user->events;
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $events = Event::where('user_id', $user->id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $events = Event::where('user_id', $entreprise->user_id)->get();
+        }
+        
         return view('recruiter.events.index', compact('events'));
     }
     public function myEventsStore(Request $request){
@@ -562,6 +575,7 @@ class RecruiterController extends Controller
             'required_documents' => $request->input('required_documents'),
             'event_date' => $request->input('event_date'),
             'event_hour' => $request->input('event_hour'),
+            'statut' => 'open',
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
 
@@ -618,14 +632,37 @@ class RecruiterController extends Controller
         $events = $user->events;
         return response()->json($events);
     }
+    public function myEventsSuspend($id){
+        $event = Event::find($id);
+        $event->statut = 'suspended';
+        $event->save();
+        toast('Evenement Suspendue.','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function myEventsCancel($id){
+        $event = Event::find($id);
+        $event->statut = 'cancelled';
+        $event->save();
+        toast('Evenement annulé.','success')->autoClose(5000);
+        return redirect()->back();
+    }
 
     // FACTURE ET CONTRAT
     public function myFacturesAndContracts(){
         $user = auth()->user();
-        $documents = $user->documents()
-        ->where('type', 'facture')
-        ->orWhere('type', 'contrat')
-        ->get();
+        // $documents = $user->documents()
+        // ->where('type', 'facture')
+        // ->orWhere('type', 'contrat')
+        // ->get();
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $documents = Document::where('user_id', $user->id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $documents = Document::where('user_id', $entreprise->user_id)->get();
+        }
+
         return view('recruiter.factures-contrats', compact('documents'));
     }
     public function addFactureOrContract(Request $request){
@@ -800,7 +837,9 @@ class RecruiterController extends Controller
     // COMPTE ADMINISTRATEUR
     public function adminAccount(){
         $user = auth()->user();
-        return view('recruiter.account.index', compact('user'));
+        $adminEntrepriseId = $user->entreprise->first()->id;
+        $users = User::where('parent_entreprise_id', $adminEntrepriseId)->get();
+        return view('recruiter.account.index', compact('user', 'users'));
     }
 
     // CHAT

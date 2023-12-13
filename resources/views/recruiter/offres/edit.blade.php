@@ -1,32 +1,106 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+    .select2-selection--single {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 35px !important;
+    padding: .330rem .70rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+.select2-selection--multiple{
+    margin: 0 !important;
+    width: 100% !important;
+    height: 35px !important;
+    /* padding: .3rem .70rem !important; */
+    padding-top:2px;
+    padding-left:6px;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #8f959b !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+    #edit-offer-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#edit-offer-form > div > label, #edit-offer-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#edit-offer-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+</style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Ma Tâche</h3>
-        </div>
+        
         <div class="row">
             <div class="col-lg-12">
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mon offre d'emploi</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <div class="widget-content">
-                            <form action="{{route('recruiter.offer.update')}}" method="POST" enctype="multipart/form-data">
+                            <form action="{{route('recruiter.offer.update')}}" method="POST" 
+                            enctype="multipart/form-data" id="edit-offer-form">
                                 @csrf
                                 <input type="hidden" name="offer_id" value="{{$offer->id}}">
                                 <!-- Field: Nom du projet ou de la campagne -->
                                 <div class="form-group">
                                     <label for="project_campaign_name">Nom du projet ou de la campagne
-                                        (facultatif)</label>
+                                        </label>
                                     <input type="text" class="form-control" id="project_campaign_name"
                                         name="project_campaign_name" value="{{$offer->project_campaign_name}}">
                                 </div>
 
                                 <!-- Field: Intitulé du poste recherché -->
                                 <div class="form-group">
-                                    <label for="job_title">Intitulé du poste recherché (laisser le champ libre)</label>
+                                    <label for="job_title">Intitulé du poste recherché </label>
                                     <input type="text" class="form-control" id="job_title" name="job_title" value="{{$offer->job_title}}">
                                 </div>
 
@@ -39,12 +113,12 @@
 
                                 <!-- Field: Localisation du poste (Ville et Code postal) -->
                                 <div class="form-group">
-                                    <label for="location_city">Ville de la localisation du poste (obligatoire)</label>
+                                    <label for="location_city">Ville de la localisation du poste</label>
                                     <input type="text" class="form-control" id="location_city" name="location_city" required value="{{$offer->location_city}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="location_postal_code">Code postal de la localisation du poste
-                                        (obligatoire)</label>
+                                        </label>
                                     <input type="text" class="form-control" id="location_postal_code"
                                         name="location_postal_code" required value="{{$offer->location_postal_code}}">
                                 </div>
@@ -58,13 +132,17 @@
 
                                 <!-- Field: Code ROME -->
                                 <div class="form-group">
-                                    <label for="rome_code">Code ROME (permettant des suggestions)</label>
-                                    <input type="text" class="form-control" name="rome_code" id="rome_code" value="{{$offer->rome_code}}">
+                                    <label for="rome_code">Code ROME</label>
+                                    <select name="rome_code" id="rome_code" class="form-control">
+                                        @foreach($jobs as $job)
+                                        <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <!-- Field: Type de contrat -->
                                 <div class="form-group">
-                                    <label for="contract_type">Type de contrat (CDD, CDI, INTERIM)</label>
+                                    <label for="contract_type">Type de contrat</label>
                                     <select class="form-control" id="contract_type" name="contract_type">
                                         <option value="CDD" @if($offer->contract_type == 'CDD') selected @endif>CDD</option>
                                         <option value="CDI" @if($offer->contract_type == 'CDI') selected @endif>CDI</option>
@@ -88,28 +166,28 @@
 
                                 <!-- Field: Temps de travail -->
                                 <div class="form-group">
-                                    <label for="weekly_hours">Temps de travail (choix multiple)</label>
-                                    <select class="form-control" id="weekly_hours" name="weekly_hours[]" multiple>
-                                        <option value="35H" @if(in_array('35H', json_decode($offer->weekly_hours))) selected @endif>35H</option>
-                                        <option value="39H" @if(in_array('39H', json_decode($offer->weekly_hours))) selected @endif>39H</option>
-                                        <option value="Autre" @if(in_array('Autre', json_decode($offer->weekly_hours))) selected @endif>Autre</option>
+                                    <label for="weekly_hours">Temps de travail</label>
+                                    <select class="form-control" id="weekly_hours" name="weekly_hours" >
+                                        <option value="35H" {{ $offer->weekly_hours === '35H' ? 'selected' : '' }}>35H</option>
+                                        <option value="39H" {{ $offer->weekly_hours === '39H' ? 'selected' : '' }}>39H</option>
+                                        <option value="Autre" {{ $offer->weekly_hours === 'Autre' ? 'selected' : '' }}>Autre</option>
                                     </select>
                                 </div>
 
                                 <!-- Field: Niveau d’expérience -->
                                 <div class="form-group">
-                                    <label for="experience_level">Niveau d’expérience (choix multiple)</label>
-                                    <select class="form-control" id="experience_level" name="experience_level[]" multiple>
-                                        <option value="Débutant (0 – 2 ans)" @if(in_array('Débutant (0 – 2 ans)', json_decode($offer->experience_level))) selected @endif>Débutant (0 – 2 ans)</option>
-                                        <option value="Intermédiaire (2 – 5 ans)" @if(in_array('Intermédiaire (2 – 5 ans)', json_decode($offer->experience_level))) selected @endif>Intermédiaire (2 – 5 ans)</option>
-                                        <option value="Confirmé (5 -10 ans)" @if(in_array('Confirmé (5 -10 ans)', json_decode($offer->experience_level))) selected @endif>Confirmé (5 -10 ans)</option>
-                                        <option value="Sénior (+ 10 ans)" @if(in_array('Sénior (+ 10 ans)', json_decode($offer->experience_level))) selected @endif>Sénior (+ 10 ans)</option>
+                                    <label for="experience_level">Niveau d’expérience</label>
+                                    <select class="form-control" id="experience_level" name="experience_level" >
+                                        <option value="Débutant (0 – 2 ans)" {{ $offer->experience_level === 'Débutant (0 – 2 ans)' ? 'selected' : '' }}>Débutant (0 – 2 ans)</option>
+                                        <option value="Intermédiaire (2 – 5 ans)" {{ $offer->experience_level === 'Intermédiaire (2 – 5 ans)' ? 'selected' : '' }}>Intermédiaire (2 – 5 ans)</option>
+                                        <option value="Confirmé (5 -10 ans)" {{ $offer->experience_level === 'Confirmé (5 -10 ans)' ? 'selected' : '' }}>Confirmé (5 -10 ans)</option>
+                                        <option value="Sénior (+ 10 ans)" {{ $offer->experience_level === 'Sénior (+ 10 ans)' ? 'selected' : '' }}>Sénior (+ 10 ans)</option>
                                     </select>
                                 </div>
 
                                 <!-- Field: Langues souhaitées -->
                                 <div class="form-group">
-                                    <label for="desired_languages">Langues souhaitées (choix multiple)</label>
+                                    <label for="desired_languages">Langues souhaitées</label>
                                     <select class="form-control" id="desired_languages" name="desired_languages[]" multiple>
                                         <option value="Anglais" @if(in_array('Anglais', json_decode($offer->desired_languages))) selected @endif>Anglais</option>
                                         <option value="Espagnol" @if(in_array('Espagnol', json_decode($offer->desired_languages))) selected @endif>Espagnol</option>
@@ -123,37 +201,62 @@
 
                                 <!-- Field: Niveau d’éducation -->
                                 <div class="form-group">
-                                    <label for="education_level">Niveau d’éducation (choix multiple)</label>
-                                    <select class="form-control" id="education_level" name="education_level[]" multiple>
-                                        <option value="CAP / BEP" @if(in_array('CAP / BEP', json_decode($offer->education_level))) selected @endif>CAP / BEP</option>
-                                        <option value="Bac" @if(in_array('Bac', json_decode($offer->education_level))) selected @endif>Bac</option>
-                                        <option value="Bac + 2" @if(in_array('Bac + 2', json_decode($offer->education_level))) selected @endif>Bac + 2</option>
-                                        <option value="Bac + 4" @if(in_array('Bac + 4', json_decode($offer->education_level))) selected @endif>Bac + 4</option>
-                                        <option value="Bac + 5 et plus" @if(in_array('Bac + 5 et plus', json_decode($offer->education_level))) selected @endif>Bac + 5 et plus</option>
+                                    <label for="education_level">Niveau d’éducation</label>
+                                    <select class="form-control" id="education_level" name="education_level">
+                                        <option value="CAP / BEP" @if($offer->education_level == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                        <option value="Bac" @if($offer->education_level == 'Bac') selected @endif>Bac</option>
+                                        <option value="Bac + 2" @if($offer->education_level == 'Bac + 3') selected @endif>Bac + 2</option>
+                                        <option value="Bac + 4" @if($offer->education_level == 'Bac + 4') selected @endif>Bac + 4</option>
+                                        <option value="Bac + 5 et plus" @if($offer->education_level == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
                                     </select>
                                 </div>
 
                                 <!-- Field: Salaire Brut -->
                                 <div class="form-group">
-                                    <label for="gross_salary">Salaire Brut (laisser un champ vide pour permettre à
-                                        l’entreprise d’indiquer le salaire)</label>
+                                    <label for="gross_salary">Salaire Brut </label>
                                     <input type="text" class="form-control" id="gross_salary" name="brut_salary" value="{{ $offer->brut_salary }}">
                                 </div>
 
                                 <!-- Field: Secteur d’activité -->
                                 <div class="form-group">
-                                    <label for="industry_sector">Secteur d’activité (choix multiple)</label>
+                                    <label for="industry_sector">Secteur d’activité </label>
                                     <select class="form-control" id="industry_sector" name="industry_sector[]" multiple>
-                                        <option value="Agroalimentaire" @if(in_array('Agroalimentaire', json_decode($offer->industry_sector))) selected @endif>Agroalimentaire</option>
-                                        <option value="Banque / Assurance" @if(in_array('Banque / Assurance', json_decode($offer->industry_sector))) selected @endif>Banque / Assurance</option>
+                                        <!-- <option value="Banque / Assurance" @if(in_array('Banque / Assurance', json_decode($offer->industry_sector))) selected @endif>Banque / Assurance</option> -->
                                         <!-- Add other options based on your needs -->
+                                        <option value="Agroalimentaire" @if(in_array('Agroalimentaire', json_decode($offer->industry_sector))) selected @endif>Agroalimentaire</option>
+                                        <option value="Automobile / Services" @if(in_array('Automobile / Services', json_decode($offer->industry_sector))) selected @endif>Automobile / Services</option>
+                                        <option value="Banque / Assurance" @if(in_array('Banque / Assurance', json_decode($offer->industry_sector))) selected @endif>Banque / Assurance</option>
+                                        <option value="Bois / Papier / Carton / Imprimerie" @if(in_array('Bois / Papier / Carton / Imprimerie', json_decode($offer->industry_sector))) selected @endif>Bois / Papier / Carton / Imprimerie</option>
+                                        <option value="BTP / Matériaux de construction" @if(in_array('BTP / Matériaux de construction', json_decode($offer->industry_sector))) selected @endif>BTP / Matériaux de construction</option>
+                                        <option value="Chimie / Parachimie" @if(in_array('Chimie / Parachimie', json_decode($offer->industry_sector))) selected @endif>Chimie / Parachimie</option>
+                                        <option value="Commerce / Négoce / Distribution" @if(in_array('Commerce / Négoce / Distribution', json_decode($offer->industry_sector))) selected @endif>Commerce / Négoce / Distribution</option>
+                                        <option value="Édition / Communication / Multimédia" @if(in_array('Édition / Communication / Multimédia', json_decode($offer->industry_sector))) selected @endif)>Édition / Communication / Multimédia</option>
+                                        <option value="Électronique / Électricité" @if(in_array('Électronique / Électricité', json_decode($offer->industry_sector))) selected @endif>Électronique / Électricité</option>
+                                        <option value="Évènementiel" @if(in_array('Évènementiel', json_decode($offer->industry_sector))) selected @endif>Évènementiel</option>
+                                        <option value="Études et conseils" @if(in_array('Études et conseils', json_decode($offer->industry_sector))) selected @endif>Études et conseils</option>
+                                        <option value="Hôtellerie / Restauration" @if(in_array('Hôtellerie / Restauration', json_decode($offer->industry_sector))) selected @endif>Hôtellerie / Restauration</option>
+                                        <option value="Industrie" @if(in_array('Industrie', json_decode($offer->industry_sector))) selected @endif>Industrie</option>
+                                        <option value="Ingénierie" @if(in_array('Ingénierie', json_decode($offer->industry_sector))) selected @endif>Ingénierie</option>
+                                        <option value="Informatique / Télécoms / Réseaux" @if(in_array('Informatique / décoms / Réseaux', json_decode($offer->industry_sector))) selected @endif>Informatique / Télécoms / Réseaux</option>
+                                        <option value="Machines et équipements / Automobile" @if(in_array('Machines et	RTLRquements / Automobile', json_decode($offer->industry_sector))) selected @endif>Machines et équipements / Automobile</option>
+                                        <option value="Métallurgie / Travail du métal" @if(in_array('Métallurgie / Travail du-metal', json_decode($offer->industry_sector))) selected @endif>Métallurgie / Travail du métal</option>
+                                        <option value="Plastique / Caoutchouc" @if(in_array('Plastique / Caoutchouc', json_decode($offer->industry_sector))) selected @endif>Plastique / Caoutchouc</option>
+                                        <option value="Propreté" @if(in_array('Propreté', json_decode($offer->industry_sector))) selected @endif>Propreté</option>
+                                        <option value="Production et services" @if(in_array('Production et services', json_decode($offer->industry_sector))) selected @endif>Production et services</option>
+                                        <option value="Santé" @if(in_array('Santé', json_decode($offer->industry_sector))) selected @endif>Santé</option>
+                                        <option value="Services aux entreprises" @if(in_array('Services aux entreprises', json_decode($offer->industry_sector))) selected @endif>Services aux entreprises</option>
+                                        <option value="Technologie de l'information" @if(in_array('Technologie de l\'information', json_decode($offer->industry_sector))) selected @endif>Technologie de l'information</option>
+                                        <option value="Télécommunications / Presse" @if(in_array('Télécommunications / Presse', json_decode($offer->industry_sector))) selected @endif>Télécommunications / Presse</option>
+                                        <option value="Textile / Habillement / Chaussure / Maroquineries" @if(in_array('Textile / Habillement / Chaussure / Maroquineries', json_decode($offer->industry_sector))) selected @endif>Textile / Habillement / Chaussure / Maroquineries</option>
+                                        <option value="Transports / Logistique" @if(in_array('Transports / Logistique', json_decode($offer->industry_sector))) selected @endif>Transports / Logistique</option>
+                                        <option value="Travaux publics" @if(in_array('Travaux publics', json_decode($offer->industry_sector))) selected @endif>Travaux publics</option>
+                                        <option value="Autres" @if(in_array('Autres', json_decode($offer->industry_sector))) selected @endif>Autres</option>
                                     </select>
                                 </div>
 
                                 <!-- Field: Avantages proposés -->
                                 <div class="form-group">
-                                    <label for="benefits">Avantages proposés (laisser un grand champ libre pour
-                                        permettre de rédiger plusieurs lignes)</label>
+                                    <label for="benefits">Avantages proposés</label>
                                     <textarea class="form-control" id="benefits" name="benefits" rows="3"> {{ $offer->benefits }}</textarea>
                                 </div>
 
@@ -172,13 +275,25 @@
 
                                 <!-- Field: Choix des canaux de diffusion -->
                                 <div class="form-group">
-                                    <label for="selected_jobboards">Choix des canaux de diffusion (cocher les
-                                        jobboards)</label>
+                                    <label for="selected_jobboards">Choix des canaux de diffusion </label>
                                     <!-- You can add checkboxes for each jobboard -->
                                     <select class="form-control" id="selected_jobboards" name="selected_jobboards[]" multiple>
-                                        <option value="linkedin" @if(in_array('linkedin', json_decode($offer->selected_jobboards))) selected @endif>Linkedin</option>
-                                        <option value="facebook" @if(in_array('facebook', json_decode($offer->selected_jobboards))) selected @endif>Facebook</option>
                                         <!-- Add other options based on your needs -->
+                                        <option value="linkedin" @if(in_array('linkedin', json_decode($offer->selected_jobboards))) selected @endif>LinkedIn</option>
+                                        <option value="pole_emploi" @if(in_array('pole_emploi', json_decode($offer->selected_jobboards))) selected @endif>Pôle Emploi</option>
+                                        <option value="indeed" @if(in_array('indeed', json_decode($offer->selected_jobboards))) selected @endif>Indeed</option>
+                                        <option value="apec" @if(in_array('apec', json_decode($offer->selected_jobboards))) selected @endif>APEC</option>
+                                        <option value="monster" @if(in_array('monster', json_decode($offer->selected_jobboards))) selected @endif>Monster</option>
+                                        <option value="wizbii" @if(in_array('wizbii', json_decode($offer->selected_jobboards))) selected @endif>Wizbii</option>
+                                        <option value="jobijoba" @if(in_array('jobijoba', json_decode($offer->selected_jobboards))) selected @endif>Jobijoba</option>
+                                        <option value="jooble" @if(in_array('jooble', json_decode($offer->selected_jobboards))) selected @endif>Jooble</option>
+                                        <option value="neuvo" @if(in_array('neuvo', json_decode($offer->selected_jobboards))) selected @endif)>Neuvo</option>
+                                        <option value="place_des_talents" @if(in_array('place_des_talents', json_decode($offer->selected_jobboards))) selected @endif>Place des Talents</option>
+                                        <option value="le_bon_coin" @if(in_array('le_bon_coin', json_decode($offer->selected_jobboards))) selected @endif>Le Bon Coin</option>
+                                        <option value="cadre_emploi" @if(in_array('cadre_emploi', json_decode($offer->selected_jobboards))) selected @endif>Cadre Emploi</option>
+                                        <option value="job_transport" @if(in_array('job_transport', json_decode($offer->selected_jobboards))) selected @endif>Job Transport</option>
+                                        <option value="l_hotellerie_restauration" @if(in_array('l_hotellerie_restauration', json_decode($offer->selected_jobboards))) selected @endif>L'Hôtellerie Restauration</option>
+                                        <option value="meteojob" @if(in_array('meteojob', json_decode($offer->selected_jobboards))) selected @endif>Meteojob</option>
                                     </select>
                                 </div>
 
@@ -189,7 +304,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Enregistrer</button>
+                                    <button class="theme-btn btn-style-one" 
+                                    id="edit-offer-btn" type="submit">Enregistrer</button>
                                 </div>
                             </form>
                         </div>
@@ -202,5 +318,44 @@
 @endsection
 
 @push('scripts')
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    // when document is 
+    $(document).ready(function () {
+        $.ajax({
+            url: "{{ route('getRomeCodes') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                const autocompleteSource = Object.entries(data).map(([fullName, codeOgr]) => {
+                    return `${codeOgr} - ${fullName}`;
+                });
 
+                $( "#code_rome" ).autocomplete({
+                    source: autocompleteSource
+                });
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        })
+
+        $("#desired_languages").select2({
+        });
+
+        $("#education_level").select2({
+        });
+
+        $("#industry_sector").select2({
+        });
+
+        $("#selected_jobboards").select2({
+        });
+
+        $("#rome_code").select2({});
+
+
+    })
+    
+</script>
 @endpush

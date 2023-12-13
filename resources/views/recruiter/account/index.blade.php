@@ -185,7 +185,7 @@
 
                             </div>
                             <div class="d-flex ">
-                                <a href="" class="theme-btn btn-style-one bg-btn-smaller">+ Ajouter un membre</a>
+                                <a href="" class="theme-btn btn-style-one bg-btn-smaller" id="open-user-modal">+ Ajouter un membre</a>
                                 <a href="" class="theme-btn-one btn-one ml-4" id="toggle-3"><i class="las la-angle-down"
                                         style="font-size:24px;color:#000;"></i></a>
                             </div>
@@ -195,8 +195,45 @@
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
                                 <table class="table table-sm table-bordered" id="data-table">
-                                        <thead class="thead-light">
-                                        </thead>
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Nom du Membre</th>
+                                            <th>Type de Compte</th>
+                                            <th>Fonction du Membre</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td class="text-left">
+                                                    {{ $user->name }}
+                                                </td>
+                                                <td class="text-left">
+                                                    @if($user->getRoleNames()->first() == 'recruiter')
+                                                        Administrateur
+                                                    @elseif($user->getRoleNames()->first() == 'limited')
+                                                        Membre Limité
+                                                    @elseif($user->getRoleNames()->first() == 'restricted')
+                                                        Membre Restreint
+                                                    @endif
+                                                </td>
+                                                <td class="text-left">
+                                                    {{ $user->function }}
+                                                </td>
+                                                <td class="text-left">
+                                                    <a href="" type="button" class="bg-btn-three mt-2">
+                                                        <i class="las la-edit"></i>
+                                                        Editer
+                                                    </a>
+                                                    <a href="" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
+                                                        <i class="las la-trash"></i>
+                                                        Supprimer
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -239,6 +276,49 @@
             </div>
 
         </div>
+
+        <!-- Modal HTML embedded directly into document -->
+        <div id="user-modal" class="modal">
+            <form action="{{route('recruiter.user.create')}}" method="POST">
+                @csrf
+                
+                <div class="form-group">
+                    <label class="text-dark" for="name">Nom</label>
+                    <input type="text" class="form-control" name="name" id="name" value="">
+                </div>
+
+                <div class="form-group">
+                    <label class="text-dark" for="email">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" value="">
+                </div>
+
+                <div class="form-group">
+                    <label class="text-dark" for="password">Mot de passe</label>
+                    <input type="password" class="form-control" name="password" id="password" value="">
+                </div>
+
+                <div class="form-group">
+                    <label class="text-dark" for="nom">Rôle</label>
+                    <select class="form-control" name="role" id="role">
+                        <!-- <option value="candidate">Candidat</option> -->
+                        <option value="limited">Limité</option>
+                        <option value="restricted">Restreint</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-dark" for="function">Fonction</label>
+                    <input type="text" class="form-control" name="function" id="function" value="">
+                </div>
+
+                <div class="form-group">
+                    <button class="theme-btn btn-style-one" type="submit" id="create-user">Envoyer</button>
+                </div>
+            </form>
+
+            <a href="#" id="close-modal">Fermer</a>
+            <a href="#" class="custom-close-modal"></a>
+        </div>
         @endsection
 
         @push('scripts')
@@ -263,6 +343,43 @@
                 event.preventDefault();
                 $("#toggleElement-4").toggle();
             })
+
+            const button = document.querySelector('#open-user-modal');
+
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                $("#user-modal").modal({
+                    escapeClose: false,
+                    clickClose: true,
+                    showClose: false
+                });
+            });
+
+            $('#data-table').DataTable({
+                "info": false, // Hide "Showing X to Y of Z entries"
+                "searching": true,
+                "language": {
+                    "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "next": "Suivant",
+                        "previous": "Précédent",
+                    },
+                    "search": "",
+                    "searchPlaceholder": "Rechercher...",
+                    // Add other language customization options if needed
+                },
+                // "pagingType": "full_numbers",
+            });
+
+            $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+            $('#close-modal, .custom-close-modal').click(function(event) {
+                event.preventDefault();
+                $.modal.close();
+            });
         })
         </script>
         @endpush

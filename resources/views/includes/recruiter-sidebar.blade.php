@@ -60,6 +60,7 @@
                         candidature</span>
                 </a>
             </li>
+            @role('recruiter')
             <li class="{{ Str::contains(Request::url(), 'ma-vitrine') ? 'active' : '' }}">
                 <a href="/ma-vitrine" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -67,6 +68,7 @@
                         entreprise</span>
                 </a>
             </li>
+            @endrole
             <li class="{{ Str::contains(Request::url(), 'mes-formations') ? 'active' : '' }}">
                 <a href="/mes-formations" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -108,6 +110,7 @@
                         des recherches</span>
                 </a>
             </li>
+            @role('recruiter')
             <li class="{{ Str::contains(Request::url(), 'compte-administrateur') ? 'active' : '' }}">
                 <a href="/compte-administrateur" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -115,6 +118,7 @@
                         administrateur</span>
                 </a>
             </li>
+            @endrole
             <!-- <li class="{{ Str::contains(Request::url(), 'mon-mot-de-passe') ? 'active' : '' }}">
                 <a href="/user/profile/change-password" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><i class="la la-lock"></i> Mot de passe</span>

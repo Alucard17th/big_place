@@ -57,7 +57,9 @@
                                             <th>Ville / département</th>
                                             <th>Type du contrat</th>
                                             <th>Salaire Brut</th>
+                                            @unlessrole('restricted')
                                             <th>Actions</th>
+                                            @endunlessrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -69,16 +71,22 @@
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
+
+                                            @unlessrole('restricted')
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three">
                                                     <i class="las la-edit"></i>
                                                     Editer
                                                 </a>
+                                                @role('recruiter')
                                                 <a href="" type="button" class="bg-btn-four mt-3">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
+                                                @endrole
                                             </td>
+                                            @endunlessrole
+
                                         </tr>
                                         @endforeach
                                     </tbody>

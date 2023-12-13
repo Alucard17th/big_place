@@ -193,11 +193,13 @@ input, select{
                                                     <i class="las la-edit"></i>
                                                     Editer
                                                 </a>
+                                                @role('recruiter')
                                                 <a href="{{route('recruiter.task.delete', $task->id)}}" type="button" class="bg-btn-four">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
+                                                @endrole
                                             </td>
                                         </tr>
                                         @endforeach

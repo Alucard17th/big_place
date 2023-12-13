@@ -25,6 +25,31 @@
     border-top-right-radius: 25px;
     background-color: #22218c
 }
+
+#edit-event-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#edit-event-form > div > label, #edit-event-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#edit-event-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
 </style>
 @endpush
 
@@ -49,7 +74,7 @@
                     <div class="tabs-box">
                         <div class="widget-content">
                             <form action="{{ route('recruiter.events.update') }}" method="POST"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="edit-event-form">
                                 @csrf
 
                                 <input type="hidden" name="event_id" value="{{ $event->id }}">
@@ -126,7 +151,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Modifier</button>
+                                    <button class="theme-btn btn-style-one" type="submit"
+                                    id="edit-event-btn">Modifier</button>
                                 </div>
                             </form>
 

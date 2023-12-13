@@ -62,7 +62,9 @@
                                             <th>Postes Ouverts</th>
                                             <th>Nombre d'inscrits</th>
                                             <th>Lieu</th>
+                                            @unlessrole('restricted')
                                             <th>Actions</th>
+                                            @endunlessrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -87,6 +89,7 @@
                                             <td>{{$formation->open_positions}}</td>
                                             <td>XXX</td>
                                             <td>{{$formation->work_location}}</td>
+                                            @unlessrole('restricted')
                                             <td class="text-left d-flex flex-column" style="width:8vw;">
                                                 <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="bg-btn-three">
                                                     <i class="las la-edit"></i>
@@ -105,6 +108,8 @@
                                                     Fermer
                                                 </a>
                                             </td>
+                                            @endunlessrole
+
                                         </tr>
                                         @endforeach
                                     </tbody>

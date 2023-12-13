@@ -54,10 +54,10 @@
                     </a>
                     <ul class="dropdown-menu text-left" aria-labelledby="dropdownMenuUser">
                         
-                        @role('recruiter')
-                        <li class="menu-hr"><a href="/recruiter-dashboard">Tableau de bord</a></li>
-                        @else
+                        @role('candidat')
                         <li class="menu-hr"><a href="/candidat-dashboard">Tableau de bord</a></li>
+                        @else
+                        <li class="menu-hr"><a href="/recruiter-dashboard">Tableau de bord</a></li>
                         @endrole
 
                         <li class="dropdown-divider"></li>

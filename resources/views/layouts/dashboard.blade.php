@@ -318,10 +318,10 @@
             </p>
         </div>
         
-        @role('recruiter')
-            @include('includes.recruiter-sidebar')
-        @else
+        @role('candidat')
             @include('includes.candidat-sidebar')
+        @else
+            @include('includes.recruiter-sidebar')
         @endrole
 
        

@@ -94,7 +94,9 @@
                                             <th>Entrée gratuite</th>
                                             <th>Date - Heure</th>
                                             <th>Status</th>
+                                            @unlessrole('restricted')
                                             <th>Actions</th>
+                                            @endunlessrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,18 +115,27 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
-                                            <td class="text-left">XXX</td>
+                                            <td class="text-left">
+                                                @if($event->statut == 'open')
+                                                    Ouvert
+                                                @elseif($event->statut == 'suspended')
+                                                    Suspendu
+                                                @elseif($event->statut == 'cancelled')
+                                                    Annulé
+                                                @endif
+                                            </td>
                                             
+                                            @unlessrole('restricted')
                                             <td class="text-left">
                                                 <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-nine mt-2">
+                                                <a href="{{ route('recruiter.events.suspend', $event->id) }}" type="button" class="bg-btn-nine mt-2">
                                                     <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
-                                                <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-eight mt-2">
+                                                <a href="{{ route('recruiter.events.cancel', $event->id) }}" type="button" class="bg-btn-eight mt-2">
                                                     <i class="las la-times"></i>
                                                     Annuler
                                                 </a>
@@ -137,6 +148,8 @@
                                                     Supprimer
                                                 </a>
                                             </td>
+                                            @endunlessrole
+
                                         </tr>
                                         @endforeach
                                     </tbody>
