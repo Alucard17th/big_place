@@ -18,19 +18,23 @@ class CurriculumController extends Controller
 
     public function curriculumStore(Request $request){
         $user = auth()->user();
-        $curriculum = $user->curriculum()->create([
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'ville_domiciliation' => $request->ville_domiciliation,
-            'metier_recherche' => $request->metier_recherche,
-            'pretentions_salariales' => $request->pretentions_salariales,
-            'annees_experience' => $request->annees_experience,
-            'niveau' => $request->niveau,
-            'niveau_etudes' => $request->niveau_etudes,
-            'valeurs' =>json_encode($request->valeurs),
-            'user_id ' => $user->id,
-        ]);
-        dd($curriculum);
+        $curriculum = $user->curriculum()->updateOrCreate(
+            // Search criteria to find the record to update
+            ['user_id' => $user->id],
+    
+            // Values to update or create
+            [
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'ville_domiciliation' => $request->ville_domiciliation,
+                'metier_recherche' => $request->metier_recherche,
+                'pretentions_salariales' => $request->pretentions_salariales,
+                'annees_experience' => $request->annees_experience,
+                'niveau' => $request->niveau,
+                'niveau_etudes' => $request->niveau_etudes,
+                'valeurs' => json_encode($request->valeurs),
+            ]
+        );
 
         toast('Curriculum uploaded','success')->autoClose(5000);
 

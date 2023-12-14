@@ -12,7 +12,17 @@ class RendezVousController extends Controller
 
     public function rdvs(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous;
+        $rdvs = RendezVous::where('candidat_it', $user->id)->get();
         return view('candidat.rendez-vous.rendez-vous', compact('rdvs'));
     }
+
+    public function cancelRdv($id){
+        $rdv = RendezVous::find($id);
+        $rdv->status = 'Annulé';
+        $rdv->save();
+        toast('Rendez-vous annulé','success')->autoClose(5000);
+        return redirect()->back();
+    }
+
+   
 }

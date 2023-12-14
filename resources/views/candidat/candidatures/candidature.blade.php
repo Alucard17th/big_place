@@ -36,106 +36,239 @@ input, select{
 #data-table_length > label > select{
     width: auto !important;
 }
+ /* LIST */
+.list-group-item.active{
+background: #f4f5ff !important;
+border-radius: 10.2715px;
+} 
+.list-title{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+font-size: 20.543px;
+line-height: 31px;
+color: #1C1C1E;
+}
+.list-subtitle{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 15.4073px;
+line-height: 23px;
+color: rgba(28, 28, 30, 0.72);
+}
+.list-time-subtitle{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #1C1C1E;
+}
+.list-item-img{
+min-width: 92.44px;
+width: 92.44px;
+height: 92.44px;
+border: 0.320985px solid rgba(28, 28, 30, 0.08);
+border-radius: 10.2715px;
+}
+
+
+
+.offre-title{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+font-size: 41.0861px;
+line-height: 51px;
+color: #1C1C1E;
+}
+.offre-subtitle{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 20.543px;
+line-height: 31px;
+color: rgba(28, 28, 30, 0.72);
+}
+.offre-time-subtitle{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 20.543px;
+line-height: 31px;
+color: rgba(28, 28, 30, 0.72);
+}
+.candidature-time-subtitle{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #1C1C1E;
+}
+.offre-desc, .offre-status, .offre-end-date{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 16.543px;
+line-height: 31px;
+color: #000000;
+}
+.offre-subtitle img,
+.entreprise-logo img{
+width: 30.81px;
+height: 30.81px;
+border-radius: 30.8146px;
+}
+
+.entreprise-name{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+font-size: 20.543px;
+line-height: 31px;
+color: #1C1C1E;
+}
+.entreprise-info{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 15.4073px;
+line-height: 23px;
+color: rgba(28, 28, 30, 0.72);
+}
+.see-more-btn{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 28px;
+letter-spacing: 0.02em;
+text-transform: capitalize;
+color: #6836DD;
+}
+.entreprise-desc{
+font-family: 'Outfit';
+font-style: normal;
+font-weight: 400;
+font-size: 15.4073px;
+line-height: 23px;
+color: rgba(28, 28, 30, 0.72);
+}
+
+.check-icon{
+width: 30.81px;
+height: 30.81px;
+background: #13D527;
+
+}
+.offre-btn{
+    color:#302ea7;
+    font-size: 30px;
+}
 </style>
 @endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-    <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('candidat.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                        <i class="las la-arrow-left" style="font-size:38px"></i>
-                    </a>
-                <h3>Mes Candidatures</h3>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
-                <div class="ls-widget">
-                    <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
-                                    action="{{ route('recruiter.cvtheque.search') }}">
-                                    <div class="row">
-                                            <div class="col-4">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <select name="type" id="type" class="form-control">
-                                                        <option value=""  selected>Type de rendez-vous</option>
-                                                        <option value="Visio">Visio</option>
-                                                        <option value="Physique">Physique</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <input type="date" name="date" id="date" class="form-control w-100">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4 mt-3">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <select name="category" id="category" class="form-control">
-                                                        <option value=""  selected>Catégorie</option>
-                                                        <option value="a_venir">A venir</option>
-                                                        <option value="passé">Passé</option>
-                                                        <option value="annulé">Annulé</option>
-                                                        <option value="en_attente">En Attente</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                           
-                                    </div>
-                                   
-                                  <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
-                                  </div>
-                                   
-                                </form>
-                            </div>
+                <div class="ls-widget py-5">
+                    <!-- <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes Candidatures</h3>
                         </div>
-
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                                Retour
+                            </a>
+                        </div>
+                    </div> -->
+                    <div class="tabs-box">
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
-                            <div class="table-outer">
-                                <table class="table table-sm table-bordered" id="data-table">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Titre</th>
-                                            <th>Status</th>
-                                            <th>Crée le</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($candidatures as $candidature)
-                                        <tr>
-                                            <td class="text-left">{{$candidature->title}}</td>
-                                            <td class="text-left">{{$candidature->status}}</td>
-                                            <td class="text-left">{{$candidature->created_at}}</td>
-                                           
-                                            <td class="text-left">
-                                                <a href="" type="button" class="bg-btn-five">
-                                                    <!-- Détails -->
-                                                    <i class="las la-video"></i>
-                                                    Voir
-                                                </a>
-                                            </td>
-                                        </tr>
+                            <div class="row">
+                                <div class="col-5" style="border-right: 1px solid #0000005c;">
+                                    <ul class="list-group">
+                                        @foreach ($candidatures as $key => $candidature)
+                                        <a class="candidature-link" data-candidature-id="{{ $candidature->id }}">
+                                            <li class="list-group-item d-flex border-0 {{ $key == 0 ? 'active' : '' }}">
+                                                <div class="list-img">
+                                                    <img class="list-item-img" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                </div>
+                                                <div class="list-content ml-2">
+                                                    <h4 class="list-title">{{getOfferByCandidatId($candidature->offer_id)->job_title}}</h4>
+                                                    <span class="list-subtitle">{{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}} , {{getOfferByCandidatId($candidature->offer_id)->location_city}}</span>
+                                                    <h5 class="list-time-subtitle">Déposé le {{ \Carbon\Carbon::parse($candidature->created_at)->isoFormat('LL') }}</h5>
+                                                </div>
+                                            </li>
+                                        </a>
                                         @endforeach
-                                    </tbody>
-                                </table>
+                                    </ul>
+                                </div>
+                                <div class="vr"></div>
+                                <div class="col-7">
+                                    <div class="row">
+                                        <div class="col-12 pl-5">
+                                            <div class="">
+                                                <div class="d-flex justify-content-between">
+                                                    <h4 class="offre-title">{{getOfferByCandidatId($candidatures[0]->offer_id)->job_title}}</h4>
+                                                    <div class="d-flex">
+                                                        <button class="offre-btn mr-3"><i class="las la-bookmark"></i></button>
+                                                        <button class="offre-btn mr-3"><i class="las la-share"></i></button>
+                                                        <button class="offre-btn"><i class="las la-ellipsis-h"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="offre-subtitle my-1"> 
+                                                    <img src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt="" class="mr-2">
+                                                     {{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}} , {{getOfferByCandidatId($candidature->offer_id)->location_city}}
+                                                </div>
+                                                <h5 class="offre-time-subtitle">Publiée le {{getOfferByCandidatId($candidature->offer_id)->created_at}}</h5>
+
+                                                <h4 class="candidature-time-subtitle mt-4">
+                                                    <img src="{{asset('/plugins/images/icons/tick-circle.png')}}" alt="">
+                                                    Déposée le {{ \Carbon\Carbon::parse($candidature->created_at)->isoFormat('LL') }}
+                                                </h4>
+                                                <div class="offre-desc my-4">
+                                                    Responsabilités : Développer et maintenir des applications Java complexes Travailler en collaboration avec une équipe d'ingénieurs pour concevoir et mettre en œuvre de nouvelles fonctionnalités Participer à la conception et à la mise en œuvre de l'architecture logicielle des applications
+                                                </div>
+                                                <div class="offre-status">Status de l'offre : {{getOfferByCandidatId($candidature->offer_id)->status}}</div>
+                                                <div class="offre-end-date">Date de limitation de candidature : {{getOfferByCandidatId($candidature->offer_id)->unpublish_date}}</div>
+                                                
+                                                <div class="card mt-5" style="height:100%;">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-2 pr-0">
+                                                                <div class="entreprise-logo"><img src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt=""></div>
+                                                            </div>
+                                                            <div class="col-7 pl-0">
+                                                                <div class="entreprise-name">{{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}}</div>
+                                                                <div class="entreprise-info">{{getEntrepriseByUserID($candidature->user_id)->effectif}} Employés</div>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <button class="see-more-btn">Voir Plus</button>
+                                                            </div>
+                                                            <div class="col-12 mt-3">
+                                                                <span class="entreprise-desc">
+                                                                    Google est l'une des entreprises les plus influentes au monde. 
+                                                                    Elle est connue pour son moteur de recherche, 
+                                                                    mais elle propose également une gamme d'autres produits et services, 
+                                                                    notamment Gmail, Google Maps, YouTube, Google Cloud Platform et Google AI.... see more
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -145,102 +278,31 @@ input, select{
     </div>
 
     <!-- Modal HTML embedded directly into document -->
-    <div id="commentaire-modal" class="modal">
-        <form action="{{route('recruiter.invite.candidates')}}" method="POST">
-            @csrf
-            <div class="form-group">
-                <h4>Ajouter un Commentaire :</h4>
-            </div>
-            <input type="hidden" name="rdv_id" id="rdv_id">
-            <div class="form-group">
-                <label for="candidate">Commentaire </label>
-                <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="10"></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="button" id="create-comment">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
-    </div>
-
 </div>
 @endsection
 
 @push('scripts')
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const openModalCommentBtns = document.querySelectorAll('.add-comment-modal');
-    const createCommentBtn = document.querySelector('#create-comment');
-
-    openModalCommentBtns.forEach(function(button) {
-        button.addEventListener('click', function() {
-            $("#commentaire-modal").modal({
-                escapeClose: false,
-                clickClose: true,
-                showClose: false
-            });
-            $('#rdv_id').val($(this).data('rdv-id'));
-            document.getElementById('commentaire').value = '';
+$(document).ready(function () {
+    $('.candidature-link').on('click', function (e) {
+        e.preventDefault();
+        
+        var candidatureId = $(this).data('candidature-id');
+        
+        // Make an AJAX request
+        $.ajax({
+            url: '/candidature/' + candidatureId,
+            type: 'GET',
+            success: function (data) {
+                // Handle the received data, e.g., update a modal with the candidature details
+                console.log(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
         });
     });
-
-    $('#create-comment').click(function() {
-        // Send the data 
-        const data = {
-            commentaire: document.getElementById('commentaire').value,
-            rdv_id: $('#rdv_id').val()
-        }
-        fetch('{{ route('recruiter.commentaire.add') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-                    },
-                    body: JSON.stringify(data),
-                })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response, e.g., show a success message
-                // refresh the current page
-                //    window.location.reload();
-            })
-            .catch(error => {
-                // Handle errors, e.g., show an error message
-                console.error(error);
-            });
-    })
-
-    $('#data-table').DataTable({
-        "info": false, // Hide "Showing X to Y of Z entries"
-        "searching": true,
-        "language": {
-            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
-            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-            "paginate": {
-                "first": "Premier",
-                "last": "Dernier",
-                "next": "Suivant",
-                "previous": "Précédent",
-            },
-            "search": "",
-            "searchPlaceholder": "Rechercher...",
-            // Add other language customization options if needed
-        },
-        // "pagingType": "full_numbers",
-    });
-    $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
-
-})
-</script>
-
-<script>
-$('#close-modal, .custom-close-modal').click(function() {
-    console.log('Modal Should Be Closed');
-    $.modal.close();
 });
 </script>
+
 @endpush

@@ -1289,7 +1289,7 @@ hr {
 
 .dashboard .dashboard-outer {
     position: relative;
-    padding: 120px 20px 120px 0px;
+    padding: 80px 20px 120px 0px;
 }
 
 .call-to-action-two {
@@ -2291,6 +2291,16 @@ input[type=checkbox]:checked:before {
 }
 
 .copyright-text, #mm-0{
-    background-color: #cae7f642 !important;
+    background-color: #f1f9fd !important;
+}
+
+.deactivated li {
+    cursor: not-allowed; /* Change the cursor to indicate unclickable */
+    pointer-events: none; /* Disable pointer events */
+}
+.deactivated li a{
+    color: #c2c2c2 !important; /* Change the color to visually indicate deactivation */
+    cursor: not-allowed; /* Change the cursor to indicate unclickable */
+    pointer-events: none; /* Disable pointer events */
 }
  /* NRD STYLES END */

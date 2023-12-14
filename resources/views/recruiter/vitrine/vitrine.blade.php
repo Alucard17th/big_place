@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoUrl = @json($logo);
     const coverUrl = @json($cover);
     const videoUrl = @json($video);
-    const newArray = images.map(str => str.replace('public', 'storage'));
+    const newArray =  images ? images.map(str => str.replace('public', 'storage')) : [];
 
     
     FilePond.registerPlugin(FilePondPluginFileValidateSize);

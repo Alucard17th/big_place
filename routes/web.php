@@ -10,6 +10,8 @@ use App\Http\Controllers\Candidat\RendezVousController;
 use App\Http\Controllers\Candidat\CandidatureController;
 use App\Http\Controllers\Candidat\EmailController;
 use App\Http\Controllers\Candidat\DocumentController;
+use App\Http\Controllers\Candidat\TaskController;
+use App\Http\Controllers\Candidat\EventController;
 
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -176,9 +178,11 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-dashboard', [CandidatController::class, 'dashboard'])->name('candidat.dashboard');
     Route::get('/candidat-favoris', [FavoritesController::class, 'favoris'])->name('candidat.favoris');
     Route::get('/candidat-rdvs', [RendezVousController::class, 'rdvs'])->name('candidat.rdvs');
+    Route::get('/candidat-tasks', [TaskController::class, 'tasks'])->name('candidat.tasks');
     Route::get('/candidat-candidatures', [CandidatureController::class, 'candidatures'])->name('candidat.candidatures');
     Route::get('/candidat-emails', [EmailController::class, 'emails'])->name('candidat.emails');
     Route::get('/candidat-documents', [DocumentController::class, 'documents'])->name('candidat.documents');
+    Route::get('/candidat-events', [EventController::class, 'events'])->name('candidat.events');
     
     // TODO
     Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
@@ -187,11 +191,22 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-formation', [FormationController::class, 'formation'])->name('candidat.formation');
     Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
 
-    
+    // RDV
+    Route::get('/candidat-rdv/cancel/{id}', [RendezVousController::class, 'cancelRdv'])->name('candidat.rdv.cancel');
+
+    // TASKS
+    Route::post('/task/add', [TaskController::class, 'addTask'])->name('candidat.task.add');
+    Route::get('/task/get/{id}', [TaskController::class, 'getTask'])->name('candidat.task.see');
+    Route::post('/task/update', [TaskController::class, 'updateTask'])->name('candidat.task.update');
+    Route::get('/task/delete/{id}', [TaskController::class, 'deleteTask'])->name('candidat.task.delete');
+
     // JSON 
     Route::get('/getCandidatRdvs', [CandidatController::class, 'getCandidatRdvs'])->name('getCandidatRdvs');
     Route::get('/getCandidatEvents', [CandidatController::class, 'getCandidatEvents'])->name('getCandidatEvents');
     Route::get('/getCandidatFormations', [CandidatController::class, 'getCandidatFormations'])->name('getCandidatFormations');
+
+    // CANDIDATURES
+    Route::get('/candidature/{id}', [CandidatureController::class, 'jsonShow'])->name('candidature.json.show');
 
 });
 

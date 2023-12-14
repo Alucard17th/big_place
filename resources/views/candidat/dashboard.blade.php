@@ -6,10 +6,10 @@
     height: 200px;
 }
 
-.dashboard-small-img {
+/* .dashboard-small-img {
     width: 100%;
     height: 150px;
-}
+} */
 
 .dashboard-link img {
     border-radius: 20px;
