@@ -124,4 +124,18 @@ class CandidatController extends Controller
         $histories = auth()->user()->history;
         return view('candidat.history.index', compact('histories'));
     }
+
+    public function stats(){
+        $user = auth()->user();
+       
+        $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
+        $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
+
+        $offresByMetier = $user->offers->groupBy('rome_code')->map->count();
+   
+        $moyenneDureeRecrutement = 555;
+
+        $dureeSusbcription = 555;
+        return view('candidat.stats.index', compact('doneRdvs','refusedRdvs', 'offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+    }
 }

@@ -294,7 +294,8 @@ background: #13D527;
 $(document).ready(function () {
     $('.candidature-link').on('click', function (e) {
         e.preventDefault();
-        
+        $('.candidature-link').closest('ul').find('li').removeClass('active');
+        $(this).find('li').addClass('active');
         var candidatureId = $(this).data('candidature-id');
         
         // Make an AJAX request

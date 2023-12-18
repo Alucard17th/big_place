@@ -89,97 +89,136 @@ select {
     padding: 20px;
 }
 
-.offre-title{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 500;
-font-size: 41.0861px;
-line-height: 51px;
-color: #1C1C1E;
+.offre-title {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 41.0861px;
+    line-height: 51px;
+    color: #1C1C1E;
 }
-.offre-subtitle{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 20.543px;
-line-height: 31px;
-color: rgba(28, 28, 30, 0.72);
+
+.offre-subtitle {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.543px;
+    line-height: 31px;
+    color: rgba(28, 28, 30, 0.72);
 }
-.offre-time-subtitle{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 20.543px;
-line-height: 31px;
-color: rgba(28, 28, 30, 0.72);
+
+.offre-time-subtitle {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20.543px;
+    line-height: 31px;
+    color: rgba(28, 28, 30, 0.72);
 }
-.candidature-time-subtitle{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 24px;
-color: #1C1C1E;
+
+.candidature-time-subtitle {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1C1C1E;
 }
-.offre-desc, .offre-status, .offre-end-date{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 16.543px;
-line-height: 31px;
-color: #000000;
+
+.offre-desc,
+.offre-status,
+.offre-end-date {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16.543px;
+    line-height: 31px;
+    color: #000000;
 }
+
 .offre-subtitle img,
-.entreprise-logo img{
-width: 30.81px;
-height: 30.81px;
-border-radius: 30.8146px;
+.entreprise-logo img {
+    width: 30.81px;
+    height: 30.81px;
+    border-radius: 30.8146px;
 }
 
-.entreprise-name{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 500;
-font-size: 20.543px;
-line-height: 31px;
-color: #1C1C1E;
-}
-.entreprise-info{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 15.4073px;
-line-height: 23px;
-color: rgba(28, 28, 30, 0.72);
-}
-.see-more-btn{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 600;
-font-size: 18px;
-line-height: 28px;
-letter-spacing: 0.02em;
-text-transform: capitalize;
-color: #6836DD;
-}
-.entreprise-desc{
-font-family: 'Outfit';
-font-style: normal;
-font-weight: 400;
-font-size: 15.4073px;
-line-height: 23px;
-color: rgba(28, 28, 30, 0.72);
+.entreprise-name {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20.543px;
+    line-height: 31px;
+    color: #1C1C1E;
 }
 
-.check-icon{
-width: 30.81px;
-height: 30.81px;
-background: #13D527;
+.entreprise-info {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15.4073px;
+    line-height: 23px;
+    color: rgba(28, 28, 30, 0.72);
+}
+
+.see-more-btn {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+    color: #6836DD;
+}
+
+.entreprise-desc {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15.4073px;
+    line-height: 23px;
+    color: rgba(28, 28, 30, 0.72);
+}
+
+.check-icon {
+    width: 30.81px;
+    height: 30.81px;
+    background: #13D527;
 
 }
-.offre-btn{
-    color:#302ea7;
+
+.offre-btn {
+    color: #302ea7;
     font-size: 30px;
+}
+
+#apply-form>h4 {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+
+#apply-form>div>label,
+#apply-form>div.row>div>div>label {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+
+#apply-btn {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
 }
 </style>
 @endpush
@@ -192,31 +231,18 @@ background: #13D527;
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
-                    <!-- <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <h3>Mes Favoris</h3>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
-                                Retour
-                            </a>
-                        </div>
-                    </div> -->
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-
-                        <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
-                            <!-- TABLE VIEW -->
                             <div class="row">
                                 <div class="col-12 pl-5">
                                     <div class="">
-                                        <div class="upper-title-box d-flex justify-content-between align-items-center pt-5">
+                                        <div
+                                            class="upper-title-box d-flex justify-content-between align-items-center pt-5">
                                             <h4 class="offre-title">
                                                 {{$offer->job_title}}</h4>
                                             <div class="d-flex">
-                                                <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2 pb-0">
-                                                    <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                                <a href="{{ route('candidat.dashboard') }}"
+                                                    class="bg-back-btn mr-2 pb-0">
                                                     Retour
                                                 </a>
                                             </div>
@@ -231,8 +257,12 @@ background: #13D527;
                                             {{$offer->created_at}}</h5>
 
                                         <div class="row my-4">
-                                            <a class="theme-btn btn-style-one bg-btn text-white">Je Postule</a>
-                                            <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" class="bg-btn-three bg-btn ml-3" style="padding-left:25px !important;padding-right:25px !important;">Consulter la vitrine de l'entreprise</a>
+                                            <a class="theme-btn btn-style-one bg-btn text-white"
+                                                id="open-apply-modal">Je Postule</a>
+                                            <a href="{{route('candidat.vitrine.show', $offer->user_id)}}"
+                                                class="bg-btn-three bg-btn ml-3"
+                                                style="padding-left:25px !important;padding-right:25px !important;">Consulter
+                                                la vitrine de l'entreprise</a>
                                         </div>
                                         <div class="offre-desc my-4">
                                             Responsabilités : Développer et maintenir des applications Java
@@ -287,6 +317,60 @@ background: #13D527;
         </div>
     </div>
 
+    <div id="ex1" class="modal">
+        <form action="{{ route('candidat.candidature.store') }}" method="POST" id="apply-form">
+            @csrf
+            <div class="form-tags d-none">
+                <input type="hidden" name="entreprise_owner_id" value="{{$offer->user_id}}">
+                <input type="hidden" name="title" value="{{$offer->job_title}}">
+                <input type="hidden" name="offer_id" value="{{$offer->id}}">
+            </div>
+            <h4 class="text-dark mb-3">Postuler </h4>
+
+            <div class="row">
+                <h4 class="offre-title col-12">
+                    {{$offer->job_title}}</h4>
+                <div class="offre-desc my-4 col-12">
+                    Responsabilités : Développer et maintenir des applications Java
+                    complexes Travailler en collaboration avec une équipe d'ingénieurs pour
+                    concevoir et mettre en œuvre de nouvelles fonctionnalités Participer à
+                    la conception et à la mise en œuvre de l'architecture logicielle des
+                    applications
+                </div>
+                <div class="offre-status col-12">Status de l'offre :
+                    {{$offer->status}}</div>
+                <div class="offre-end-date col-12">Date de limitation de candidature :
+                    {{$offer->unpublish_date}}</div>
+            </div>
+
+            <div class="row my-4">
+                <h4 class="offre-title col-12">Mes informations </h4>
+                <div class="col-12 offre-desc">
+                    Nom : {{auth()->user()->name}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Email : {{auth()->user()->email}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Date de naissance : {{auth()->user()->birth_date}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Mon CV : 
+                    <a href="{{asset('storage'.auth()->user()->curriculum[0]->cv)}}" class="" target="_blank">
+                    <i class="las la-eye"></i>
+                        Voir
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit" id="apply-btn">Postuler</button>
+            </div>
+        </form>
+
+        <a href="#" class="custom-close-modal"></a>
+    </div>
+
 </div>
 @endsection
 
@@ -294,7 +378,19 @@ background: #13D527;
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+    $('#open-apply-modal').click(function() {
+        // Send the data 
+        $("#ex1").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    })
 
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
 });
 </script>
 @endpush

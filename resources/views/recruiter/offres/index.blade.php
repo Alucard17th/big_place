@@ -79,7 +79,8 @@
                                                     Editer
                                                 </a>
                                                 @role('recruiter')
-                                                <a href="" type="button" class="bg-btn-four mt-3">
+                                                <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
+                                                class="bg-btn-four mt-3"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>

@@ -340,7 +340,7 @@ color: #2D2F30;
             <p class="text-dark modal-text">En fournissant des détails complets et précis, vous augmentez significativement vos chances d'être remarqué
                 par les recruteurs. Ces informations aideront à adapter les opportunités qui vous seront présentées et à
                 simplifier le processus de candidature.</p>
-            <button class="btn-style-one rounded-pill py-3 px-4" id="modal-btn">Compléter ma Fiche de Candidature</button>
+            <button class="btn-style-one rounded-pill py-3 px-4 custom-close-modal" id="modal-btn">Compléter ma Fiche de Candidature</button>
         </div>
        
         <a href="#" id="close-modal">Fermer</a>

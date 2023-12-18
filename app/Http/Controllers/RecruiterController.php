@@ -484,7 +484,7 @@ class RecruiterController extends Controller
         $offer->desired_languages = json_encode($request->input('desired_languages'));
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        $offer->industry_sector = json_encode($request->input('industry_sector'));
+        $offer->industry_sector = $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
         $offer->unpublish_date = $request->input('unpublish_date');
@@ -518,7 +518,7 @@ class RecruiterController extends Controller
         $offer->desired_languages = json_encode($request->input('desired_languages'));
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        $offer->industry_sector = json_encode($request->input('industry_sector'));
+        $offer->industry_sector = $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
         $offer->unpublish_date = $request->input('unpublish_date');

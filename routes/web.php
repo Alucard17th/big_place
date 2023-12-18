@@ -187,11 +187,12 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-events', [EventController::class, 'events'])->name('candidat.events');
     Route::get('/candidat-formation', [FormationController::class, 'index'])->name('candidat.formation');
     Route::get('/candidat-account', [CandidatController::class, 'account'])->name('candidat.account');
+    Route::get('/candidat-stats', [CandidatController::class, 'stats'])->name('candidat.stats');
     
     // TODO
     Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
     Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
-    Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
+    // Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
     Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
 
     // RDV
@@ -212,6 +213,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidature/{id}', [CandidatureController::class, 'jsonShow'])->name('candidature.json.show');
     Route::get('/candidature/apply/{id}', [CandidatureController::class, 'apply'])->name('candidat.candidature.apply');
     Route::get('/candidature/vitrine/show/{id}', [CandidatureController::class, 'vitrineShow'])->name('candidat.vitrine.show');
+    Route::post('/candidat/candidature/create', [CandidatureController::class, 'store'])->name('candidat.candidature.store');
 
     // OFFERS
     Route::get('/candidat-offers', [OfferController::class, 'index'])->name('candidat.offers');

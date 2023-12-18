@@ -221,36 +221,34 @@
                                 <div class="form-group">
                                     <label for="industry_sector">Secteur d’activité </label>
                                     <select class="form-control" id="industry_sector" name="industry_sector[]" multiple>
-                                        <!-- <option value="Banque / Assurance" @if(in_array('Banque / Assurance', json_decode($offer->industry_sector))) selected @endif>Banque / Assurance</option> -->
-                                        <!-- Add other options based on your needs -->
-                                        <option value="Agroalimentaire" @if(in_array('Agroalimentaire', json_decode($offer->industry_sector))) selected @endif>Agroalimentaire</option>
-                                        <option value="Automobile / Services" @if(in_array('Automobile / Services', json_decode($offer->industry_sector))) selected @endif>Automobile / Services</option>
-                                        <option value="Banque / Assurance" @if(in_array('Banque / Assurance', json_decode($offer->industry_sector))) selected @endif>Banque / Assurance</option>
-                                        <option value="Bois / Papier / Carton / Imprimerie" @if(in_array('Bois / Papier / Carton / Imprimerie', json_decode($offer->industry_sector))) selected @endif>Bois / Papier / Carton / Imprimerie</option>
-                                        <option value="BTP / Matériaux de construction" @if(in_array('BTP / Matériaux de construction', json_decode($offer->industry_sector))) selected @endif>BTP / Matériaux de construction</option>
-                                        <option value="Chimie / Parachimie" @if(in_array('Chimie / Parachimie', json_decode($offer->industry_sector))) selected @endif>Chimie / Parachimie</option>
-                                        <option value="Commerce / Négoce / Distribution" @if(in_array('Commerce / Négoce / Distribution', json_decode($offer->industry_sector))) selected @endif>Commerce / Négoce / Distribution</option>
-                                        <option value="Édition / Communication / Multimédia" @if(in_array('Édition / Communication / Multimédia', json_decode($offer->industry_sector))) selected @endif)>Édition / Communication / Multimédia</option>
-                                        <option value="Électronique / Électricité" @if(in_array('Électronique / Électricité', json_decode($offer->industry_sector))) selected @endif>Électronique / Électricité</option>
-                                        <option value="Évènementiel" @if(in_array('Évènementiel', json_decode($offer->industry_sector))) selected @endif>Évènementiel</option>
-                                        <option value="Études et conseils" @if(in_array('Études et conseils', json_decode($offer->industry_sector))) selected @endif>Études et conseils</option>
-                                        <option value="Hôtellerie / Restauration" @if(in_array('Hôtellerie / Restauration', json_decode($offer->industry_sector))) selected @endif>Hôtellerie / Restauration</option>
-                                        <option value="Industrie" @if(in_array('Industrie', json_decode($offer->industry_sector))) selected @endif>Industrie</option>
-                                        <option value="Ingénierie" @if(in_array('Ingénierie', json_decode($offer->industry_sector))) selected @endif>Ingénierie</option>
-                                        <option value="Informatique / Télécoms / Réseaux" @if(in_array('Informatique / décoms / Réseaux', json_decode($offer->industry_sector))) selected @endif>Informatique / Télécoms / Réseaux</option>
-                                        <option value="Machines et équipements / Automobile" @if(in_array('Machines et	RTLRquements / Automobile', json_decode($offer->industry_sector))) selected @endif>Machines et équipements / Automobile</option>
-                                        <option value="Métallurgie / Travail du métal" @if(in_array('Métallurgie / Travail du-metal', json_decode($offer->industry_sector))) selected @endif>Métallurgie / Travail du métal</option>
-                                        <option value="Plastique / Caoutchouc" @if(in_array('Plastique / Caoutchouc', json_decode($offer->industry_sector))) selected @endif>Plastique / Caoutchouc</option>
-                                        <option value="Propreté" @if(in_array('Propreté', json_decode($offer->industry_sector))) selected @endif>Propreté</option>
-                                        <option value="Production et services" @if(in_array('Production et services', json_decode($offer->industry_sector))) selected @endif>Production et services</option>
-                                        <option value="Santé" @if(in_array('Santé', json_decode($offer->industry_sector))) selected @endif>Santé</option>
-                                        <option value="Services aux entreprises" @if(in_array('Services aux entreprises', json_decode($offer->industry_sector))) selected @endif>Services aux entreprises</option>
-                                        <option value="Technologie de l'information" @if(in_array('Technologie de l\'information', json_decode($offer->industry_sector))) selected @endif>Technologie de l'information</option>
-                                        <option value="Télécommunications / Presse" @if(in_array('Télécommunications / Presse', json_decode($offer->industry_sector))) selected @endif>Télécommunications / Presse</option>
-                                        <option value="Textile / Habillement / Chaussure / Maroquineries" @if(in_array('Textile / Habillement / Chaussure / Maroquineries', json_decode($offer->industry_sector))) selected @endif>Textile / Habillement / Chaussure / Maroquineries</option>
-                                        <option value="Transports / Logistique" @if(in_array('Transports / Logistique', json_decode($offer->industry_sector))) selected @endif>Transports / Logistique</option>
-                                        <option value="Travaux publics" @if(in_array('Travaux publics', json_decode($offer->industry_sector))) selected @endif>Travaux publics</option>
-                                        <option value="Autres" @if(in_array('Autres', json_decode($offer->industry_sector))) selected @endif>Autres</option>
+                                        <option value="Agroalimentaire" @if('Agroalimentaire' == $offer->industry_sector) selected @endif>Agroalimentaire</option>
+                                        <option value="Automobile / Services" @if('Automobile / Services' == $offer->industry_sector) selected @endif>Automobile / Services</option>
+                                        <option value="Banque / Assurance" @if('Banque / Assurance' == $offer->industry_sector) selected @endif>Banque / Assurance</option>
+                                        <option value="Bois / Papier / Carton / Imprimerie" @if('Bois / Papier / Carton / Imprimerie' == $offer->industry_sector) selected @endif>Bois / Papier / Carton / Imprimerie</option>
+                                        <option value="BTP / Matériaux de construction" @if('BTP / Matériaux de construction' == $offer->industry_sector) selected @endif>BTP / Matériaux de construction</option>
+                                        <option value="Chimie / Parachimie" @if('Chimie / Parachimie' == $offer->industry_sector) selected @endif>Chimie / Parachimie</option>
+                                        <option value="Commerce / Négoce / Distribution" @if('Commerce / Négoce / Distribution' == $offer->industry_sector) selected @endif>Commerce / Négoce / Distribution</option>
+                                        <option value="Édition / Communication / Multimédia" @if('Édition / Communication / Multimédia' == $offer->industry_sector) selected @endif)>Édition / Communication / Multimédia</option>
+                                        <option value="Électronique / Électricité" @if('Électronique / Électricité' == $offer->industry_sector) selected @endif>Électronique / Électricité</option>
+                                        <option value="Évènementiel" @if('Évènementiel' == $offer->industry_sector) selected @endif>Évènementiel</option>
+                                        <option value="Études et conseils" @if('Études et conseils' == $offer->industry_sector) selected @endif>Études et conseils</option>
+                                        <option value="Hôtellerie / Restauration" @if('Hôtellerie / Restauration' == $offer->industry_sector) selected @endif>Hôtellerie / Restauration</option>
+                                        <option value="Industrie" @if('Industrie' == $offer->industry_sector) selected @endif>Industrie</option>
+                                        <option value="Ingénierie" @if('Ingénierie' == $offer->industry_sector) selected @endif>Ingénierie</option>
+                                        <option value="Informatique / Télécoms / Réseaux" @if('Informatique / décoms / Réseaux' == $offer->industry_sector) selected @endif>Informatique / Télécoms / Réseaux</option>
+                                        <option value="Machines et équipements / Automobile" @if('Machines et	RTLRquements / Automobile' == $offer->industry_sector) selected @endif>Machines et équipements / Automobile</option>
+                                        <option value="Métallurgie / Travail du métal" @if('Métallurgie / Travail du-metal' == $offer->industry_sector) selected @endif>Métallurgie / Travail du métal</option>
+                                        <option value="Plastique / Caoutchouc" @if('Plastique / Caoutchouc' == $offer->industry_sector) selected @endif>Plastique / Caoutchouc</option>
+                                        <option value="Propreté" @if('Propreté' == $offer->industry_sector) selected @endif>Propreté</option>
+                                        <option value="Production et services" @if('Production et services' == $offer->industry_sector) selected @endif>Production et services</option>
+                                        <option value="Santé" @if('Santé' == $offer->industry_sector) selected @endif>Santé</option>
+                                        <option value="Services aux entreprises" @if('Services aux entreprises' == $offer->industry_sector) selected @endif>Services aux entreprises</option>
+                                        <option value="Technologie de l'information" @if('Technologie de l\'information' == $offer->industry_sector) selected @endif>Technologie de l'information</option>
+                                        <option value="Télécommunications / Presse" @if('Télécommunications / Presse' == $offer->industry_sector) selected @endif>Télécommunications / Presse</option>
+                                        <option value="Textile / Habillement / Chaussure / Maroquineries" @if('Textile / Habillement / Chaussure / Maroquineries' == $offer->industry_sector) selected @endif>Textile / Habillement / Chaussure / Maroquineries</option>
+                                        <option value="Transports / Logistique" @if('Transports / Logistique' == $offer->industry_sector) selected @endif>Transports / Logistique</option>
+                                        <option value="Travaux publics" @if('Travaux publics' == $offer->industry_sector) selected @endif>Travaux publics</option>
+                                        <option value="Autres" @if('Autres' == $offer->industry_sector) selected @endif>Autres</option>
                                     </select>
                                 </div>
 

@@ -75,8 +75,8 @@
                         documents</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-statistiques') ? 'active' : '' }}">
-                <a href="/mes-stats" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-stats') ? 'active' : '' }}">
+                <a href="/candidat-stats" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/stats.png')}}" alt=""> Mes
                         Statistiques</span>

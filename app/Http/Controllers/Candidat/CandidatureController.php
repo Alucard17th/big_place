@@ -56,4 +56,18 @@ class CandidatureController extends Controller
         // dd($offres);
         return view('candidat.favorites.vitrine', compact('entreprise', 'offres'));
     }
+
+    public function store(Request $request){
+        $candidature = new Candidature();
+        $candidature->status = 'coming';
+        $candidature->user_id = $request->entreprise_owner_id;
+        $candidature->title = $request->title;
+        $candidature->candidat_id = auth()->user()->id;
+        $candidature->offer_id = $request->offer_id;
+        $candidature->save();
+
+        toast('Candidature envoyée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+   
 }
