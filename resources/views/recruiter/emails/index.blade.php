@@ -111,10 +111,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($emails as $email)
+                                            @foreach ($receivedEmails as $email)
                                             <tr>
-                                                <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                <td>{{$email->subject}}</td>
+                                                <td>{{getUserById($email->user_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{$email->created_at}}</td>
                                             </tr>
                                             @endforeach
@@ -132,7 +132,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($receivedEmails as $email)
+                                            @foreach ($emails as $email)
                                             <tr>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>

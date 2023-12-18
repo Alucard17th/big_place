@@ -197,7 +197,8 @@ background: #13D527;
                                         <a class="candidature-link" data-candidature-id="{{ $candidature->id }}">
                                             <li class="list-group-item d-flex border-0 {{ $key == 0 ? 'active' : '' }}">
                                                 <div class="list-img">
-                                                    <img class="list-item-img" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                                                    <img class="list-item-img" 
+                                                    src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt="">
                                                 </div>
                                                 <div class="list-content ml-2">
                                                     <h4 class="list-title">{{getOfferByCandidatId($candidature->offer_id)->job_title}}</h4>
@@ -223,10 +224,16 @@ background: #13D527;
                                                     </div>
                                                 </div>
                                                 <div class="offre-subtitle my-1"> 
-                                                    <img src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt="" class="mr-2">
-                                                     {{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}} , {{getOfferByCandidatId($candidature->offer_id)->location_city}}
+                                                    <img src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt="" class="mr-2 offre-subtitle-img">
+                                                    <span class="entreprise-title">{{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}}</span> ,
+                                                    <span class="entreprise-location">{{getOfferByCandidatId($candidature->offer_id)->location_city}}</span>
                                                 </div>
-                                                <h5 class="offre-time-subtitle">Publiée le {{getOfferByCandidatId($candidature->offer_id)->created_at}}</h5>
+                                                @php
+                                                    use Carbon\Carbon;
+                                                    $created_at = getOfferByCandidatId($candidature->offer_id)->created_at;
+                                                    $formattedDate = Carbon::parse($created_at)->format('d-m-Y');
+                                                @endphp
+                                                <h5 class="offre-time-subtitle">Publiée le {{$formattedDate}}</h5>
 
                                                 <h4 class="candidature-time-subtitle mt-4">
                                                     <img src="{{asset('/plugins/images/icons/tick-circle.png')}}" alt="">
@@ -242,14 +249,15 @@ background: #13D527;
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-2 pr-0">
-                                                                <div class="entreprise-logo"><img src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt=""></div>
+                                                                <div class="entreprise-logo"><img class="entreprise-logo-img" src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}" alt=""></div>
                                                             </div>
                                                             <div class="col-7 pl-0">
                                                                 <div class="entreprise-name">{{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}}</div>
                                                                 <div class="entreprise-info">{{getEntrepriseByUserID($candidature->user_id)->effectif}} Employés</div>
                                                             </div>
                                                             <div class="col-3">
-                                                                <button class="see-more-btn">Voir Plus</button>
+                                                                <a class="see-more-btn" type="button"
+                                                                href="{{route('candidat.vitrine.show', $candidature->user_id)}}">Voir Plus</a>
                                                             </div>
                                                             <div class="col-12 mt-3">
                                                                 <span class="entreprise-desc">
@@ -296,6 +304,19 @@ $(document).ready(function () {
             success: function (data) {
                 // Handle the received data, e.g., update a modal with the candidature details
                 console.log(data);
+                $('.offre-title').text(data.offre.job_title);
+                $('.offre-subtitle-img').attr('src', 'storage'+data.entreprise.logo);
+                $('.entreprise-title').text(data.entreprise.nom_entreprise);
+                $('.entreprise-location').text(data.entreprise.location_city);
+                $('.offre-time-subtitle').text('Publiée le ' + moment(data.offre.created_at).format('DD-MM-YYYY'));
+                $('.offre-desc').text("Responsabilités : Développer et maintenir des applications Java complexes Travailler en collaboration avec une équipe d'ingénieurs pour concevoir et mettre en œuvre de nouvelles fonctionnalités Participer à la conception et à la mise en œuvre de l'architecture logicielle des applications")
+                $('.offre-status').text('Status de l\'offre : ' + data.offre.status);
+                $('.offre-end-date').text('Date de limitation de candidature : ' + data.offre.unpublish_date);
+
+                $('.entreprise-name').text(data.entreprise.nom_entreprise);
+                $('.entreprise-info').text(data.entreprise.effectif + ' Employés');
+                $('.entreprise-desc').text('Description manquante...');
+                $('.entreprise-logo-img').attr('src', 'storage'+data.entreprise.logo);
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);

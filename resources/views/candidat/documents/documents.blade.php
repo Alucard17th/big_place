@@ -19,19 +19,22 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                </a>
-                <h3>Mes documents</h3>
-            </div>
-            <a href="#" class="theme-btn btn-style-one bg-header-btn add-doc">+ Ajouter une document</a>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                        <h3>Mes documents</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                            <a href="#" class="theme-btn btn-style-one bg-header-btn add-doc">+ Ajouter un document</a>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
@@ -44,9 +47,7 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
-                                            </th>
-                                            <th>Name</th>
+                                            <th>Nom</th>
                                             <th>Crée le</th>
                                             <th>Type</th>
                                             <th>Actions</th>
@@ -55,23 +56,21 @@
                                     <tbody>
                                         @foreach ($documents as $document)
                                         <tr>
-                                            <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$document->id}}"></td>
                                             <td class="text-left">{{$document->name}}</td>
                                             <td class="text-left">{{$document->created_at}}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a href="" type="button" class="bg-btn-three">
+                                                <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-three" target="_blank">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Aperçu
                                                 </a>
-                                                <a href="" type="button" class="bg-btn-five">
+                                                <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-five" target="_blank" download>
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Télécharger
                                                 </a>
-                                                <a href="" type="button" class="bg-btn-four">
+                                                <a href="{{ route('candidat.document.delete', $document->id) }}" type="button" class="bg-btn-four" onclick="return confirm('Etes-vous sur de vouloir supprimer ce document ?');">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer
@@ -94,7 +93,7 @@
 
     <!-- Modal HTML embedded directly into document -->
     <div id="doc-modal" class="modal">
-       <form action="{{route('recruiter.document.add')}}" method="POST" enctype="multipart/form-data">
+       <form action="{{route('candidat.document.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <h4>Ajouter un Document :</h4>
@@ -143,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun document disponible",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",

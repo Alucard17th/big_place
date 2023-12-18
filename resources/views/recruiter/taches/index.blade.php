@@ -194,7 +194,8 @@ input, select{
                                                     Editer
                                                 </a>
                                                 @role('recruiter')
-                                                <a href="{{route('recruiter.task.delete', $task->id)}}" type="button" class="bg-btn-four">
+                                                <a href="{{route('recruiter.task.delete', $task->id)}}" type="button"
+                                                onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');" class="bg-btn-four">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer

@@ -2,15 +2,15 @@
     <div class="sidebar-inner">
         
         <ul class="navigation @if(empty(auth()->user()->curriculum)) deactivated @endif">
-            <li class="{{ Str::contains(Request::url(), 'recruiter-dashboard') ? 'active' : '' }}">
-                <a href="/recruiter-dashboard" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-dashboard') ? 'active' : '' }}">
+                <a href="/candidat-dashboard" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/dashboard.png')}}" alt=""> Tableau De
                         Bord</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'cv-theque') ? 'active' : '' }}">
-                <a href="/cv-theque" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-offers') ? 'active' : '' }}">
+                <a href="/candidat-offers" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Offre D'emploi</span>
                 </a>
@@ -22,7 +22,7 @@
                         Candidat</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-rendez-vous') ? 'active' : '' }}">
+            <li class="{{ Str::contains(Request::url(), 'candidat-rdvs') ? 'active' : '' }}">
                 <a href="/candidat-rdvs" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/rdvs.png')}}" alt=""> Mes Rendez-Vous</span>
@@ -55,21 +55,21 @@
                         Candidatures</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-formations') ? 'active' : '' }}">
-                <a href="/mes-formations" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-formation') ? 'active' : '' }}">
+                <a href="/candidat-formation" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/formations.png')}}" alt=""> Les Formations
                     </span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-mails') ? 'active' : '' }}">
-                <a href="/mes-mails" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-emails') ? 'active' : '' }}">
+                <a href="/candidat-emails" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes Emails</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-documents') ? 'active' : '' }}">
-                <a href="/mes-documents" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-documents') ? 'active' : '' }}">
+                <a href="/candidat-documents" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/documents.png')}}" alt=""> Mes
                         documents</span>
@@ -82,17 +82,17 @@
                         Statistiques</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'compte-administrateur') ? 'active' : '' }}">
-                <a href="/compte-administrateur" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-account') ? 'active' : '' }}">
+                <a href="/candidat-account" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/account.png')}}" alt=""> Mon Compte
-                        Administrateur</span>
+                        </span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'historique') ? 'active' : '' }}">
-                <a href="/historique" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'candidat-history') ? 'active' : '' }}">
+                <a href="/candidat-history" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Mes Dernières
+                            src="{{asset('/plugins/images/recruiter-sidebar/search.png')}}" alt=""> Mes Dernières
                         Recherches</span>
                 </a>
             </li>

@@ -1,60 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-.modal a.custom-close-modal {
-    position: absolute;
-    top: -12.5px;
-    right: -12.5px;
-    /* display: block; */
-    display: none;
-    width: 30px;
-    height: 30px;
-    text-indent: -9999px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
-}
-
-#add-event-form input,
-#add-event-form select {
-    width: 100%;
-}
-
-#ex1 {
-    background: #f8f8f8;
-    max-width: 100%;
-    width: 600px;
-    padding: 50px;
-}
-
-#add-event-form>h4 {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 41px;
-    /* identical to box height, or 102% */
-    color: #202124;
-}
-
-#add-event-form>div>label,
-#add-event-form>div.row>div>div>label {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 41px;
-    color: #202124;
-}
-
-#add-event-btn {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 20px;
-}
 </style>
 @endpush
 
@@ -62,14 +8,13 @@
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
 
-
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
                         <div class="d-flex align-items-center justify-content-center">
-                            <h3>Mes évènemements / jobdatings</h3>
+                            <h3>Mes dernières recherches</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
@@ -91,35 +36,20 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Organisateur</th>
-                                            <th>Poste</th>
-                                            <th>Adresse</th>
-                                            <th>Date - Heure</th>
-                                            <th>Entrée gratuite</th>
+                                            <th>Titre de l'offre</th>
+                                            <th>Entreprise</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($events as $event)
+                                        @foreach ($histories as $history)
                                         <tr>
-                                            <td class="text-left">{{$event->organizer_name}}</td>
-                                            <td class="text-left">{{$event->job_position}}</td>
-                                            <td class="text-left">{{$event->event_address}}</td>
-                                            <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
+                                            <td class="text-left">{{getOfferByCandidatId($history->searchable)->job_title}}</td>
+                                            <td class="text-left">{{getEntrepriseByUserID(getOfferByCandidatId($history->searchable)->user_id)->nom_entreprise}}</td>
+                                           
                                             <td class="text-left">
-                                                @if($event->free_entry == 1)
-                                                Oui
-                                                @else
-                                                Non
-                                                @endif
-                                            </td>
-                                            <td class="text-left">
-                                                <a href="{{ route('candidat.event.unsubscribe', $event->id) }}" type="button" class="bg-btn-four mt-2" 
-                                                    onclick="return confirm('Etes vous sur de vouloir ne plus participer à cet événement?')">
-                                                    Annuler la participation
-                                                </a>
-                                                <a href="{{route('candidat.vitrine.show', $event->user_id)}}" type="button" class="bg-btn-three mt-2">
-                                                    Voir l'entreprise
+                                                <a href="{{route('candidat.candidature.apply', $history->searchable)}}" type="button" class="bg-btn-three mt-2">
+                                                    Voir l'offre
                                                 </a>
                                             </td>
                                         </tr>

@@ -22,7 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'siret'
+        'siret',
+        'birth_date',
+        'avatar',
     ];
 
     /**
@@ -102,5 +104,15 @@ class User extends Authenticatable
     public function history()
     {
         return $this->hasMany(History::class, 'user_id');
+    }
+
+    public function participationEvents()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function participationFormations()
+    {
+        return $this->belongsToMany(Formation::class);
     }
 }

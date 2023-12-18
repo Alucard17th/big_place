@@ -12,6 +12,8 @@ use App\Http\Controllers\Candidat\EmailController;
 use App\Http\Controllers\Candidat\DocumentController;
 use App\Http\Controllers\Candidat\TaskController;
 use App\Http\Controllers\Candidat\EventController;
+use App\Http\Controllers\Candidat\OfferController;
+use App\Http\Controllers\Candidat\FormationController;
 
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Role;
@@ -183,22 +185,23 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-emails', [EmailController::class, 'emails'])->name('candidat.emails');
     Route::get('/candidat-documents', [DocumentController::class, 'documents'])->name('candidat.documents');
     Route::get('/candidat-events', [EventController::class, 'events'])->name('candidat.events');
+    Route::get('/candidat-formation', [FormationController::class, 'index'])->name('candidat.formation');
+    Route::get('/candidat-account', [CandidatController::class, 'account'])->name('candidat.account');
     
     // TODO
     Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
     Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
     Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
-    Route::get('/candidat-formation', [FormationController::class, 'formation'])->name('candidat.formation');
     Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
 
     // RDV
     Route::get('/candidat-rdv/cancel/{id}', [RendezVousController::class, 'cancelRdv'])->name('candidat.rdv.cancel');
 
     // TASKS
-    Route::post('/task/add', [TaskController::class, 'addTask'])->name('candidat.task.add');
+    Route::post('/task/candidate/add', [TaskController::class, 'addTask'])->name('candidat.task.add');
     Route::get('/task/get/{id}', [TaskController::class, 'getTask'])->name('candidat.task.see');
-    Route::post('/task/update', [TaskController::class, 'updateTask'])->name('candidat.task.update');
-    Route::get('/task/delete/{id}', [TaskController::class, 'deleteTask'])->name('candidat.task.delete');
+    Route::post('/task/candidate/update', [TaskController::class, 'updateTask'])->name('candidat.task.update');
+    Route::get('/task/candidate/delete/{id}', [TaskController::class, 'deleteTask'])->name('candidat.task.delete');
 
     // JSON 
     Route::get('/getCandidatRdvs', [CandidatController::class, 'getCandidatRdvs'])->name('getCandidatRdvs');
@@ -207,6 +210,35 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
     // CANDIDATURES
     Route::get('/candidature/{id}', [CandidatureController::class, 'jsonShow'])->name('candidature.json.show');
+    Route::get('/candidature/apply/{id}', [CandidatureController::class, 'apply'])->name('candidat.candidature.apply');
+    Route::get('/candidature/vitrine/show/{id}', [CandidatureController::class, 'vitrineShow'])->name('candidat.vitrine.show');
+
+    // OFFERS
+    Route::get('/candidat-offers', [OfferController::class, 'index'])->name('candidat.offers');
+    Route::get('/candidat-offers/search', [OfferController::class, 'search'])->name('candidat.offers.search');
+
+    // EVENTS
+    Route::get('/event/candidat/unsubscribe/{id}', [EventController::class, 'cancelParticipation'])->name('candidat.event.unsubscribe');
+
+    // FORMATIONS
+    Route::get('/formation/candidat/subscribe/{id}', [FormationController::class, 'subscribeToFormation'])->name('candidat.formation.subscribe');
+    Route::get('/formation/candidat/show/{id}', [FormationController::class, 'show'])->name('candidat.formation.show');
+
+    // EMAILS
+    Route::post('/email/candidate/store', [EmailController::class, 'store'])->name('candidat.email.store');
+
+    // DOCUMENTS
+    Route::post('/document/candidate/update', [DocumentController::class, 'store'])->name('candidat.document.store');
+    Route::get('/document/candidat/delete/{id}', [DocumentController::class, 'delete'])->name('candidat.document.delete');
+
+    // ACCOUNT
+    Route::post('/account/candidate/update', [CandidatController::class, 'update'])->name('candidat.account.update');
+    Route::get('/account/candidate/avatar/delete', [CandidatController::class, 'deleteAvatar'])->name('candidat.account.avatar.delete');
+    Route::post('/account/candidate/password/update', [CandidatController::class, 'updatePassword'])->name('candidat.account.update.password');
+    Route::post('/account/candidate/delete', [CandidatController::class, 'deleteAccount'])->name('candidat.account.delete');
+
+    // HISTORY
+    Route::get('/candidat-history', [CandidatController::class, 'history'])->name('candidat.history');
 
 });
 

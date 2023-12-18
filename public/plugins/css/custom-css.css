@@ -2194,6 +2194,30 @@ h6 {
     margin-left: 10px;
 }
 
+#data-table-two tbody td{
+    font-size: 15px;
+    padding-top:12px;
+    color: #696969;
+}
+#data-table-two_length > label > select{
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 10px 20px;
+}
+#data-table-two_paginate{
+    text-align: left !important;
+}
+#data-table-two_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-two_previous{
+    margin-right: 10px;
+}
+#data-table-two_next{
+    margin-left: 10px;
+}
+
 .search-container{
     background: #e6edff;
     padding: 30px;
@@ -2261,6 +2285,9 @@ label > i{
 }
 
 #data-table_length > label{
+    color: #000 !important;
+}
+#data-table-two_length > label{
     color: #000 !important;
 }
 

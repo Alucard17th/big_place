@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const pond_cv = FilePond.create(candidatCv, {
-        files: 'storage' + cv,
+        files: cv ? 'storage' + cv : null,
         labelIdle: '<img class="mr-3" src="http://127.0.0.1:8000/plugins/images/candidat/cv-upload.png" alt="">+ Ajouter document',
     });
 

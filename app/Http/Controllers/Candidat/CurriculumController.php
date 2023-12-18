@@ -48,6 +48,9 @@ class CurriculumController extends Controller
             $fileInfos = Filepond::field($request->cv)->moveTo('/uploads/'.$user->id.'/cv_'.uniqid());
             $curriculum->cv = $fileInfos['location'];
             $curriculum->save();
+        }else{
+            $curriculum->cv = null;
+            $curriculum->save();
         }
 
         toast('Curriculum uploaded','success')->autoClose(5000);

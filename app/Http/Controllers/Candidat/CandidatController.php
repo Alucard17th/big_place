@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Candidat;
 use App\Http\Controllers\Controller; // Import the Controller class from Laravel
 use Illuminate\Http\Request;
 use App\Models\Job;
+use Illuminate\Support\Facades\Hash;
 
 class CandidatController extends Controller
 {
@@ -31,5 +32,96 @@ class CandidatController extends Controller
         $user = auth()->user();
         $formations = $user->formations;
         return response()->json($formations);
+    }
+
+    public function account(){
+        $user = auth()->user();
+        return view('candidat.account.index', compact('user'));
+    }
+
+    public function update(Request $request){
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->birth_date = $request->birth;
+
+        $userId = auth()->user()->id;
+
+        // Get the uploaded file
+        $file = $request->file('avatar');
+
+        // Generate a unique filename
+        $fileName = $userId . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+        // Store the file in the user's directory within the storage/app/public directory
+        $filePath = $file->storeAs('public/uploads/' . $userId, $fileName);
+
+        $user->avatar = $filePath;
+
+        $user->save();
+        toast('Vos informations ont bien été mises à jour', 'success');
+        return redirect()->back();
+    }
+
+    public function deleteAvatar(){
+        $user = auth()->user();
+        $user->avatar = null;
+        $user->save();
+        toast('Votre avatar a bien été supprimé', 'success');
+        return redirect()->back();
+    }
+
+    public function updatePassword(Request $request){
+        // $user = auth()->user();
+        // $user->password = bcrypt($request->password);
+        // $user->save();
+        // toast('Votre mot de passe a bien été mis à jour', 'success');
+        // return redirect()->back();
+        $user = auth()->user();
+        $actualPassword = $request->input('actual_password');
+        $newPassword = $request->input('password');
+        $confirmedPassword = $request->input('confirmed_password');
+    
+        // Check if the actual password matches the user's hashed password
+        if (Hash::check($actualPassword, $user->password)) {
+            // Actual password is correct, proceed with updating the password
+            if ($newPassword === $confirmedPassword) {
+                // New password and confirmed password match, update the password
+                $user->password = bcrypt($newPassword);
+                $user->save();
+                toast('Votre mot de passe a bien été mis à jour', 'success');
+                return redirect()->back();
+            } else {
+                // New password and confirmed password do not match, display an error message
+                toast('La confirmation du nouveau mot de passe ne correspond pas. Veuillez réessayer.', 'error');
+                return redirect()->back();
+            }
+        } else {
+            // Actual password is incorrect, display an error message
+            toast('Le mot de passe actuel est incorrect. Veuillez réessayer.', 'error');
+            return redirect()->back();
+        }
+    }
+
+    public function deleteAccount(Request $request){
+        $user = auth()->user();
+        $password = $request->input('password');
+
+        // Check if the provided password matches the user's hashed password
+        if (Hash::check($password, $user->password)) {
+            // Password is correct, proceed with deletion
+            $user->delete();
+            toast('Votre compte a bien été supprimé', 'success');
+            return redirect('/');
+        } else {
+            // Password is incorrect, display an error message
+            toast('Le mot de passe est incorrect. Veuillez réessayer.', 'error');
+            return redirect()->back();
+        }
+    }
+
+
+    public function history(){
+        $histories = auth()->user()->history;
+        return view('candidat.history.index', compact('histories'));
     }
 }

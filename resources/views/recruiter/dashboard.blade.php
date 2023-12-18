@@ -145,7 +145,7 @@
         <div class="row">
 
         
-        <div class="col-5 px-2">
+            <div class="col-5 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -168,32 +168,6 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <select name="valeur[]" id="values_select" class="" multiple>
-                                        <option value="Le respect">Le respect</option>
-                                        <option value="L'adaptabilité">L'adaptabilité</option>
-                                        <option value="la considération">la considération</option>
-                                        <option value="l'altruisme">l'altruisme</option>
-                                        <option value="l'assertivité">l'assertivité</option>
-                                        <option value="l'entraide">l'entraide</option>
-                                        <option value="la solidarité">la solidarité</option>
-                                        <option value="l'écoute">l'écoute</option>
-                                        <option value="la bienveillance">la bienveillance</option>
-                                        <option value="l'empathie">l'empathie</option>
-                                        <option value="la créativité">la créativité</option>
-                                        <option value="la justice">la justice</option>
-                                        <option value="la tolérance">la tolérance</option>
-                                        <option value="l'équité">l'équité</option>
-                                        <option value="l'honnêteté">l'honnêteté</option>
-                                        <option value="la responsabilité">la responsabilité</option>
-                                        <option value="la loyauté">la loyauté</option>
-                                        <option value="la détermination">la détermination</option>
-                                        <option value="la persévérance">la persévérance</option>
-                                        <option value="la rigueur">la rigueur</option>
-                                        <option value="la générosité">la générosité</option>
-                                        <option value="la stabilité">la stabilité</option>
-                                    </select>
                                 </div>
                             </div>
 

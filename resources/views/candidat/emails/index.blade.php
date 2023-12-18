@@ -27,10 +27,12 @@
 
 #inbox-btn.active {
     background-color: #f5f5f5;
+    border-bottom: 7px solid #0369A1 !important;
 }
 
 #sent-btn.active {
     background-color: #f5f5f5;
+    border-bottom: 7px solid #0369A1 !important;
 }
 
 .email-container {
@@ -70,40 +72,136 @@
 .paginate_button {
     margin-left: 10px;
 }
+
+
+#data-table-sent tbody td{
+    font-size: 15px;
+    padding-top:12px;
+    color: #696969;
+}
+#data-table-sent_length > label > select{
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 10px 20px;
+}
+#data-table-sent_paginate{
+    text-align: left !important;
+}
+#data-table-sent_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-sent_previous{
+    margin-right: 10px;
+}
+#data-table-sent_next{
+    margin-left: 10px;
+}
+#data-table-sent_length > label{
+    color: #000 !important;
+}
+
+#data-table-inbox tbody td{
+    font-size: 15px;
+    padding-top:12px;
+    color: #696969;
+}
+#data-table-inbox_length > label > select{
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 10px 20px;
+}
+#data-table-inbox_paginate{
+    text-align: left !important;
+}
+#data-table-inbox_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-inbox_previous{
+    margin-right: 10px;
+}
+#data-table-inbox_next{
+    margin-left: 10px;
+}
+#data-table-inbox_length > label{
+    color: #000 !important;
+}
+
+.user-avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin-right: 20px;
+}
+
+#message-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#message-form > div > label, #message-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#create-message-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+#message-form > div:nth-child(2) > span{
+    width:100% !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
 </style>
 @endpush
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="{{ route('recruiter.dashboard') }}" class="theme-btn-one btn-one mr-2">
-                    <i class="las la-arrow-left" style="font-size:38px"></i>
-                </a>
-                <h3>Mes emails</h3>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
-                    <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer">
-                            </div>
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes emails</h3>
                         </div>
-
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                            <a href="" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
+                        </div>
+                    </div>
+                    <div class="tabs-box">
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-
                                 <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
                                     <button type="button" class="btn" id="sent-btn">Message Envoyés</button>
                                 </div>
-                                
                                 <div class="inbox">
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
                                         <thead class="thead-light">
@@ -114,17 +212,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($emails as $email)
+                                            @foreach ($receivedEmails as $email)
                                             <tr>
-                                                <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                <td>{{$email->subject}}</td>
+                                                <td class="d-flex align-items-center">
+                                                    <img src="https://i.pravatar.cc/300" alt="" class="user-avatar">
+                                                    {{getUserById($email->user_id)->name}}
+                                                </td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{$email->created_at}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-
                                 <div class="sent" style="display: none">
                                     <table class="table table-sm table-bordered" id="data-table-sent">
                                         <thead class="thead-light">
@@ -135,66 +235,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($receivedEmails as $email)
+                                            @foreach ($emails as $email)
                                             <tr>
-                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>
+                                                    <img src="https://i.pravatar.cc/300" alt="" class="user-avatar">
+                                                    {{getUserById($email->receiver_id)->name}}
+                                                </td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{$email->created_at}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-                              
-
-                                <!-- <div class="row inbox">
-
-                                    <div class="col-4">
-                                        <ul>
-                                            @foreach($emails as $email)
-                                            <li class="email-item" data-id="{{$email->id}}">
-                                                <div class="d-flex justify-content-between py-2 border-bottom">
-                                                    <span>{{getUserById($email->receiver_id)->name}}</span>
-                                                    <span>{{$email->subject}} </span>
-                                                    <span>{{$email->created_at}}</span>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-8">
-                                        <div class="email-container">
-                                            <h1 id="email-title"></h1>
-                                            <p id="email-content"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row sent" style="display: none">
-                                    <div class="col-4">
-                                        <ul>
-                                            @foreach($receivedEmails as $email)
-                                            <li class="email-item-received" data-id="{{$email->id}}">
-                                                <div class="d-flex justify-content-between py-2 border-bottom">
-                                                    <span>{{getUserById($email->user_id)->name}}</span>
-                                                    <span>{{$email->subject}} </span>
-                                                    <span>{{$email->created_at}}</span>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="email-container">
-                                            <h1 id="email-title-received"></h1>
-                                            <p id="email-content-received"></p>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-
-                                <div class="ls-pagination">
                                 </div>
                             </div>
                         </div>
@@ -204,43 +256,42 @@
         </div>
     </div>
 
+    <!-- Modal HTML embedded directly into document -->
+    <div id="message-modal" class="modal">
+        <form action="{{route('candidat.email.store')}}" method="POST" id="message-form">
+            @csrf
+            <div class="form-group">
+                <label for="candidate">Envoyé à</label>
+                <br>
+                <select name="receiver[]" id="receiver" class="form-control w-100" multiple required>
+                    @foreach ($receivers as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="candidate">Sujet</label>
+                <input type="text" name="subject" id="subject" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="candidate">Message</label>
+                <textarea class="form-control" name="message" id="message" cols="30" rows="10" required></textarea>
+            </div>
 
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit" id="create-message-btn">Envoyer</button>
+            </div>
+        </form>
+        <a href="#" id="close-modal">Fermer</a>
+        <a href="#" class="custom-close-modal"></a>
+    </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
 $(document).ready(function() {
-    $('.email-item').on('click', function() {
-        var emailId = $(this).data('id');
-        $.ajax({
-            url: "{{route('recruiter.email.show')}}",
-            type: "GET",
-            data: {
-                id: emailId
-            },
-            success: function(data) {
-                $('#email-title').text(data.subject);
-                $('#email-content').text(data.message);
-            }
-        })
-    })
-
-    $('.email-item-received').on('click', function() {
-        var emailId = $(this).data('id');
-        $.ajax({
-            url: "{{route('recruiter.email.show')}}",
-            type: "GET",
-            data: {
-                id: emailId
-            },
-            success: function(data) {
-                $('#email-title-received').text(data.subject);
-                $('#email-content-received').text(data.message);
-            }
-        })
-    })
-
+    var addMessageBtn = document.getElementById('add-message-btn');
     $('#inbox-btn').on('click', function() {
         $('.inbox').show();
         $('.sent').hide();
@@ -258,6 +309,21 @@ $(document).ready(function() {
         $('#inbox-btn').removeClass('active');
     })
 
+    $("#receiver").select2({});
+
+    addMessageBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        $("#message-modal").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    });
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
+
     $('#data-table-inbox').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
@@ -272,13 +338,12 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "emptyTable": "Aucun email reçu",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
-
     $('#data-table-inbox_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
-
 
     $('#data-table-sent').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
@@ -294,13 +359,12 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "emptyTable": "Aucun email envoyé",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
-
     $('#data-table-sent_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
-
 })
 </script>
 @endpush

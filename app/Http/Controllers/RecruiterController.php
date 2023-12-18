@@ -482,7 +482,7 @@ class RecruiterController extends Controller
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
         $offer->desired_languages = json_encode($request->input('desired_languages'));
-        $offer->education_level = json_encode($request->input('education_level'));
+        $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
         $offer->industry_sector = json_encode($request->input('industry_sector'));
         $offer->benefits = $request->input('benefits');
@@ -513,10 +513,10 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = $request->input('work_schedule');
-        $offer->weekly_hours = json_encode($request->input('weekly_hours'));
-        $offer->experience_level = json_encode($request->input('experience_level'));
+        $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->experience_level = $request->input('experience_level');
         $offer->desired_languages = json_encode($request->input('desired_languages'));
-        $offer->education_level = json_encode($request->input('education_level'));
+        $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
         $offer->industry_sector = json_encode($request->input('industry_sector'));
         $offer->benefits = $request->input('benefits');

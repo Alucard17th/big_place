@@ -32,7 +32,7 @@
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <a href="#" class="theme-btn btn-style-one bg-header-btn add-doc">+ Ajouter une document</a>
+                            <a href="#" class="theme-btn btn-style-one bg-header-btn add-doc">+ Ajouter un document</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -49,7 +49,7 @@
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
-                                            <th>Name</th>
+                                            <th>Nom</th>
                                             <th>Crée le</th>
                                             <th>Type</th>
                                             <th>Actions</th>

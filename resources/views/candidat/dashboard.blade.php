@@ -6,10 +6,21 @@
     height: 200px;
 }
 
-/* .dashboard-small-img {
-    width: 100%;
-    height: 150px;
-} */
+.dashboard-small-img {
+    /* width: 100%; */
+    /* height: 150px; */
+   
+}
+
+#icons > div > div > div > div > a{
+    position: relative;
+    bottom: 0px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top:30px;
+}
 
 .dashboard-link img {
     border-radius: 20px;
@@ -31,17 +42,54 @@
 }
 
 .select2-selection--single {
+    margin: 0 !important;
+    width: 100% !important;
     height: 35px !important;
-    padding: 0px 18px 0px 10px !important;
+    padding: .330rem .70rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+.select2-selection--multiple{
+    margin: 0 !important;
+    width: 100% !important;
+    height: 35px !important;
+    /* padding: .3rem .70rem !important; */
+    padding-top:2px;
+    padding-left:6px;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #8f959b !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem!important !important;
+    border: 1px solid #dae1e7 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
 }
 
-.select2-selection--multiple {
-    max-height: 35px !important;
-    padding: 0px 18px 0px 10px !important;
-    border: 1px solid #dae1e7 !important;
-    border-radius: 3px;
-    box-shadow: none;
-    font-size: 14px;
+#select2-job_title-container{
+    padding-left: 25px !important;
+}
+#location_city{
+    padding-left: 38px !important;
+}
+.select2-search__field{
+    color:#8f959b !important;
+}
+.select2-selection__rendered{
+    color:#8f959b !important;
+    padding-left:18px;
 }
 
 .card{
@@ -49,6 +97,22 @@
 }
 .chartjs-render-monitor{
     height: 300px !important;
+}
+
+#annees_experience{
+    /* width:244.5px !important;
+    height: 48px !important;
+    border-radius: 8px;
+    border: 1px solid #1C1C1E7A;
+    padding : 7px 8px 5px 16px;  */
+}
+
+#search-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
 }
 
 
@@ -64,65 +128,36 @@
         </div>
 
         <div class="row">
-
-            <div class="col-8 px-2">
+            <div class="col-5 px-2">
                 <div class="card">
-                    <div class="card-body">
-                        <canvas id="myChart" ></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4 px-2">
-                <div class="card">
-                    <div class="card-body">
-                    <form method="get" class="" action="{{route('recruiter.cvtheque.search')}}">
-                        <div class="row">
+                    <div class="card-body px-4">
+                    <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
+                    <form method="get" class="" action="{{route('candidat.offers.search')}}">
+                        <div class="row no-gutters">
                             <div class="col-12">
                                 <div class="form-group mb-2">
-                                    <select name="metier_recherche" id="metier_recherche" class="form-control">
+                                    <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
+                                    style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
+                                    <select name="job_title" id="job_title" class="form-control">
+                                        <option value="" selected value="">Titre de l'offre</option>
                                         @foreach($jobs as $job)
-                                            <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
+                                        <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département">
+                                    <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt="" 
+                                    style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
+                                    <input type="text" name="location_city" id="location_city" value="" class="form-control mb-2" placeholder="Ville / Département">
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <select name="valeur[]" id="values_select" class="form-control" multiple>
-                                        <option value="Le respect">Le respect</option>
-                                        <option value="L'adaptabilité">L'adaptabilité</option>
-                                        <option value="la considération">la considération</option>
-                                        <option value="l'altruisme">l'altruisme</option>
-                                        <option value="l'assertivité">l'assertivité</option>
-                                        <option value="l'entraide">l'entraide</option>
-                                        <option value="la solidarité">la solidarité</option>
-                                        <option value="l'écoute">l'écoute</option>
-                                        <option value="la bienveillance">la bienveillance</option>
-                                        <option value="l'empathie">l'empathie</option>
-                                        <option value="la créativité">la créativité</option>
-                                        <option value="la justice">la justice</option>
-                                        <option value="la tolérance">la tolérance</option>
-                                        <option value="l'équité">l'équité</option>
-                                        <option value="l'honnêteté">l'honnêteté</option>
-                                        <option value="la responsabilité">la responsabilité</option>
-                                        <option value="la loyauté">la loyauté</option>
-                                        <option value="la détermination">la détermination</option>
-                                        <option value="la persévérance">la persévérance</option>
-                                        <option value="la rigueur">la rigueur</option>
-                                        <option value="la générosité">la générosité</option>
-                                        <option value="la stabilité">la stabilité</option>
-                                    </select>
+                                    <input type="text" name="brut_salary" value="" class="form-control" placeholder="Pretentions salariales">
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 pr-1">
                                 <div class="form-group mb-2">
-                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                                    <select name="education_level" id="education_level" class="form-control">
                                         <option value="" selected>Niveau d'études</option>
                                         <option value="CAP / BEP">CAP / BEP</option>
                                         <option value="Bac">Bac</option>
@@ -133,19 +168,26 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 pl-1">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="annees_experience" value="" class="form-control mb-2" placeholder="Années d'expérience">
+                                    <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience">
                                 </div>
                             </div>
 
                         </div>
-                        <button type="submit" class="theme-btn btn-style-one my-2">Chercher</button>
+                        <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3" id="search-btn">Chercher</button>
                     </form>
                     </div>
                 </div>
             </div>
 
+            <div class="col-7 px-2">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="myChart" ></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row mt-3">
@@ -315,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder: "Valeurs attendues",
     });
     $("#niveau_etudes").select2({});
-    $("#metier_recherche").select2({});
+    $("#job_title").select2({});
 })
 </script>
 

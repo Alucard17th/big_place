@@ -1,20 +1,45 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+#edit-task-form > div > label, #edit-task-form > div.row > div > div > label, #edit-task-form > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#edit-task-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+</style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Ma Tâche</h3>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Ma Tâche</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                        </div>
+                    </div>
                     <div class="tabs-box">
                         <div class="widget-content">
                             <form action="{{ route('recruiter.task.update') }}" method="POST"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="edit-task-form">
                                 @csrf
 
                                 <input type="hidden" name="task_id" value="{{ $task->id }}">
@@ -51,7 +76,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Enregistrer</button>
+                                    <button class="theme-btn btn-style-one" type="submit" id="edit-task-btn">Enregistrer</button>
                                 </div>
                             </form>
                         </div>
