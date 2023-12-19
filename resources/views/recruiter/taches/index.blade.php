@@ -143,10 +143,9 @@ input, select{
                                         <div class="col-4 px-1 mt-3">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Status Tâche</option>
+                                                    <option value=""  selected>Statut Tâche</option>
                                                     <option value="Terminée">Terminée</option>
                                                     <option value="En cours">En cours</option>
-                                                    <option value="Bloqué">Bloquée</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -241,7 +240,7 @@ input, select{
             </div>
 
             <div class="form-group">
-                <label class="text-dark" for="candidate">Status</label>
+                <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
                     <option value="1">Terminée</option>
