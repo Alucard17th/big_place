@@ -127,7 +127,8 @@
                                         @if(!isset($entreprise) || $entreprise->cover == '')
                                         <img src="https://placehold.co/900X313" alt="" style="border-radius: 15px">
                                         @else
-                                        <img src="{{ 'storage'.$entreprise->cover }}" alt="" style="border-radius: 15px; width: 900px; height: 200px">
+                                        <div style="background-image: url({{ 'storage'.$entreprise->cover }});border-radius: 15px; width: 900px; height: 300px;background-repeat: no-repeat;background-size: cover;"></div>
+                                        <!-- <img src="{{ 'storage'.$entreprise->cover }}" alt="" style="border-radius: 15px; width: 900px; height: 200px"> -->
                                         @endif
                                         <a href="" class="bg-custom-btn" type="button" id="change-cover">
                                             <i class="las la-sync mr-2"></i>
