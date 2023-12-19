@@ -132,9 +132,9 @@ input, select{
                                             </div>
                                     </div>
                                    
-                                  <div class="form-group mt-3">
+                                  <!-- <div class="form-group mt-3">
                                     <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
+                                  </div> -->
                                    
                                 </form>
                             </div>
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 // Handle the response, e.g., show a success message
                 // refresh the current page
-                //    window.location.reload();
+                window.location.reload();
             })
             .catch(error => {
                 // Handle errors, e.g., show an error message
