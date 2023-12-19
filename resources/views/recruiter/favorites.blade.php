@@ -170,7 +170,7 @@ input, select{
                                         </div> -->
 
                                         <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mt-2 mr-1">
+                                            <div class="form-group mb-0 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                                     <option value=""  selected>Niveau d'études</option>
                                                     <option value="CAP/BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
