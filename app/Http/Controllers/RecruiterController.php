@@ -209,7 +209,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_1_date,
             'heure' => $request->crenau_1_time,
-            'status' => 'En attente confirmation candidat',
+            'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
         ]);
@@ -219,7 +219,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_2_date,
             'heure' => $request->crenau_2_time,
-            'status' => 'En attente confirmation candidat',
+            'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
         ]);
@@ -229,7 +229,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_3_date,
             'heure' => $request->crenau_3_time,
-            'status' => 'En attente confirmation candidat',
+            'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
         ]);

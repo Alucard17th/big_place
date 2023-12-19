@@ -161,8 +161,8 @@ class CandidatController extends Controller
     public function confirmCreneau($id){
         $rdv = RendezVous::find($id);
 
-        if($rdv->status == 'En attente confirmation candidat'){
-            $rdv->status = 'En attente';
+        if($rdv->status == 'En attente'){
+            $rdv->status = 'A venir';
             $rdv->participant = auth()->user()->id;
             $rdv->candidat_it = auth()->user()->id;
             $rdv->save();
