@@ -207,7 +207,7 @@
     </div>
 <!-- Modal HTML embedded directly into document -->
 <div id="message-modal" class="modal">
-        <form action="{{route('candidat.email.store')}}" method="POST" id="message-form">
+        <form action="{{route('recruiter.email.store')}}" method="POST" id="message-form">
             @csrf
             <div class="form-group">
                 <label for="candidate">Envoyé à</label>

@@ -147,6 +147,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     // EMAILS 
     Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
     Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
+    Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
 
     // STATS
     Route::get('/mes-stats', [RecruiterController::class, 'stats'])->name('recruiter.stats');
