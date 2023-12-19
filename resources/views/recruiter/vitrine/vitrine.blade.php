@@ -322,12 +322,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const pond_cover = FilePond.create(cover,{
-        files:'storage' + coverUrl,
+        files:coverUrl  ? 'storage' + coverUrl : null,
         labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
     });
 
     const pond_logo = FilePond.create(logo,{
-        files:logoUrl ? 'storage' + logoUrl : '',
+        files: logoUrl ? 'storage' + logoUrl : null,
         labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
     });
 
@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     const pond_photos = FilePond.create(photos_locaux,{
-        files: newArray.map(url => ({ source: 'storage' + url })),
+        files:newArray ? newArray.map(url => ({ source: 'storage' + url })) : null,
         labelIdle: '<i class="las la-image"></i>Ajouter des images',
     });
 
