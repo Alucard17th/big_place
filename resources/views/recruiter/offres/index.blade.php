@@ -80,7 +80,7 @@
                                                 </a>
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
-                                                class="bg-btn-four mt-3"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                class="bg-btn-four mt-3 ml-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
