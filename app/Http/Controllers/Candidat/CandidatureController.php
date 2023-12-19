@@ -16,7 +16,7 @@ class CandidatureController extends Controller
     //
     public function candidatures(){
         $user = auth()->user();
-        $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        $candidatures = Candidature::where('candidat_id', $user->id)->simplePaginate(5);
         return view('candidat.candidatures.candidature', compact('candidatures'));
     }
 

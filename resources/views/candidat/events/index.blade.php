@@ -61,15 +61,13 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-
-
         <div class="row">
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
                         <div class="d-flex align-items-center justify-content-center">
-                            <h3>Mes évènemements / jobdatings</h3>
+                            <h3>Tous les évènemements / jobdatings</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
@@ -114,11 +112,86 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">
-                                                <a href="{{ route('candidat.event.unsubscribe', $event->id) }}" type="button" class="bg-btn-four mt-2" 
+                                                <a href="{{ route('candidat.event.subscribe', $event->id) }}"
+                                                    type="button" class="bg-btn-five mt-2">
+                                                    Je participe
+                                                </a>
+                                                <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
+                                                    type="button" class="bg-btn-three mt-2">
+                                                    Voir l'entreprise
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div class="ls-pagination">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Ls widget -->
+                <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes évènemements / jobdatings</h3>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                                Retour
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tabs-box">
+                        <!-- SEARCH FORM -->
+                        <div class="widget-title">
+
+                        </div>
+
+                        <!-- TABLE AND GRID VIEW -->
+                        <div class="widget-content">
+                            <!-- TABLE VIEW -->
+                            <div class="table-outer">
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Organisateur</th>
+                                            <th>Poste</th>
+                                            <th>Adresse</th>
+                                            <th>Date - Heure</th>
+                                            <th>Entrée gratuite</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($myEvents as $event)
+                                        <tr>
+                                            <td class="text-left">{{$event->organizer_name}}</td>
+                                            <td class="text-left">{{$event->job_position}}</td>
+                                            <td class="text-left">{{$event->event_address}}</td>
+                                            <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
+                                            <td class="text-left">
+                                                @if($event->free_entry == 1)
+                                                Oui
+                                                @else
+                                                Non
+                                                @endif
+                                            </td>
+                                            <td class="text-left">
+                                                <a href="{{ route('candidat.event.unsubscribe', $event->id) }}"
+                                                    type="button" class="bg-btn-four mt-2"
                                                     onclick="return confirm('Etes vous sur de vouloir ne plus participer à cet événement?')">
                                                     Annuler la participation
                                                 </a>
-                                                <a href="{{route('candidat.vitrine.show', $event->user_id)}}" type="button" class="bg-btn-three mt-2">
+                                                <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
+                                                    type="button" class="bg-btn-three mt-2">
                                                     Voir l'entreprise
                                                 </a>
                                             </td>

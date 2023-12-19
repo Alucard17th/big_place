@@ -28,8 +28,16 @@ class OfferController extends Controller
             $query->where('location_city', 'like', '%' . $request->input('location_city') . '%');
         }
 
+        // if ($request->filled('brut_salary')) {
+        //     dd($request->input('brut_salary'));
+        //     $query->where('brut_salary', '=', $request->input('brut_salary'));
+        // }
         if ($request->filled('brut_salary')) {
-            $query->where('brut_salary', '=', $request->input('brut_salary'));
+            // Extract the minimum and maximum values from the interval
+            [$minSalary, $maxSalary] = explode('-', str_replace(' ', '', $request->input('brut_salary')));
+        
+            // Use whereBetween to filter by the range
+            $query->whereBetween('brut_salary', [$minSalary, $maxSalary]);
         }
 
         if ($request->filled('education_level')) {

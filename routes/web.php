@@ -193,8 +193,6 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-creneau/choose/{time}', [CandidatController::class, 'chooseCreneau'])->name('candidat.creneau.choose');
     Route::get('/candidat-creneau/confirm/{id}', [CandidatController::class, 'confirmCreneau'])->name('candidat.creneau.confirm');
 
-
-
     // TODO
     Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
     Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
@@ -203,6 +201,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
     // FAVORITES
     Route::post('/candidat/favortie/add', [FavoritesController::class, 'addToFavorites'])->name('candidat.favorite.add');
+   
     // RDV
     Route::get('/candidat-rdv/cancel/{id}', [RendezVousController::class, 'cancelRdv'])->name('candidat.rdv.cancel');
 
@@ -228,6 +227,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-offers/search', [OfferController::class, 'search'])->name('candidat.offers.search');
 
     // EVENTS
+    Route::get('/event/candidat/subscribe/{id}', [EventController::class, 'subscribeToEvent'])->name('candidat.event.subscribe');
     Route::get('/event/candidat/unsubscribe/{id}', [EventController::class, 'cancelParticipation'])->name('candidat.event.unsubscribe');
 
     // FORMATIONS

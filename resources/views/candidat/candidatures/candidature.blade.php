@@ -238,6 +238,7 @@ select {
                                         </a>
                                         @endforeach
                                     </ul>
+                                    <div class="pagination mt-3">{{ $candidatures->links() }}</div>
                                 </div>
                                 <div class="vr"></div>
                                 @if(count($candidatures) > 0)
