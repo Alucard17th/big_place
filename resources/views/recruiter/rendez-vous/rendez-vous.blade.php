@@ -161,7 +161,7 @@ input, select{
                                     <tbody>
                                         @foreach ($rdvs as $rdv)
                                         <tr>
-                                            <td class="text-left">{{getUserById($rdv->participant)->name}}</td>
+                                            <td class="text-left">{{ optional(getUserById($rdv->participant))->name }}</td>
                                             <td class="text-left">
                                                 @if($rdv->is_type_distanciel)
                                                     Visio

@@ -272,8 +272,8 @@ class RecruiterController extends Controller
     public function myRdv(){
         $user = auth()->user();
         $rdvs = $user->rendezvous()
-        ->where('status', '!=', 'En attente confirmation candidat')
-        ->whereNotNull('participant')
+        // ->where('status', '!=', 'En attente confirmation candidat')
+        // ->whereNotNull('participant')
         ->get();
         return view('recruiter.rendez-vous.rendez-vous', compact('rdvs'));
     }
