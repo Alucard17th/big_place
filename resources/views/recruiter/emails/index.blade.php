@@ -70,6 +70,10 @@
 .paginate_button {
     margin-left: 10px;
 }
+
+.#message-form > div:nth-child(2) > span{
+    width: 28rem;
+}
 </style>
 @endpush
 @section('content')
@@ -88,6 +92,7 @@
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
+                            <a href="" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -200,7 +205,35 @@
             </div>
         </div>
     </div>
+<!-- Modal HTML embedded directly into document -->
+<div id="message-modal" class="modal">
+        <form action="{{route('candidat.email.store')}}" method="POST" id="message-form">
+            @csrf
+            <div class="form-group">
+                <label for="candidate">Envoyé à</label>
+                <br>
+                <select name="receiver[]" id="receiver" class="form-control" multiple required>
+                    @foreach ($receivers as $user)
+                    <option value="{{$user->id}}">{{$user->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="candidate">Sujet</label>
+                <input type="text" name="subject" id="subject" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="candidate">Message</label>
+                <textarea class="form-control" name="message" id="message" cols="30" rows="10" required></textarea>
+            </div>
 
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit" id="create-message-btn">Envoyer</button>
+            </div>
+        </form>
+        <a href="#" id="close-modal">Fermer</a>
+        <a href="#" class="custom-close-modal"></a>
+    </div>
 
 </div>
 @endsection
@@ -208,6 +241,24 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    var addMessageBtn = document.getElementById('add-message-btn');
+
+    addMessageBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        $("#message-modal").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    });
+    $("#receiver").select2({
+        width: '100%'
+    });
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
+
     $('.email-item').on('click', function() {
         var emailId = $(this).data('id');
         $.ajax({

@@ -809,7 +809,8 @@ class RecruiterController extends Controller
         $user = auth()->user();
         $emails = $user->emails;
         $receivedEmails = Email::where('receiver_id', $user->id)->get();
-        return view('recruiter.emails.index', compact('emails', 'receivedEmails'));
+        $receivers = User::all();
+        return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers'));
     }
     public function getMyMail(Request $request){
         $email = Email::find($request->id);
