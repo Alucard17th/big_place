@@ -780,24 +780,22 @@ class RecruiterController extends Controller
         ]);
 
         if ($request->hasFile('uploaded_documents')) {
-            $photosLocaux = $formation->uploaded_documents;
-            if (!is_array($photosLocaux)) {
-                $photosLocaux = [];
-            }
+            $photosLocaux = $formation->uploaded_documents ?? [];
             $newFilePaths = [];
-
+        
             foreach ($request->file('uploaded_documents') as $file) {
                 $fileName = $user->id . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $filePath = $file->storeAs('public/' . $user->id, $fileName);
-                
+        
                 $newFilePaths[] = $filePath;
             }
-            // Merge the new file paths into the existing JSON array
-            $photosLocaux = array_merge(json_decode($photosLocaux), $newFilePaths);
-          
-            // Set the updated JSON array back to the model
+        
+            // Merge the new file paths into the existing array
+            $photosLocaux = array_merge($photosLocaux, $newFilePaths);
+        
+            // Set the updated array back to the model
             $formation->uploaded_documents = $photosLocaux;
-            
+        
             $formation->save();
         }
 
