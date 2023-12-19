@@ -780,7 +780,7 @@ class RecruiterController extends Controller
         ]);
 
         if ($request->hasFile('uploaded_documents')) {
-            $photosLocaux = $formation->uploaded_documents ?? [];
+            $photosLocaux = json_decode($formation->uploaded_documents) ?? [];
             $newFilePaths = [];
         
             foreach ($request->file('uploaded_documents') as $file) {
