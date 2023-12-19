@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showClose: false
             });
             $('#rdv_id').val($(this).data('rdv-id'));
-            
+
             document.getElementById('commentaire').value = '';
 
             $('#commentaire').val($(this).data('rdv-commentaire'));
@@ -347,7 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-$('#close-modal, .custom-close-modal').click(function() {
+$('#close-modal, .custom-close-modal').click(function(event) {
+    event.preventDefault();
     console.log('Modal Should Be Closed');
     $.modal.close();
 });

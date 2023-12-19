@@ -151,9 +151,6 @@ input, select{
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group mt-3">
-                                        <button type="submit" class="theme-btn btn-style-one bg-btn">Chercher</button>
-                                    </div>
                                 </form>
                             </div>
                         </div>

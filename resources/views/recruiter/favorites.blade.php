@@ -149,24 +149,25 @@ input, select{
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Nom du candidat">
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="address" id="address" class="form-control" placeholder="Adresse">
+                                                <input type="text" name="address" id="address" class="form-control" placeholder="Ville/département">
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
+                                        <!-- <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Status Rendez-vous</option>
+                                                    <option value=""  selected>Statut Rendez-vous</option>
+                                                    <option value="">Tout</option>
                                                     <option value="Envoyé">Envoyé</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mt-2 mr-1">
@@ -183,9 +184,9 @@ input, select{
 
                                     </div>
                                    
-                                  <div class="form-group mt-3">
+                                  <!-- <div class="form-group mt-3">
                                     <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
+                                  </div> -->
                                    
                                 </form>
 
@@ -203,10 +204,10 @@ input, select{
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th></th>
-                                            <th>Nom</th>
+                                            <th>Nom du candidat</th>
                                             <th>Ville</th>
                                             <th>Niveau d'études</th>
-                                            <th>Etat</th>
+                                            <!-- <th>Statut</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -218,7 +219,7 @@ input, select{
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
                                             <td class="text-left">{{$curriculum->niveau_etudes}}</td>
-                                            <td class="text-left">XXX</td>
+                                            <!-- <td class="text-left">XXX</td> -->
                                             
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
