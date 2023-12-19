@@ -156,6 +156,7 @@
                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                     <select name="metier_recherche" id="metier_recherche" class="form-control">
+                                    <option value="" selected>Métier / Code Rome</option>
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
                                         @endforeach
