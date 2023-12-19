@@ -189,6 +189,7 @@ input, select{
                                             <th>Années d’expérience</th>
                                             <th>Niveau</th>
                                             <th>Niveau de salaire</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -201,6 +202,9 @@ input, select{
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
+                                            <td class="text-left">
+                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

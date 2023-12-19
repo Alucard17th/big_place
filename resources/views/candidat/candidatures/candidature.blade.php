@@ -250,14 +250,14 @@ select {
                                                     <h4 class="offre-title">
                                                         {{ getOfferByCandidatId($candidatures[0]->offer_id)->job_title }}
                                                     </h4>
-                                                    <div class="d-flex">
+                                                    <!-- <div class="d-flex">
                                                         <button class="offre-btn mr-3"><i
                                                                 class="las la-bookmark"></i></button>
                                                         <button class="offre-btn mr-3"><i
                                                                 class="las la-share"></i></button>
                                                         <button class="offre-btn"><i
                                                                 class="las la-ellipsis-h"></i></button>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                                 <div class="offre-subtitle my-1">
                                                     <img src="{{ asset('storage' . getEntrepriseByUserID($candidature->user_id)->logo) }}"

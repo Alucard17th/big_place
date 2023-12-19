@@ -108,7 +108,7 @@ input, select{
                                     <div class="row w-100">
                                             <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
-                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
+                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom du candidat">
                                                 </div>
                                             </div>
 
@@ -141,9 +141,9 @@ input, select{
                                             </div>
                                     </div>
                                    
-                                  <div class="form-group mt-3">
+                                  <!-- <div class="form-group mt-3">
                                     <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
+                                  </div> -->
                                    
                                 </form>
                             </div>

@@ -106,16 +106,16 @@ input, select{
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Titre de l'offre">
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="address" id="address" class="form-control" placeholder="Adresse">
+                                                <input type="text" name="address" id="address" class="form-control" placeholder="Ville/département">
                                             </div>
                                         </div>
-
+<!-- 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
@@ -123,7 +123,7 @@ input, select{
                                                     <option value="Envoyé">Envoyé</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mt-2 mr-1">
@@ -140,9 +140,9 @@ input, select{
 
                                     </div>
                                    
-                                  <div class="form-group mt-3">
+                                  <!-- <div class="form-group mt-3">
                                     <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
+                                  </div> -->
                                    
                                 </form>
 
@@ -162,7 +162,7 @@ input, select{
                                             <th>Titre de l'offre</th>
                                             <th>Ville</th>
                                             <th>Niveau</th>
-                                            <th>Etat</th>
+                                            <!-- <th>Etat</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -172,7 +172,7 @@ input, select{
                                             <td class="text-left">{{$offre->job_title}}</td>
                                             <td class="text-left">{{$offre->location_city}}</td>
                                             <td class="text-left">{{$offre->experience_level}}</td>
-                                            <td class="text-left">{{$offre->status}}</td>
+                                            <!-- <td class="text-left">{{$offre->status}}</td> -->
                                             
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offre->user_id)}}" type="button" class="bg-btn-three proposez-rdv px-1">Vitrine entreprise</a>

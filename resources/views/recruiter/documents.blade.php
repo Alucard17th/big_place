@@ -47,7 +47,6 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
                                             <th>Nom</th>
                                             <th>Crée le</th>
@@ -58,8 +57,6 @@
                                     <tbody>
                                         @foreach ($documents as $document)
                                         <tr>
-                                            <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$document->id}}"></td>
                                             <td class="text-left">{{$document->name}}</td>
                                             <td class="text-left">{{$document->created_at}}</td>
                                             <td class="text-left">{{$document->type}}</td>

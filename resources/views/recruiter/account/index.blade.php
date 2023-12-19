@@ -45,7 +45,7 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title d-flex justify-content-between">
                             <div class="chosen-outer">
-                                <h3 class="text-dark">Informations de l'entreprise</h3>
+                                <h3 class="text-dark">Mon profil</h3>
                             </div>
                             <a href="" class="theme-btn-one btn-one ml-4" id="toggle-1"><i class="las la-angle-down"
                                     style="font-size:24px;color:#000;"></i></a>
@@ -249,7 +249,7 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title d-flex justify-content-between">
                             <div class="chosen-outer">
-                                <h3 class="text-dark">Supression</h3>
+                                <h3 class="text-dark">Suppression</h3>
                             </div>
                             <a href="" class="theme-btn-one btn-one ml-4" id="toggle-4"><i class="las la-angle-down"
                                     style="font-size:24px;color:#000;"></i></a>

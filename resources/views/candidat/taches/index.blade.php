@@ -143,10 +143,9 @@ input, select{
                                         <div class="col-4 px-1 mt-3">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Status Tâche</option>
+                                                    <option value=""  selected>Statut Tâche</option>
                                                     <option value="Terminée">Terminée</option>
                                                     <option value="En cours">En cours</option>
-                                                    <option value="Bloqué">Bloquée</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -183,7 +182,7 @@ input, select{
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>
                                                 @else
-                                                <span class="badge badge-success">Terminé</span>
+                                                <span class="badge badge-success">Terminée</span>
                                                 @endif
                                             </td>
                                             <td class="text-left">{{Str::limit($task->description, $limit = 30, $end = '...')}}</td>
