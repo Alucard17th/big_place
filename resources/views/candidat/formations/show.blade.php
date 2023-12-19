@@ -214,12 +214,6 @@ background: #13D527;
                                         <div class="upper-title-box d-flex justify-content-between align-items-center pt-5">
                                             <h4 class="offre-title">
                                                 {{$formation->job_title}}</h4>
-                                            <div class="d-flex">
-                                                <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2 pb-0">
-                                                    <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
-                                                    Retour
-                                                </a>
-                                            </div>
                                         </div>
                                         <div class="offre-subtitle my-1">
                                             <img src="{{asset('storage'.getEntrepriseByUserID($formation->user_id)->logo)}}"
@@ -245,15 +239,16 @@ background: #13D527;
                                             Durée de la Formation ( {{$formation->start_date}} - {{$formation->end_date}} ) 
                                         </div>
                                         <div class="offre-desc my-4">
-                                            Lieu et Adresse {{$formation->work_location}}
+                                            Lieu et Adresse:
+                                            <div>{{$formation->work_location}}</div> 
                                         </div>
                                         <div class="offre-desc my-4">
                                             Nombre de Participants : {{$formation->max_participants}} particpiants
                                         </div>
-                                        <div class="offre-status">Status de l'offre :
+                                        <!-- <div class="offre-status">Status de l'offre :
                                             {{$formation->status}}</div>
                                         <div class="offre-end-date">Date de limitation de candidature :
-                                            {{$formation->end_date}}</div>
+                                            {{$formation->end_date}}</div> -->
 
                                         <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">

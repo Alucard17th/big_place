@@ -34,17 +34,17 @@ class RecruiterController extends Controller
     }
     // CV THEQUE
     public function cvtheque(){
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if($user->parent_entreprise_id == null){
-            // USER IS ADMIN
-            $curriculums = Curriculum::where('user_id', $user->id)->get();
-        }else{
-            // OTHER TEAM MEMBERS
-            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $curriculums = Curriculum::where('user_id', $entreprise->user_id)->get();
-        }
-       
+        // if($user->parent_entreprise_id == null){
+        //     // USER IS ADMIN
+        //     $curriculums = Curriculum::where('user_id', $user->id)->get();
+        // }else{
+        //     // OTHER TEAM MEMBERS
+        //     $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+        //     $curriculums = Curriculum::where('user_id', $entreprise->user_id)->get();
+        // }
+        $curriculums = Curriculum::all();
         $jobs = Job::all();
         return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
@@ -120,7 +120,8 @@ class RecruiterController extends Controller
         // dd(json_decode($favorite->favorites), $request->selectedValues);
         if ($favorite) {
             // update favorite
-            $favsMerged = array_merge( json_decode($favorite->favorites), $request->selectedValues);
+            // $favsMerged = array_merge( json_decode($favorite->favorites), $request->selectedValues);
+            $favsMerged = array_unique(array_merge(json_decode($favorite->favorites), $request->selectedValues));
             $favorite->favorites = $favsMerged;
             $favorite->save();
         }else{
@@ -147,9 +148,11 @@ class RecruiterController extends Controller
     public function inviteCandidates(Request $request){
         $participants = json_decode($request->selectedValues);
         $errors = [];
+        $user = auth()->user();
 
          
-        $existingRendezVous = RendezVous::where('date', $request->crenau_2_date)
+        $existingRendezVous = $user->rendezvous()
+        ->where('date', $request->crenau_2_date)
         ->where('heure', $request->crenau_2_time)
         ->first();
         if ($existingRendezVous) {
@@ -157,7 +160,8 @@ class RecruiterController extends Controller
             $errors[0] = 'Il existe déjà un rendez-vous à cette date et heure';
         }
         // check if there is a Rendez-Vous already created with one of the creneau date and time selected in the request 
-        $existingRendezVous = RendezVous::where('date', $request->crenau_1_date)
+        $existingRendezVous = $user->rendezvous()
+        ->where('date', $request->crenau_1_date)
         ->where('heure', $request->crenau_1_time)
         ->first();
         if ($existingRendezVous) {
@@ -166,7 +170,8 @@ class RecruiterController extends Controller
         }
        
 
-        $existingRendezVous = RendezVous::where('date', $request->crenau_3_date)
+        $existingRendezVous = $user->rendezvous()
+        ->where('date', $request->crenau_3_date)
         ->where('heure', $request->crenau_3_time)
         ->first();
         if ($existingRendezVous) {
@@ -199,46 +204,54 @@ class RecruiterController extends Controller
         
         $confirmationUrl = '';
 
+        $rdv_1 = RendezVous::create([
+            'user_id' => auth()->user()->id,
+            // 'participant' => $participant,
+            'date' => $request->crenau_1_date,
+            'heure' => $request->crenau_1_time,
+            'status' => 'En attente confirmation candidat',
+            'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+            'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+        ]);
+
+        $rdv_2 = RendezVous::create([
+            'user_id' => auth()->user()->id,
+            // 'participant' => $participant,
+            'date' => $request->crenau_2_date,
+            'heure' => $request->crenau_2_time,
+            'status' => 'En attente confirmation candidat',
+            'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+            'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+        ]);
+
+        $rdv_3 = RendezVous::create([
+            'user_id' => auth()->user()->id,
+            // 'participant' => $participant,
+            'date' => $request->crenau_3_date,
+            'heure' => $request->crenau_3_time,
+            'status' => 'En attente confirmation candidat',
+            'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
+            'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
+        ]);
+
         $emailDetails = [
-            'title' => 'Proposition rendez-vous',
+            'title' => 'Proposition de rendez-vous',
             'body' => $message_body,
             'creneau' => $creneau,
-            'confirmationUrl' => $confirmationUrl
+            'confirmationUrl' => $confirmationUrl,
+            'rdvs' =>[
+                $rdv_1->id,
+                $rdv_2->id,
+                $rdv_3->id
+            ] 
         ];
 
         foreach($participants as $participant){
-            $rdv_1 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_1_date,
-                'heure' => $request->crenau_1_time,
-                'status' => 'En attente',
-                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
-                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
-            ]);
-    
-            $rdv_2 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_2_date,
-                'heure' => $request->crenau_2_time,
-                'status' => 'En attente',
-                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
-                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
-            ]);
-    
-            $rdv_3 = RendezVous::create([
-                'user_id' => auth()->user()->id,
-                'participant' => $participant,
-                'date' => $request->crenau_3_date,
-                'heure' => $request->crenau_3_time,
-                'status' => 'En attente',
-                'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
-                'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
-            ]);
+            
 
             // Send Emails TO all the participant 
-            // Mail::to('eddallal.noureddine@gmail.com')->send(new SendRdvInvitation($emailDetails));
+            $user = User::find($participant);
+            Mail::to($user->email)->send(new SendRdvInvitation($emailDetails));
 
             $email = Email::create([
                 'user_id' => auth()->user()->id,
@@ -258,7 +271,10 @@ class RecruiterController extends Controller
     // RDV
     public function myRdv(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous;
+        $rdvs = $user->rendezvous()
+        ->where('status', '!=', 'En attente confirmation candidat')
+        ->whereNotNull('participant')
+        ->get();
         return view('recruiter.rendez-vous.rendez-vous', compact('rdvs'));
     }
     public function seeMyRdv($id){

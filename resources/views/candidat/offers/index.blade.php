@@ -139,6 +139,9 @@ input, select{
                             </div>
                         </div>
 
+                        <button type="button" class="btn-style-one bg-btn px-0 mb-2 ml-2 d-none add-to-favorites">Ajouter aux
+                            favoris</button>
+
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -146,6 +149,8 @@ input, select{
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
+                                            </th>
                                             <th>Titre de l'offre</th>
                                             <th>Ville / département</th>
                                             <th>Années d'expérience</th>
@@ -157,6 +162,8 @@ input, select{
                                     <tbody>
                                         @foreach ($offres as $offer)
                                         <tr>
+                                            <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$offer->id}}"></td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>
@@ -188,6 +195,67 @@ input, select{
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const selectAllCheckbox = document.querySelector('.checkbox-all');
+    const checkboxes = document.querySelectorAll('.checkbox-item');
+    const addToFavoritesButton = document.querySelector('.add-to-favorites');
+
+    // Add an event listener to checkboxes to toggle the button visibility
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+            addToFavoritesButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
+        });
+    });
+
+    selectAllCheckbox.addEventListener('change', function() {
+        const isChecked = selectAllCheckbox.checked;
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = isChecked;
+        });
+
+        // Update the visibility of the "Ajouter aux favoris" button
+        const addToFavoritesButton = document.querySelector('.add-to-favorites');
+        addToFavoritesButton.classList.toggle('d-none', !isChecked);
+    });
+
+    // Add an event listener to the "Ajouter aux favoris" button to collect values
+    addToFavoritesButton.addEventListener('click', function() {
+        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+        const selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
+            return checkbox.value;
+        });
+
+        if (selectedValues.length > 0) {
+            // Define the data to be sent
+            const data = {
+                selectedValues: selectedValues
+            };
+
+            // Send the data using AJAX
+            fetch('{{ route('candidat.favorite.add') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+                        },
+                        body: JSON.stringify(data),
+                    })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response, e.g., show a success message
+                    // refresh the current page
+                    window.location.reload();
+                })
+                .catch(error => {
+                    // Handle errors, e.g., show an error message
+                    console.error(error);
+                });
+        }
+        console.log('Selected values:', selectedValues);
+        // You can now perform further actions with the selected values.
+    });
+
     $("#values_select").select2({
         placeholder: "Valeurs",
     });

@@ -37,6 +37,8 @@ class EmailController extends Controller
            
             $user->emails()->save($email);
         }
-        dd($request->all());
+       
+        toast('Emails envoyés', 'success');
+        return redirect()->back();
     }
 }

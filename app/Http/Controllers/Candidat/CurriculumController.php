@@ -48,12 +48,18 @@ class CurriculumController extends Controller
             $fileInfos = Filepond::field($request->cv)->moveTo('/uploads/'.$user->id.'/cv_'.uniqid());
             $curriculum->cv = $fileInfos['location'];
             $curriculum->save();
+
+            $user->documents()->create([
+                'name' => $fileInfos['basename'],
+                'file' => $fileInfos['location'],
+                'type' => 'cv',
+            ]);
         }else{
             $curriculum->cv = null;
             $curriculum->save();
         }
 
-        toast('Curriculum uploaded','success')->autoClose(5000);
+        toast('Votre CV a bien été enregistre','success')->autoClose(5000);
 
         return redirect()->back();
     }

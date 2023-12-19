@@ -96,7 +96,7 @@ color: #949494;
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Candidatures envoyées</h5>
-                                            <p class="card-text">{{$refusedRdvs}}</p>
+                                            <p class="card-text">{{$candidature}}</p>
                                         </div>
                                     </div>
                                 </div>

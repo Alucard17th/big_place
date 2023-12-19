@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Candidat;
 use App\Http\Controllers\Controller; // Import the Controller class from Laravel
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Candidature;
+use App\Models\RendezVous;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Hash;
 
 class CandidatController extends Controller
@@ -121,7 +125,17 @@ class CandidatController extends Controller
 
 
     public function history(){
-        $histories = auth()->user()->history;
+        // $histories = auth()->user()->history;
+        $histories = auth()->user()->history()
+        ->where(function ($query) {
+            $query->whereNotNull('searchable')
+                  ->whereExists(function ($subquery) {
+                      $subquery->select(DB::raw(1))
+                               ->from('offres')
+                               ->whereRaw('offres.id = histories.searchable');
+                  });
+        })
+        ->get();
         return view('candidat.history.index', compact('histories'));
     }
 
@@ -131,11 +145,32 @@ class CandidatController extends Controller
         $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
         $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
 
-        $offresByMetier = $user->offers->groupBy('rome_code')->map->count();
+        $candidature = Candidature::where('candidat_id', $user->id)->count();
    
         $moyenneDureeRecrutement = 555;
 
         $dureeSusbcription = 555;
-        return view('candidat.stats.index', compact('doneRdvs','refusedRdvs', 'offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+        return view('candidat.stats.index', compact('doneRdvs','refusedRdvs', 'candidature', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+    }
+
+    public function chooseCreneau($time){
+        $rdv = RendezVous::find($time);
+        return view('candidat.creneau.index', compact('rdv'));
+    }
+
+    public function confirmCreneau($id){
+        $rdv = RendezVous::find($id);
+
+        if($rdv->status == 'En attente confirmation candidat'){
+            $rdv->status = 'En attente';
+            $rdv->participant = auth()->user()->id;
+            $rdv->candidat_it = auth()->user()->id;
+            $rdv->save();
+            toast('Votre rendez-vous a bien été confirme', 'success');
+        }else{
+            toast('Ce créneau est déja réservé', 'error');
+        }
+
+        return redirect()->back();
     }
 }

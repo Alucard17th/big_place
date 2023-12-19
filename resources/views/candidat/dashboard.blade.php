@@ -138,12 +138,13 @@
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                    <select name="job_title" id="job_title" class="form-control">
+                                    <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;">
+                                    <!-- <select name="job_title" id="job_title" class="form-control">
                                         <option value="" selected value="">Titre de l'offre</option>
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
                                         @endforeach
-                                    </select>
+                                    </select> -->
                                 </div>
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt="" 
@@ -206,7 +207,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-rendez-vous">
+                            <a href="/candidat-rdvs">
                                 <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-rdvs.png')}}"
                                     alt="">
                             </a>
@@ -217,7 +218,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-taches">
+                            <a href="/candidat-tasks">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-taches.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes tâches</span>
@@ -228,7 +229,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-evenements">
+                            <a href="/candidat-events">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes évènemements / jobdatings</span>
@@ -239,10 +240,10 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-offres">
+                            <a href="/candidat-favoris">
                                 <img class="img-fluid dashboard-small-img"
                             src="{{asset('/plugins/images/dashboard/mes-offres.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes offres d'emploi</span>
+                                <span class="pt-4 mb-3 text-dark">Mes favoris</span>
                         </a>
                         </div>
                     </div>
@@ -254,7 +255,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-candidatures">
+                            <a href="/candidat-candidatures">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-candidatures.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes candidatures</span>
@@ -265,10 +266,10 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/ma-vitrine">
+                            <a href="/candidat-cvredirect">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/ma-vitrine.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Ma vitrine entreprise</span>
+                                <span class="pt-4 mb-3 text-dark">Ma fiche candidat</span>
                                 </a>
                         </div>
                     </div>
@@ -276,10 +277,10 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat#">
+                            <a href="/candidat-formation">
                                 <img class="img-fluid dashboard-small-img"
                             src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
+                                <span class="pt-4 mb-3 text-dark">Mes formations à suivre</span>
                         </a>
                         </div>
                     </div>
@@ -287,7 +288,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat#">
+                            <a href="/candidat-emails">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes emails</span>
@@ -302,7 +303,7 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-documents">
+                            <a href="/candidat-documents">
                                 <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-docs.png')}}"
                                     alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes documents</span>
@@ -313,20 +314,9 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat/mes-factures-et-contrats">
+                            <a href="/candidat-stats">
                                 <img class="img-fluid dashboard-small-img"
                                 src="{{asset('/plugins/images/dashboard/mes-factures-contrats.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes factures et contrats</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card dashboard-link">
-                        <div class="card-body text-center">
-                            <a href="candidat#">
-                                <img class="img-fluid dashboard-small-img"
-                                src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes statistiques</span>
                             </a>
                         </div>
@@ -335,14 +325,24 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="candidat#">
+                            <a href="/candidat-account">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mon-compte.png')}}" alt="">
                                 <span class="pt-4 mb-3 text-dark">Mes compte administrateur</span>
                                 </a>
                         </div>
                     </div>
-                   
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/candidat-history">
+                                <img class="img-fluid dashboard-small-img"
+                                src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes dernières recherches</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -104,7 +104,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
     
     Route::post('/ma-vitrine/update', [RecruiterController::class, 'updateVitrine'])->name('recruiter.update.vitrine');
-    
+
     // TASKS
     Route::post('/task/add', [RecruiterController::class, 'addTask'])->name('recruiter.task.add');
     Route::post('/task/update', [RecruiterController::class, 'updateTask'])->name('recruiter.task.update');
@@ -189,12 +189,20 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-account', [CandidatController::class, 'account'])->name('candidat.account');
     Route::get('/candidat-stats', [CandidatController::class, 'stats'])->name('candidat.stats');
     
+    // CHoose Creneau
+    Route::get('/candidat-creneau/choose/{time}', [CandidatController::class, 'chooseCreneau'])->name('candidat.creneau.choose');
+    Route::get('/candidat-creneau/confirm/{id}', [CandidatController::class, 'confirmCreneau'])->name('candidat.creneau.confirm');
+
+
+
     // TODO
     Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
     Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
     // Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
     Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
 
+    // FAVORITES
+    Route::post('/candidat/favortie/add', [FavoritesController::class, 'addToFavorites'])->name('candidat.favorite.add');
     // RDV
     Route::get('/candidat-rdv/cancel/{id}', [RendezVousController::class, 'cancelRdv'])->name('candidat.rdv.cancel');
 
