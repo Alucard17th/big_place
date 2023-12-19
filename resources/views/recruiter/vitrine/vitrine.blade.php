@@ -321,6 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    
     const pond_cover = FilePond.create(cover,{
         files:coverUrl  ? 'storage' + coverUrl : null,
         labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
