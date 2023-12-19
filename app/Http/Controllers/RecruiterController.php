@@ -338,7 +338,10 @@ class RecruiterController extends Controller
         $rdv->save();
 
         toast('Votre commentaire a bien été ajouté','success')->autoClose(5000);
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     // VITRINE

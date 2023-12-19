@@ -184,7 +184,7 @@ input, select{
                                                     Annuler
                                                 </a>
                                                 <button class="bg-btn-five add-comment-modal mt-2"
-                                                    data-rdv-id="{{$rdv->id}}">
+                                                    data-rdv-id="{{$rdv->id}}" data-rdv-commentaire="{{$rdv->commentaire}}">
                                                     <i class="las la-comment"></i>
                                                     Commentaire
                                                 </button>
@@ -241,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showClose: false
             });
             $('#rdv_id').val($(this).data('rdv-id'));
+            $('#commentaire').val($(this).data('rdv-commentaire'));
             document.getElementById('commentaire').value = '';
         });
     });
