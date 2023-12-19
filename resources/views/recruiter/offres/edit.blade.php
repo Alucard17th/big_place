@@ -220,7 +220,7 @@
                                 <!-- Field: Secteur d’activité -->
                                 <div class="form-group">
                                     <label for="industry_sector">Secteur d’activité </label>
-                                    <select class="form-control" id="industry_sector" name="industry_sector[]" multiple>
+                                    <select class="form-control" id="industry_sector" name="industry_sector">
                                         <option value="Agroalimentaire" @if('Agroalimentaire' == $offer->industry_sector) selected @endif>Agroalimentaire</option>
                                         <option value="Automobile / Services" @if('Automobile / Services' == $offer->industry_sector) selected @endif>Automobile / Services</option>
                                         <option value="Banque / Assurance" @if('Banque / Assurance' == $offer->industry_sector) selected @endif>Banque / Assurance</option>
