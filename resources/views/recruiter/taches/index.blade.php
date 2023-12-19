@@ -179,7 +179,7 @@ input, select{
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>
                                                 @else
-                                                <span class="badge badge-success">Terminé</span>
+                                                <span class="badge badge-success">Terminée</span>
                                                 @endif
                                             </td>
                                             <td class="text-left">{{Str::limit($task->description, $limit = 30, $end = '...')}}</td>
