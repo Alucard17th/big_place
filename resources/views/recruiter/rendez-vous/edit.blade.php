@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <label for="date">Invité</label>
                                     <input type="text" class="form-control" id="date"
-                                        name="date" value="{{ getUserById($rdv->participant)->name }}" disabled>
+                                        name="date" value="{{ optional(getUserById($rdv->participant))->name }}" disabled>
                                 </div>
 
                                 <!-- Field: Nom du projet ou de la campagne -->
