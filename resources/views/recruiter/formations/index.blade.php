@@ -99,10 +99,10 @@
                                                     <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
-                                                <a href="" type="button" class="bg-btn-seven mt-2" style="padding-left:6px !important;padding-right:6px !important;">
+                                                <!-- <a href="" type="button" class="bg-btn-seven mt-2" style="padding-left:6px !important;padding-right:6px !important;">
                                                     <i class="las la-download"></i>
                                                     Documents
-                                                </a>
+                                                </a> -->
                                                 <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-2">
                                                     <i class="las la-trash"></i>
                                                     Fermer
