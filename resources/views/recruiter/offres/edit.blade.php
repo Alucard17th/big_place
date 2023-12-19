@@ -280,21 +280,21 @@
                                     @endphp
                                     <select class="form-control" id="selected_jobboards" name="selected_jobboards[]" multiple>
                                         <!-- Add other options based on your needs -->
-                                        <option value="linkedin" @if(in_array('linkedin', json_decode($jobboards))) selected @endif>LinkedIn</option>
-                                        <option value="pole_emploi" @if(in_array('pole_emploi', json_decode($jobboards))) selected @endif>Pôle Emploi</option>
-                                        <option value="indeed" @if(in_array('indeed', json_decode($jobboards))) selected @endif>Indeed</option>
-                                        <option value="apec" @if(in_array('apec', json_decode($jobboards))) selected @endif>APEC</option>
-                                        <option value="monster" @if(in_array('monster', json_decode($jobboards))) selected @endif>Monster</option>
-                                        <option value="wizbii" @if(in_array('wizbii', json_decode($jobboards))) selected @endif>Wizbii</option>
-                                        <option value="jobijoba" @if(in_array('jobijoba', json_decode($jobboards))) selected @endif>Jobijoba</option>
-                                        <option value="jooble" @if(in_array('jooble', json_decode($jobboards))) selected @endif>Jooble</option>
-                                        <option value="neuvo" @if(in_array('neuvo', json_decode($jobboards))) selected @endif)>Neuvo</option>
-                                        <option value="place_des_talents" @if(in_array('place_des_talents', json_decode($jobboards))) selected @endif>Place des Talents</option>
-                                        <option value="le_bon_coin" @if(in_array('le_bon_coin', json_decode($jobboards))) selected @endif>Le Bon Coin</option>
-                                        <option value="cadre_emploi" @if(in_array('cadre_emploi', json_decode($jobboards))) selected @endif>Cadre Emploi</option>
-                                        <option value="job_transport" @if(in_array('job_transport', json_decode($jobboards))) selected @endif>Job Transport</option>
-                                        <option value="l_hotellerie_restauration" @if(in_array('l_hotellerie_restauration', json_decode($jobboards))) selected @endif>L'Hôtellerie Restauration</option>
-                                        <option value="meteojob" @if(in_array('meteojob', json_decode($jobboards))) selected @endif>Meteojob</option>
+                                        <option value="linkedin" @if(in_array('linkedin', ($jobboards)) selected @endif>LinkedIn</option>
+                                        <option value="pole_emploi" @if(in_array('pole_emploi', ($jobboards)) selected @endif>Pôle Emploi</option>
+                                        <option value="indeed" @if(in_array('indeed', ($jobboards)) selected @endif>Indeed</option>
+                                        <option value="apec" @if(in_array('apec', ($jobboards)) selected @endif>APEC</option>
+                                        <option value="monster" @if(in_array('monster', ($jobboards)) selected @endif>Monster</option>
+                                        <option value="wizbii" @if(in_array('wizbii', ($jobboards)) selected @endif>Wizbii</option>
+                                        <option value="jobijoba" @if(in_array('jobijoba', ($jobboards)) selected @endif>Jobijoba</option>
+                                        <option value="jooble" @if(in_array('jooble', ($jobboards)) selected @endif>Jooble</option>
+                                        <option value="neuvo" @if(in_array('neuvo', ($jobboards)) selected @endif)>Neuvo</option>
+                                        <option value="place_des_talents" @if(in_array('place_des_talents', ($jobboards)) selected @endif>Place des Talents</option>
+                                        <option value="le_bon_coin" @if(in_array('le_bon_coin', ($jobboards)) selected @endif>Le Bon Coin</option>
+                                        <option value="cadre_emploi" @if(in_array('cadre_emploi', ($jobboards)) selected @endif>Cadre Emploi</option>
+                                        <option value="job_transport" @if(in_array('job_transport', ($jobboards)) selected @endif>Job Transport</option>
+                                        <option value="l_hotellerie_restauration" @if(in_array('l_hotellerie_restauration', ($jobboards)) selected @endif>L'Hôtellerie Restauration</option>
+                                        <option value="meteojob" @if(in_array('meteojob', ($jobboards)) selected @endif>Meteojob</option>
                                     </select>
                                 </div>
 
