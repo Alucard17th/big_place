@@ -321,10 +321,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-
     console.log('Cover Url : ', coverUrl);
     console.log('Logo Url : ', logoUrl);
     console.log('Gallery Url : ', newArray);
+
     const pond_cover = FilePond.create(cover,{
         files:coverUrl  ? 'storage' + coverUrl : null,
         labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pond_video = FilePond.create(video,{
         maxFileSize: '100MB',
         chunkUploads: true,
-        files:'storage' + videoUrl,
+        files:videoUrl ? 'storage' + videoUrl : null,
         labelIdle: '<i class="las la-video"></i>Ajouter une vidéo',
     });
     pond_video.on('processfile', (error, file) => {
