@@ -141,8 +141,8 @@ class CandidatController extends Controller
 
     public function stats(){
         $user = auth()->user();
-        $doneRdvs = RendezVous::where('candidat_id', $user->id)->where('status', 'Effectué')->count();
-        $doneRdvs = RendezVous::where('candidat_id', $user->id)->where('status', 'Annulé')->count();
+        $doneRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Effectué')->count();
+        $doneRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Annulé')->count();
         // $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
         // $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
 
