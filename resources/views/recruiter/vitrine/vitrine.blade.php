@@ -124,7 +124,7 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 align-items-center justify-content-center py-4">
-                                        @if(!isset($entreprise))
+                                        @if(!isset($entreprise) || $entreprise->cover == '')
                                         <img src="https://placehold.co/900X313" alt="" style="border-radius: 15px">
                                         @else
                                         <img src="{{ 'storage'.$entreprise->cover }}" alt="" style="border-radius: 15px; width: 900px; height: 200px">
