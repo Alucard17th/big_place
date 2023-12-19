@@ -241,8 +241,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showClose: false
             });
             $('#rdv_id').val($(this).data('rdv-id'));
-            $('#commentaire').val($(this).data('rdv-commentaire'));
+            
             document.getElementById('commentaire').value = '';
+
+            $('#commentaire').val($(this).data('rdv-commentaire'));
         });
     });
 
