@@ -139,9 +139,14 @@
                                     <div class="col-12">
                                         <div class="row align-items-center pt-4 pb-5">
                                             <div class="col-2">
+                                                @if(!isset($entreprise->logo) || $entreprise->logo == '')
+                                                <img src="https://placehold.co/150X150" alt="" style="border-radius: 15px">
+                                                @else
                                                 <img class="img-fluid vitrine-logo"
                                                     src="{{isset($entreprise) ? 'storage'.$entreprise->logo : '' }}"
                                                     alt="logo">
+                                                @endif
+                                                
                                             </div>
                                             <div class="col-10">
                                                 <div>
@@ -322,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const pond_logo = FilePond.create(logo,{
-        files:'storage' + logoUrl,
+        files:logoUrl ? 'storage' + logoUrl : '',
         labelIdle: 'Glissez vos fichiers ici ou <span class="filepond--label-action">Parcourir</span>',
     });
 

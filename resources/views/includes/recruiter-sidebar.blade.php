@@ -57,7 +57,7 @@
                 <a href="/mes-candidatures" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/candidatures.png')}}" alt=""> Mes
-                        candidature</span>
+                        candidatures</span>
                 </a>
             </li>
             @role('recruiter')
