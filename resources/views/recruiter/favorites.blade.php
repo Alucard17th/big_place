@@ -214,7 +214,7 @@ input, select{
                                         @foreach ($favorites as $curriculum)
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
-                                                    value="{{$curriculum->id}}"></td>
+                                                    value="{{$curriculum->user_id}}"></td>
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
                                             <td class="text-left">{{$curriculum->niveau_etudes}}</td>

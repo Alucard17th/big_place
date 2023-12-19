@@ -71,7 +71,7 @@ input, select{
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button>
+                            <!-- <button class="theme-btn btn-style-one bg-header-btn">+ Ajouter des candidats</button> -->
                         </div>
                     </div>
 
