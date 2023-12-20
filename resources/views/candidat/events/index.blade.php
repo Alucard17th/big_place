@@ -5,8 +5,8 @@
     position: absolute;
     top: -12.5px;
     right: -12.5px;
-    /* display: block; */
-    display: none;
+    display: block;
+    /* display: none; */
     width: 30px;
     height: 30px;
     text-indent: -9999px;
@@ -55,6 +55,34 @@
     font-size: 20px;
     line-height: 20px;
 }
+
+.badge-card {
+    border: 1px solid #0000004a;
+    /* border-radius: 25px; */
+}
+
+.badge-card-header {
+    /* border-top-left-radius: 25px;
+    border-top-right-radius: 25px; */
+    background-color: #22218c
+}
+
+#loading{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+    text-align: center;
+    padding-top: 20%; /* Adjust as needed */
+    z-index: 9999; /* Ensure it appears on top of other elements */
+    color:#000;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 </style>
 @endpush
 
@@ -99,7 +127,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($events as $event)
-                                        
+
                                         <tr>
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
@@ -197,6 +225,11 @@
                                                     type="button" class="bg-btn-three mt-2">
                                                     Voir l'entreprise
                                                 </a>
+                                                <a href="" data-event-id="{{$event->id}}"
+                                                    data-event-name="{{$event->job_position}}" type="button"
+                                                    class="bg-btn-five mt-2" id="get-qr-code-btn">
+                                                    Badge
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -215,94 +248,25 @@
 
     <!-- Modal HTML embedded directly into document -->
     <div id="ex1" class="modal">
-        <form action="{{ route('recruiter.events.store') }}" method="POST" id="add-event-form">
-            @csrf
-            <div class="form-group d-flex align-items-center justify-content-between">
-                <h4 class="text-dark">J'organise un nouvel évènement</h4>
-                <a href="#" id="close-modal"><i class="las la-times" style="font-size: 30px;"></i></a>
+        <div id="loading" style="display: none;">
+        Génération du badge...
+        <img src="/plugins/images/icons/loading.svg" alt="">
+        </div>
+        <div class="row w-100 badge-card">
+            <div class="col-12 text-center badge-card-header">
+                <img src="/plugins/images/logo.png" alt="" width="25%" class="py-3">
             </div>
 
-            <div class="row">
-                <div class="col-6">
-                    <!-- Field: Organizer Name -->
-                    <div class="form-group">
-                        <label class="text-dark" for="organizer_name">Organisateur</label>
-                        <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <!-- Field: Job Position -->
-                    <div class="form-group">
-                        <label class="text-dark" for="job_position">Poste</label>
-                        <input type="text" class="form-control" id="job_position" name="job_position" required>
-                    </div>
-                </div>
+            <div class="col-12 text-center py-3">
+                <h5>Evénement : <span id="event-name"></span></h5>
+                <h4 class="text-dark py-4">{{auth()->user()->name}}</h4>
+                <div id="qrcode-container"></div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-6">
-                    <!-- Field: Event Date -->
-                    <div class="form-group">
-                        <label class="text-dark" for="event_date">Date</label>
-                        <input type="date" class="form-control" id="event_date" name="event_date" required>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <!-- Field: Event Hour -->
-                    <div class="form-group">
-                        <label class="text-dark" for="event_hour">Heure</label>
-                        <input type="time" class="form-control" id="event_hour" name="event_hour" required>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Field: Event Address -->
-            <div class="form-group">
-                <label class="text-dark" for="event_address">Adresse</label>
-                <input type="text" class="form-control" id="event_address" name="event_address" required>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <!-- Field: Free Entry -->
-                    <div>
-                        <label class="text-dark" for="participants_count">Entrée</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
-                        <label class="form-check-label" for="free_entry">Gratuit</label>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <!-- Field: Participants Count -->
-                    <div class="form-group">
-                        <label class="text-dark" for="participants_count">Limite de participants</label>
-                        <input type="number" class="form-control" id="participants_count" name="participants_count"
-                            required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- <div class="col-6"> -->
-                <!-- Field: Digital Badge Download -->
-                <!-- <div class="form-group">
-                        <label class="text-dark" for="digital_badge_download">Badge Digital</label>
-                        <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
-                    </div> -->
-                <!-- </div> -->
-                <div class="col-6">
-                    <!-- Field: Required Documents -->
-                    <div class="form-group">
-                        <label class="text-dark" for="required_documents">Documents requis</label>
-                        <input type="text" class="form-control" id="required_documents" name="required_documents">
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="theme-btn btn-style-one create-rdv px-5 py-3" id="add-event-btn">Créer
-                l'événement</button>
-        </form>
+        <div class="d-flex justify-content-center">
+            <button class="bg-btn-five mt-2" id="download-badge">Télécharger</button>
+        </div>
 
         <a href="#" class="custom-close-modal"></a>
     </div>
@@ -311,6 +275,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     $('#close-modal, .custom-close-modal').click(function() {
@@ -340,12 +305,56 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table_filter input').before(
         '<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
+
     function confirmDelete(url) {
         var result = window.confirm("Are you sure you want to delete?");
         if (result) {
             window.location.href = url;
         }
     }
+
+    let getQrCodeBtn = document.getElementById('get-qr-code-btn');
+    getQrCodeBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        let eventId = getQrCodeBtn.getAttribute('data-event-id');
+        let eventName = getQrCodeBtn.getAttribute('data-event-name');
+        let qrcodeImg = ''
+        $.ajax({
+            url: "{{ route('candidat.event.qrcode', 4) }}",
+            type: 'GET',
+            dataType: 'text',
+            success: function(data) {
+                $('#qrcode-container').html(data);
+                $('#event-name').html(eventName);
+                $("#ex1").modal({
+                    escapeClose: false,
+                    clickClose: true,
+                    showClose: false
+                });
+            },
+            error: function() {
+                console.log('Error fetching events');
+            }
+        })
+
+        console.log('My qrcode', qrcodeImg);
+    })
+
+    let downloadBadgeBtn = document.getElementById('download-badge');
+    const elementToSave = document.querySelector(".badge-card");
+    let loadingElement = document.getElementById('loading');
+    downloadBadgeBtn.addEventListener('click', function(event) {
+        loadingElement.style.display = 'flex';
+        html2canvas(elementToSave).then(canvas => {
+            const a = document.createElement("a");
+            a.href = canvas.toDataURL("image/jpeg");
+            a.download = "image.jpeg";
+            a.click();
+            loadingElement.style.display = 'none';
+        });
+    })
+
+
 
 })
 </script>

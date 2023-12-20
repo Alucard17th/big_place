@@ -230,6 +230,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     // EVENTS
     Route::get('/event/candidat/subscribe/{id}', [EventController::class, 'subscribeToEvent'])->name('candidat.event.subscribe');
     Route::get('/event/candidat/unsubscribe/{id}', [EventController::class, 'cancelParticipation'])->name('candidat.event.unsubscribe');
+    Route::get('/event/candidat/qrcode/{id}', [EventController::class, 'getQrCode'])->name('candidat.event.qrcode');
 
     // FORMATIONS
     Route::get('/formation/candidat/subscribe/{id}', [FormationController::class, 'subscribeToFormation'])->name('candidat.formation.subscribe');

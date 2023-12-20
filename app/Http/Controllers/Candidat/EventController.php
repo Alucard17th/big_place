@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Candidat;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Response;
 
 class EventController extends Controller
 {
@@ -46,6 +48,15 @@ class EventController extends Controller
         $events = $user->participationEvents;
         toast('Participation annulée', 'success');
         return redirect()->back();
+    }
+
+    public function getQrCode($id){
+        $event = Event::find($id);
+        $qrcode = QrCode::size(100)
+        ->generate("EventID:{$event->id}, Organizer:{$event->organizer_name}, Date:{$event->event_date}, Time:{$event->event_hour}");
+        // return response()->json($qrcode);
+        return Response::make($qrcode, 200, ['Content-Type' => 'image/svg+xml']);
+
     }
 
 
