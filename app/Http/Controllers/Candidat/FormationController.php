@@ -32,7 +32,7 @@ class FormationController extends Controller
             // You can also perform additional actions if needed
             toast('Votre souscription a bien été prise en compte.', 'success');
         } else {
-            toast('Vous êtes déjà inscrit.', 'success');
+            toast('Vous êtes déjà inscrit.', 'info');
         }
         // $user->participationFormations()->attach($formation);
         return redirect()->back();

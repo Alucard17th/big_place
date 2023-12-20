@@ -102,8 +102,8 @@ input, select{
                         </div>
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
+                            <div class="chosen-outer search-container w-100">
+                                <form method="get" class="default-form form-inline w-100"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row w-100">
                                             <div class="col-4 px-1">

@@ -99,6 +99,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($events as $event)
+                                        
                                         <tr>
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
@@ -112,12 +113,14 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">
+                                                @if($event->registration_closed != 1)
                                                 <a href="{{ route('candidat.event.subscribe', $event->id) }}"
-                                                    type="button" class="bg-btn-five mt-2">
+                                                    type="button" class="bg-btn-five">
                                                     Je participe
                                                 </a>
+                                                @endif
                                                 <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
-                                                    type="button" class="bg-btn-three mt-2">
+                                                    type="button" class="bg-btn-three">
                                                     Voir l'entreprise
                                                 </a>
                                             </td>

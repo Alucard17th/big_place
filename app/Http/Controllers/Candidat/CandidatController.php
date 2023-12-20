@@ -22,7 +22,8 @@ class CandidatController extends Controller
 
     public function getCandidatRdvs(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous;
+        // $rdvs = $user->rendezvous;
+        $rdvs = RendezVous::where('candidat_it', $user->id)->get();
         return response()->json($rdvs);
     }
 

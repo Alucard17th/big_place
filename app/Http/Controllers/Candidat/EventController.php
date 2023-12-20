@@ -25,6 +25,11 @@ class EventController extends Controller
         if (!$user->participationEvents->contains($event)) {
             // If not, attach the event
             $user->participationEvents()->attach($event);
+            $event->registered_participants	= $event->registered_participants + 1;
+            if($event->registered_participants == $event->participants_count){
+                $event->registration_closed = 1;
+            }
+            $event->save();
             toast('Participation effectuée', 'success');
         } else {
             toast('Vous êtes déjà inscrit à cet événement', 'info');
@@ -36,9 +41,10 @@ class EventController extends Controller
         $user = auth()->user();
         $event = Event::find($id);
         $user->participationEvents()->detach($event);
-        
+        $event->registered_participants	= $event->registered_participants - 1;
+        $event->save();
         $events = $user->participationEvents;
-        toast('Participation annulee', 'success');
+        toast('Participation annulée', 'success');
         return redirect()->back();
     }
 

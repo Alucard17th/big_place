@@ -100,8 +100,8 @@ input, select{
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
+                            <div class="chosen-outer search-container w-100">
+                                <form method="get" class="default-form form-inline w-100"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
@@ -115,7 +115,7 @@ input, select{
                                                 <input type="text" name="address" id="address" class="form-control" placeholder="Ville/département">
                                             </div>
                                         </div>
-<!-- 
+                                        <!-- 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
@@ -126,7 +126,7 @@ input, select{
                                         </div> -->
 
                                         <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mt-2 mr-1">
+                                            <div class="form-group mb-0 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                                     <option value=""  selected>Niveau d'études</option>
                                                     <option value="CAP/BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
@@ -160,8 +160,8 @@ input, select{
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th>Titre de l'offre</th>
-                                            <th>Ville</th>
-                                            <th>Niveau</th>
+                                            <th>Ville/département</th>
+                                            <th>Niveau d'études</th>
                                             <!-- <th>Etat</th> -->
                                             <th>Action</th>
                                         </tr>

@@ -21,7 +21,7 @@ class OfferController extends Controller
 
         // Check each search parameter and apply the filter if it's present
         if ($request->filled('job_title')) {
-            $query->where('job_title', 'like', '%' . $request->input('job_title') . '%');
+            $query->where('rome_code', 'like', '%' . $request->input('job_title') . '%');
         }
 
         if ($request->filled('location_city')) {

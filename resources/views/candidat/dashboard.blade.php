@@ -128,7 +128,7 @@
         </div>
 
         <div class="row">
-            <div class="col-5 px-2">
+            <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -138,13 +138,13 @@
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                    <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;">
-                                    <!-- <select name="job_title" id="job_title" class="form-control">
+                                    <!-- <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;"> -->
+                                    <select name="job_title" id="job_title" class="form-control">
                                         <option value="" selected value="">Titre de l'offre</option>
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
                                         @endforeach
-                                    </select> -->
+                                    </select>
                                 </div>
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt="" 
@@ -171,7 +171,14 @@
 
                             <div class="col-6 pl-1">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience">
+                                    <select class="form-control" id="experience_level" name="experience_level">
+                                        <option value=""  selected>Année d'expérience</option>
+                                        <option value="Débutant (0 – 2 ans)"  @if(request('experience_level') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
+                                        <option value="Intermédiaire (2 – 5 ans)" @if(request('experience_level') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
+                                        <option value="Confirmé (5 -10 ans)" @if(request('experience_level') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
+                                        <option value="Sénior (+ 10 ans)" @if(request('experience_level') == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                    </select>
+                                    <!-- <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience"> -->
                                 </div>
                             </div>
 
@@ -182,7 +189,7 @@
                 </div>
             </div>
 
-            <div class="col-7 px-2">
+            <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body">
                         <canvas id="myChart" ></canvas>
