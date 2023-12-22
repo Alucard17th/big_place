@@ -203,7 +203,9 @@ input, select{
                                             <td class="text-left">{{$curriculum->niveau}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
                                             <td class="text-left">
-                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>
+                                                <a href="{{ asset('storage/'.$curriculum->cv) }}" type="button" class="bg-btn-three" target="_blank">
+                                                    <i class="las la-eye mr-2"></i>Consulter le profil
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

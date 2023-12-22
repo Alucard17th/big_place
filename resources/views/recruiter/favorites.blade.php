@@ -222,6 +222,9 @@ input, select{
                                             <!-- <td class="text-left">XXX</td> -->
                                             
                                             <td class="text-left">
+                                                <a href="{{ asset('storage'.$curriculum->cv) }}" type="button" class="bg-btn-nine" target="_blank">
+                                                    <i class="las la-eye mr-2"></i>Consulter le profil
+                                                </a>
                                                 <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <br>
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->
@@ -265,11 +268,17 @@ input, select{
                 </label>
             </div>
 
+
             <div class="form-group">
                 <div class="choices d-flex">
                     <button type="button" class="bg-btn-visio mr-2 d-flex align-items-center"><i class="las la-video mr-2" style="font-size: 24px;"></i>Proposer Rdv visio</button>
                     <button type="button" class="bg-btn-physic mr-2">Proposer Rdv physique</button>
                 </div>
+            </div>
+
+            <div class="form-group" id="address-div" style="display: none">
+                <label class="text-dark" for="address">Adresse</label>
+                <input class="form-control mb-1" type="text" name="rdv_address" id="rdv_address">
             </div>
 
             <hr style="padding: 0px 0;background-color: rgb(0 0 0);">
@@ -278,10 +287,10 @@ input, select{
                 <label for="candidate" class="text-dark">Crénau 1:</label>
                 <div class="row">
                     <div class="col-6">
-                        <input class="form-control mb-2" type="date" name="crenau_1_date" id="crenau_1_date" required>
+                        <input class="form-control mb-1" type="date" name="crenau_1_date" id="crenau_1_date" required>
                     </div>
                     <div class="col-6">
-                        <input class="form-control mb-2" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                        <input class="form-control mb-1" type="time" name="crenau_1_time" id="crenau_1_time" required>
                     </div>
                 </div>
                 <p id="creanuea_1_msg" class="text-danger" style="font-size:18px;"></p>
@@ -291,10 +300,10 @@ input, select{
                 <label for="candidate" class="text-dark">Crénau 2:</label>
                 <div class="row">
                     <div class="col-6">
-                    <input class="form-control mb-2" type="date" name="crenau_2_date" id="crenau_2_date" required>
+                    <input class="form-control mb-1" type="date" name="crenau_2_date" id="crenau_2_date" required>
                     </div>
                     <div class="col-6">
-                    <input class="form-control mb-2" type="time" name="crenau_2_time" id="crenau_2_time" required>
+                    <input class="form-control mb-1" type="time" name="crenau_2_time" id="crenau_2_time" required>
                     </div>
                 </div>
                 <p id="creanuea_2_msg" class="text-danger" style="font-size:18px;"></p>
@@ -304,23 +313,25 @@ input, select{
                 <label for="candidate" class="text-dark">Crénau 3:</label>
                 <div class="row">
                     <div class="col-6">
-                        <input class="form-control mb-2" type="date" name="crenau_3_date" id="crenau_3_date" required>
+                        <input class="form-control mb-1" type="date" name="crenau_3_date" id="crenau_3_date" required>
                     </div>
                     <div class="col-6">
-                        <input class="form-control mb-2" type="time" name="crenau_3_time" id="crenau_3_time" required>
+                        <input class="form-control mb-1" type="time" name="crenau_3_time" id="crenau_3_time" required>
                     </div>
                 </div>
                 <p id="creanuea_3_msg" class="text-danger" style="font-size:18px;"></p>
             </div>
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one create-rdv px-5 py-3" type="button" style="font-size: 16px">Envoyer</button>
-            </div>
-            <div class="form-group">
                 <div class="alert alert-success alert-dismissible" style="display: none;">
                     <p id="success-msg">Les créneaux de rendez-vous pour le(s) candidat(s) ont été transmis avec succès.</p>
                 </div>
             </div>
+
+            <div class="form-group">
+                <button class="theme-btn btn-style-one create-rdv px-5 py-3" type="button" style="font-size: 16px">Envoyer</button>
+            </div>
+            
        </form>
         
         <a href="#"  class="custom-close-modal"></a>
@@ -441,6 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('is_type_distanciel', document.getElementById('is_type_distanciel').checked);
 
                 formData.append('selectedValues', JSON.stringify(selectedValues));
+                formData.append('address', document.getElementById('rdv_address').value);
 
                 // Send the data using AJAX
                 fetch('{{ route('recruiter.invite.candidates') }}', {
@@ -542,17 +554,19 @@ document.addEventListener('DOMContentLoaded', function() {
      $('.form-check').hide();
 
      $('.bg-btn-visio').click(function() {
-        $('#is_type_distanciel').prop('checked', function(i, value) {
-            return !value; // Toggle the checked property
-        });
-        $('.bg-btn-visio').toggleClass('active');
+        $('#is_type_distanciel').prop('checked', true);
+        $('.bg-btn-visio').addClass('active');
+        $('.bg-btn-physic').removeClass('active');  // Remove active class from the other button
+        $('#is_type_presentiel').prop('checked', false);  // Uncheck the other checkbox
+        $('#address-div').hide();
     });
 
     $('.bg-btn-physic').click(function() {
-        $('#is_type_presentiel').prop('checked', function(i, value) {
-            return !value; // Toggle the checked property
-        });
-        $('.bg-btn-physic').toggleClass('active');
+        $('#is_type_presentiel').prop('checked', true);
+        $('.bg-btn-physic').addClass('active');
+        $('.bg-btn-visio').removeClass('active');  // Remove active class from the other button
+        $('#is_type_distanciel').prop('checked', false);  // Uncheck the other checkbox
+        $('#address-div').show();
     });
     
 });

@@ -1,12 +1,22 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+    #custom-tooltip{
+        padding: 10px;
+        color: #fff;
+        background: #000;
+        border-radius: 5px;
+        pointer-events: none;
+
+    }
+</style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
         <div class="upper-title-box">
-            <h3>Calendrier</h3>
+            <h3>Mon Calendrier</h3>
         </div>
         <div class="row">
             <div class="col-lg-12">
@@ -193,13 +203,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     success: function(data) {
     console.log('RDVS fetched successfully', data);
         data.forEach(function(event) {
+            let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
             rdvs.push({
                 title: 'Rendez vous le : ' + event.date,
                 start: event.date + 'T' + event.heure,
                 backgroundColor: '#e7f6fd',
                 borderColor: '#e7f6fd',
                 textColor: '#0369A1',
-                classNames: ['event-visio']
+                classNames: ['event-visio'],
+                extendedProps: {
+                    description: 'Type : ' + rdvType
+                }
             });
         })
     },
@@ -220,6 +234,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 start: event.event_date + 'T' + event.event_hour,
                 backgroundColor: 'red',
                 borderColor: 'red',
+                extendedProps: {
+                    description: 'Poste proposé : ' + event.job_position
+                }
             });
         })
     },
@@ -240,7 +257,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 start: event.start_date,
                 backgroundColor: 'green',
                 borderColor: 'green',
+                extendedProps: {
+                    description: event.job_title
+                }
             });
+          
         })
     },
     error: function() {
@@ -252,33 +273,57 @@ document.addEventListener('DOMContentLoaded', async function() {
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
     var yyyy = today.getFullYear();
-
     today = yyyy + '-' + mm + '-' + dd;
     var initialLocaleCode = 'fr';
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    height: '100vh',
-    width: '100%',
-    initialView: 'timeGridWeek',
-    initialDate: today,
-    headerToolbar: {
-      left: 'prev,today,next',
-      right: '',
-      center: 'timeGridDay,timeGridWeek' 
-    },
-    events : rdvs,
-    locale: initialLocaleCode,
-    eventClick: function(info) {
-        alert('Event: ' + info.event.title);
-        alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-        alert('View: ' + info.view.type);
-    },
-    slotLabelFormat: {
-        hour: 'numeric',
-        minute: '2-digit',
-        omitZeroMinute: false,
-        hour12: false // Change to true if you want 12-hour format
-    }
-  });
+        height: '100vh',
+        width: '100%',
+        initialView: 'timeGridWeek',
+        initialDate: today,
+        headerToolbar: {
+        left: 'prev,today,next',
+        right: '',
+        center: 'timeGridDay,timeGridWeek' 
+        },
+        events : rdvs,
+        locale: initialLocaleCode,
+        eventClick: function(info) {
+            alert('Event: ' + info.event.title);
+            alert('Coordinates: ' + info.jsEvent.pageX + '<br>' + info.jsEvent.pageY);
+            alert('View: ' + info.view.type);
+        },
+        eventMouseEnter: function(info) {
+            var tooltip = document.getElementById('custom-tooltip');
+
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.id = 'custom-tooltip';
+                document.body.appendChild(tooltip);
+            }
+
+            tooltip.innerHTML = info.event.title + '<br>' + info.event.extendedProps.description;
+            tooltip.style.display = 'block';
+            tooltip.style.position = 'absolute';
+            tooltip.style.zIndex =9;
+
+            var x = info.jsEvent.pageX;
+            var y = info.jsEvent.pageY;
+
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        },
+        eventMouseLeave: function(info) {
+            $(this).css('z-index', 8);
+            $('#custom-tooltip').remove();
+        },
+        slotLabelFormat: {
+            hour: 'numeric',
+            minute: '2-digit',
+            omitZeroMinute: false,
+            hour12: false // Change to true if you want 12-hour format
+        }
+    });
 
   calendar.render();
 });

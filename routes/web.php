@@ -108,13 +108,16 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     // TASKS
     Route::post('/task/add', [RecruiterController::class, 'addTask'])->name('recruiter.task.add');
     Route::post('/task/update', [RecruiterController::class, 'updateTask'])->name('recruiter.task.update');
+    Route::get('/task/complete/{id}', [RecruiterController::class, 'completeTask'])->name('recruiter.task.complete');
     Route::get('/task/delete/{id}', [RecruiterController::class, 'deleteTask'])->name('recruiter.task.delete');
 
     // OFFERS
     Route::get('/mes-offres', [RecruiterController::class, 'myOffers'])->name('recruiter.offers');
     Route::get('/mes-offres/create', [RecruiterController::class, 'myOffersCreate'])->name('recruiter.offers.create');
     Route::post('/offer/add', [RecruiterController::class, 'addOffer'])->name('recruiter.offer.add');
+    Route::post('/offer/draft', [RecruiterController::class, 'saveDraftOffer'])->name('recruiter.offer.draft');
     Route::get('/mes-offres/edit/{id}', [RecruiterController::class, 'myOffersEdit'])->name('recruiter.offers.edit');
+    Route::get('/mes-offres/show/{id}', [RecruiterController::class, 'myOffersShow'])->name('recruiter.offers.show');
     Route::post('/offer/update', [RecruiterController::class, 'updateOffer'])->name('recruiter.offer.update');
     Route::get('/mes-offres/delete/{id}', [RecruiterController::class, 'myOffersDelete'])->name('recruiter.offers.delete');
 
@@ -126,6 +129,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-evenements/delete/{id}', [RecruiterController::class, 'myEventsDelete'])->name('recruiter.events.delete');
     
     Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');
+    Route::get('/mes-evenements/resume/{id}', [RecruiterController::class, 'myEventsResume'])->name('recruiter.events.resume');
     Route::get('/mes-evenements/cancel/{id}', [RecruiterController::class, 'myEventsCancel'])->name('recruiter.events.cancel');
     
     Route::get('/getRdvs', [RecruiterController::class, 'getUserRdvs'])->name('getUserRdvs');
@@ -142,10 +146,12 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::post('/formation/add', [RecruiterController::class, 'addFormation'])->name('recruiter.formation.add');
     Route::get('/mes-formations/edit/{id}', [RecruiterController::class, 'myFormationsEdit'])->name('recruiter.formation.edit');
     Route::post('/formation/update', [RecruiterController::class, 'updateFormation'])->name('recruiter.formation.update');
+    Route::get('/mes-formations/delete-doc/{id}/{userid}/{docname}', [RecruiterController::class, 'myFormationDeleteDoc'])->name('recruiter.formation.document.delete');
     Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
     
     // EMAILS 
     Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
+    Route::get('/mes-mails/create', [RecruiterController::class, 'createMail'])->name('recruiter.email.create');
     Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
     Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
 
@@ -210,6 +216,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::post('/task/candidate/add', [TaskController::class, 'addTask'])->name('candidat.task.add');
     Route::get('/task/get/{id}', [TaskController::class, 'getTask'])->name('candidat.task.see');
     Route::post('/task/candidate/update', [TaskController::class, 'updateTask'])->name('candidat.task.update');
+    Route::get('/candidat/task/complete/{id}', [TaskController::class, 'completeTask'])->name('candidat.task.complete');
     Route::get('/task/candidate/delete/{id}', [TaskController::class, 'deleteTask'])->name('candidat.task.delete');
 
     // JSON 

@@ -92,7 +92,7 @@
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <a href="" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
+                            <a href="{{route('recruiter.email.create')}}" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -149,51 +149,7 @@
                                 </div>
                               
 
-                                <!-- <div class="row inbox">
-
-                                    <div class="col-4">
-                                        <ul>
-                                            @foreach($emails as $email)
-                                            <li class="email-item" data-id="{{$email->id}}">
-                                                <div class="d-flex justify-content-between py-2 border-bottom">
-                                                    <span>{{getUserById($email->receiver_id)->name}}</span>
-                                                    <span>{{$email->subject}} </span>
-                                                    <span>{{$email->created_at}}</span>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-8">
-                                        <div class="email-container">
-                                            <h1 id="email-title"></h1>
-                                            <p id="email-content"></p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row sent" style="display: none">
-                                    <div class="col-4">
-                                        <ul>
-                                            @foreach($receivedEmails as $email)
-                                            <li class="email-item-received" data-id="{{$email->id}}">
-                                                <div class="d-flex justify-content-between py-2 border-bottom">
-                                                    <span>{{getUserById($email->user_id)->name}}</span>
-                                                    <span>{{$email->subject}} </span>
-                                                    <span>{{$email->created_at}}</span>
-                                                </div>
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="email-container">
-                                            <h1 id="email-title-received"></h1>
-                                            <p id="email-content-received"></p>
-                                        </div>
-                                    </div>
-                                </div> -->
+                           
 
 
                                 <div class="ls-pagination">
@@ -241,19 +197,21 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    var addMessageBtn = document.getElementById('add-message-btn');
+    // var addMessageBtn = document.getElementById('add-message-btn');
 
-    addMessageBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        $("#message-modal").modal({
-            escapeClose: false,
-            clickClose: true,
-            showClose: false
-        });
-    });
+    // addMessageBtn.addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     $("#message-modal").modal({
+    //         escapeClose: false,
+    //         clickClose: true,
+    //         showClose: false
+    //     });
+    // });
+
     $("#receiver").select2({
         width: '100%'
     });
+
     $('#close-modal, .custom-close-modal').click(function() {
         console.log('Modal Should Be Closed');
         $.modal.close();

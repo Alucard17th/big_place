@@ -49,6 +49,14 @@ class TaskController extends Controller
         return redirect()->back();
     }
 
+    public function completeTask($id){
+        $task = Task::find($id);
+        $task->completed = true;
+        $task->save();
+        toast('Tâche terminée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+
     public function deleteTask($id){
         $task = Task::find($id);
         $task->delete();

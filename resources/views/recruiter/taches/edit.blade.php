@@ -56,6 +56,11 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label class="text-dark" for="candidate">Heure</label>
+                                    <input class="form-control mb-2" type="time" name="hour" id="hour" value="{{ $task->hour }}" required>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="status">Status</label>
                                         <select class="form-control" name="status" id="status">
                                             <option value="0" @if($task->completed == '0') selected @endif>En cours</option>

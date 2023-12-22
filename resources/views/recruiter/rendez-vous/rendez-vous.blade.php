@@ -176,7 +176,7 @@ input, select{
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
-                                                    Editer
+                                                    Modifier
                                                 </a>
                                                 <a href="{{route('recruiter.rendez-vous.cancel', $rdv->id)}}" type="button" class="bg-btn-four">
                                                     <!-- Détails -->

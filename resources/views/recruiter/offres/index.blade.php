@@ -34,7 +34,7 @@
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <a href="{{route('recruiter.offers.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Ajouter une offre</a>
+                            <a href="{{route('recruiter.offers.create')}}" class="theme-btn btn-style-one bg-header-btn">+ Créer une offre</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -53,10 +53,11 @@
                                         <tr>
                                             <th>Nom projet</th>
                                             <th>Poste</th>
-                                            <th>Date de début</th>
+                                            <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
                                             <th>Type du contrat</th>
                                             <th>Salaire Brut</th>
+                                            <th>Date de publication</th>
                                             @unlessrole('restricted')
                                             <th>Actions</th>
                                             @endunlessrole
@@ -71,16 +72,21 @@
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
+                                            <td class="text-left">{{$offer->publication_date}}</td>
 
                                             @unlessrole('restricted')
                                             <td class="text-left">
-                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2">
+                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine ml-2">
                                                     <i class="las la-edit"></i>
                                                     Editer
                                                 </a>
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
+                                                    <i class="las la-edit"></i>
+                                                    Modifier
+                                                </a>
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
-                                                class="bg-btn-four ml-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                class="bg-btn-four ml-2 mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>

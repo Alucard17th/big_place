@@ -106,8 +106,8 @@
             <li class="{{ Str::contains(Request::url(), 'historique') ? 'active' : '' }}">
                 <a href="/historique" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Mon historiques
-                        de recherche</span>
+                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Mes dernières recherches
+                    </span>
                 </a>
             </li>
             @role('recruiter')

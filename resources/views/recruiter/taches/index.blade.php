@@ -143,7 +143,7 @@ input, select{
                                         <div class="col-4 px-1 mt-3">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Statut</option>
+                                                    <option value=""  selected>Tous</option>
                                                     <option value="Terminée">Terminée</option>
                                                     <option value="En cours">En cours</option>
                                                 </select>
@@ -187,11 +187,17 @@ input, select{
                                                 <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
-                                                    Editer
+                                                    Modifier
+                                                </a>
+                                                <a href="{{route('recruiter.task.complete', $task->id)}}" type="button" class="bg-btn-five">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Terminé
                                                 </a>
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.task.delete', $task->id)}}" type="button"
-                                                onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');" class="bg-btn-four">
+                                                onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');" 
+                                                class="bg-btn-four mt-2">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer
@@ -240,6 +246,11 @@ input, select{
             </div>
 
             <div class="form-group">
+                <label class="text-dark" for="candidate">Heure</label>
+                <input class="form-control mb-2" type="time" name="hour" id="hour" required>
+            </div>
+
+            <div class="form-group">
                 <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
@@ -273,24 +284,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 clickClose: true,
                 showClose: false
             });
-        // fetch('{{ route('recruiter.commentaire.add') }}', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
-        //             },
-        //             body: JSON.stringify(data),
-        //         })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Handle the response, e.g., show a success message
-        //         // refresh the current page
-        //         //    window.location.reload();
-        //     })
-        //     .catch(error => {
-        //         // Handle errors, e.g., show an error message
-        //         console.error(error);
-        //     });
     })
 
     $('#close-modal, .custom-close-modal').click(function() {

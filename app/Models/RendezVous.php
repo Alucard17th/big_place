@@ -9,7 +9,7 @@ class RendezVous extends Model
 {
     use HasFactory;
 
-    protected $fillable  = ['date', 'heure', 'status', 'user_id', 'participant', 'is_type_distanciel', 'is_type_presentiel'];
+    protected $fillable  = ['date', 'heure', 'status', 'user_id', 'participant', 'is_type_distanciel', 'is_type_presentiel', 'address'];
 
     public function user()
     {

@@ -39,6 +39,7 @@ class EmailController extends Controller
         }
        
         toast('Emails envoyés', 'success');
-        return redirect()->back();
+        return redirect()->route('recruiter.mails');
+        // return redirect()->back();
     }
 }

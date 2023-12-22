@@ -187,7 +187,13 @@
 
                             <div class="col-6 pl-1">
                                 <div class="form-group mb-2">
-                                    <input type="number" name="annees_experience" id="annees_experience"  value="" class="form-control mb-2" placeholder="Années d'expérience">
+                                    <select class="form-control" id="annees_experience" name="annees_experience">
+                                        <option value="" selected>Niveau d'éxpérience</option>
+                                        <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
+                                        <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
+                                        <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
+                                        <option value="Sénior (+ 10 ans)">Sénior (+ 10 ans)</option>
+                                    </select>
                                 </div>
                             </div>
 

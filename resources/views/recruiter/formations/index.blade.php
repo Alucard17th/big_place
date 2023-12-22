@@ -55,13 +55,14 @@
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th> -->
                                             <th>Nom du poste</th>
-                                            <th>Durée de Formation</th>
+                                            <th>Nombre de jours de formation</th>
                                             <th>Période de formation</th>
                                             <th>CDI à l'embauche</th>
                                             <th>Compétences acquises</th>
                                             <th>Postes Ouverts</th>
                                             <th>Nombre d'inscrits</th>
                                             <th>Lieu</th>
+                                            <th>Statut</th>
                                             @unlessrole('restricted')
                                             <th>Actions</th>
                                             @endunlessrole
@@ -77,7 +78,7 @@
                                         <tr>
                                             <td>{{$formation->job_title}}</td>
                                             <td>{{$durationInDays}}</td>
-                                            <td>{{$formation->start_date}} - {{$formation->end_date}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d %b %y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d %b %y') }}</td>
                                             <td>
                                                 @if($formation->cdi_at_hiring == 1)
                                                     Oui
@@ -89,6 +90,13 @@
                                             <td>{{$formation->open_positions}}</td>
                                             <td>XXX</td>
                                             <td>{{$formation->work_location}}</td>
+                                            <td>
+                                                @if($formation->status == 'on')
+                                                    <span class="badge badge-success">Active</span>
+                                                @else
+                                                    <span class="badge badge-warning">Inactive</span>
+                                                @endif
+                                            </td>
                                             @unlessrole('restricted')
                                             <td class="text-left d-flex flex-column" style="width:8vw;">
                                                 <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="bg-btn-three">

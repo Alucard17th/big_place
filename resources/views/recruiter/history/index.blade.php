@@ -25,7 +25,7 @@
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
                         <div class="d-flex align-items-center justify-content-center">
-                            <h3>Historiques des recherches</h3>
+                            <h3>Mes dernières recherches</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">

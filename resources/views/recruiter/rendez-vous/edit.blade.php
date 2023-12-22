@@ -61,7 +61,7 @@
                                 <input type="hidden" name="rdv_id" value="{{$rdv->id}}">
 
                                 <div class="form-group">
-                                    <label for="date">Invité</label>
+                                    <label for="date">Candidat</label>
                                     <input type="text" class="form-control" id="date"
                                         name="date" value="{{ optional(getUserById($rdv->participant))->name }}" disabled>
                                 </div>
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Statut</label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="En attente" {{ $rdv->status == 'En attente' ? 'selected' : '' }}>En attente</option>
                                         <option value="Accepté" {{ $rdv->status == 'Accepté' ? 'selected' : '' }}>Accepté</option>

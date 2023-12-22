@@ -1,5 +1,31 @@
 @extends('layouts.dashboard')
 @push('styles')
+<style>
+#edit-formation-form > h4{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 41px;
+    /* identical to box height, or 102% */
+    color: #202124;
+}
+#edit-formation-form > div > label, #edit-formation-form > div.row > div > div > label{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+#edit-formation-btn{
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 20px;
+}
+</style>
 @endpush
 
 @section('content')
@@ -14,7 +40,7 @@
                     <div class="tabs-box">
                         <div class="widget-content">
                             <form action="{{ route('recruiter.formation.update') }}" method="POST"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="edit-formation-form" class="py-5">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $formation->id }}">
                                 <!-- Field: Nom du poste -->
@@ -85,8 +111,9 @@
                                     <input type="file" class="form-control-file" id="uploaded_documents"
                                         name="uploaded_documents[]" multiple>
                                         @foreach (json_decode($formation->uploaded_documents, true) ?? [] as $document)
-                                        <li>
+                                        <li class="my-2">
                                             <a href="{{ url(str_replace('public', 'storage', $document)) }}" target="_blank">{{ pathinfo($document, PATHINFO_BASENAME) }}</a>
+                                            <a href="{{ route('recruiter.formation.document.delete', ['id' => $formation->id, 'userid' => Auth::user()->id ,'docname' => substr($document, strrpos($document, '/') + 1)]) }}" class="text-danger" type="button">X</a>
                                         </li>
                                         @endforeach
                                 </div>
@@ -100,7 +127,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="theme-btn btn-style-one" type="submit">Modifier</button>
+                                    <button class="theme-btn btn-style-one" type="submit" id="edit-formation-btn">Modifier</button>
                                 </div>
                             </form>
                         </div>

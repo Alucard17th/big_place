@@ -75,7 +75,7 @@
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
                         <div class="d-flex align-items-center justify-content-center">
-                            <h3>Mon offre d'emploi</h3>
+                            <h3>Mon offre d'emploi - Détails</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
@@ -95,26 +95,26 @@
                                     <label for="project_campaign_name">Nom du projet ou de la campagne
                                         </label>
                                     <input type="text" class="form-control" id="project_campaign_name"
-                                        name="project_campaign_name" value="{{$offer->project_campaign_name}}" required>
+                                        name="project_campaign_name" value="{{$offer->project_campaign_name}}">
                                 </div>
 
                                 <!-- Field: Intitulé du poste recherché -->
                                 <div class="form-group">
                                     <label for="job_title">Intitulé du poste recherché </label>
-                                    <input type="text" class="form-control" id="job_title" name="job_title" value="{{$offer->job_title}}" required>
+                                    <input type="text" class="form-control" id="job_title" name="job_title" value="{{$offer->job_title}}">
                                 </div>
 
                                 <!-- Field: Date de prise de poste souhaitée -->
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
                                     <input type="date" class="form-control" id="desired_start_date"
-                                        name="start_date" value="{{$offer->start_date}}" required>
+                                        name="start_date" value="{{$offer->start_date}}">
                                 </div>
 
                                 <!-- Field: Localisation du poste (Ville et Code postal) -->
                                 <div class="form-group">
                                     <label for="location_city">Ville de la localisation du poste</label>
-                                    <input type="text" class="form-control" id="location_city" name="location_city" required value="{{$offer->location_city}}" required>
+                                    <input type="text" class="form-control" id="location_city" name="location_city" required value="{{$offer->location_city}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="location_postal_code">Code postal de la localisation du poste
@@ -127,23 +127,13 @@
                                 <div class="form-group">
                                     <label for="location_address">Adresse complète</label>
                                     <input type="text" class="form-control" id="location_address"
-                                        name="location_address" value="{{$offer->location_address}}" required>
-                                </div>
-
-                                <!-- Field: Code ROME -->
-                                <div class="form-group">
-                                    <label for="rome_code">Code ROME</label>
-                                    <select name="rome_code" id="rome_code" class="form-control" required>
-                                        @foreach($jobs as $job)
-                                        <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
-                                        @endforeach
-                                    </select>
+                                        name="location_address" value="{{$offer->location_address}}">
                                 </div>
 
                                 <!-- Field: Type de contrat -->
                                 <div class="form-group">
                                     <label for="contract_type">Type de contrat</label>
-                                    <select class="form-control" id="contract_type" name="contract_type" required>
+                                    <select class="form-control" id="contract_type" name="contract_type">
                                         <option value="CDD" @if($offer->contract_type == 'CDD') selected @endif>CDD</option>
                                         <option value="CDI" @if($offer->contract_type == 'CDI') selected @endif>CDI</option>
                                         <option value="INTERIM" @if($offer->contract_type == 'INTERIM') selected @endif>INTERIM</option>
@@ -153,7 +143,7 @@
                                 <!-- Field: Horaires de travail -->
                                 <div class="form-group">
                                     <label for="work_schedule">Horaires de travail</label>
-                                    <select class="form-control" id="work_schedule" name="work_schedule" required>
+                                    <select class="form-control" id="work_schedule" name="work_schedule">
                                         <option value="Temps plein" @if($offer->work_schedule == 'Temps plein') selected @endif>Temps plein</option>
                                         <option value="Temps partiel" @if($offer->work_schedule == 'Temps partiel') selected @endif>Temps partiel</option>
                                         <option value="Horaires de nuit" @if($offer->work_schedule == 'Horaires de nuit') selected @endif>Horaires de nuit</option>
@@ -167,7 +157,7 @@
                                 <!-- Field: Temps de travail -->
                                 <div class="form-group">
                                     <label for="weekly_hours">Temps de travail</label>
-                                    <select class="form-control" id="weekly_hours" name="weekly_hours" required>
+                                    <select class="form-control" id="weekly_hours" name="weekly_hours" >
                                         <option value="35H" {{ $offer->weekly_hours === '35H' ? 'selected' : '' }}>35H</option>
                                         <option value="39H" {{ $offer->weekly_hours === '39H' ? 'selected' : '' }}>39H</option>
                                         <option value="Autre" {{ $offer->weekly_hours === 'Autre' ? 'selected' : '' }}>Autre</option>
@@ -177,7 +167,7 @@
                                 <!-- Field: Niveau d’expérience -->
                                 <div class="form-group">
                                     <label for="experience_level">Niveau d’expérience</label>
-                                    <select class="form-control" id="experience_level" name="experience_level" required>
+                                    <select class="form-control" id="experience_level" name="experience_level" >
                                         <option value="Débutant (0 – 2 ans)" {{ $offer->experience_level === 'Débutant (0 – 2 ans)' ? 'selected' : '' }}>Débutant (0 – 2 ans)</option>
                                         <option value="Intermédiaire (2 – 5 ans)" {{ $offer->experience_level === 'Intermédiaire (2 – 5 ans)' ? 'selected' : '' }}>Intermédiaire (2 – 5 ans)</option>
                                         <option value="Confirmé (5 -10 ans)" {{ $offer->experience_level === 'Confirmé (5 -10 ans)' ? 'selected' : '' }}>Confirmé (5 -10 ans)</option>
@@ -188,25 +178,21 @@
                                 <!-- Field: Langues souhaitées -->
                                 <div class="form-group">
                                     <label for="desired_languages">Langues souhaitées</label>
-                                    <select class="form-control" id="desired_languages" name="desired_languages[]" multiple required>
+                                    <select class="form-control" id="desired_languages" name="desired_languages[]" multiple>
                                         <option value="Anglais" @if(in_array('Anglais', json_decode($offer->desired_languages))) selected @endif>Anglais</option>
                                         <option value="Espagnol" @if(in_array('Espagnol', json_decode($offer->desired_languages))) selected @endif>Espagnol</option>
                                         <option value="Arabe" @if(in_array('Arabe', json_decode($offer->desired_languages))) selected @endif>Arabe</option>
                                         <option value="Mandarin" @if(in_array('Mandarin', json_decode($offer->desired_languages))) selected @endif>Mandarin</option>
                                         <option value="Russe" @if(in_array('Russe', json_decode($offer->desired_languages))) selected @endif>Russe</option>
+                                        <option value="Allemand" @if(in_array('Allemand', json_decode($offer->desired_languages))) selected @endif>Allemand</option>
                                         <option value="Autre" @if(in_array('Autre', json_decode($offer->desired_languages))) selected @endif>Autre</option>
                                     </select>
-                                </div>
-
-                                <div class="form-group" id="other_language_field" style="display: @if(in_array('Autre', json_decode($offer->desired_languages))) none @endif">
-                                    <label for="other_language">Ajouter les langues souhaitées (séparées par une virgule)</label>
-                                    <input type="text" class="form-control" id="other_language" name="other_language" value='{{ implode(",", json_decode($offer->desired_languages)) }}'>
                                 </div>
 
                                 <!-- Field: Niveau d’éducation -->
                                 <div class="form-group">
                                     <label for="education_level">Niveau d’éducation</label>
-                                    <select class="form-control" id="education_level" name="education_level" required>
+                                    <select class="form-control" id="education_level" name="education_level">
                                         <option value="CAP / BEP" @if($offer->education_level == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                         <option value="Bac" @if($offer->education_level == 'Bac') selected @endif>Bac</option>
                                         <option value="Bac + 2" @if($offer->education_level == 'Bac + 3') selected @endif>Bac + 2</option>
@@ -218,14 +204,13 @@
                                 <!-- Field: Salaire Brut -->
                                 <div class="form-group">
                                     <label for="gross_salary">Salaire Brut </label>
-                                    <input type="text" class="form-control" id="gross_salary" name="brut_salary" value="{{ $offer->brut_salary }}" required>
+                                    <input type="text" class="form-control" id="gross_salary" name="brut_salary" value="{{ $offer->brut_salary }}">
                                 </div>
 
                                 <!-- Field: Secteur d’activité -->
                                 <div class="form-group">
                                     <label for="industry_sector">Secteur d’activité </label>
-                                    <select class="form-control" id="industry_sector" name="industry_sector" required>
-                                        <option value="">Secteur d’activité</option>
+                                    <select class="form-control" id="industry_sector" name="industry_sector">
                                         <option value="Agroalimentaire" @if('Agroalimentaire' == $offer->industry_sector) selected @endif>Agroalimentaire</option>
                                         <option value="Automobile / Services" @if('Automobile / Services' == $offer->industry_sector) selected @endif>Automobile / Services</option>
                                         <option value="Banque / Assurance" @if('Banque / Assurance' == $offer->industry_sector) selected @endif>Banque / Assurance</option>
@@ -257,28 +242,23 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group" id="other_sectors_field" style="">
-                                    <label for="other_sectors">Autre secteur d'activité</label>
-                                    <input type="text" class="form-control" id="other_sectors" name="other_sectors" value='{{$offer->industry_sector }}'>
-                                </div>
-
                                 <!-- Field: Avantages proposés -->
                                 <div class="form-group">
                                     <label for="benefits">Avantages proposés</label>
-                                    <textarea class="form-control" id="benefits" name="benefits" rows="3" required> {{ $offer->benefits }}</textarea>
+                                    <textarea class="form-control" id="benefits" name="benefits" rows="3"> {{ $offer->benefits }}</textarea>
                                 </div>
 
                                 <!-- Field: Date de publication de l’offre -->
                                 <div class="form-group">
                                     <label for="publication_date">Date de publication de l’offre</label>
                                     <input type="date" class="form-control" id="publication_date"
-                                        name="publication_date" value="{{ $offer->publication_date }}" required>
+                                        name="publication_date" value="{{ $offer->publication_date }}">
                                 </div>
 
                                 <!-- Field: Dépublier l’offre le -->
                                 <div class="form-group">
                                     <label for="unpublish_date">Dépublier l’offre le</label>
-                                    <input type="date" class="form-control" id="unpublish_date" name="unpublish_date" value="{{ $offer->unpublish_date }}" required>
+                                    <input type="date" class="form-control" id="unpublish_date" name="unpublish_date" value="{{ $offer->unpublish_date }}">
                                 </div>
 
                                 <!-- Field: Choix des canaux de diffusion -->
@@ -288,7 +268,7 @@
                                     @php
                                         $jobboards = json_decode($offer->selected_jobboards, true) ?? [];
                                     @endphp
-                                    <select class="form-control" id="selected_jobboards" name="selected_jobboards[]" multiple required>
+                                    <select class="form-control" id="selected_jobboards" name="selected_jobboards[]" multiple>
                                         <!-- Add other options based on your needs -->
                                         <option value="linkedin" @if(in_array('linkedin', ($jobboards))) selected @endif>LinkedIn</option>
                                         <option value="pole_emploi" @if(in_array('pole_emploi', ($jobboards))) selected @endif>Pôle Emploi</option>
@@ -311,13 +291,13 @@
                                  <!-- Field: Couts de la diffusion -->
                                  <div class="form-group">
                                     <label for="advertising_costs">Coûts de la diffusion</label>
-                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" value="{{ $offer->advertising_costs }}" required>
+                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" value="{{ $offer->advertising_costs }}">
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <button class="theme-btn btn-style-one" 
-                                    id="edit-offer-btn" type="submit">Valider</button>
-                                </div>
+                                    id="edit-offer-btn" type="submit">Enregistrer</button>
+                                </div> -->
                             </form>
                         </div>
                     </div>
@@ -329,64 +309,5 @@
 @endsection
 
 @push('scripts')
-<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    // when document is 
-    $(document).ready(function () {
-        $.ajax({
-            url: "{{ route('getRomeCodes') }}",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                const autocompleteSource = Object.entries(data).map(([fullName, codeOgr]) => {
-                    return `${codeOgr} - ${fullName}`;
-                });
 
-                $( "#code_rome" ).autocomplete({
-                    source: autocompleteSource
-                });
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        })
-
-        $("#desired_languages").select2({
-        });
-
-        $("#education_level").select2({
-        });
-
-        $("#industry_sector").select2({
-        });
-
-        $("#selected_jobboards").select2({
-        });
-
-        $("#rome_code").select2({});
-
-        $('#desired_languages').on('change', function() {
-            if (this.value.includes('Autre')) {
-                $('#other_language_field').show();
-                $('#other_language').prop('required', true); // Make the input required
-            } else {
-                $('#other_language_field').hide();
-                $('#other_language').val('');  // Clear the input field if "Autre" is no longer selected
-                $('#other_language').prop('required', false);
-            }
-        });
-
-        $('#industry_sector').on('change', function() {
-            if (this.value.includes('Autre')) {
-                $('#other_sectors_field').show();
-                $('#other_sectors').prop('required', true); // Make the input required
-            } else {
-                $('#other_sectors_field').hide();
-                $('#other_sectors').val('');  // Clear the input field if "Autre" is no longer selected
-                $('#other_sectors').prop('required', false);
-            }
-        });
-    })
-    
-</script>
 @endpush

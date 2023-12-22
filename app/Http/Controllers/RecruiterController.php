@@ -19,6 +19,7 @@ use App\Models\User;
 use App\Models\Document;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
+use App\Mail\RendezVousDateOrHourChanged;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use RahulHaque\Filepond\Facades\Filepond;
@@ -209,6 +210,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_1_date,
             'heure' => $request->crenau_1_time,
+            'address' => $request->address,
             'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
@@ -219,6 +221,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_2_date,
             'heure' => $request->crenau_2_time,
+            'address' => $request->address,
             'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
@@ -229,6 +232,7 @@ class RecruiterController extends Controller
             // 'participant' => $participant,
             'date' => $request->crenau_3_date,
             'heure' => $request->crenau_3_time,
+            'address' => $request->address,
             'status' => 'En attente',
             'is_type_presentiel' => $request->is_type_presentiel == 'true' ? 1 : 0,
             'is_type_distanciel' => $request->is_type_distanciel == 'true' ? 1 : 0
@@ -243,16 +247,15 @@ class RecruiterController extends Controller
                 $rdv_1->id,
                 $rdv_2->id,
                 $rdv_3->id
-            ] 
+            ],
+            'type' => $request->is_type_presentiel == 'true' ? 'Présentiel' : 'Distanciel',
+            'address' => $request->address != '' ? $request->address : 'A distance'
         ];
 
         foreach($participants as $participant){
-            
-
             // Send Emails TO all the participant 
             $user = User::find($participant);
             Mail::to($user->email)->send(new SendRdvInvitation($emailDetails));
-
             $email = Email::create([
                 'user_id' => auth()->user()->id,
                 'subject' => 'Rendez-vous',
@@ -260,8 +263,6 @@ class RecruiterController extends Controller
                 'receiver_id' => $participant,
             ]);
         }
-       
-        // toast('Les invitations ont bien été envoyées.','success')->autoClose(5000);
 
         return response()->json([
             'status' => 'success',
@@ -283,13 +284,32 @@ class RecruiterController extends Controller
     }
     public function updateMyRdv(Request $request){
         $rdv = RendezVous::find($request->rdv_id);
+        $oldDate = $rdv->date;
+        $oldTime = $rdv->heure;
+
         $rdv->date = $request->date;
         $rdv->heure = $request->heure;
         $rdv->status = $request->status;
         $rdv->commentaire = $request->commentaire;
         $rdv->save();
 
-        toast('Votre rendez-vous a bien été mis a jour','success')->autoClose(5000);
+        $recipient = $rdv->participant;
+        $participant = User::find($recipient);
+        // Check if the old date or old time have been changed
+        if ($oldDate != $request->date || $oldTime != $request->heure) {
+            // Send an email here
+            $emailData = [
+                'date' => $request->date,
+                'time' => $request->heure,
+                'title' => 'Rendez-vous modifié.',
+                'body' => 'Votre rendez-vous du '.$oldDate.' à '.$oldTime.' a été modifié pour le '.$request->date.' à '.$request->heure.' .',
+
+            ];
+            Mail::to($participant->email)->send(new RendezVousDateOrHourChanged($emailData));
+            // Example: Mail::to($rdv->participant->email)->send(new YourEmailClass($rdv));
+        }
+
+        toast('Votre rendez-vous a bien été mis a jour, le candidat recevra une notification.','success')->autoClose(5000);
 
         return redirect()->back();
     }
@@ -440,6 +460,7 @@ class RecruiterController extends Controller
         $task->user_id = auth()->user()->id;
         $task->start_date = $request->start_date;
         $task->due_date = $request->end_date;
+        $task->hour = $request->hour;
         $task->save();
 
         toast('Tâche ajoutée','success')->autoClose(5000);
@@ -457,8 +478,16 @@ class RecruiterController extends Controller
         $task->completed = $request->status;
         $task->due_date = $request->date_fin;
         $task->start_date = $request->date_debut;
+        $task->hour = $request->hour;
         $task->save();
         toast('Tâche modifiée','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function completeTask($id){
+        $task = Task::find($id);
+        $task->completed = true;
+        $task->save();
+        toast('Tâche terminée','success')->autoClose(5000);
         return redirect()->back();
     }
     public function deleteTask($id){
@@ -474,11 +503,11 @@ class RecruiterController extends Controller
 
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
-            $offers = Offre::where('user_id', $user->id)->get();
+            $offers = Offre::where('user_id', $user->id)->where('publish', 1)->get();
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $offers = Offre::where('user_id', $entreprise->user_id)->get();
+            $offers = Offre::where('user_id', $entreprise->user_id)->where('publish', 1)->get();
         }
         
         return view('recruiter.offres.index', compact('offers'));
@@ -500,21 +529,60 @@ class RecruiterController extends Controller
         $offer->work_schedule = $request->input('work_schedule');
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
-        $offer->desired_languages = json_encode($request->input('desired_languages'));
+
+        $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
+         : json_encode($request->input('desired_languages'));
+
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        $offer->industry_sector = $request->input('industry_sector');
+        $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
         $offer->unpublish_date = $request->input('unpublish_date');
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
         $offer->user_id = auth()->user()->id;
+        $offer->publish = true;
         $offer->save();
 
         toast('Offre ajoutée','success')->autoClose(5000);
+        return redirect()->route('recruiter.offers');
+    }
+    public function saveDraftOffer(Request $request){
+        $offer = new Offre();
+        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->job_title = $request->input('job_title');
+        $offer->start_date = $request->input('start_date');
+        $offer->location_city = $request->input('location_city');
+        $offer->location_postal_code = $request->input('location_postal_code');
+        $offer->location_address = $request->input('location_address');
+        $offer->rome_code = $request->input('rome_code');
+        $offer->contract_type = $request->input('contract_type');
+        $offer->work_schedule = $request->input('work_schedule');
+        $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->experience_level = $request->input('experience_level');
 
-        return redirect()->back();
+        $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
+         : json_encode($request->input('desired_languages'));
+
+        $offer->education_level = $request->input('education_level');
+        $offer->brut_salary = $request->input('brut_salary');
+        $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
+        $offer->benefits = $request->input('benefits');
+        $offer->publication_date = $request->input('publication_date');
+        $offer->unpublish_date = $request->input('unpublish_date');
+        $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
+        $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->user_id = auth()->user()->id;
+        $offer->publish = false;
+        $offer->save();
+
+        toast('Offre ajoutée','success')->autoClose(5000);
+        return redirect()->route('recruiter.offers');
+    }
+    public function myOffersShow($id){
+        $offer = Offre::find($id);
+        return view('recruiter.offres.show', compact('offer'));
     }
     public function myOffersEdit($id){
         $offer = Offre::find($id);
@@ -534,10 +602,13 @@ class RecruiterController extends Controller
         $offer->work_schedule = $request->input('work_schedule');
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
-        $offer->desired_languages = json_encode($request->input('desired_languages'));
+        // $offer->desired_languages = json_encode($request->input('desired_languages'));
+        $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
+         : json_encode($request->input('desired_languages'));
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        $offer->industry_sector = $request->input('industry_sector');
+        // $offer->industry_sector = $request->input('industry_sector');
+        $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
         $offer->unpublish_date = $request->input('unpublish_date');
@@ -546,8 +617,7 @@ class RecruiterController extends Controller
         $offer->save();
 
         toast('Offre modifiée','success')->autoClose(5000);
-
-        return redirect()->back();
+        return redirect()->route('recruiter.offers');
     }
     public function myOffersDelete($id){
         $offer = Offre::find($id);
@@ -648,7 +718,7 @@ class RecruiterController extends Controller
     }
     public function getUserEvents(){
         $user = auth()->user();
-        $events = $user->events;
+        $events = $user->events()->where('statut', 'active')->get();
         return response()->json($events);
     }
     public function myEventsSuspend($id){
@@ -656,6 +726,13 @@ class RecruiterController extends Controller
         $event->statut = 'suspended';
         $event->save();
         toast('Evenement Suspendue.','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function myEventsResume($id){
+        $event = Event::find($id);
+        $event->statut = 'active';
+        $event->save();
+        toast('Evenement activé.','success')->autoClose(5000);
         return redirect()->back();
     }
     public function myEventsCancel($id){
@@ -803,6 +880,17 @@ class RecruiterController extends Controller
 
         return redirect()->back();
     }
+    public function myFormationDeleteDoc(Request $request, $id, $userId,$docname)
+    {
+        dd($id, $userId, $docname);
+        $fomation = Formation::find($id);
+        $formation->uploaded_documents = array_diff($formation->uploaded_documents, [$docname]);
+        // Example usage:
+        echo "Retrieved ID: $retrievedId";
+        echo "Filtered document name: $filteredDocname";
+
+        // ... your controller logic to handle document deletion ...
+    }
 
     // MAILS
     public function myMails(){
@@ -815,6 +903,10 @@ class RecruiterController extends Controller
     public function getMyMail(Request $request){
         $email = Email::find($request->id);
         return response()->json($email);
+    }
+    public function createMail(){
+        $receivers = User::all();
+        return view('recruiter.emails.create', compact('receivers'));
     }
 
     // STATS

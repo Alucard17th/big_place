@@ -143,7 +143,7 @@ input, select{
                                         <div class="col-4 px-1 mt-3">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Statut Tâche</option>
+                                                    <option value=""  selected>Tous</option>
                                                     <option value="Terminée">Terminée</option>
                                                     <option value="En cours">En cours</option>
                                                 </select>
@@ -190,7 +190,12 @@ input, select{
                                                 <a href="{{route('candidat.task.see', $task->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
-                                                    Editer
+                                                    Modifier
+                                                </a>
+                                                <a href="{{route('candidat.task.complete', $task->id)}}" type="button" class="bg-btn-five">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Terminé
                                                 </a>
                                                 <a href="{{route('candidat.task.delete', $task->id)}}" type="button" class="bg-btn-four"
                                                 onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');">

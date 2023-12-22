@@ -114,9 +114,11 @@
                                                     Non
                                                 @endif
                                             </td>
-                                            <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
                                             <td class="text-left">
-                                                @if($event->statut == 'open')
+                                                {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d %b %y à %H:%M') }}
+                                            </td>
+                                            <td class="text-left">
+                                                @if($event->statut == 'active')
                                                     Ouvert
                                                 @elseif($event->statut == 'suspended')
                                                     Suspendu
@@ -131,18 +133,25 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                @if($event->statut == 'suspended')
+                                                <a href="{{ route('recruiter.events.resume', $event->id) }}" type="button" class="bg-btn-nine mt-2">
+                                                    <i class="las la-braille"></i>
+                                                    Reprendre
+                                                </a>
+                                                @else
                                                 <a href="{{ route('recruiter.events.suspend', $event->id) }}" type="button" class="bg-btn-nine mt-2">
                                                     <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
+                                                @endif
                                                 <a href="{{ route('recruiter.events.cancel', $event->id) }}" type="button" class="bg-btn-eight mt-2">
                                                     <i class="las la-times"></i>
                                                     Annuler
                                                 </a>
-                                                <!-- <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-seven mt-2">
+                                                <a type="button" class="bg-btn-seven mt-2 docs-modal-btn" data-required-docs="{{$event->required_documents}}">
                                                     <i class="las la-download"></i>
                                                     Documents
-                                                </a> -->
+                                                </a>
                                                 <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
@@ -257,6 +266,15 @@
         <a href="#" class="custom-close-modal"></a>
     </div>
    
+
+    <div id="docs-modal" class="modal">
+        <h4 class="text-dark">Listes des documents requis:</h4>
+
+        <ul id="modal-docs-list" class="my-4 text-dark p-3">
+        </ul>
+        <a href="#" id="close-modal">Fermer</a>
+        <a href="#" class="custom-close-modal"></a>
+    </div>
 </div>
 @endsection
 
@@ -264,9 +282,29 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('#add-event');
+    const docModalBtn = document.querySelector('.docs-modal-btn');
 
     searchBtn.addEventListener('click', function() {
         $("#ex1").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    })
+
+    docModalBtn.addEventListener('click', function() {
+        
+        const requiredDocs = $(this).data('requiredDocs')
+        const docsList = document.getElementById("modal-docs-list");
+        const docsArray = requiredDocs.split(",");
+        docsArray.forEach(doc => {
+            const listItem = document.createElement("li");
+            listItem.textContent = doc.trim(); // Trim whitespace
+            docsList.appendChild(listItem);
+        });
+        // Use the retrieved value
+        console.log("Required documents:", requiredDocs);
+        $("#docs-modal").modal({
             escapeClose: false,
             clickClose: true,
             showClose: false
