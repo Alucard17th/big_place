@@ -153,14 +153,24 @@
                                 <!-- Field: Horaires de travail -->
                                 <div class="form-group">
                                     <label for="work_schedule">Horaires de travail</label>
-                                    <select class="form-control" id="work_schedule" name="work_schedule" required>
-                                        <option value="Temps plein" @if($offer->work_schedule == 'Temps plein') selected @endif>Temps plein</option>
-                                        <option value="Temps partiel" @if($offer->work_schedule == 'Temps partiel') selected @endif>Temps partiel</option>
-                                        <option value="Horaires de nuit" @if($offer->work_schedule == 'Horaires de nuit') selected @endif>Horaires de nuit</option>
-                                        <option value="Samedi" @if($offer->work_schedule == 'Samedi') selected @endif>Samedi</option>
-                                        <option value="Dimanche" @if($offer->work_schedule == 'Dimanche') selected @endif>Dimanche</option>
-                                        <option value="Nuit" @if($offer->work_schedule == 'Nuit') selected @endif>Nuit</option>
-                                        <option value="Télétravail" @if($offer->work_schedule == 'Télétravail') selected @endif>Télétravail</option>
+                                    @php 
+                                        $schedules = json_decode($offer->work_schedule, true) ?? [];
+                                    @endphp
+                                    <select class="form-control" id="work_schedule" name="work_schedule[]" multiple required>
+                                        <option value="Temps plein" @if(in_array('Temps plein', ($schedules))) selected @endif>Temps plein</option>
+
+                                        <option value="Temps partiel"  @if(in_array('Temps partiel', ($schedules))) selected @endif>Temps partiel</option>
+
+                                        <option value="Horaires de nuit" @if(in_array('Horaires de nuit', ($schedules))) selected @endif>Horaires de nuit</option>
+                                        
+                                        <option value="Samedi" @if(in_array('Samedi', ($schedules))) selected @endif>Samedi</option>
+                                        
+                                        <option value="Dimanche" @if(in_array('Dimanche', ($schedules))) selected @endif>Dimanche</option>
+                                        
+                                        <option value="Nuit" @if(in_array('Nuit', ($schedules))) selected @endif>Nuit</option>
+                                        
+                                        <option value="Télétravail" @if(in_array('Télétravail', ($schedules))) selected @endif>Télétravail</option>
+                                   
                                     </select>
                                 </div>
 
@@ -361,6 +371,9 @@
         });
 
         $("#selected_jobboards").select2({
+        });
+
+        $("#work_schedule").select2({
         });
 
         $("#rome_code").select2({});

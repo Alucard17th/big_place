@@ -43,9 +43,12 @@ class EventController extends Controller
         $user = auth()->user();
         $event = Event::find($id);
         $user->participationEvents()->detach($event);
-        $event->registered_participants	= $event->registered_participants - 1;
+        $event->registered_participants = max(0, $event->registered_participants - 1);
+        if($event->registered_participants < $event->participants_count){
+            $event->registration_closed = 0;
+        }
         $event->save();
-        $events = $user->participationEvents;
+        // $events = $user->participationEvents;
         toast('Participation annulée', 'success');
         return redirect()->back();
     }
@@ -57,6 +60,12 @@ class EventController extends Controller
         // return response()->json($qrcode);
         return Response::make($qrcode, 200, ['Content-Type' => 'image/svg+xml']);
 
+    }
+
+    public function showEvent($id){
+        $event = Event::find($id);
+        // dd($event);
+        return view('candidat.events.show', compact('event'));
     }
 
 

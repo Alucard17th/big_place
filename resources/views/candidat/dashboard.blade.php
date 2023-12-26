@@ -140,7 +140,7 @@
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                     <!-- <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;"> -->
                                     <select name="job_title" id="job_title" class="form-control">
-                                        <option value="" selected value="">Titre de l'offre</option>
+                                        <option value="" selected value="">Poste recherché</option>
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
                                         @endforeach

@@ -88,13 +88,15 @@
                                             </td>
                                             <td>{{$formation->skills_acquired}}</td>
                                             <td>{{$formation->open_positions}}</td>
-                                            <td>XXX</td>
+                                            <td>{{$formation->participants->count()}}</td>
                                             <td>{{$formation->work_location}}</td>
                                             <td>
-                                                @if($formation->status == 'on')
+                                                @if($formation->status == 'Active')
                                                     <span class="badge badge-success">Active</span>
+                                                @elseif($formation->status == 'Suspendue')
+                                                    <span class="badge badge-warning">Suspendue</span>
                                                 @else
-                                                    <span class="badge badge-warning">Inactive</span>
+                                                    <span class="badge badge-danger">Inactive</span>
                                                 @endif
                                             </td>
                                             @unlessrole('restricted')
@@ -103,7 +105,7 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="" type="button" class="bg-btn-nine mt-2" style="padding-left:8px !important;padding-right:8px !important;">
+                                                <a href="{{route('recruiter.formation.suspend', $formation->id)}}" type="button" class="bg-btn-nine mt-2" style="padding-left:8px !important;padding-right:8px !important;">
                                                     <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
@@ -111,9 +113,9 @@
                                                     <i class="las la-download"></i>
                                                     Documents
                                                 </a> -->
-                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" class="bg-btn-four mt-2">
+                                                <a href="{{route('recruiter.formation.close', $formation->id)}}" class="bg-btn-four mt-2">
                                                     <i class="las la-trash"></i>
-                                                    Fermer
+                                                    Annuler
                                                 </a>
                                             </td>
                                             @endunlessrole

@@ -113,7 +113,7 @@
                                         @foreach (json_decode($formation->uploaded_documents, true) ?? [] as $document)
                                         <li class="my-2">
                                             <a href="{{ url(str_replace('public', 'storage', $document)) }}" target="_blank">{{ pathinfo($document, PATHINFO_BASENAME) }}</a>
-                                            <a href="{{ route('recruiter.formation.document.delete', ['id' => $formation->id, 'userid' => Auth::user()->id ,'docname' => substr($document, strrpos($document, '/') + 1)]) }}" class="text-danger" type="button">X</a>
+                                            <a href="{{ route('recruiter.formation.document.delete', ['id' => $formation->id, 'userid' => Auth::user()->id ,'docname' => substr($document, strrpos($document, '/') + 1)]) }}" class="text-danger" type="button">X Supprimer</a>
                                         </li>
                                         @endforeach
                                 </div>

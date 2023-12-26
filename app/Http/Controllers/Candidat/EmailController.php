@@ -38,8 +38,8 @@ class EmailController extends Controller
             $user->emails()->save($email);
         }
        
-        toast('Emails envoyés', 'success');
-        return redirect()->route('recruiter.mails');
+        toast('Email envoyé', 'success');
+        return redirect()->back();
         // return redirect()->back();
     }
 }

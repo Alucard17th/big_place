@@ -59,6 +59,7 @@
                 <a href="/candidat-formation" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/formations.png')}}" alt=""> Les Formations
+                            Proposées
                     </span>
                 </a>
             </li>

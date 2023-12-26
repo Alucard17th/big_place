@@ -14,6 +14,18 @@
     background-position: center center;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
 }
+
+#add-doc-form>div>label,
+#add-doc-form>div.row>div>div>label,
+#add-doc-form>div>div>label {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 41px;
+    color: #202124;
+}
+
 </style>
 @endpush
 @section('content')
@@ -57,21 +69,21 @@
                                     <tbody>
                                         @foreach ($documents as $document)
                                         <tr>
-                                            <td class="text-left">{{$document->name}}</td>
+                                            <td class="text-left">{{$document->label}}</td>
                                             <td class="text-left">{{$document->created_at}}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a href="" type="button" class="bg-btn-three">
-                                                    <!-- Détails -->
-                                                    <i class="las la-edit"></i>
-                                                    Aperçu
-                                                </a>
-                                                <a href="" type="button" class="bg-btn-five">
+                                                <a href="{{ asset('storage/'.auth()->user()->id.'/'.$document->name) }}" download type="button" class="bg-btn-five">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Télécharger
                                                 </a>
-                                                <a href="" type="button" class="bg-btn-four">
+                                                <a href="{{ asset('storage/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-three" target="_blank">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Aperçu
+                                                </a>
+                                                <a href="{{ route('recruiter.document.delete', $document->id) }}" type="button" class="bg-btn-four">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer
@@ -94,19 +106,23 @@
 
     <!-- Modal HTML embedded directly into document -->
     <div id="doc-modal" class="modal">
-       <form action="{{route('recruiter.document.add')}}" method="POST" enctype="multipart/form-data">
+       <form action="{{route('recruiter.document.add')}}" method="POST" enctype="multipart/form-data" id="add-doc-form">
             @csrf
             <div class="form-group">
-                <h4>Ajouter un Document :</h4>
+                <label>Ajouter un Document :</label>
             </div>
             <div class="form-group">
-                <label for="candidate">Document</label>
+                <label for="label">Nom</label>
+                <input type="text" class="form-control" name="label" id="label" required>
+            </div>
+            <div class="form-group">
+                <label for="document">Document</label>
                 <input type="file" name="document" id="document">
             </div>
           
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one upload-doc" type="submit">Enregistrer</button>
+                <button class="theme-btn btn-style-one upload-doc" type="submit" id="upload-doc-btn">Enregistrer</button>
             </div>
        </form>
         <a href="#" id="close-modal">Fermer</a>
@@ -150,6 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
 });
 </script>
 @endpush

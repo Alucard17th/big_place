@@ -143,13 +143,17 @@
                                             <td class="text-left">
                                                 @if($event->registration_closed != 1)
                                                 <a href="{{ route('candidat.event.subscribe', $event->id) }}"
-                                                    type="button" class="bg-btn-five">
+                                                    type="button" class="bg-btn-nine">
                                                     Je participe
                                                 </a>
                                                 @endif
+                                                <a href="{{route('candidat.event.show', $event->id)}}"
+                                                    type="button" class="bg-btn-five">
+                                                    Consulter l'événement
+                                                </a>
                                                 <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
-                                                    type="button" class="bg-btn-three">
-                                                    Voir l'entreprise
+                                                    type="button" class="bg-btn-three mt-2">
+                                                    Consulter la vitrine entreprise
                                                 </a>
                                             </td>
                                         </tr>

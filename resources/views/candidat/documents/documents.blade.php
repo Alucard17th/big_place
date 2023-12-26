@@ -28,7 +28,7 @@
                         <h3>Mes documents</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -60,15 +60,15 @@
                                             <td class="text-left">{{$document->created_at}}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-three" target="_blank">
-                                                    <!-- Détails -->
-                                                    <i class="las la-edit"></i>
-                                                    Aperçu
-                                                </a>
                                                 <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-five" target="_blank" download>
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Télécharger
+                                                </a>
+                                                <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-three" target="_blank">
+                                                    <!-- Détails -->
+                                                    <i class="las la-edit"></i>
+                                                    Aperçu
                                                 </a>
                                                 <a href="{{ route('candidat.document.delete', $document->id) }}" type="button" class="bg-btn-four" onclick="return confirm('Etes-vous sur de vouloir supprimer ce document ?');">
                                                     <!-- Détails -->
@@ -97,6 +97,10 @@
             @csrf
             <div class="form-group">
                 <h4>Ajouter un Document :</h4>
+            </div>
+            <div class="form-group">
+                <label for="label">Nom</label>
+                <input type="text" class="form-control" name="label" id="label" required>
             </div>
             <div class="form-group">
                 <label for="candidate">Document</label>
@@ -150,6 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
 });
 </script>
 @endpush

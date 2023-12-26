@@ -346,6 +346,7 @@ class RecruiterController extends Controller
             'name' => $fileName,
             'file' => $filePath,
             'type' => 'document',
+            'label' => $request->label,
         ]);
 
         toast('Votre document a bien été ajouté','success')->autoClose(5000);
@@ -362,6 +363,12 @@ class RecruiterController extends Controller
         return response()->json([
             'status' => 'success',
         ]);
+    }
+    public function deleteDocument($id){
+        $document = Document::find($id);
+        $document->delete();
+        toast('Votre document a bien été supprimé','success')->autoClose(5000);
+        return redirect()->back();
     }
 
     // VITRINE
@@ -526,7 +533,7 @@ class RecruiterController extends Controller
         $offer->location_address = $request->input('location_address');
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
-        $offer->work_schedule = $request->input('work_schedule');
+        $offer->work_schedule = json_encode($request->input('work_schedule'));
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
@@ -721,6 +728,10 @@ class RecruiterController extends Controller
         $events = $user->events()->where('statut', 'active')->get();
         return response()->json($events);
     }
+    public function getUserById($id){
+        $user = User::find($id);
+        return response()->json($user);
+    }
     public function myEventsSuspend($id){
         $event = Event::find($id);
         $event->statut = 'suspended';
@@ -815,7 +826,7 @@ class RecruiterController extends Controller
             'open_positions' => $request->open_positions,
             'registration_deadline' => $request->registration_deadline,
             // 'upload_documents' => json_encode($request->upload_documents),
-            'status' => $request->status,
+            'status' => 'Active',
             'max_participants' => $request->max_participants
         ]);
 
@@ -880,16 +891,28 @@ class RecruiterController extends Controller
 
         return redirect()->back();
     }
-    public function myFormationDeleteDoc(Request $request, $id, $userId,$docname)
+    public function myFormationDeleteDoc(Request $request, $id, $userId, $docname)
     {
-        dd($id, $userId, $docname);
-        $fomation = Formation::find($id);
-        $formation->uploaded_documents = array_diff($formation->uploaded_documents, [$docname]);
-        // Example usage:
-        echo "Retrieved ID: $retrievedId";
-        echo "Filtered document name: $filteredDocname";
-
-        // ... your controller logic to handle document deletion ...
+        $formation = Formation::find($id);
+        $formation->uploaded_documents = array_diff(json_decode($formation->uploaded_documents, true), ['public/'.$userId.'/'.$docname]);
+        $formation->save();
+       
+        toast('Document supprimé','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function myFormationsSuspend($id){
+        $formation = Formation::find($id);
+        $formation->status = 'Suspendue';
+        $formation->save();
+        toast('Formation suspendue','success')->autoClose(5000);
+        return redirect()->back();
+    }
+    public function myFormationsClose($id){
+        $formation = Formation::find($id);
+        $formation->status = 'Ferme';
+        $formation->save();
+        toast('Formation fermée','success')->autoClose(5000);
+        return redirect()->back();
     }
 
     // MAILS

@@ -33,6 +33,7 @@ class DocumentController extends Controller
             'name' => $fileName,
             'file' => $filePath,
             'type' => 'document',
+            'label' => $request->label,
         ]);
 
         toast('Votre document a bien été ajouté','success')->autoClose(5000);

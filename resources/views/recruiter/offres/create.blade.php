@@ -149,7 +149,7 @@
                                 <!-- Field: Horaires de travail -->
                                 <div class="form-group">
                                     <label for="work_schedule">Horaires de travail</label>
-                                    <select class="form-control" id="work_schedule" name="work_schedule" required>
+                                    <select class="form-control" id="work_schedule" name="work_schedule[]" multiple required>
                                         <option value="Temps plein">Temps plein</option>
                                         <option value="Temps partiel">Temps partiel</option>
                                         <option value="Horaires de nuit">Horaires de nuit</option>
@@ -359,6 +359,9 @@
         });
 
         $("#selected_jobboards").select2({
+        });
+
+        $("#work_schedule").select2({
         });
 
         $("#rome_code").select2({});

@@ -3,10 +3,14 @@
 <style>
     #custom-tooltip{
         padding: 10px;
-        color: #fff;
-        background: #000;
+        color: #000;
+        background: #fff;
         border-radius: 5px;
         pointer-events: none;
+        border-left: 1px solid #000;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        border-right: 1px solid #000;
 
     }
 </style>
@@ -204,6 +208,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.log('RDVS fetched successfully', data);
         data.forEach(function(event) {
             let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
+            let candidatId = event.candidat_it
             rdvs.push({
                 title: 'Rendez vous le : ' + event.date,
                 start: event.date + 'T' + event.heure,
@@ -212,7 +217,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 textColor: '#0369A1',
                 classNames: ['event-visio'],
                 extendedProps: {
-                    description: 'Type : ' + rdvType
+                    description: 'Type : ' + rdvType,
+                    candidat_id: candidatId
                 }
             });
         })
@@ -255,8 +261,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             rdvs.push({
                 title: 'Formation le : ' + event.start_date,
                 start: event.start_date,
-                backgroundColor: 'green',
-                borderColor: 'green',
+                backgroundColor: 'blue',
+                borderColor: 'blue',
                 extendedProps: {
                     description: event.job_title
                 }
@@ -289,11 +295,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         events : rdvs,
         locale: initialLocaleCode,
         eventClick: function(info) {
-            alert('Event: ' + info.event.title);
-            alert('Coordinates: ' + info.jsEvent.pageX + '<br>' + info.jsEvent.pageY);
-            alert('View: ' + info.view.type);
+            // alert('Event: ' + info.event.title);
+            // alert('Coordinates: ' + info.jsEvent.pageX + '<br>' + info.jsEvent.pageY);
+            // alert('View: ' + info.view.type);
         },
-        eventMouseEnter: function(info) {
+        eventMouseEnter: async function(info) {
             var tooltip = document.getElementById('custom-tooltip');
 
             if (!tooltip) {
@@ -302,7 +308,29 @@ document.addEventListener('DOMContentLoaded', async function() {
                 document.body.appendChild(tooltip);
             }
 
-            tooltip.innerHTML = info.event.title + '<br>' + info.event.extendedProps.description;
+            if(info.event.extendedProps.candidat_id != null){
+                await $.ajax({
+                    url: "/getUserById" + '/' + info.event.extendedProps.candidat_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Candidat fetched successfully', data.avatar);
+                        const imgString = `<img src="${data.avatar.replace('public', 'storage')}" width="50" height="50" style="border-radius: 50%;">`;
+
+                        tooltip.innerHTML += imgString + '  ' + data.name + '<br>' +
+                        'Email : ' + data.email + '<br>' +
+                        info.event.title + '<br>' +
+                        info.event.extendedProps.description;
+                    },
+                    error: function() {
+                        console.log('Error fetching User');
+                    }
+                })
+            }else{
+                tooltip.innerHTML += info.event.title + '<br>' +
+                        info.event.extendedProps.description;
+            }
+
             tooltip.style.display = 'block';
             tooltip.style.position = 'absolute';
             tooltip.style.zIndex =9;

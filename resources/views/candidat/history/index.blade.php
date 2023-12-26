@@ -49,7 +49,7 @@
                                            
                                             <td class="text-left">
                                                 <a href="{{route('candidat.candidature.apply', $history->searchable)}}" type="button" class="bg-btn-three mt-2">
-                                                    Voir l'offre
+                                                    Consulter l'offre
                                                 </a>
                                             </td>
                                         </tr>
@@ -65,7 +65,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Modal HTML embedded directly into document -->
     <div id="ex1" class="modal">

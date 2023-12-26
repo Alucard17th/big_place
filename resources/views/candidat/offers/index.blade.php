@@ -172,7 +172,11 @@ input, select{
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
-                                                    Voir la vitrine de l'entreprise
+                                                    Consulter la vitrine de l'entreprise
+                                                </a>
+                                                <a href="{{route('candidat.candidature.apply', $offer->id)}}" 
+                                                type="button" class="bg-btn-five mt-2">
+                                                    Consulter l'offre
                                                 </a>
                                             </td>
                                         </tr>

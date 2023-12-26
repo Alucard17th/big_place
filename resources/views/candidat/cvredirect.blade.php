@@ -109,18 +109,81 @@ letter-spacing: -0.284368px;
 /* Neutral / Grey 7 */
 color: #2D2F30;
 }
+
+#create-cv-form > div:nth-child(6) > div > div > span,
+#create-cv-form > div:nth-child(5) > div:nth-child(1) > div > span{
+    width: unset !important;
+}
 </style>
 @endpush
 
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
+        <!-- <div class="upper-title-box">
             <h3>Bonjour, {{auth()->user()->name}} !</h3>
             <div class="text">Vous devez remplir votre profil pour accéder à votre compte.</div>
+        </div> -->
+
+        <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+            <div class="d-flex align-items-center justify-content-center">
+                <h3>Bonjour, {{auth()->user()->name}} !</h3>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                    <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                    Retour
+                </a>
+            </div>
+        </div>
+        <div class="row text-right">
+            <div class="col-md-12">
+                <button id="edit-profile">
+                    <i class="las la-user-edit mr-1" style="font-size: 30px;"></i> 
+                    <span id="edit-profile-span">Modifier</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row" id="preview-container">
+            <div class="container">
+                <div class="card p-5 h-100">
+                    <div class="row">
+                        <!-- <div class="col-md-4">
+                            <img src="path/to/candidate_photo.jpg" class="img-fluid rounded-circle mb-3" alt="Candidate Photo">
+                        </div> -->
+                        <div class="col-md-12">
+                            <h1 class="mb-3">{{$curriculum->nom}} {{$curriculum->prenom}}</h1>
+                            <h4 class="mb-3">Métier: {{$curriculum->metier_recherche}}</h4>
+                            <p class="mb-5 text-dark">Ville: {{$curriculum->ville_domiciliation}}</p>
+
+                            <hr>
+
+                            <h5>Expérience</h5>
+                            <ul class="list-unstyled">
+                                <li>Nombre d'années d'expérience: {{$curriculum->annees_experience}} années</li>
+                                <li>Niveau: {{$curriculum->niveau}}</li>
+                            </ul>
+
+                            <h5>Formation</h5>
+                            <ul class="list-unstyled">
+                                <li>Niveau d'études: {{$curriculum->niveau_etudes}}</li>
+                                </ul>
+
+                            <h5>Prétentions salariales</h5>
+                            <div>{{$curriculum->pretentions_salariales}}</div>
+
+                            <hr>
+
+                            <h5>CV</h5>
+                            <a href="{{asset('storage' . $curriculum->cv)}}" class="btn btn-primary" download>Télécharger</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="row">
+        <div class="row mt-3" id="editor-container" style="display:none">
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
@@ -253,7 +316,7 @@ color: #2D2F30;
                                         <label for="valeurs" class="form-label text-dark">Les valeurs</label>
                                         <!-- <textarea class="form-control" id="valeurs" name="valeurs" rows="3"
                                             required></textarea> -->
-                                        <select name="valeurs[]" id="values_select" class="form-control" multiple>
+                                        <select name="valeurs[]" id="values_select" class="form-control w-100" multiple>
                                             <option value="Le respect" @if(isset($curriculum->valeurs) && in_array('Le
                                                 respect', json_decode($curriculum->valeurs))) selected @endif>Le respect
                                             </option>
@@ -402,6 +465,14 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#values_select").select2({
         placeholder: "Valeurs",
     });
+
+    $('#edit-profile').click(function() {
+        $('#preview-container').toggle()
+        $('#editor-container').toggle()
+        var currentText = $('#edit-profile-span').text();
+        var newText = currentText === "Aperçu" ? "Modifier" : "Aperçu";
+        $('#edit-profile-span').text(newText);
+    })
 
 })
 </script>

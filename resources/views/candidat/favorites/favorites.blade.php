@@ -91,7 +91,7 @@ input, select{
                             <h3>Mes Favoris</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -106,7 +106,7 @@ input, select{
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="name" id="name" class="form-control" placeholder="Titre de l'offre">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="Poste recherché">
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@ input, select{
                                     <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
-                                            <th>Titre de l'offre</th>
+                                            <th>Nom du Poste</th>
                                             <th>Ville/département</th>
                                             <th>Niveau d'études</th>
                                             <!-- <th>Etat</th> -->

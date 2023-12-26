@@ -106,22 +106,49 @@ input, select{
                                     <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
-                                            <th>Nom de la formation</th>
-                                            <th>Entreprise</th>
-                                            <th>Durée de la formation</th>
-                                            <th>Période de la formation</th>
+                                            <th>Nom du poste</th>
+                                            <th>Nombre de jours de formation</th>
+                                            <th>Période de formation</th>
+                                            <th>CDI à l'embauche</th>
+                                            <th>Compétences acquises</th>
+                                            <th>Postes Ouverts</th>
+                                            <th>Nombre d'inscrits</th>
                                             <th>Lieu</th>
+                                            <th>Statut</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($formations as $formation)
+                                        @php
+                                            $startDate = \Carbon\Carbon::parse($formation->start_date);
+                                            $endDate = \Carbon\Carbon::parse($formation->end_date);
+                                            $durationInDays = $startDate->diffInDays($endDate);
+                                        @endphp
                                         <tr>
-                                            <td class="text-left">{{$formation->job_title}}</td>
-                                            <td class="text-left">{{$formation->user_id}}</td>
-                                            <td class="text-left">{{$formation->training_duration}}</td>
-                                            <td class="text-left">{{$formation->start_date}} - {{$formation->end_date}}</td>
-                                            <td class="text-left">{{$formation->work_location}}</td>
+                                            <td>{{$formation->job_title}}</td>
+                                            <td>{{$durationInDays}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d %b %y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d %b %y') }}</td>
+                                            <td>
+                                                @if($formation->cdi_at_hiring == 1)
+                                                    Oui
+                                                @else
+                                                    Non
+                                                @endif
+                                            </td>
+                                            <td>{{$formation->skills_acquired}}</td>
+                                            <td>{{$formation->open_positions}}</td>
+                                            <td>{{$formation->participants->count()}}</td>
+                                            <td>{{$formation->work_location}}</td>
+                                            <td>
+                                                @if($formation->status == 'Active')
+                                                    <span class="badge badge-success">Active</span>
+                                                @elseif($formation->status == 'Suspendue')
+                                                    <span class="badge badge-warning">Suspendue</span>
+                                                @else
+                                                    <span class="badge badge-danger">Inactive</span>
+                                                @endif
+                                            </td>
                                             <td class="text-left">
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>

@@ -198,7 +198,7 @@ select {
             <div class="col-lg-12">
                 <!-- Ls widget -->
                 <div class="ls-widget py-5">
-                    <!-- <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
                         <div class="d-flex align-items-center justify-content-center">
                             <h3>Mes Candidatures</h3>
                         </div>
@@ -207,7 +207,7 @@ select {
                                 Retour
                             </a>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="tabs-box">
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">

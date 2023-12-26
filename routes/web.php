@@ -100,6 +100,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::post('/favorties/invite-candidates', [RecruiterController::class, 'inviteCandidates'])->name('recruiter.invite.candidates');
     
     Route::post('/document/add', [RecruiterController::class, 'addDocument'])->name('recruiter.document.add');
+    Route::get('/document/delete/{id}', [RecruiterController::class, 'deleteDocument'])->name('recruiter.document.delete');
     
     Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
     
@@ -135,6 +136,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/getRdvs', [RecruiterController::class, 'getUserRdvs'])->name('getUserRdvs');
     Route::get('/getFormations', [RecruiterController::class, 'getUserFormations'])->name('getUserFormations');
     Route::get('/getEvents', [RecruiterController::class, 'getUserEvents'])->name('getUserEvents');
+    Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->name('getUserById');
     
     // Factures And Contracts
     Route::get('/mes-factures-et-contrats', [RecruiterController::class, 'myFacturesAndContracts'])->name('recruiter.factures.and.contracts');
@@ -147,7 +149,8 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-formations/edit/{id}', [RecruiterController::class, 'myFormationsEdit'])->name('recruiter.formation.edit');
     Route::post('/formation/update', [RecruiterController::class, 'updateFormation'])->name('recruiter.formation.update');
     Route::get('/mes-formations/delete-doc/{id}/{userid}/{docname}', [RecruiterController::class, 'myFormationDeleteDoc'])->name('recruiter.formation.document.delete');
-    Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
+    Route::get('/mes-formations/suspend/{id}', [RecruiterController::class, 'myFormationsSuspend'])->name('recruiter.formation.suspend');
+    Route::get('/mes-formations/close/{id}', [RecruiterController::class, 'myFormationsClose'])->name('recruiter.formation.close');
     
     // EMAILS 
     Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
@@ -238,6 +241,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/event/candidat/subscribe/{id}', [EventController::class, 'subscribeToEvent'])->name('candidat.event.subscribe');
     Route::get('/event/candidat/unsubscribe/{id}', [EventController::class, 'cancelParticipation'])->name('candidat.event.unsubscribe');
     Route::get('/event/candidat/qrcode/{id}', [EventController::class, 'getQrCode'])->name('candidat.event.qrcode');
+    Route::get('/event/candidat/show/{id}', [EventController::class, 'showEvent'])->name('candidat.event.show');
 
     // FORMATIONS
     Route::get('/formation/candidat/subscribe/{id}', [FormationController::class, 'subscribeToFormation'])->name('candidat.formation.subscribe');
