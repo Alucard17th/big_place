@@ -201,8 +201,8 @@
                         <div class="login-item dropmenu-right dropdown show">
                             <a href="#" class="is_login dropdown-toggle" id="dropdownMenuUser" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img class="avatar" src="https://bigplace.fr/images/avatar.png" alt="{{auth()->user()->name}}">
-                                <div class="menu-hr d-flex align-items-center justify-content-center flex-column">
+                                <!-- <img class="avatar" src="https://bigplace.fr/images/avatar.png" alt="{{auth()->user()->name}}"> -->
+                                <div class="menu-hr d-flex align-items-end justify-content-right flex-column">
                                     <span class="bord-name">Tableau de bord</span>
                                     <span class="full-name">{{auth()->user()->name}}</span>
                                 </div>
