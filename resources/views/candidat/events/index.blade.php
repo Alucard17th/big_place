@@ -141,7 +141,9 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">
-                                                @if($event->participants_count >= $event->participants->count() || !$event->participants->pluck('id')->contains(Auth::id()))
+                                                MAX : {{$event->participants_count}}
+                                                Participant : {{$event->participants->count()}}
+                                                @if($event->participants_count >= $event->participants->count())
                                                 <a href="{{ route('candidat.event.subscribe', $event->id) }}"
                                                     type="button" class="bg-btn-nine">
                                                     Je participe
