@@ -120,7 +120,7 @@
                                             <tr>
                                                 <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{$email->created_at}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -141,7 +141,7 @@
                                             <tr>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{$email->created_at}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>

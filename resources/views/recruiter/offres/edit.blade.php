@@ -325,8 +325,9 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <button class="theme-btn btn-style-four @if($offer->publish) d-none @endif" type="button" id="save-offer-draft">Enregistrer en brouillon</button>
                                     <button class="theme-btn btn-style-one" 
-                                    id="edit-offer-btn" type="submit">Valider</button>
+                                    id="edit-offer-btn" type="submit">Publier</button>
                                 </div>
                             </form>
                         </div>
@@ -398,6 +399,11 @@
                 $('#other_sectors').val('');  // Clear the input field if "Autre" is no longer selected
                 $('#other_sectors').prop('required', false);
             }
+        });
+
+        document.getElementById("save-offer-draft").addEventListener("click", function() {
+            document.getElementById("edit-offer-form").action = "{{ route('recruiter.offer.draft.update') }}"; // Replace with the actual route for saving drafts
+            document.getElementById("edit-offer-form").submit();
         });
     })
     

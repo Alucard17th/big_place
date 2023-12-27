@@ -589,6 +589,40 @@ class RecruiterController extends Controller
         toast('Offre ajoutée','success')->autoClose(5000);
         return redirect()->route('recruiter.offers');
     }
+    public function updateDraftOffer(Request $request){
+        $offer = new Offre();
+        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->job_title = $request->input('job_title');
+        $offer->start_date = $request->input('start_date');
+        $offer->location_city = $request->input('location_city');
+        $offer->location_postal_code = $request->input('location_postal_code');
+        $offer->location_address = $request->input('location_address');
+        $offer->rome_code = $request->input('rome_code');
+        $offer->contract_type = $request->input('contract_type');
+        $offer->work_schedule = json_encode($request->input('work_schedule'));
+        $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->experience_level = $request->input('experience_level');
+
+        if($request->input('desired_languages') != null && count($request->input('desired_languages')) > 0){
+            $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
+            : json_encode($request->input('desired_languages'));
+        }
+
+        $offer->education_level = $request->input('education_level');
+        $offer->brut_salary = $request->input('brut_salary');
+        $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
+        $offer->benefits = $request->input('benefits');
+        $offer->publication_date = $request->input('publication_date');
+        $offer->unpublish_date = $request->input('unpublish_date');
+        $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
+        $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->user_id = auth()->user()->id;
+        $offer->publish = false;
+        $offer->save();
+
+        toast('Offre modifiée','success')->autoClose(5000);
+        return redirect()->route('recruiter.offers');
+    }
     public function myOffersShow($id){
         $offer = Offre::find($id);
         return view('recruiter.offres.show', compact('offer'));

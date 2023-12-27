@@ -116,7 +116,8 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-offres', [RecruiterController::class, 'myOffers'])->name('recruiter.offers');
     Route::get('/mes-offres/create', [RecruiterController::class, 'myOffersCreate'])->name('recruiter.offers.create');
     Route::post('/offer/add', [RecruiterController::class, 'addOffer'])->name('recruiter.offer.add');
-    Route::post('/offer/draft', [RecruiterController::class, 'saveDraftOffer'])->name('recruiter.offer.draft');
+    Route::post('/offer/draft/create', [RecruiterController::class, 'saveDraftOffer'])->name('recruiter.offer.draft');
+    Route::post('/offer/draft/save', [RecruiterController::class, 'updateDraftOffer'])->name('recruiter.offer.draft.update');
     Route::get('/mes-offres/edit/{id}', [RecruiterController::class, 'myOffersEdit'])->name('recruiter.offers.edit');
     Route::get('/mes-offres/show/{id}', [RecruiterController::class, 'myOffersShow'])->name('recruiter.offers.show');
     Route::post('/offer/update', [RecruiterController::class, 'updateOffer'])->name('recruiter.offer.update');

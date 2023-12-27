@@ -80,10 +80,12 @@
                                                     <i class="las la-edit"></i>
                                                     Editer
                                                 </a>
+                                               
                                                 <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
                                                 class="bg-btn-four ml-2 mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
