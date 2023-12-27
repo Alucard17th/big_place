@@ -120,9 +120,14 @@
                                                     <i class="las la-download"></i>
                                                     Documents
                                                 </a> -->
-                                                <a href="{{route('recruiter.formation.close', $formation->id)}}" class="bg-btn-four mt-2">
+                                                <a href="{{route('recruiter.formation.close', $formation->id)}}" class="bg-btn-five mt-2">
                                                     <i class="las la-trash"></i>
                                                     Annuler
+                                                </a>
+                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
+                                                onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">
+                                                    <i class="las la-trash"></i>
+                                                    Supprimer
                                                 </a>
                                             </td>
                                             @endunlessrole

@@ -152,6 +152,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-formations/suspend/{id}', [RecruiterController::class, 'myFormationsSuspend'])->name('recruiter.formation.suspend');
     Route::get('/mes-formations/restart/{id}', [RecruiterController::class, 'myFormationsRestart'])->name('recruiter.formation.restart');
     Route::get('/mes-formations/close/{id}', [RecruiterController::class, 'myFormationsClose'])->name('recruiter.formation.close');
+    Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
     
     // EMAILS 
     Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');

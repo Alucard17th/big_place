@@ -925,6 +925,13 @@ class RecruiterController extends Controller
         toast('Formation fermée','success')->autoClose(5000);
         return redirect()->back();
     }
+    public function myFormationsDelete($id){
+        $formation = Formation::find($id);
+        $formation->participants()->detach();
+        $formation->delete();
+        toast('Formation supprimée','success')->autoClose(5000);
+        return redirect()->back();
+    }
 
     // MAILS
     public function myMails(){
