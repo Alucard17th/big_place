@@ -103,7 +103,7 @@
 
                                 <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
-                                    <button type="button" class="btn" id="sent-btn">Message Envoyés</button>
+                                    <button type="button" class="btn" id="sent-btn">Messages Envoyés</button>
                                 </div>
                                 
                                 <div class="inbox">
@@ -146,13 +146,6 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                </div>
-                              
-
-                           
-
-
-                                <div class="ls-pagination">
                                 </div>
                             </div>
                         </div>

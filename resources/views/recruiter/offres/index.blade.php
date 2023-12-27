@@ -101,6 +101,105 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tabs-box">
+                        <!-- SEARCH FORM -->
+                        <div class="widget-title">
+                            <div class="chosen-outer">
+                            </div>
+                        </div>
+
+                        <!-- TABLE AND GRID VIEW -->
+                       
+                    </div>
+
+               
+                </div>
+
+                <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Mes brouillons</h3>
+                        </div>
+                    </div>
+                    <div class="tabs-box">
+                        <!-- SEARCH FORM -->
+                        <div class="widget-title">
+                            <div class="chosen-outer">
+                            </div>
+                        </div>
+
+                        <!-- TABLE AND GRID VIEW -->
+                        <div class="widget-content">
+                            <!-- TABLE VIEW -->
+                            <div class="table-outer">
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Nom projet</th>
+                                            <th>Poste</th>
+                                            <th>Date de prise de poste</th>
+                                            <th>Ville / département</th>
+                                            <th>Type du contrat</th>
+                                            <th>Salaire Brut</th>
+                                            <th>Date de publication</th>
+                                            @unlessrole('restricted')
+                                            <th>Actions</th>
+                                            @endunlessrole
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($draftOffers as $offer)
+                                        <tr>
+                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->job_title}}</td>
+                                            
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-y') }}</td>
+                                            <td class="text-left">{{$offer->location_city}}</td>
+                                            <td class="text-left">{{$offer->contract_type}}</td>
+                                            <td class="text-left">{{$offer->brut_salary}}</td>
+                                            <td class="text-left">{{$offer->publication_date}} </td>
+
+                                            @unlessrole('restricted')
+                                            <td class="text-left">
+                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine ml-2">
+                                                    <i class="las la-edit"></i>
+                                                    Editer
+                                                </a>
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
+                                                    <i class="las la-edit"></i>
+                                                    Modifier
+                                                </a>
+                                                @role('recruiter')
+                                                <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
+                                                class="bg-btn-four ml-2 mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                    <i class="las la-trash"></i>
+                                                    Supprimer
+                                                </a>
+                                                @endrole
+                                            </td>
+                                            @endunlessrole
+
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tabs-box">
+                        <!-- SEARCH FORM -->
+                        <div class="widget-title">
+                            <div class="chosen-outer">
+                            </div>
+                        </div>
+
+                        <!-- TABLE AND GRID VIEW -->
+                       
+                    </div>
+
+               
                 </div>
             </div>
         </div>

@@ -173,8 +173,8 @@ input, select{
                                         @foreach ($tasks as $task)
                                         <tr>
                                             <td class="text-left">{{$task->title}}</td>
-                                            <td class="text-left">{{$task->start_date}}</td>
-                                            <td class="text-left">{{$task->due_date}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($task->start_date)->formatLocalized('%d-%m-%y') }}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($task->due_date)->formatLocalized('%d-%m-%y') }}</td>
                                             <td class="text-left">
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>

@@ -274,8 +274,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '860px',
         width: '100%',
-        slotMinTime: "06:00:00",
-        slotMaxTime: "19:00:00",
+        // slotMinTime: "06:00:00",
+        // slotMaxTime: "19:00:00",
         initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {

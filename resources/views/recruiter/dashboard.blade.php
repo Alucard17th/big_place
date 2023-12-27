@@ -503,8 +503,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     var calendar = new FullCalendar.Calendar(calendarEl, {
     height: '600px',
     width: '100%',
-    slotMinTime: "06:00:00",
-    slotMaxTime: "19:00:00",
+    // slotMinTime: "06:00:00",
+    // slotMaxTime: "00:00:00",
     initialView: 'timeGridWeek',
     initialDate: today,
     headerToolbar: {

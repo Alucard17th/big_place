@@ -511,13 +511,15 @@ class RecruiterController extends Controller
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
             $offers = Offre::where('user_id', $user->id)->where('publish', 1)->get();
+            $draftOffers = Offre::where('user_id', $user->id)->where('publish', 0)->get();
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
             $offers = Offre::where('user_id', $entreprise->user_id)->where('publish', 1)->get();
+            $draftOffers = Offre::where('user_id', $entreprise->user_id)->where('publish', 0)->get();
         }
         
-        return view('recruiter.offres.index', compact('offers'));
+        return view('recruiter.offres.index', compact('offers', 'draftOffers'));
     }
     public function myOffersCreate(){
         $jobs = Job::all();
@@ -621,6 +623,7 @@ class RecruiterController extends Controller
         $offer->unpublish_date = $request->input('unpublish_date');
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->publish = true;
         $offer->save();
 
         toast('Offre modifiée','success')->autoClose(5000);
