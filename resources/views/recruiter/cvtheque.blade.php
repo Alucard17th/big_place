@@ -84,7 +84,7 @@ input, select{
                                     <div class="row">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                            <select name="metier_recherche" id="metier_recherche" class="form-control">
+                                            <select name="metier_recherche" id="metier_recherche" class="form-control" required>
                                                 <option value="" selected>Métier / Code Rome</option>
                                                 @foreach($jobs as $job)
                                                     <option value="{{$job->id}}" @if(request('metier_recherche') == $job->id) selected @endif>{{$job->id}} - {{$job->full_name}}</option>    
@@ -96,13 +96,13 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="ville_domiciliation" id="ville_domiciliation" placeholder="Ville / département"
-                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2">
+                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2" required>
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <select class="form-control" id="annees_experience" name="annees_experience">
+                                                <select class="form-control" id="annees_experience" name="annees_experience" required>
                                                     <option value=""  selected>Année d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
@@ -114,7 +114,7 @@ input, select{
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control" required>
                                                         <option value=""  selected>Niveau d'études</option>
                                                         <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                         <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
@@ -128,13 +128,13 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
-                                                    value="{{ request('pretentions_salariales') }}" class="form-control">
+                                                    value="{{ request('pretentions_salariales') }}" class="form-control" required>
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0">
-                                                <select name="valeurs[]" id="values_select" class="" multiple>
+                                                <select name="valeurs[]" id="values_select" class="" multiple required>
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
                                                     <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
