@@ -115,7 +115,7 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">
-                                                {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%y à %H:%M') }}
+                                                {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                             </td>
                                             <td class="text-left">
                                                 @if($event->statut == 'Actif')

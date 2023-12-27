@@ -78,7 +78,7 @@
                                         <tr>
                                             <td>{{$formation->job_title}}</td>
                                             <td>{{$durationInDays}}</td>
-                                            <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td>
                                                 @if($formation->cdi_at_hiring == 1)
                                                     Oui

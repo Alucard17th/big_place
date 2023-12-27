@@ -133,7 +133,7 @@ input, select{
                                         </div>
 
                                         <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
+                                            <div class="form-group mb-0">
                                                 <select name="valeurs[]" id="values_select" class="" multiple>
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
@@ -158,7 +158,6 @@ input, select{
                                                     <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
                                                     <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
                                                 </select>
-
                                             </div>
                                         </div>
                                     </div>

@@ -87,7 +87,7 @@
                                         @if($document->type == 'facture')
                                         <tr>
                                             <td class="text-left">{{$document->name}}</td>
-                                            <td class="text-left">{{$document->created_at}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($document->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>
@@ -138,7 +138,7 @@
                                         @if($document->type == 'contrat')
                                         <tr>
                                             <td class="text-left">{{$document->name}}</td>
-                                            <td class="text-left">{{$document->created_at}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($document->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>

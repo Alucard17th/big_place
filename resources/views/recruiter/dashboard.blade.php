@@ -155,7 +155,7 @@
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                    <select name="metier_recherche" id="metier_recherche" class="form-control">
+                                    <select name="metier_recherche" id="metier_recherche" class="form-control" required>
                                     <option value="" selected>Métier / Code Rome</option>
                                         @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
@@ -165,16 +165,16 @@
                                 <div class="form-group mb-2">
                                     <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt="" 
                                     style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
-                                    <input type="text" name="ville_domiciliation" id="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département">
+                                    <input type="text" name="ville_domiciliation" id="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département" required>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales">
+                                    <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales" required>
                                 </div>
                             </div>
 
                             <div class="col-6 pr-1">
                                 <div class="form-group mb-2">
-                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
+                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control" required>
                                         <option value="" selected>Niveau d'études</option>
                                         <option value="CAP / BEP">CAP / BEP</option>
                                         <option value="Bac">Bac</option>
@@ -187,7 +187,7 @@
 
                             <div class="col-6 pl-1">
                                 <div class="form-group mb-2">
-                                    <select class="form-control" id="annees_experience" name="annees_experience">
+                                    <select class="form-control" id="annees_experience" name="annees_experience" required>
                                         <option value="" selected>Niveau d'éxpérience</option>
                                         <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
                                         <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
@@ -199,8 +199,8 @@
 
                             <div class="col-12 pl-1">
                                 <div class="form-group mb-2">
-                                    <select class="form-control" id="values_select" name="valeurs[]" multiple>
-                                        <option value="" selected>Valeurs attendues</option>
+                                    <select class="form-control" id="values_select" name="valeurs[]" multiple required>
+                                        <option value="" >Valeurs attendues</option>
                                         <option value="respect">Le respect</option>
                                         <option value="adaptabilite">L’adaptabilité</option>
                                         <option value="consideration">La considération</option>
