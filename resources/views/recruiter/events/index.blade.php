@@ -105,7 +105,7 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->participants_count}}</td>
-                                            <td class="text-left">{{$event->registered_participants}}</td>
+                                            <td class="text-left">{{$event->participants->count()}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)

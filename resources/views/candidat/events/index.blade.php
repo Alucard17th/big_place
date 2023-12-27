@@ -227,7 +227,7 @@
                                                 </a>
                                                 <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
                                                     type="button" class="bg-btn-three mt-2">
-                                                    Voir l'entreprise
+                                                    Consulter la vitrine de l'entreprise
                                                 </a>
                                                 <a href="" data-event-id="{{$event->id}}"
                                                     data-event-name="{{$event->job_position}}" type="button"

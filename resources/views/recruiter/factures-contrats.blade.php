@@ -90,7 +90,7 @@
                                             <td class="text-left">{{ \Carbon\Carbon::parse($document->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>
+                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Consulter</a>
                                                 <a type="button" class="bg-btn-five"><i class="las la-download mr-2"></i>Télécharger</a>
                                             </td>
                                         </tr>
@@ -141,7 +141,7 @@
                                             <td class="text-left">{{ \Carbon\Carbon::parse($document->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
-                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Voir</a>
+                                                <a type="button" class="bg-btn-three"><i class="las la-eye mr-2"></i>Consulter</a>
                                                 <a type="button" class="bg-btn-five"><i class="las la-download mr-2"></i>Télécharger</a>
                                             </td>
                                         </tr>
