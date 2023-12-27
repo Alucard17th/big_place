@@ -68,11 +68,11 @@
                                         <tr>
                                             <td class="text-left">{{$offer->project_campaign_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
-                                            <td class="text-left">{{$offer->start_date}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-y') }}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
-                                            <td class="text-left">{{$offer->publication_date}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-y') }}</td>
 
                                             @unlessrole('restricted')
                                             <td class="text-left">
@@ -154,11 +154,11 @@
                                             <td class="text-left">{{$offer->project_campaign_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-y') }}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-yy') }}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
-                                            <td class="text-left">{{$offer->publication_date}} </td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-y') }}</td>
 
                                             @unlessrole('restricted')
                                             <td class="text-left">
