@@ -143,10 +143,10 @@
                                             <td class="text-left">
                                                 MAX : {{$event->participants_count}}
                                                 Participant : {{$event->participants->count()}}
-                                                @if($event->participants_count >= $event->participants->count())
+                                                @if ((int) $event->participants_count > (int) $event->participants->count())
                                                 <a href="{{ route('candidat.event.subscribe', $event->id) }}"
                                                     type="button" class="bg-btn-nine">
-                                                    Je participe
+                                                    Je participeW
                                                 </a>
                                                 @endif
                                                 <a href="{{route('candidat.event.show', $event->id)}}"
