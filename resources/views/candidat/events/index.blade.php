@@ -141,7 +141,7 @@
                                                 @endif
                                             </td>
                                             <td class="text-left">
-                                                @if($event->registration_closed != 1)
+                                                @if($event->registration_closed != 1 || $event->participants->count() == $event->participants_count)
                                                 <a href="{{ route('candidat.event.subscribe', $event->id) }}"
                                                     type="button" class="bg-btn-nine">
                                                     Je participe
