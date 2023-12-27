@@ -590,7 +590,7 @@ class RecruiterController extends Controller
         return redirect()->route('recruiter.offers');
     }
     public function updateDraftOffer(Request $request){
-        $offer = new Offre();
+        $offer = Offre::find($request->offer_id);
         $offer->project_campaign_name = $request->input('project_campaign_name');
         $offer->job_title = $request->input('job_title');
         $offer->start_date = $request->input('start_date');
