@@ -21,6 +21,19 @@
                         Favoris</span>
                 </a>
             </li>
+            <li class="{{ Str::contains(Request::url(), 'historique') ? 'active' : '' }}">
+                <a href="/historique" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-3"
+                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Mes dernières recherches
+                    </span>
+                </a>
+            </li>
+            <li class="{{ Str::contains(Request::url(), 'mes-mails') ? 'active' : '' }}">
+                <a href="/mes-mails" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-3"
+                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes emails</span>
+                </a>
+            </li>
             <li class="{{ Str::contains(Request::url(), 'mes-rendez-vous') ? 'active' : '' }}">
                 <a href="/mes-rendez-vous" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -46,6 +59,13 @@
                         jobdatings</span>
                 </a>
             </li>
+            <li class="{{ Str::contains(Request::url(), 'mes-formations') ? 'active' : '' }}">
+                <a href="/mes-formations" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-3"
+                            src="{{asset('/plugins/images/recruiter-sidebar/formations.png')}}" alt="">Mes formations
+                        proposées</span>
+                </a>
+            </li>
             <li class="{{ Str::contains(Request::url(), 'mes-offres') ? 'active' : '' }}">
                 <a href="/mes-offres" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -64,28 +84,15 @@
             <li class="{{ Str::contains(Request::url(), 'ma-vitrine') ? 'active' : '' }}">
                 <a href="/ma-vitrine" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/vitrine.png')}}" alt=""> Ma vitrine
+                            src="{{asset('/plugins/images/recruiter-sidebar/vitrine.png')}}" alt="">Ma vitrine
                         entreprise</span>
                 </a>
             </li>
             @endrole
-            <li class="{{ Str::contains(Request::url(), 'mes-formations') ? 'active' : '' }}">
-                <a href="/mes-formations" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/formations.png')}}" alt=""> Mes formations
-                        proposées</span>
-                </a>
-            </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-mails') ? 'active' : '' }}">
-                <a href="/mes-mails" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes emails</span>
-                </a>
-            </li>
             <li class="{{ Str::contains(Request::url(), 'mes-documents') ? 'active' : '' }}">
                 <a href="/mes-documents" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/documents.png')}}" alt=""> Mes
+                            src="{{asset('/plugins/images/recruiter-sidebar/documents.png')}}" alt="">Mes
                         documents</span>
                 </a>
             </li>
@@ -101,13 +108,6 @@
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/stats.png')}}" alt=""> Mes
                         statistiques</span>
-                </a>
-            </li>
-            <li class="{{ Str::contains(Request::url(), 'historique') ? 'active' : '' }}">
-                <a href="/historique" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Mes dernières recherches
-                    </span>
                 </a>
             </li>
             @role('recruiter')

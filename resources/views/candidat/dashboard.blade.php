@@ -222,6 +222,7 @@
             <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body">
+                        <h4 class="text-dark dashboard-card-title">Nombre de vues de la candidature</h4>
                         <canvas id="myChart" ></canvas>
                     </div>
                 </div>

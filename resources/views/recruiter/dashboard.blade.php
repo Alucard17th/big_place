@@ -145,7 +145,7 @@
         <div class="row">
 
         
-            <div class="col-5 px-2">
+            <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -234,10 +234,10 @@
                 </div>
             </div>
 
-            <div class="col-7 px-2">
+            <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="text-dark dashboard-card-title">Nombre de vues de votre profil</h4>
+                        <h4 class="text-dark dashboard-card-title">Nombre de vues de la vitrine</h4>
                         <canvas id="myChart" class="px-2 pt-2"></canvas>
                     </div>
                 </div>
@@ -259,6 +259,17 @@
 
         <div class="icons" id="icons">
             <div class="row mt-5 gx-0 gy-0">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-mails">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes emails</span>
+                                </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -292,6 +303,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/mes-formations">
+                                <img class="img-fluid dashboard-small-img"
+                            src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
+                                <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
+                        </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -302,11 +327,7 @@
                         </a>
                         </div>
                     </div>
-                    
                 </div>
-            </div>
-
-            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -328,29 +349,6 @@
                                 </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card dashboard-link">
-                        <div class="card-body text-center">
-                            <a href="/mes-formations">
-                                <img class="img-fluid dashboard-small-img"
-                            src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
-                        </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
-                    <div class="card dashboard-link">
-                        <div class="card-body text-center">
-                            <a href="/mes-mails">
-                                <img class="img-fluid dashboard-small-img"
-                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes emails</span>
-                                </a>
-                        </div>
-                    </div>
-                   
                 </div>
             </div>
 
