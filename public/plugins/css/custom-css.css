@@ -2335,4 +2335,19 @@ input[type=checkbox]:checked:before {
 .select2-selection__choice, .select2-selection__choice__remove{
     color:#000 !important;
 }
+
+#custom-tooltip{
+    padding: 10px;
+    color: #000;
+    background: #fff;
+    border-radius: 5px;
+    pointer-events: none;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+}
+.fc .fc-toolbar-title {
+    font-size: 1.4em !important;
+}
  /* NRD STYLES END */

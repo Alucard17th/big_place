@@ -1,18 +1,7 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-    #custom-tooltip{
-        padding: 10px;
-        color: #000;
-        background: #fff;
-        border-radius: 5px;
-        pointer-events: none;
-        border-left: 1px solid #000;
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
-        border-right: 1px solid #000;
 
-    }
 </style>
 @endpush
 
@@ -283,13 +272,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     var initialLocaleCode = 'fr';
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        height: '100vh',
+        height: '860px',
         width: '100%',
+        slotMinTime: "06:00:00",
+        slotMaxTime: "19:00:00",
         initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {
         left: 'prev,today,next',
-        right: '',
+        right: 'title',
         center: 'timeGridDay,timeGridWeek' 
         },
         events : rdvs,
@@ -344,6 +335,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         eventMouseLeave: function(info) {
             $(this).css('z-index', 8);
             $('#custom-tooltip').remove();
+        },
+        titleFormat: {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         },
         slotLabelFormat: {
             hour: 'numeric',

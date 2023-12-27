@@ -118,12 +118,12 @@
                                                 {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d %b %y à %H:%M') }}
                                             </td>
                                             <td class="text-left">
-                                                @if($event->statut == 'active')
-                                                    Ouvert
-                                                @elseif($event->statut == 'suspended')
-                                                    Suspendu
-                                                @elseif($event->statut == 'cancelled')
-                                                    Annulé
+                                                @if($event->statut == 'Actif')
+                                                <span class="badge badge-success">Actif</span>
+                                                @elseif($event->statut == 'Suspendu')
+                                                <span class="badge badge-warning">Suspendu</span>
+                                                @elseif($event->statut == 'Annulé')
+                                                <span class="badge badge-danger">Inactif</span>
                                                 @endif
                                             </td>
                                             
@@ -133,7 +133,7 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                @if($event->statut == 'suspended')
+                                                @if($event->statut == 'Suspendu')
                                                 <a href="{{ route('recruiter.events.resume', $event->id) }}" type="button" class="bg-btn-nine mt-2">
                                                     <i class="las la-braille"></i>
                                                     Reprendre
@@ -254,7 +254,7 @@
                 <div class="col-6">
                     <!-- Field: Required Documents -->
                     <div class="form-group">
-                        <label class="text-dark" for="required_documents">Documents requis</label>
+                        <label class="text-dark" for="required_documents">Documents requis pour la participation</label>
                         <input type="text" class="form-control" id="required_documents" name="required_documents">
                     </div>
                 </div>
@@ -268,7 +268,7 @@
    
 
     <div id="docs-modal" class="modal">
-        <h4 class="text-dark">Listes des documents requis:</h4>
+        <h4 class="text-dark">Documents requis pour la participation:</h4>
 
         <ul id="modal-docs-list" class="my-4 text-dark p-3">
         </ul>

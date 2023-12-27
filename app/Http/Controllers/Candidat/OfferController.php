@@ -48,6 +48,12 @@ class OfferController extends Controller
             $query->where('experience_level', '=', $request->input('experience_level'));
         }
 
+        if ($request->filled('valeurs')) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->orWhereJsonContains('valeurs', $request->input('valeurs'));
+            });
+        }
+
         // Repeat the process for other search parameters
 
         // Get the results

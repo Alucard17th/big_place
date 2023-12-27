@@ -75,27 +75,27 @@ class RecruiterController extends Controller
         // if (!empty($searchTerm['valeur'])) {
         //     $query->where('valeurs->valeur', 'like', '%' . $searchTerm['valeur'] . '%');
         // }
-        if (!empty($searchTerm['valeur'])) {
+        if (!empty($searchTerm['valeurs'])) {
             $query->where(function ($query) use ($searchTerm) {
-                $query->orWhereJsonContains('valeurs', $searchTerm['valeur']);
+                $query->orWhereJsonContains('valeurs', $searchTerm['valeurs']);
             });
         }
 
         $curriculums = $query->get();
 
         // Calculate percentage match for each curriculum
-        $searchCriteria = array_filter($searchTerm);
-        foreach ($curriculums as $curriculum) {
-            $matchingFields = 0;
-            foreach ($searchCriteria as $field => $value) {
-                if (str_contains(strtolower($curriculum->$field), strtolower($value))) {
-                    $matchingFields++;
-                }
-            }
-            $percentageMatch = count($searchCriteria) > 0 ? ($matchingFields / count($searchCriteria)) * 100 : 0;
+        // $searchCriteria = array_filter($searchTerm);
+        // foreach ($curriculums as $curriculum) {
+        //     $matchingFields = 0;
+        //     foreach ($searchCriteria as $field => $value) {
+        //         if (str_contains(strtolower($curriculum->$field), strtolower($value))) {
+        //             $matchingFields++;
+        //         }
+        //     }
+        //     $percentageMatch = count($searchCriteria) > 0 ? ($matchingFields / count($searchCriteria)) * 100 : 0;
            
-            $curriculum->percentageMatch = $percentageMatch;
-        }
+        //     $curriculum->percentageMatch = $percentageMatch;
+        // }
 
         // Create search History model with the request data
         $history = new History();
@@ -565,7 +565,7 @@ class RecruiterController extends Controller
         $offer->location_address = $request->input('location_address');
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
-        $offer->work_schedule = $request->input('work_schedule');
+        $offer->work_schedule = json_encode($request->input('work_schedule'));
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
@@ -671,7 +671,7 @@ class RecruiterController extends Controller
             'required_documents' => $request->input('required_documents'),
             'event_date' => $request->input('event_date'),
             'event_hour' => $request->input('event_hour'),
-            'statut' => 'open',
+            'statut' => 'Active',
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
 
@@ -709,6 +709,7 @@ class RecruiterController extends Controller
     }
     public function myEventsDelete($id){
         $event = Event::find($id);
+        $event->participants()->detach();
         $event->delete();
         toast('Evenement supprimé','success')->autoClose(5000);
         return redirect()->back();
@@ -734,21 +735,21 @@ class RecruiterController extends Controller
     }
     public function myEventsSuspend($id){
         $event = Event::find($id);
-        $event->statut = 'suspended';
+        $event->statut = 'Suspendu';
         $event->save();
-        toast('Evenement Suspendue.','success')->autoClose(5000);
+        toast('Evenement Suspendu','success')->autoClose(5000);
         return redirect()->back();
     }
     public function myEventsResume($id){
         $event = Event::find($id);
-        $event->statut = 'active';
+        $event->statut = 'Actif';
         $event->save();
         toast('Evenement activé.','success')->autoClose(5000);
         return redirect()->back();
     }
     public function myEventsCancel($id){
         $event = Event::find($id);
-        $event->statut = 'cancelled';
+        $event->statut = 'Annulé';
         $event->save();
         toast('Evenement annulé.','success')->autoClose(5000);
         return redirect()->back();
@@ -907,6 +908,13 @@ class RecruiterController extends Controller
         toast('Formation suspendue','success')->autoClose(5000);
         return redirect()->back();
     }
+    public function myFormationsRestart($id){
+        $formation = Formation::find($id);
+        $formation->status = 'Active';
+        $formation->save();
+        toast('Formation reprise','success')->autoClose(5000);
+        return redirect()->back();
+    }
     public function myFormationsClose($id){
         $formation = Formation::find($id);
         $formation->status = 'Ferme';
@@ -963,8 +971,8 @@ class RecruiterController extends Controller
 
     // HISTORIQUE DE RECHERCHE
     public function getSearchHistory(){
-        $history = auth()->user()->history;
-        return view('recruiter.history.index', compact('history'));
+        $histories = auth()->user()->history;
+        return view('recruiter.history.index', compact('histories'));
     }
 
     // COMPTE ADMINISTRATEUR

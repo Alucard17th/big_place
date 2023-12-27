@@ -197,6 +197,36 @@
                                 </div>
                             </div>
 
+                            <div class="col-12 pl-1">
+                                <div class="form-group mb-2">
+                                    <select class="form-control" id="values_select" name="valeurs[]" multiple>
+                                        <option value="" selected>Valeurs attendues</option>
+                                        <option value="respect">Le respect</option>
+                                        <option value="adaptabilite">L’adaptabilité</option>
+                                        <option value="consideration">La considération</option>
+                                        <option value="altruisme">L’altruisme</option>
+                                        <option value="assertivite">L’assertivité</option>
+                                        <option value="entraide">L'entraide</option>
+                                        <option value="solidarite">La solidarité</option>
+                                        <option value="ecoute">L'écoute</option>
+                                        <option value="bienveillance">La bienveillance</option>
+                                        <option value="empathie">L'empathie</option>
+                                        <option value="creativite">La créativité</option>
+                                        <option value="justice">La justice</option>
+                                        <option value="tolerance">La tolérance</option>
+                                        <option value="equite">L’équité</option>
+                                        <option value="honnetete">L’honnêteté</option>
+                                        <option value="responsabilite">La responsabilité</option>
+                                        <option value="loyaute">La loyauté</option>
+                                        <option value="determination">La détermination</option>
+                                        <option value="perseverance">La persévérance</option>
+                                        <option value="rigueur">La rigueur</option>
+                                        <option value="generosite">La générosité</option>
+                                        <option value="stabilite">La stabilité</option>
+                                    </select>
+                                </div>
+                            </div>
+
                         </div>
                         <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3" id="search-btn">Chercher</button>
                     </form>
@@ -402,13 +432,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     success: function(data) {
     console.log('RDVS fetched successfully', data);
         data.forEach(function(event) {
+            let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
+            let candidatId = event.candidat_it
             rdvs.push({
                 title: 'Rendez vous le : ' + event.date,
                 start: event.date + 'T' + event.heure,
                 backgroundColor: '#e7f6fd',
                 borderColor: '#e7f6fd',
                 textColor: '#0369A1',
-                classNames: ['event-visio']
+                classNames: ['event-visio'],
+                extendedProps: {
+                    description: 'Type : ' + rdvType,
+                    candidat_id: candidatId
+                }
             });
         })
     },
@@ -465,13 +501,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     today = yyyy + '-' + mm + '-' + dd;
     var initialLocaleCode = 'fr';
     var calendar = new FullCalendar.Calendar(calendarEl, {
-    height: '400px',
+    height: '600px',
     width: '100%',
+    slotMinTime: "06:00:00",
+    slotMaxTime: "19:00:00",
     initialView: 'timeGridWeek',
     initialDate: today,
     headerToolbar: {
       left: 'prev,today,next',
-      right: '',
+      right: 'title',
       center: 'timeGridDay,timeGridWeek' 
     },
     events : rdvs,
@@ -481,12 +519,66 @@ document.addEventListener('DOMContentLoaded', async function() {
         alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
         alert('View: ' + info.view.type);
     },
+    eventMouseEnter: async function(info) {
+        var tooltip = document.getElementById('custom-tooltip');
+
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'custom-tooltip';
+            document.body.appendChild(tooltip);
+        }
+
+        if(info.event.extendedProps.candidat_id != null){
+            await $.ajax({
+                url: "/getUserById" + '/' + info.event.extendedProps.candidat_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Candidat fetched successfully', data.avatar);
+                    const imgString = `<img src="${data.avatar.replace('public', 'storage')}" width="50" height="50" style="border-radius: 50%;">`;
+
+                    tooltip.innerHTML += imgString + '  ' + data.name + '<br>' +
+                    'Email : ' + data.email + '<br>' +
+                    info.event.title + '<br>' +
+                    info.event.extendedProps.description;
+                },
+                error: function() {
+                    console.log('Error fetching User');
+                }
+            })
+        }else{
+            tooltip.innerHTML += info.event.title + '<br>' +
+                    info.event.extendedProps.description;
+        }
+
+        tooltip.style.display = 'block';
+        tooltip.style.position = 'absolute';
+        tooltip.style.zIndex =9;
+
+        var x = info.jsEvent.pageX;
+        var y = info.jsEvent.pageY;
+
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+    },
+    eventMouseLeave: function(info) {
+        $(this).css('z-index', 8);
+        $('#custom-tooltip').remove();
+    },
+    titleFormat: {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    },
     slotLabelFormat: {
         hour: 'numeric',
         minute: '2-digit',
         omitZeroMinute: false,
         hour12: false // Change to true if you want 12-hour format
-    }
+    },
+    // title: function (info) {
+    //   return info.date.getFullYear().toString();
+    // }
   });
 
   calendar.render();

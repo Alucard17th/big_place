@@ -105,10 +105,17 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                @if($formation->status != 'Suspendue' && $formation->status != 'Ferme')
                                                 <a href="{{route('recruiter.formation.suspend', $formation->id)}}" type="button" class="bg-btn-nine mt-2" style="padding-left:8px !important;padding-right:8px !important;">
                                                     <i class="las la-braille"></i>
                                                     Suspendre
                                                 </a>
+                                                @else
+                                                <a href="{{route('recruiter.formation.restart', $formation->id)}}" type="button" class="bg-btn-nine mt-2" style="padding-left:8px !important;padding-right:8px !important;">
+                                                    <i class="las la-braille"></i>
+                                                    Reprendre
+                                                </a>
+                                                @endif
                                                 <!-- <a href="" type="button" class="bg-btn-seven mt-2" style="padding-left:6px !important;padding-right:6px !important;">
                                                     <i class="las la-download"></i>
                                                     Documents

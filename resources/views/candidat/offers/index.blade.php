@@ -85,7 +85,7 @@ input, select{
                                     <div class="row">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="job_title" id="job_title" placeholder="Titre de l'offre"
+                                                <input type="text" name="job_title" id="job_title" placeholder="Poste recherché"
                                                     value="{{ request('job_title') }}" class="form-control mb-2">
                                             </div>
                                         </div>
@@ -125,6 +125,36 @@ input, select{
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('experience_level') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
                                                     <option value="Confirmé (5 -10 ans)" @if(request('experience_level') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
                                                     <option value="Sénior (+ 10 ans)" @if(request('experience_level') == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 pl-1">
+                                            <div class="form-group mb-2">
+                                                <select class="form-control" id="values_select" name="valeurs[]" multiple>
+                                                    <option value="" selected>Valeurs attendues</option>
+                                                    <option value="respect">Le respect</option>
+                                                    <option value="adaptabilite">L’adaptabilité</option>
+                                                    <option value="consideration">La considération</option>
+                                                    <option value="altruisme">L’altruisme</option>
+                                                    <option value="assertivite">L’assertivité</option>
+                                                    <option value="entraide">L'entraide</option>
+                                                    <option value="solidarite">La solidarité</option>
+                                                    <option value="ecoute">L'écoute</option>
+                                                    <option value="bienveillance">La bienveillance</option>
+                                                    <option value="empathie">L'empathie</option>
+                                                    <option value="creativite">La créativité</option>
+                                                    <option value="justice">La justice</option>
+                                                    <option value="tolerance">La tolérance</option>
+                                                    <option value="equite">L’équité</option>
+                                                    <option value="honnetete">L’honnêteté</option>
+                                                    <option value="responsabilite">La responsabilité</option>
+                                                    <option value="loyaute">La loyauté</option>
+                                                    <option value="determination">La détermination</option>
+                                                    <option value="perseverance">La persévérance</option>
+                                                    <option value="rigueur">La rigueur</option>
+                                                    <option value="generosite">La générosité</option>
+                                                    <option value="stabilite">La stabilité</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -172,7 +202,7 @@ input, select{
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
-                                                    Consulter la vitrine de l'entreprise
+                                                    Consulter la vitrine entreprise
                                                 </a>
                                                 <a href="{{route('candidat.candidature.apply', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">

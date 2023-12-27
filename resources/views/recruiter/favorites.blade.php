@@ -431,6 +431,10 @@ document.addEventListener('DOMContentLoaded', function() {
     createRendezVousButton.addEventListener('click', function(event) {
         event.preventDefault();
         console.log('kjhds')
+        // make the button disabled
+        createRendezVousButton.disabled = true;
+        // show the loading 
+        createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
         sendRdv(selectedCandidates);
     })
 
@@ -485,6 +489,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             if(data.status == 'success'){
                                 $('.alert-success').show();
                             }
+                            createRendezVousButton.disabled = false;
+        // show the loading 
+        createRendezVousButton.innerHTML = 'Envoyer';
 
                     })
                     .catch(error => {
