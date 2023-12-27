@@ -61,8 +61,8 @@
                         @endrole
 
                         <li class="dropdown-divider"></li>
-                        <li class="menu-hr"><a href="https://bigplace.fr/user/my-plan">Mes abonnements</a></li>
-                        <li class="menu-hr"><a href="https://bigplace.fr/user/my-contact">Mes contacts</a></li>
+                        <!-- <li class="menu-hr"><a href="https://bigplace.fr/user/my-plan">Mes abonnements</a></li> -->
+                        <!-- <li class="menu-hr"><a href="https://bigplace.fr/user/my-contact">Mes contacts</a></li> -->
                         <li class="menu-hr"><a href="https://bigplace.fr/user/profile/change-password">Changer le mot de
                                 passe</a></li>
 

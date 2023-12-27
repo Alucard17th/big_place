@@ -202,7 +202,10 @@
                             <a href="#" class="is_login dropdown-toggle" id="dropdownMenuUser" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <img class="avatar" src="https://bigplace.fr/images/avatar.png" alt="{{auth()->user()->name}}">
-                                <span class="full-name">{{auth()->user()->name}}</span>
+                                <div class="menu-hr d-flex align-items-center justify-content-center flex-column">
+                                    <span class="bord-name">Tableau de bord</span>
+                                    <span class="full-name">{{auth()->user()->name}}</span>
+                                </div>
                                 <i class="flaticon-down-arrow"></i>
                             </a>
                             <ul class="dropdown-menu text-left" aria-labelledby="dropdownMenuUser">
@@ -210,8 +213,8 @@
                                 </li>
 
                                 <li class="dropdown-divider"></li>
-                                <li class="menu-hr"><a href="https://bigplace.fr/user/my-plan">Mes abonnements</a></li>
-                                <li class="menu-hr"><a href="https://bigplace.fr/user/my-contact">Mes contacts</a></li>
+                                <!-- <li class="menu-hr"><a href="https://bigplace.fr/user/my-plan">Mes abonnements</a></li> -->
+                                <!-- <li class="menu-hr"><a href="https://bigplace.fr/user/my-contact">Mes contacts</a></li> -->
                                 <li class="menu-hr"><a href="https://bigplace.fr/user/profile/change-password">Changer
                                         le mot de passe</a></li>
 
