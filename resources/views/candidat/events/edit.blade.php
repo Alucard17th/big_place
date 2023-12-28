@@ -131,7 +131,7 @@
 
                                 <!-- Field: Required Documents -->
                                 <div class="form-group">
-                                    <label for="required_documents">Documents requis</label>
+                                    <label for="required_documents">Documents requis pour la participation</label>
                                     <input type="text" class="form-control" id="required_documents"
                                         name="required_documents" value="{{ $event->required_documents }}">
                                 </div>

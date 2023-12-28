@@ -1028,6 +1028,28 @@ class RecruiterController extends Controller
    
         $moyenneDureeRecrutement = 555;
 
+        $rdvs = $user->rendezvous;
+        // Group the data by date
+        $groupedByDay = $rdvs->groupBy(function ($item) {
+            return $item->created_at->toDateString(); // Assuming 'created_at' is your timestamp field
+        });
+        // Calculate the count for each group
+        $countByDate = $groupedByDay->map(function ($group) {
+            return $group->count();
+        });
+
+        // Group the data by month
+        $groupedByMonth = $rdvs->groupBy(function ($item) {
+            return $item->created_at->format('Y-m'); // Group by year and month
+        });
+
+        // Calculate the count for each group
+        $countByMonth = $groupedByMonth->map(function ($group) {
+            return $group->count();
+        });
+
+        dd($countByDate, $countByMonth);
+
         $dureeSusbcription = 555;
         return view('recruiter.stats.index', compact('doneRdvs','refusedRdvs', 'offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
     }

@@ -52,15 +52,17 @@ class CandidatController extends Controller
         $userId = auth()->user()->id;
 
         // Get the uploaded file
-        $file = $request->file('avatar');
+        if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
 
-        // Generate a unique filename
-        $fileName = $userId . '-' . time() . '.' . $file->getClientOriginalExtension();
+            // Generate a unique filename
+            $fileName = $userId . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-        // Store the file in the user's directory within the storage/app/public directory
-        $filePath = $file->storeAs('public/uploads/' . $userId, $fileName);
+            // Store the file in the user's directory within the storage/app/public directory
+            $filePath = $file->storeAs('public/uploads/' . $userId, $fileName);
 
-        $user->avatar = $filePath;
+            $user->avatar = $filePath;
+        }
 
         $user->save();
         toast('Vos informations ont bien été mises à jour', 'success');
