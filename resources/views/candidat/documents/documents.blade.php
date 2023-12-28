@@ -57,7 +57,7 @@
                                         @foreach ($documents as $document)
                                         <tr>
                                             <td class="text-left">{{$document->name}}</td>
-                                            <td class="text-left">{{$document->created_at}}</td>
+                                            <td class="text-left"> {{ \Carbon\Carbon::parse($document->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a href="{{ asset('storage/uploads/'.auth()->user()->id.'/'.$document->name) }}" type="button" class="bg-btn-five" target="_blank" download>

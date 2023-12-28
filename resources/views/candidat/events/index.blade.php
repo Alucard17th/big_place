@@ -132,7 +132,7 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
-                                            <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)
                                                 Oui

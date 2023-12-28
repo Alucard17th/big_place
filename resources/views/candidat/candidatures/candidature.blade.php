@@ -250,14 +250,6 @@ select {
                                                     <h4 class="offre-title">
                                                         {{ getOfferByCandidatId($candidatures[0]->offer_id)->job_title }}
                                                     </h4>
-                                                    <!-- <div class="d-flex">
-                                                        <button class="offre-btn mr-3"><i
-                                                                class="las la-bookmark"></i></button>
-                                                        <button class="offre-btn mr-3"><i
-                                                                class="las la-share"></i></button>
-                                                        <button class="offre-btn"><i
-                                                                class="las la-ellipsis-h"></i></button>
-                                                    </div> -->
                                                 </div>
                                                 <div class="offre-subtitle my-1">
                                                     <img src="{{ asset('storage' . getEntrepriseByUserID($candidature->user_id)->logo) }}"
@@ -278,7 +270,7 @@ select {
                                                     <img src="{{ asset('/plugins/images/icons/tick-circle.png') }}"
                                                         alt="">
                                                     Déposée le
-                                                    {{ \Carbon\Carbon::parse($candidature->created_at)->isoFormat('LL') }}
+                                                    {{ \Carbon\Carbon::parse($candidature->created_at)->formatLocalized('%d-%m-%Y') }}
                                                 </h4>
                                                 <div class="offre-desc my-4">
                                                     Responsabilités : Développer et maintenir des applications Java
@@ -290,7 +282,7 @@ select {
                                                 <div class="offre-status">Status de l'offre :
                                                     {{ getOfferByCandidatId($candidature->offer_id)->status }}</div>
                                                 <div class="offre-end-date">Date de limitation de candidature :
-                                                    {{ getOfferByCandidatId($candidature->offer_id)->unpublish_date }}
+                                                    {{ \Carbon\Carbon::parse(getOfferByCandidatId($candidature->offer_id)->unpublish_date)->formatLocalized('%d-%m-%Y') }}
                                                 </div>
 
                                                 <div class="card mt-5" style="height:100%;">

@@ -18,6 +18,11 @@ class EmailController extends Controller
         return view('candidat.emails.index', compact('emails', 'receivedEmails', 'receivers'));
     }
 
+    public function create(){
+        $receivers = User::all();
+        return view('candidat.emails.create', compact('receivers'));
+    }
+
     public function store(Request $request){
         // Extract data from the request
         $subject = $request->input('subject');

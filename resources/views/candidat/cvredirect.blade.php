@@ -153,30 +153,54 @@ color: #2D2F30;
                             <img src="path/to/candidate_photo.jpg" class="img-fluid rounded-circle mb-3" alt="Candidate Photo">
                         </div> -->
                         <div class="col-md-12">
-                            <h1 class="mb-3">{{$curriculum->nom}} {{$curriculum->prenom}}</h1>
-                            <h4 class="mb-3">Métier: {{$curriculum->metier_recherche}}</h4>
-                            <p class="mb-5 text-dark">Ville: {{$curriculum->ville_domiciliation}}</p>
+                            <div class="row">
+                                <div class="col-12 text-center mb-5 pb-5 pt-2"><h2>Fiche Candidat</h2></div>
+                                <div class="col-4">
+                                    <img src="{{ asset(str_replace('public', 'storage', $curriculum->user->avatar)) }}" alt="">
+                                </div>
 
-                            <hr>
+                                <div class="col-8">
+                                    <h4 class="mb-3">{{$curriculum->nom}} {{$curriculum->prenom}}</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="text-dark">{{$curriculum->address}} {{$curriculum->ville_domiciliation}}</li>
+                                        <li class="text-dark">Email : {{$curriculum->user->email}}</li>
+                                        <li class="text-dark">{{\Carbon\Carbon::parse($curriculum->user->birth_date)->diffInYears(\Carbon\Carbon::now())}} ans</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                            <h5>Expérience</h5>
-                            <ul class="list-unstyled">
-                                <li>Nombre d'années d'expérience: {{$curriculum->annees_experience}} années</li>
-                                <li>Niveau: {{$curriculum->niveau}}</li>
-                            </ul>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="text-center">
+                                        <h4 class="mb-3">{{$curriculum->metier_recherche}}</h4>
+                                    </div>
+                                   
+                                    <ul class="list-unstyled">
+                                        <li>Niveau: {{$curriculum->niveau}}</li>
+                                        <li>Nombre d'années d'expérience: {{$curriculum->annees_experience}} années</li>
+                                        <li>Niveau d'études: {{$curriculum->niveau_etudes}}</li>
+                                        <li>Prétentions salariales: {{$curriculum->pretentions_salariales}}</li>
+                                        <li>Valeurs: 
+                                            @php 
+                                            $valeursArray = json_decode($curriculum->valeurs, true);
+                                            echo implode(', ', $valeursArray);
+                                            @endphp
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                            <h5>Formation</h5>
-                            <ul class="list-unstyled">
-                                <li>Niveau d'études: {{$curriculum->niveau_etudes}}</li>
-                                </ul>
-
-                            <h5>Prétentions salariales</h5>
-                            <div>{{$curriculum->pretentions_salariales}}</div>
-
-                            <hr>
-
-                            <h5>CV</h5>
-                            <a href="{{asset('storage' . $curriculum->cv)}}" class="btn btn-primary" download>Télécharger</a>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <h5>CV</h5>
+                                    @if(!empty($curriculum) && $curriculum->cv != null && $curriculum->cv != '') 
+                                    <a href="{{asset('storage' . $curriculum->cv)}}" class="btn bg-btn-five mt-3" download>Télécharger</a>
+                                    @else
+                                    Aucun CV disponible.
+                                    @endif
+                                </div>
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -317,71 +341,65 @@ color: #2D2F30;
                                         <!-- <textarea class="form-control" id="valeurs" name="valeurs" rows="3"
                                             required></textarea> -->
                                         <select name="valeurs[]" id="values_select" class="form-control w-100" multiple>
-                                            <option value="respect" @if(isset($curriculum->valeurs) && in_array('Le
-                                                respect', json_decode($curriculum->valeurs))) selected @endif>Le respect
+                                            <option value="respect" @if(isset($curriculum->valeurs) && in_array('respect', json_decode($curriculum->valeurs))) selected @endif>Le respect
                                             </option>
                                             <option value="adaptabilite" @if(isset($curriculum->valeurs) &&
-                                                in_array('L\'adaptabilité', json_decode($curriculum->valeurs))) selected
+                                                in_array('adaptabilite', json_decode($curriculum->valeurs))) selected
                                                 @endif>L'adaptabilité</option>
                                             <option value="consideration" @if(isset($curriculum->valeurs) &&
-                                                in_array('la considération', json_decode($curriculum->valeurs)))
+                                                in_array('consideration', json_decode($curriculum->valeurs)))
                                                 selected @endif>la considération</option>
                                             <option value="altruisme" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'altruisme', json_decode($curriculum->valeurs))) selected
+                                                in_array('altruisme', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'altruisme</option>
                                             <option value="assertivite" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'assertivité', json_decode($curriculum->valeurs))) selected
+                                                in_array('assertivite', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'assertivité</option>
                                             <option value="entraide" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'entraide', json_decode($curriculum->valeurs))) selected
+                                                in_array('entraide', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'entraide</option>
                                             <option value="solidarite" @if(isset($curriculum->valeurs) &&
-                                                in_array('la solidarité', json_decode($curriculum->valeurs))) selected
+                                                in_array('solidarite', json_decode($curriculum->valeurs))) selected
                                                 @endif>la solidarité</option>
                                             <option value="ecoute" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'écoute', json_decode($curriculum->valeurs))) selected
+                                                in_array('ecoute', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'écoute</option>
                                             <option value="bienveillance" @if(isset($curriculum->valeurs) &&
-                                                in_array('la bienveillance', json_decode($curriculum->valeurs)))
+                                                in_array('bienveillance', json_decode($curriculum->valeurs)))
                                                 selected @endif>la bienveillance</option>
                                             <option value="empathie" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'empathie', json_decode($curriculum->valeurs))) selected
+                                                in_array('empathie', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'empathie</option>
                                             <option value="creativite" @if(isset($curriculum->valeurs) &&
-                                                in_array('la créativité', json_decode($curriculum->valeurs))) selected
+                                                in_array('creativite', json_decode($curriculum->valeurs))) selected
                                                 @endif>la créativité</option>
-                                            <option value="justice" @if(isset($curriculum->valeurs) && in_array('la
-                                                justice', json_decode($curriculum->valeurs))) selected @endif>la justice
+                                            <option value="justice" @if(isset($curriculum->valeurs) && in_array('justice', json_decode($curriculum->valeurs))) selected @endif>la justice
                                             </option>
-                                            <option value="tolerance" @if(isset($curriculum->valeurs) && in_array('la
-                                                tolérance', json_decode($curriculum->valeurs))) selected @endif>la
+                                            <option value="tolerance" @if(isset($curriculum->valeurs) && in_array('tolerance', json_decode($curriculum->valeurs))) selected @endif>la
                                                 tolérance</option>
                                             <option value="equite" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'équité', json_decode($curriculum->valeurs))) selected
+                                                in_array('equite', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'équité</option>
                                             <option value="honnetete" @if(isset($curriculum->valeurs) &&
-                                                in_array('l\'honnêteté', json_decode($curriculum->valeurs))) selected
+                                                in_array('honnetete', json_decode($curriculum->valeurs))) selected
                                                 @endif>l'honnêteté</option>
                                             <option value="responsabilite" @if(isset($curriculum->valeurs) &&
-                                                in_array('la responsabler', json_decode($curriculum->valeurs))) selected
+                                                in_array('responsabilite', json_decode($curriculum->valeurs))) selected
                                                 @endif>la responsabilité</option>
-                                            <option value="loyaute" @if(isset($curriculum->valeurs) && in_array('la
-                                                loyauté', json_decode($curriculum->valeurs))) selected @endif>la loyauté
+                                            <option value="loyaute" @if(isset($curriculum->valeurs) && in_array('loyaute', json_decode($curriculum->valeurs))) selected @endif>la loyauté
                                             </option>
                                             <option value="determination" @if(isset($curriculum->valeurs) &&
-                                                in_array('la détermination', json_decode($curriculum->valeurs)))
+                                                in_array('determination', json_decode($curriculum->valeurs)))
                                                 selected @endif>la détermination</option>
                                             <option value="perseverance" @if(isset($curriculum->valeurs) &&
-                                                in_array('la persévérance', json_decode($curriculum->valeurs))) selected
+                                                in_array('perseverance', json_decode($curriculum->valeurs))) selected
                                                 @endif>la persévérance</option>
-                                            <option value="rigueur" @if(isset($curriculum->valeurs) && in_array('la
-                                                rigueur', json_decode($curriculum->valeurs))) selected @endif>la rigueur
+                                            <option value="rigueur" @if(isset($curriculum->valeurs) && in_array('rigueur', json_decode($curriculum->valeurs))) selected @endif>la rigueur
                                             </option>
                                             <option value="generosite" @if(isset($curriculum->valeurs) &&
-                                                in_array('la générosité', json_decode($curriculum->valeurs))) selected
+                                                in_array('generosite', json_decode($curriculum->valeurs))) selected
                                                 @endif>la générosité</option>
-                                            <option value="stabilite" @if(isset($curriculum->valeurs) && in_array('la
-                                                stabilité', json_decode($curriculum->valeurs))) selected @endif>la
+                                            <option value="stabilite" @if(isset($curriculum->valeurs) && in_array('stabilite', json_decode($curriculum->valeurs))) selected @endif>la
                                                 stabilité</option>
                                         </select>
                                     </div>

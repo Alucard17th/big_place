@@ -45,7 +45,7 @@
                                             <td class="text-left">{{getCurriculumById($history->searchable)->metier_recherche}}</td>
                                             <td class="text-left">
                                                 <a href="{{ asset('storage'.getCurriculumById($history->searchable)->cv) }}" type="button" class="bg-btn-three mt-2" target="_blank">
-                                                    Consulter le CV
+                                                    Consulter le profil
                                                 </a>
                                             </td>
                                         </tr>

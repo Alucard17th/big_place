@@ -252,6 +252,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/formation/candidat/show/{id}', [FormationController::class, 'show'])->name('candidat.formation.show');
 
     // EMAILS
+    Route::get('/email/candidate/create', [EmailController::class, 'create'])->name('candidat.email.create');
     Route::post('/email/candidate/store', [EmailController::class, 'store'])->name('candidat.email.store');
 
     // DOCUMENTS

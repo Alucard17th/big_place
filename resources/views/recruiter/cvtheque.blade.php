@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Handle any errors (optional)
             },
             complete: function() {
-                // window.open(event.target.href, '_blank'); // Open file in new tab after AJAX
+                window.open(dataUrl, '_blank'); // Open file in new tab after AJAX
             }
         });
     });

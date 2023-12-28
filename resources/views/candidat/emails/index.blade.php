@@ -190,7 +190,7 @@
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <a href="" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
+                            <a href="{{ route('candidat.email.create') }}" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -200,7 +200,7 @@
                             <div class="table-outer">
                                 <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
-                                    <button type="button" class="btn" id="sent-btn">Message Envoyés</button>
+                                    <button type="button" class="btn" id="sent-btn">Messages Envoyés</button>
                                 </div>
                                 <div class="inbox">
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
@@ -219,7 +219,9 @@
                                                     {{getUserById($email->user_id)->name}}
                                                 </td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{$email->created_at}}</td>
+                                                <td>
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -242,7 +244,9 @@
                                                     {{getUserById($email->receiver_id)->name}}
                                                 </td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{$email->created_at}}</td>
+                                                <td>
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -311,14 +315,14 @@ $(document).ready(function() {
 
     $("#receiver").select2({});
 
-    addMessageBtn.addEventListener('click', function(event) {
-        event.preventDefault();
-        $("#message-modal").modal({
-            escapeClose: false,
-            clickClose: true,
-            showClose: false
-        });
-    });
+    // addMessageBtn.addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     $("#message-modal").modal({
+    //         escapeClose: false,
+    //         clickClose: true,
+    //         showClose: false
+    //     });
+    // });
     $('#close-modal, .custom-close-modal').click(function() {
         console.log('Modal Should Be Closed');
         $.modal.close();
