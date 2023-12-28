@@ -61,7 +61,7 @@
 .select2-selection--multiple{
     margin: 0 !important;
     width: 100% !important;
-    height: 35px !important;
+    height: 100% !important;
     /* padding: .3rem .70rem !important; */
     padding-top:2px;
     padding-left:6px;
@@ -391,7 +391,16 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    $("#values_select").select2({});
+    $("#values_select").select2({
+        placeholder: "Valeurs Attendues",
+        maximumSelectionLength: 5,
+        language: {
+            maximumSelected: function (e) {
+                return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
+            }
+        }
+    });
     $("#niveau_etudes").select2({});
     $("#job_title").select2({});
 })

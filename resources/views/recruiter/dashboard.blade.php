@@ -61,7 +61,7 @@
 .select2-selection--multiple{
     margin: 0 !important;
     width: 100% !important;
-    height: 35px !important;
+    height: 100% !important;
     /* padding: .3rem .70rem !important; */
     padding-top:2px;
     padding-left:6px;
@@ -77,6 +77,8 @@
     box-shadow: none !important;
     font-size: 14px !important;
 }
+
+
 
 #select2-metier_recherche-container{
     padding-left: 25px !important;
@@ -131,6 +133,11 @@
     color:#000000 !important;
 }
 
+.card-footer{
+    padding: 10px 15px !important;
+    text-align: center;
+}
+
 </style>
 @endpush
 
@@ -143,8 +150,6 @@
         </div>
 
         <div class="row">
-
-        
             <div class="col-6 px-2">
                 <div class="card">
                     <div class="card-body px-4">
@@ -200,7 +205,6 @@
                             <div class="col-12 pl-1">
                                 <div class="form-group mb-2">
                                     <select class="form-control" id="values_select" name="valeurs[]" multiple required>
-                                        <option value="" >Valeurs attendues</option>
                                         <option value="respect">Le respect</option>
                                         <option value="adaptabilite">L’adaptabilité</option>
                                         <option value="consideration">La considération</option>
@@ -242,8 +246,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
 
         <div class="row mt-3">
@@ -265,8 +267,11 @@
                             <a href="/mes-mails">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes emails</span>
+                                
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes emails</span>
                         </div>
                     </div>
                 </div>
@@ -277,7 +282,9 @@
                                 <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-rdvs.png')}}"
                                     alt="">
                             </a>
-                            <span class="pt-4 mb-3 text-dark">Mes rendez-vous</span>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes rendez-vous</span>
                         </div>
                     </div>
                 </div>
@@ -287,8 +294,10 @@
                             <a href="/mes-taches">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-taches.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes tâches</span>
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes tâches</span>
                         </div>
                     </div>
                 </div>
@@ -298,8 +307,10 @@
                             <a href="/mes-evenements">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-events.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes évènemements / jobdatings</span>
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes évènemements / jobdatings</span>
                         </div>
                     </div>
                 </div>
@@ -312,8 +323,10 @@
                             <a href="/mes-formations">
                                 <img class="img-fluid dashboard-small-img"
                             src="{{asset('/plugins/images/dashboard/mes-formations.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes formations proposées</span>
                         </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes formations proposées</span>
                         </div>
                     </div>
                 </div>
@@ -323,8 +336,10 @@
                             <a href="/mes-offres">
                                 <img class="img-fluid dashboard-small-img"
                             src="{{asset('/plugins/images/dashboard/mes-offres.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes offres d'emploi</span>
                         </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes offres d'emploi</span>
                         </div>
                     </div>
                 </div>
@@ -334,8 +349,11 @@
                             <a href="/mes-candidatures">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-candidatures.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes candidatures</span>
+                                
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes candidatures</span>
                         </div>
                     </div>
                 </div>
@@ -345,8 +363,10 @@
                             <a href="/ma-vitrine">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/ma-vitrine.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Ma vitrine entreprise</span>
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Ma vitrine entreprise</span>
                         </div>
                     </div>
                 </div>
@@ -359,8 +379,10 @@
                             <a href="/mes-documents">
                                 <img class="img-fluid dashboard-small-img" src="{{asset('/plugins/images/dashboard/mes-docs.png')}}"
                                     alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes documents</span>
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes documents</span>
                         </div>
                     </div>
                 </div>
@@ -370,8 +392,10 @@
                             <a href="/mes-factures-et-contrats">
                                 <img class="img-fluid dashboard-small-img"
                                 src="{{asset('/plugins/images/dashboard/mes-factures-contrats.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes factures et contrats</span>
                             </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes factures et contrats</span>
                         </div>
                     </div>
                 </div>
@@ -381,8 +405,10 @@
                             <a href="/mes-stats">
                                 <img class="img-fluid dashboard-small-img"
                                 src="{{asset('/plugins/images/dashboard/mes-stats.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes statistiques</span>
                             </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mes statistiques</span>
                         </div>
                     </div>
                 </div>
@@ -392,8 +418,10 @@
                             <a href="/compte-administrateur">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mon-compte.png')}}" alt="">
-                                <span class="pt-4 mb-3 text-dark">Mes compte administrateur</span>
                                 </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <span class="text-dark">Mon compte administrateur</span>
                         </div>
                     </div>
                    
@@ -409,9 +437,26 @@
 document.addEventListener('DOMContentLoaded', function() {
     $("#values_select").select2({
         placeholder: "Valeurs attendues",
+        maximumSelectionLength: 5,
+        language: {
+        maximumSelected: function (e) {
+            return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+            // Replace this string with your custom error message
+        }
+    }
     });
     $("#niveau_etudes").select2({});
     $("#metier_recherche").select2({});
+
+    const valuesSelect = document.getElementById("values_select");
+
+    // $("#values_select").on("select2:select", (event) => {
+    //     if ($("#values_select").val().length > 5) {
+    //         alert("Vous ne pouvez sélectionner que 5 valeurs maximum.");
+    //         $("#values_select").val($("#values_select").val().slice(0, 5)); // Keep only the first 5 selected values
+    //         event.preventDefault(); // Prevent further selection
+    //     }
+    // });
 })
 </script>
 

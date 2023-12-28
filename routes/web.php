@@ -173,6 +173,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
 
     // HISTORIQUE
     Route::get('/historique', [RecruiterController::class, 'getSearchHistory'])->name('recruiter.historique');
+    Route::post('/historique/create', [RecruiterController::class, 'addHistoryRecord'])->name('recruiter.historique.store');
 
     // COMPTE ADMINISTRATEUR
     Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');

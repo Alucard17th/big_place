@@ -226,26 +226,34 @@
                                     document.getElementById("company-name").style.display = "inline";
                                     document.getElementById("company-name").style.visibility = "hidden";
                                 }
+
+                                function gotoUrl(url) {
+                                    window.location.href = url
+                                }
                                 </script>
                                 <form method="post" action="#">
                                     <div class="form-group">
                                         <div class="btn-box row">
                                             <div class="col-lg-6 col-md-12">
                                                 <input class="checked" type="radio" name="type" id="checkbox1"
-                                                    value="candidate" onclick="teste();" checked />
-                                                <label for="checkbox1" class="theme-btn btn-style-one"><i
-                                                        class="la la-user"></i> Candidat</label>
+                                                    value="candidate" onclick="gotoUrl('/register-candidat');" checked />
+                                                <label for="checkbox1" class="theme-btn btn-style-one d-flex align-items-center justify-content-center wrap px-5">
+                                                    <i class="la la-user" style="padding-bottom: 12px;"></i> 
+                                                    Candidat
+                                                </label>
                                             </div>
                                             <div class="col-lg-6 col-md-12">
                                                 <input class="checked" type="radio" name="type" id="checkbox2"
-                                                    value="employer" onclick="test();" />
-                                                <label for="checkbox2" class="theme-btn btn-style-one"><i
-                                                        class="la la-briefcase"></i> Employeur</label>
+                                                    value="employer" onclick="gotoUrl('/register-employeur');" />
+                                                <label for="checkbox2" class="theme-btn btn-style-one d-flex align-items-center justify-content-center wrap px-5">
+                                                    <i class="la la-briefcase" style="padding-bottom: 12px;"></i>
+                                                    Employeur
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group" id="company-name" style="display: none; visibility: hidden">
+                                    <!-- <div class="form-group" id="company-name" style="display: none; visibility: hidden">
                                         <label>Nom de l&#039;entreprise</label>
                                         <input type="text" name="company" placeholder="Nom de l&#039;entreprise"
                                             required>
@@ -298,14 +306,14 @@
                                         <span class="invalid-feedback error error-password_confirmation"></span>
                                     </div>
 
-
                                     <div class="form-group">
                                         <button class="theme-btn btn-style-one " type="submit"
                                             name="Register">Inscription
                                             <span class="spinner-grow spinner-grow-sm icon-loading" role="status"
                                                 aria-hidden="true"></span>
                                         </button>
-                                    </div>
+                                    </div> -->
+
                                 </form>
                             </form>
                         </div>

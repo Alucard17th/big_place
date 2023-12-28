@@ -31,19 +31,21 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Titre de l'offre</th>
-                                            <th>Entreprise</th>
-                                            <th>Actions</th>
+                                            <th>Nom du candidat</th>
+                                            <th>Adresse</th>
+                                            <th>Métier recherché</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($histories as $history)
                                         <tr>
-                                            <td class="text-left">{{getOfferByCandidatId($history->searchable)->job_title}}</td>
-                                            <td class="text-left">{{getEntrepriseByUserID(getOfferByCandidatId($history->searchable)->user_id)->nom_entreprise}}</td>
+                                            <td class="text-left">{{getCurriculumById($history->searchable)->nom}} {{getCurriculumById($history->searchable)->prenom}}</td>
+                                            <td class="text-left">{{getCurriculumById($history->searchable)->ville_domiciliation}}</td>
+                                            <td class="text-left">{{getCurriculumById($history->searchable)->metier_recherche}}</td>
                                             <td class="text-left">
-                                                <a href="{{route('candidat.candidature.apply', $history->searchable)}}" type="button" class="bg-btn-three mt-2">
-                                                    Consulter l'offre
+                                                <a href="{{ asset('storage'.getCurriculumById($history->searchable)->cv) }}" type="button" class="bg-btn-three mt-2" target="_blank">
+                                                    Consulter le CV
                                                 </a>
                                             </td>
                                         </tr>

@@ -24,7 +24,7 @@ input, select{
     width: 22vw;
 }
 .select2-selection--multiple {
-    height: 45px !important;
+    height: 100% !important;
     border: 1px solid #dae1e7 !important;
     border-radius: 3px;
     box-shadow: none;
@@ -203,9 +203,10 @@ input, select{
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
                                             <td class="text-left">
                                                 @if($curriculum->cv != null && $curriculum->cv != '')
-                                                <a href="{{ asset('storage'.$curriculum->cv) }}" type="button" class="bg-btn-three" target="_blank">
-                                                    <i class="las la-eye mr-2"></i>Consulter le profil
-                                                </a>
+                                                <button class="bg-btn-three see-profile" data-url="{{ asset('storage'.$curriculum->cv) }}"
+                                                data-cvid="{{$curriculum->id}}">
+                                                    Consulter le profil
+                                                </button>
                                                 @else
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
@@ -236,10 +237,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
    
     $("#values_select").select2({
-        placeholder: "Valeurs",
+        placeholder: "Valeurs Attendues",
+        maximumSelectionLength: 5,
+        language: {
+            maximumSelected: function (e) {
+                return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
+            }
+        }
     });
+
     $("#niveau_etudes").select2({});
     $("#metier_recherche").select2({});
+
+    $("#values_select").on("select2:select", (event) => {
+        if ($("#values_select").val().length > 4) {
+            alert("Vous ne pouvez sélectionner que 5 valeurs maximum.");
+            $("#values_select").val($("#values_select").val().slice(0, 5)); // Keep only the first 5 selected values
+            event.preventDefault(); // Prevent further selection
+        }
+    });
 
     // new DataTable('#data-table');
     $('#data-table').DataTable({
@@ -320,6 +337,33 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Selected values:', selectedValues);
         // You can now perform further actions with the selected values.
     });
+
+    $(document).on('click', '.see-profile', function(event) {
+        // ... rest of your code
+        const dataUrl = $(this).data('url');
+        const cvId = $(this).data('cvid');
+
+        console.log("Data URL:", dataUrl); // Log the value to the console
+        $.ajax({
+            url: "{{ route('recruiter.historique.store') }}", // Replace with your actual route
+            type: 'POST',
+            data: { 
+                url: dataUrl,
+                _token: '{{ csrf_token() }}',
+                cv_id: cvId
+             },
+            success: function(response) {
+                // Handle successful request (optional)
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle any errors (optional)
+            },
+            complete: function() {
+                // window.open(event.target.href, '_blank'); // Open file in new tab after AJAX
+            }
+        });
+    });
+    
 });
 </script>
 @endpush

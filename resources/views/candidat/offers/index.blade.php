@@ -29,7 +29,7 @@ input, select{
     width: 22vw;
 }
 .select2-selection--multiple {
-    height: 45px !important;
+    height: 100% !important;
     border: 1px solid #dae1e7 !important;
     border-radius: 3px;
     box-shadow: none;
@@ -291,7 +291,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $("#values_select").select2({
-        placeholder: "Valeurs",
+        placeholder: "Valeurs Attendues",
+        maximumSelectionLength: 5,
+        language: {
+            maximumSelected: function (e) {
+                return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
+            }
+        }
     });
 
     $('#data-table').DataTable({

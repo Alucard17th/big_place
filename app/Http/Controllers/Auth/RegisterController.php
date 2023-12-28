@@ -83,8 +83,9 @@ class RegisterController extends Controller
         $user->assignRole($data['role']);
 
         $emailDetails = [
-            'title' => 'Bienvenue sur Big Place, votre plateforme de recrutement', 
-            'body' => 'Votre inscription est effectuée avec succès.',
+            'title' => 'Bienvenue chez BIG PLACE !', 
+            'body' => ' Votre inscription a bien été validée, nous vous invitions à vous rendre sur le lien ci-dessous pour profiter de votre solution digitale et recruter des talents.',
+            'url' => route('home'),
         ];
 
         Mail::to($user->email)->send(new UserRegistered($emailDetails));

@@ -19,11 +19,13 @@ use App\Models\User;
 use App\Models\Document;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
+use App\Mail\EntrepriseRdvInvitation;
 use App\Mail\RendezVousDateOrHourChanged;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use RahulHaque\Filepond\Facades\Filepond;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
 
 class RecruiterController extends Controller
 {   
@@ -97,17 +99,17 @@ class RecruiterController extends Controller
         //     $curriculum->percentageMatch = $percentageMatch;
         // }
 
-        // Create search History model with the request data
-        $history = new History();
-        $history->user_id = auth()->user()->id;
-        $history->metier_recherche = $searchTerm['metier_recherche'];
-        $history->annees_experience = $searchTerm['annees_experience'];
-        $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
-        $history->niveau_etudes = $searchTerm['niveau_etudes'];
-        $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
-        $history->valeurs = isset($searchTerm['valeur']) ? json_encode($searchTerm['valeur']) : null;
+        // // Create search History model with the request data
+        // $history = new History();
+        // $history->user_id = auth()->user()->id;
+        // $history->metier_recherche = $searchTerm['metier_recherche'];
+        // $history->annees_experience = $searchTerm['annees_experience'];
+        // $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
+        // $history->niveau_etudes = $searchTerm['niveau_etudes'];
+        // $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
+        // $history->valeurs = isset($searchTerm['valeur']) ? json_encode($searchTerm['valeur']) : null;
 
-        $history->save();
+        // $history->save();
 
         $jobs = Job::all();
 
@@ -200,8 +202,19 @@ class RecruiterController extends Controller
             ]
         ];
 
-        $message_body = 'Nous espérons que ce message vous trouve en pleine forme. Nous sommes ravis de poursuivre votre candidature et aimerions vous inviter à un entretien pour discuter de vos qualifications et de votre potentiel d\'intégration au sein de notre équipe.
-                        Pour convenir à votre emploi du temps, nous vous proposons trois créneaux horaires disponibles pour votre entretien. Veuillez examiner les options ci-dessous et nous faire part de votre choix préféré :';
+        // $message_body = 'Nous espérons que ce message vous trouve en pleine forme. Nous sommes ravis de poursuivre votre candidature et aimerions vous inviter à un entretien pour discuter de vos qualifications et de votre potentiel d\'intégration au sein de notre équipe.
+        //                 Pour convenir à votre emploi du temps, nous vous proposons trois créneaux horaires disponibles pour votre entretien. Veuillez examiner les options ci-dessous et nous faire part de votre choix préféré :';
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $entreprise = $user->entreprise->first();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+        }
+
+        $message_body = 'une proposition de RDV vous a été envoyée par l’entreprise '.$entreprise->nom_entreprise.', 
+        vous avez 24H pour valider le RDV, passé ce délai, l’entreprise pourra proposer ce RDV a un autre candidat';
         
         $confirmationUrl = '';
 
@@ -239,7 +252,7 @@ class RecruiterController extends Controller
         ]);
 
         $emailDetails = [
-            'title' => 'Proposition de rendez-vous',
+            'title' => 'Proposition de rendez-vous.',
             'body' => $message_body,
             'creneau' => $creneau,
             'confirmationUrl' => $confirmationUrl,
@@ -252,17 +265,37 @@ class RecruiterController extends Controller
             'address' => $request->address != '' ? $request->address : 'A distance'
         ];
 
+        $recipientsData = [];
         foreach($participants as $participant){
             // Send Emails TO all the participant 
-            $user = User::find($participant);
-            Mail::to($user->email)->send(new SendRdvInvitation($emailDetails));
+            $recipient = User::find($participant);
+            Mail::to($recipient->email)->send(new SendRdvInvitation($emailDetails));
             $email = Email::create([
                 'user_id' => auth()->user()->id,
                 'subject' => 'Rendez-vous',
                 'message' => $message_body,
                 'receiver_id' => $participant,
             ]);
+
+            $recipientsData[] = [
+                'name' => $recipient->name
+            ];
         }
+
+        $entrepriseEmailDetails = [
+            'title' => 'Proposition de rendez-vous.',
+            'participants' => $recipientsData,
+            'creneau' => $creneau,
+            'rdvs' =>[
+                $rdv_1->id,
+                $rdv_2->id,
+                $rdv_3->id
+            ],
+            'type' => $request->is_type_presentiel == 'true' ? 'Présentiel' : 'Distanciel',
+            'address' => $request->address != '' ? $request->address : 'A distance'
+        ];
+
+        Mail::to($user->email)->send(new EntrepriseRdvInvitation($entrepriseEmailDetails));
 
         return response()->json([
             'status' => 'success',
@@ -1017,6 +1050,23 @@ class RecruiterController extends Controller
     public function getSearchHistory(){
         $histories = auth()->user()->history;
         return view('recruiter.history.index', compact('histories'));
+    }
+    public function addHistoryRecord(Request $request){
+        $curriculum = Curriculum::find($request->cv_id);
+        // update the user->history 
+        $user = auth()->user();
+        $existingRecord = History::where('user_id', $user->id)
+        ->where('searchable', $curriculum->id)
+        ->where('created_at', '>', Carbon::now()->subDay())
+        ->first();
+        if (!$existingRecord) {
+            $history = new History();
+            $history->user_id = $user->id;
+            $history->searchable = $curriculum->id;
+            $history->save();
+        }
+
+        return response()->json($existingRecord);
     }
 
     // COMPTE ADMINISTRATEUR

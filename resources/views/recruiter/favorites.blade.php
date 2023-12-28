@@ -100,51 +100,8 @@ input, select{
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <!-- <form method="get" class="default-form form-inline"
-                                    action="{{ route('recruiter.cvtheque.search') }}">
-                                    <div class="row">
-                                            <div class="col-4 px-1">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4 px-1">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <input type="text" name="address" id="address" class="form-control" placeholder="Adresse">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4 px-1">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <select name="status" id="status" class="form-control">
-                                                        <option value=""  selected>Status Rendez-vous</option>
-                                                        <option value="Envoyé">Envoyé</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4 px-1 mt-3">
-                                                <div class="form-group mb-0 mr-1">
-                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control">
-                                                        <option value=""  selected>Niveau d'études</option>
-                                                        <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
-                                                        <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
-                                                        <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
-                                                        <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
-                                                        <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                    </div>
-                                   
-                                  <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
-                                   
-                                </form> -->
-                                <form method="get" class="default-form form-inline"
+                            <div class="chosen-outer search-container w-100">
+                                <form method="get" class="default-form form-inline w-100"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
@@ -158,16 +115,6 @@ input, select{
                                                 <input type="text" name="address" id="address" class="form-control" placeholder="Ville/département">
                                             </div>
                                         </div>
-
-                                        <!-- <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                                <select name="status" id="status" class="form-control">
-                                                    <option value=""  selected>Statut Rendez-vous</option>
-                                                    <option value="">Tout</option>
-                                                    <option value="Envoyé">Envoyé</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
