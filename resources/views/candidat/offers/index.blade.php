@@ -129,10 +129,9 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-12 pl-1">
+                                        <div class="col-4 pl-1">
                                             <div class="form-group mb-2">
                                                 <select class="form-control" id="values_select" name="valeurs[]" multiple>
-                                                    <option value="" selected>Valeurs attendues</option>
                                                     <option value="respect">Le respect</option>
                                                     <option value="adaptabilite">L’adaptabilité</option>
                                                     <option value="consideration">La considération</option>

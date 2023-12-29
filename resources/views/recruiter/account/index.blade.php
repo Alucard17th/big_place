@@ -54,79 +54,86 @@
                         <div class="widget-content" id="toggleElement-1">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <div class="col-12">
-                                    <div class="row align-items-center pt-4 pb-5">
-                                        <div class="col-2">
-                                            <img class="img-fluid vitrine-logo" src="" alt="">
+                                <form action="{{ route('recruiter.admin.account.update') }}" method="POST" id="" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="col-12">
+                                        <div class="row align-items-center pt-4 pb-5">
+                                            <div class="col-2">
+                                                <img class="img-fluid rounded-circle" id="avatar-preview"
+                                                    src="{{ asset(str_replace('/public', '', '/storage/' . $user->avatar)) }}"
+                                                alt="">
 
-                                        </div>
-                                        <div class="col-10">
-                                            <div>
-                                                <a href="" type="button" class="bg-btn-three">
-                                                    <!-- Détails -->
-                                                    <i class="las la-edit"></i>
-                                                    Changer
-                                                </a>
-                                                <a href="" type="button" class="bg-btn-four">
-                                                    <!-- Détails -->
-                                                    <i class="las la-trash"></i>
-                                                    Supprimer
-                                                </a>
                                             </div>
-                                            <div class="py-3">
-                                                <span class="text-dark">Taille recommandée: Largeur 300px X Hauteur
-                                                    300px</span>
+                                            <div class="col-10">
+                                                <div>
+                                                    <input type="file" name="avatar" id="avatar" class="d-none">
+                                                    <a href="" type="button" class="bg-btn-three" id="change-avatar">
+                                                        <!-- Détails -->
+                                                        <i class="las la-edit"></i>
+                                                        Changer
+                                                    </a>
+                                                    <a href="{{ route('recruiter.admin.account.avatar.delete') }}"
+                                                        type="button" class="bg-btn-four"
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer votre photo ?');">
+                                                        <!-- Détails -->
+                                                        <i class="las la-trash"></i>
+                                                        Supprimer
+                                                    </a>
+                                                </div>
+                                                <div class="py-3">
+                                                    <span class="text-dark">Taille recommandée: Largeur 300px X Hauteur
+                                                        300px</span>
+                                                </div>
+                                                <input type="file" class="form-control d-none" name="logo" id="logo">
                                             </div>
-                                            <input type="file" class="form-control d-none" name="logo" id="logo">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="nom_entreprise">Nom Entreprise</label>
-                                            <input type="text" class="form-control" name="nom_entreprise"
-                                                id="nom_entreprise" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="siege_social">Siège Social
-                                                (domiciliation)</label>
-                                            <input type="text" class="form-control" name="siege_social"
-                                                id="siege_social" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="siege_social">Email</label>
-                                            <input type="text" class="form-control" name="siege_social"
-                                                id="siege_social" value="">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="siege_social">Fonction</label>
-                                            <input type="text" class="form-control" name="siege_social"
-                                                id="siege_social" value="">
                                         </div>
                                     </div>
 
-                                    <div class="col-6">
-                                        <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="name">Nom Complet</label>
+                                                <input type="text" class="form-control" name="name"
+                                                    id="name" value="{{ $user->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="birth">Date de naissance
+                                                    </label>
+                                                <input type="date" class="form-control" name="birth"
+                                                    id="birth" value="{{ $user->birth_date }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="email">Email</label>
+                                                <input type="text" class="form-control" name="email"
+                                                    id="email" value="{{ $user->email }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="function">Fonction</label>
+                                                <input type="text" class="form-control" name="function"
+                                                    id="function" value="{{ $user->function }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                        </div>
+
                                     </div>
-
-                                </div>
-
-
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        
+        <div id="change-password"></div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="ls-widget">
@@ -144,28 +151,34 @@
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="nom_entreprise">Mot de passe actuel</label>
-                                            <input type="password" class="form-control" name="nom_entreprise"
-                                                id="nom_entreprise" value="">
+                                    <form action="{{ route('recruiter.admin.password.update') }}" method="POST">
+                                        @csrf
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="actual_password">Mot de passe actuel</label>
+                                                <input type="password" class="form-control" name="actual_password"
+                                                    id="actual_password" value="" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="nom_entreprise">Nouveau mot de passe</label>
-                                            <input type="password" class="form-control" name="nom_entreprise"
-                                                id="nom_entreprise" value="">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="password">Nouveau mot de passe</label>
+                                                <input type="password" class="form-control" name="password"
+                                                    id="password" value="" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="nom_entreprise">Confirmation du nouveau mot de
-                                                passe</label>
-                                            <input type="password" class="form-control" name="nom_entreprise"
-                                                id="nom_entreprise" value="">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="confirmed_password">Confirmation du nouveau mot de
+                                                    passe</label>
+                                                <input type="password" class="form-control" name="confirmed_password"
+                                                    id="confirmed_password" value="" required>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div class="col-6">
+                                            <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +239,7 @@
                                                         <i class="las la-edit"></i>
                                                         Editer
                                                     </a>
-                                                    <a href="" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
+                                                    <a href="{{ route('recruiter.admin.user.delete', $user->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet utilisateur?')">
                                                         <i class="las la-trash"></i>
                                                         Supprimer
                                                     </a>
@@ -258,17 +271,20 @@
                         <div class="widget-content" id="toggleElement-4">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="nom_entreprise">Mot de passe actuel</label>
-                                            <input type="password" class="form-control" name="nom_entreprise"
-                                                id="nom_entreprise" value="">
+                                <form action="{{ route('recruiter.admin.account.delete') }}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="text-dark" for="nom_entreprise">Mot de passe actuel</label>
+                                                <input type="password" class="form-control" name="nom_entreprise"
+                                                    id="nom_entreprise" value="" required>
+                                            </div>
+                                            <div class="text-dark my-1 py-1">Cela supprimera votre compte</div>
+                                            <button class="bg-btn-four mt-3" type="submit" onclick="return confirm('Etes-vous sur de vouloir supprimer votre compte ?');">Supprimer mon compte</button>
                                         </div>
-                                        <div class="text-dark my-1 py-1">Cela supprimera votre compte</div>
-                                        <button class="bg-btn-four mt-3" type="submit">Supprimer mon compte</button>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -321,65 +337,81 @@
         </div>
         @endsection
 
-        @push('scripts')
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $("#toggle-1").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-1").toggle();
-            })
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    $("#toggle-1").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-1").toggle();
+    })
 
-            $("#toggle-2").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-2").toggle();
-            })
+    $("#toggle-2").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-2").toggle();
+    })
 
-            $("#toggle-3").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-3").toggle();
-            })
+    $("#toggle-3").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-3").toggle();
+    })
 
-            $("#toggle-4").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-4").toggle();
-            })
+    $("#toggle-4").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-4").toggle();
+    })
 
-            const button = document.querySelector('#open-user-modal');
+    const button = document.querySelector('#open-user-modal');
 
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                $("#user-modal").modal({
-                    escapeClose: false,
-                    clickClose: true,
-                    showClose: false
-                });
-            });
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        $("#user-modal").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    });
 
-            $('#data-table').DataTable({
-                "info": false, // Hide "Showing X to Y of Z entries"
-                "searching": true,
-                "language": {
-                    "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "paginate": {
-                        "first": "Premier",
-                        "last": "Dernier",
-                        "next": "Suivant",
-                        "previous": "Précédent",
-                    },
-                    "search": "",
-                    "searchPlaceholder": "Rechercher...",
-                    // Add other language customization options if needed
-                },
-                // "pagingType": "full_numbers",
-            });
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
 
-            $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+    $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
-            $('#close-modal, .custom-close-modal').click(function(event) {
-                event.preventDefault();
-                $.modal.close();
-            });
-        })
-        </script>
-        @endpush
+    $('#close-modal, .custom-close-modal').click(function(event) {
+        event.preventDefault();
+        $.modal.close();
+    });
+
+    document.getElementById('change-avatar').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('avatar').click();
+    });
+
+    document.getElementById('avatar').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+            document.getElementById('avatar-preview').src = event.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    });
+})
+</script>
+@endpush

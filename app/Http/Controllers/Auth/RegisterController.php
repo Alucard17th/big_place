@@ -46,7 +46,7 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        return null;
+        return '/new-recruiter-redirect-url';
     }
 
     /**
@@ -93,6 +93,10 @@ class RegisterController extends Controller
         if($user){
             toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);
         }
+
+        // if($data['role'] == 'recruiter'){
+        //     return redirect(route('recruiter.vitrine'));
+        // }
 
         return $user;
     }

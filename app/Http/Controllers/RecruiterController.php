@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Storage;
 use RahulHaque\Filepond\Facades\Filepond;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class RecruiterController extends Controller
 {   
@@ -74,9 +76,6 @@ class RecruiterController extends Controller
         if (!empty($searchTerm['pretentions_salariales'])) {
             $query->where('pretentions_salariales', 'like', '%' . $searchTerm['pretentions_salariales'] . '%');
         }
-        // if (!empty($searchTerm['valeur'])) {
-        //     $query->where('valeurs->valeur', 'like', '%' . $searchTerm['valeur'] . '%');
-        // }
         if (!empty($searchTerm['valeurs'])) {
             $query->where(function ($query) use ($searchTerm) {
                 $query->orWhereJsonContains('valeurs', $searchTerm['valeurs']);
@@ -84,32 +83,6 @@ class RecruiterController extends Controller
         }
 
         $curriculums = $query->get();
-
-        // Calculate percentage match for each curriculum
-        // $searchCriteria = array_filter($searchTerm);
-        // foreach ($curriculums as $curriculum) {
-        //     $matchingFields = 0;
-        //     foreach ($searchCriteria as $field => $value) {
-        //         if (str_contains(strtolower($curriculum->$field), strtolower($value))) {
-        //             $matchingFields++;
-        //         }
-        //     }
-        //     $percentageMatch = count($searchCriteria) > 0 ? ($matchingFields / count($searchCriteria)) * 100 : 0;
-           
-        //     $curriculum->percentageMatch = $percentageMatch;
-        // }
-
-        // // Create search History model with the request data
-        // $history = new History();
-        // $history->user_id = auth()->user()->id;
-        // $history->metier_recherche = $searchTerm['metier_recherche'];
-        // $history->annees_experience = $searchTerm['annees_experience'];
-        // $history->ville_domiciliation = $searchTerm['ville_domiciliation'];
-        // $history->niveau_etudes = $searchTerm['niveau_etudes'];
-        // $history->pretentions_salariales = $searchTerm['pretentions_salariales'];
-        // $history->valeurs = isset($searchTerm['valeur']) ? json_encode($searchTerm['valeur']) : null;
-
-        // $history->save();
 
         $jobs = Job::all();
 
@@ -144,8 +117,17 @@ class RecruiterController extends Controller
     public function myFavorites(){
         $user = auth()->user();
         // $favoriteIds = json_decode($user->favorites()->pluck('favorites')->first(), true);
-        $favoriteIds = json_decode($user->favorites->pluck('favorites')->first(), true) ?? [];
-        $favorites = Curriculum::whereIn('id', $favoriteIds)->get();
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $favoriteIds = json_decode($user->favorites->pluck('favorites')->first(), true) ?? [];
+            $favorites = Curriculum::whereIn('id', $favoriteIds)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $favoriteIds = json_decode($entreprise->user->favorites->pluck('favorites')->first(), true) ?? [];
+            $favorites = Curriculum::whereIn('id', $favoriteIds)->get();
+        }
+        
         return view('recruiter.favorites', compact('favorites'));
     }
     public function inviteCandidates(Request $request){
@@ -305,10 +287,16 @@ class RecruiterController extends Controller
     // RDV
     public function myRdv(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous()
-        // ->where('status', '!=', 'En attente confirmation candidat')
-        // ->whereNotNull('participant')
-        ->get();
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $rdvs = $user->rendezvous()->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $rdvs = $entreprise->user->rendezvous()->get();
+        }
+
         return view('recruiter.rendez-vous.rendez-vous', compact('rdvs'));
     }
     public function seeMyRdv($id){
@@ -358,7 +346,15 @@ class RecruiterController extends Controller
     // DOCUMENTS
     public function myDocuments(){
         $user = auth()->user();
-        $documents = $user->documents()->where('type', 'document')->get();
+        
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $documents = $user->documents()->where('type', 'document')->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $documents = $entreprise->user->documents()->where('type', 'document')->get();
+        }
         return view('recruiter.documents', compact('documents'));
     }
     public function addDocument(Request $request){
@@ -489,7 +485,17 @@ class RecruiterController extends Controller
     public function myTasks(){
         // $tasks = Task::all();
         $user = auth()->user();
-        $tasks = $user->tasks;
+        
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $tasks = $user->tasks;
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $tasks = $entreprise->user->tasks;
+        }
+
         return view('recruiter.taches.index', compact('tasks'));
     }
     public function addTask(Request $request){
@@ -871,14 +877,28 @@ class RecruiterController extends Controller
     // CALENDRIER
     public function myCalendar(){
         $user = auth()->user();
-        $events = $user->events;
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $events = $user->events;
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $events = $entreprise->user->events;
+        }
         return view('recruiter.calendrier', compact('events'));
     }
 
     // FORMATIONS
     public function myFormations(){
         $user = auth()->user();
-        $formations = $user->formations;
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $formations = $user->formations;
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $formations = $entreprise->user->formations;
+        }
         return view('recruiter.formations.index', compact('formations'));
     }
     public function myFormationsCreate(){
@@ -1003,8 +1023,18 @@ class RecruiterController extends Controller
     // MAILS
     public function myMails(){
         $user = auth()->user();
-        $emails = $user->emails;
-        $receivedEmails = Email::where('receiver_id', $user->id)->get();
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $emails = $user->emails;
+            $receivedEmails = Email::where('receiver_id', $user->id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $emails = $entreprise->user->emails;
+            $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->get();
+        }
+
         $receivers = User::all();
         return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers'));
     }
@@ -1020,44 +1050,113 @@ class RecruiterController extends Controller
     // STATS
     public function stats(){
         $user = auth()->user();
-       
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $user = auth()->user();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $user = $entreprise->user;
+        }
+        
+        // Create an array with all 12 months
+        $months = [
+            '01' => 'January',
+            '02' => 'February',
+            '03' => 'March',
+            '04' => 'April',
+            '05' => 'May',
+            '06' => 'June',
+            '07' => 'July',
+            '08' => 'August',
+            '09' => 'September',
+            '10' => 'October',
+            '11' => 'November',
+            '12' => 'December',
+        ];
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+        $days = range(1, Carbon::create($currentYear, $currentMonth)->daysInMonth);
+        
         $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
         $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
+        $pendingRdvs = $user->rendezvous()->where('status', 'En attente')->count();
 
         $offresByMetier = $user->offers->groupBy('rome_code')->map->count();
-   
-        $moyenneDureeRecrutement = 555;
+        $offers = $user->offers;
+        $candidatures = $user->candidatures;
 
-        $rdvs = $user->rendezvous;
-        // Group the data by date
-        $groupedByDay = $rdvs->groupBy(function ($item) {
+        // OFFERS BY DAY
+        $groupedByDay = $offers->groupBy(function ($item) {
             return $item->created_at->toDateString(); // Assuming 'created_at' is your timestamp field
         });
-        // Calculate the count for each group
-        $countByDate = $groupedByDay->map(function ($group) {
-            return $group->count();
-        });
+        $offersByDay = [];
+        foreach ($days as $day) {
+            $dateString = Carbon::create($currentYear, $currentMonth, $day)->toDateString();
+            $offersByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
+        }
 
+        
+
+        // OFFERS BY MONTH
+        $offersByMonth = [];
+        // Initialize counts for all months
+        foreach ($months as $month => $monthName) {
+            $offersByMonth[$month] = 0;
+        }
         // Group the data by month
-        $groupedByMonth = $rdvs->groupBy(function ($item) {
-            return $item->created_at->format('Y-m'); // Group by year and month
+        $groupedByMonth = $offers->groupBy(function ($item) {
+            return $item->created_at->format('m'); // Group by month
         });
-
         // Calculate the count for each group
-        $countByMonth = $groupedByMonth->map(function ($group) {
-            return $group->count();
+        foreach ($groupedByMonth as $month => $group) {
+            $offersByMonth[$month] = $group->count();
+        }
+
+        // CANDIDATURES BY DAY
+        $groupedByDay = $candidatures->groupBy(function ($item) {
+            return $item->created_at->toDateString(); // Assuming 'created_at' is your timestamp field
         });
+        $candidaturesByDay = [];
+        foreach ($days as $day) {
+            $dateString = Carbon::create($currentYear, $currentMonth, $day)->toDateString();
+            $candidaturesByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
+        }
 
-        dd($countByDate, $countByMonth);
+        // CANDIDATURES BY MONTH
+        $candidaturesByMonth = [];
+        // Initialize counts for all months
+        foreach ($months as $month => $monthName) {
+            $candidaturesByMonth[$month] = 0;
+        }
+        // Group the data by month
+        $groupedByMonth = $candidatures->groupBy(function ($item) {
+            return $item->created_at->format('m'); // Group by month
+        });
+        // Calculate the count for each group
+        foreach ($groupedByMonth as $month => $group) {
+            $candidaturesByMonth[$month] = $group->count();
+        }
 
+        // dd($candidaturesByDay, $candidaturesByMonth);
+        $moyenneDureeRecrutement = 555;
         $dureeSusbcription = 555;
-        return view('recruiter.stats.index', compact('doneRdvs','refusedRdvs', 'offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+        return view('recruiter.stats.index', compact('candidaturesByMonth', 'candidaturesByDay', 'offersByMonth', 'offersByDay', 'doneRdvs','refusedRdvs','pendingRdvs','offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
     }
 
     // CANDIDATURE
     public function myCandidatures(){
         $user = auth()->user();
-        $candidatures = $user->candidatures;
+        
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $candidatures = $user->candidatures;
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $candidatures = $entreprise->user->candidatures;
+        }
         return view('recruiter.candidatures.index', compact('candidatures'));
     }
     public function updateCandidatureStatus(Request $request){
@@ -1070,7 +1169,15 @@ class RecruiterController extends Controller
 
     // HISTORIQUE DE RECHERCHE
     public function getSearchHistory(){
-        $histories = auth()->user()->history;
+        $user = auth()->user();
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $histories = auth()->user()->history;
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $histories = $entreprise->user->history;
+        }
         return view('recruiter.history.index', compact('histories'));
     }
     public function addHistoryRecord(Request $request){
@@ -1094,9 +1201,102 @@ class RecruiterController extends Controller
     // COMPTE ADMINISTRATEUR
     public function adminAccount(){
         $user = auth()->user();
-        $adminEntrepriseId = $user->entreprise->first()->id;
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $adminEntrepriseId = $user->entreprise->first()->id;
+        }else{
+            // OTHER TEAM MEMBERS
+            $adminEntreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $adminEntrepriseId = $adminEntreprise->id;
+        }
         $users = User::where('parent_entreprise_id', $adminEntrepriseId)->get();
+
         return view('recruiter.account.index', compact('user', 'users'));
+    }
+    public function updateProfile(Request $request){
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->birth_date = $request->birth;
+        $user->function = $request->function;
+
+        $userId = $user->id;
+
+        // Get the uploaded file
+        if($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+
+            // Generate a unique filename
+            $fileName = $userId . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+            // Store the file in the user's directory within the storage/app/public directory
+            $filePath = $file->storeAs('public/uploads/' . $userId, $fileName);
+
+            $user->avatar = $filePath;
+          
+        }
+
+        $user->save();
+        toast('Vos informations ont bien été mises à jour', 'success');
+        return redirect()->back();
+    }
+    public function updatePassword(Request $request){
+        // $user = auth()->user();
+        // $user->password = bcrypt($request->password);
+        // $user->save();
+        // toast('Votre mot de passe a bien été mis à jour', 'success');
+        // return redirect()->back();
+        $user = auth()->user();
+        $actualPassword = $request->input('actual_password');
+        $newPassword = $request->input('password');
+        $confirmedPassword = $request->input('confirmed_password');
+    
+        // Check if the actual password matches the user's hashed password
+        if (Hash::check($actualPassword, $user->password)) {
+            // Actual password is correct, proceed with updating the password
+            if ($newPassword === $confirmedPassword) {
+                // New password and confirmed password match, update the password
+                $user->password = bcrypt($newPassword);
+                $user->save();
+                toast('Votre mot de passe a bien été mis à jour', 'success');
+                return redirect()->back();
+            } else {
+                // New password and confirmed password do not match, display an error message
+                toast('La confirmation du nouveau mot de passe ne correspond pas. Veuillez réessayer.', 'error');
+                return redirect()->back();
+            }
+        } else {
+            // Actual password is incorrect, display an error message
+            toast('Le mot de passe actuel est incorrect. Veuillez réessayer.', 'error');
+            return redirect()->back();
+        }
+    }
+    public function deleteAvatar(){
+        $user = auth()->user();
+        $user->avatar = null;
+        $user->save();
+        toast('Votre avatar a bien été supprimé', 'success');
+        return redirect()->back();
+    }
+    public function deleteAccount(Request $request){
+        $user = auth()->user();
+        $password = $request->input('password');
+        // Check if the provided password matches the user's hashed password
+        if (Hash::check($password, $user->password)) {
+            // Password is correct, proceed with deletion
+            $user->delete();
+            toast('Votre compte a bien été supprimé', 'success');
+            return redirect('/');
+        } else {
+            // Password is incorrect, display an error message
+            toast('Le mot de passe est incorrect. Veuillez réessayer.', 'error');
+            return redirect()->back();
+        }
+    }
+    public function deleteUser($id){
+        $user = User::find($id);
+        $user->delete();
+        toast('L\'utilisateur a bien été supprimé', 'success');
+        return redirect()->back();
     }
 
     // CHAT

@@ -81,7 +81,7 @@
                             <h3>Mon offre d'emploi - Détails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="/mes-offres" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -95,14 +95,14 @@
                                         <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
 
-                                        <h4 class="h6 mb-3">Intitulé du poste : <span
-                                                class="text-muted">{{ $offer->job_title }}</span></h4>
+                                        <h5 class="h6 mb-3">Intitulé du poste : <span
+                                                class="text-muted">{{ $offer->job_title }}</span></h5>
 
                                         <h5 class="h6 mb-3">Date de début souhaitée : <span
                                                 class="text-muted">{{ $offer->start_date }}</span></h5>
-
-                                        <h5 class="h6 mb-3">Lieu : </h5>
+                                       
                                         <p class="small mb-3">
+                                            <h5 class="h6">Lieu : </h5>
                                             <span class="fw-bold">Ville :</span> {{ $offer->location_city }}<br>
                                             <span class="fw-bold">Code postal :</span>
                                             {{ $offer->location_postal_code }}<br>
@@ -113,9 +113,13 @@
                                                 class="text-muted">{{ $offer->contract_type }}</span></h5>
 
                                         <h5 class="h6 mb-3">Horaires de travail :
-                                            @foreach (json_decode($offer->work_schedule) as $schedule)
-                                                <span class="text-muted">{{ $schedule }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                            @endforeach    
+                                            @if ($offer->work_schedule != "null")
+                                                @foreach (json_decode($offer->work_schedule) as $schedule)
+                                                    <span class="text-muted">{{ $schedule }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
+                                                @endforeach
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
                                         </h5>
                                                 
 
@@ -126,9 +130,13 @@
                                                 class="text-muted">{{ $offer->experience_level }}</span></h5>
 
                                         <h5 class="h6 mb-3">Langues souhaitées :
-                                            @foreach (json_decode($offer->desired_languages) as $language)
-                                            <span class="text-muted">{{ $language }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                            @endforeach
+                                            @if ($offer->desired_languages != null)
+                                                @foreach (json_decode($offer->desired_languages) as $language)
+                                                <span class="text-muted">{{ $language }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
+                                                @endforeach
+                                            @else
+                                            <span class="text-muted">-</span>
+                                            @endif
                                         </h5>   
 
                                         <h5 class="h6 mb-3">Niveau d'études requis : <span

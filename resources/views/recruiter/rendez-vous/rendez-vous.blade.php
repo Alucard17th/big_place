@@ -93,8 +93,8 @@ input, select{
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
+                            <div class="chosen-outer search-container w-100">
+                                <form method="get" class="default-form form-inline w-100"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row w-100">
                                             <div class="col-4 px-1">
@@ -155,7 +155,9 @@ input, select{
                                             <th>Date de rendez-vous</th>
                                             <th>Statut</th>
                                             <th>Commentaire</th>
+                                            @unlessrole('restricted')
                                             <th>Actions</th>
+                                            @endunlessrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -172,6 +174,8 @@ input, select{
                                             <td class="text-left">{{ \Carbon\Carbon::parse($rdv->date)->formatLocalized('%d-%m-%Y') }} à {{$rdv->heure}}</td>
                                             <td class="text-left">{{$rdv->status}}</td>
                                             <td class="text-left">{{$rdv->commentaire}}</td>
+                                            
+                                            @unlessrole('restricted')
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
@@ -189,6 +193,7 @@ input, select{
                                                     Commentaire
                                                 </button>
                                             </td>
+                                            @endunlessrole
                                         </tr>
                                         @endforeach
                                     </tbody>

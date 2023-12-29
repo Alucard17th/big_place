@@ -39,14 +39,10 @@
                         </div>
                     </div>
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                        </div>
-                        <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="row mb-5">
-                                <div class="col-3">
+                                <div class="col-4">
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous effectués</h5>
@@ -55,7 +51,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-4">
+                                    <div class="card stat-card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Rendez-vous en attente</h5>
+                                            <p class="card-text">{{$pendingRdvs}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous annulés</h5>
@@ -64,20 +69,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3">
+                                <!-- <div class="col-3">
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Offres d’emploi par métier</h5>
                                             <p class="card-text">
                                                 @foreach($offresByMetier as $key => $value)
-                                                    {{$key}} : {{$value}}
+                                                {{$key}} : {{$value}}
                                                 @endforeach
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <div class="col-3">
+                                <!-- <div class="col-3">
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Durée moyenne d’embauche</h5>
@@ -89,20 +94,228 @@
                                 <div class="col-3 mt-3">
                                     <div class="card stat-card">
                                         <div class="card-body">
-                                            <h5 class="card-title">Durée de souscription du pack</h5>
+                                            <h5 class="card-title">Durée de souscription du pack:::</h5>
                                             <p class="card-text">{{$dureeSusbcription}}</p>
                                         </div>
                                     </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABLE VIEW -->
+                <div class="row mb-5">
+                    <div class="col-6">
+                        <div class="ls-widget">
+                            <div class="tabs-box">
+                                <div class="widget-content">
+                                    <h3 class="pt-3">Nombre d'offres publiées</h3>
+                                    <div class="actions row">
+                                        <div class="col-12 text-center">
+                                            <button>Jours</button>
+                                            <button class="d-none">Mois</button>
+                                        </div>
+                                    </div>
+                                    <canvas id="offres-chart" class="" width="600" height="500"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="col-6">
+                        <div class="ls-widget">
+                            <div class="tabs-box">
+                                <div class="widget-content">
+                                    <h3 class="pt-3">Nombre de candidatures</h3>
+                                    <div class="actions row">
+                                        <div class="col-12 text-center">
+                                            <button>Jours</button>
+                                            <button class="d-none">Mois</button>
+                                        </div>
+                                    </div>
+                                    <canvas id="candidatures-chart" class="" width="600" height="500"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="ls-widget">
+                            <div class="tabs-box">
+                                <div class="widget-content">
+                                    <h3 class="pt-3">Rendez-vous</h3>
+                                    <div class="actions row">
+                                        <div class="col-12 text-center">
+                                            <button>Jours</button>
+                                            <button class="d-none">Mois</button>
+                                        </div>
+                                    </div>
+                                    <canvas id="rdvs-chart" class="" width="600" height="500"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('scripts')
+<script>
+$(document).ready(function() {
+    var ctx = document.getElementById("rdvs-chart").getContext('2d');
+    var ctx2 = document.getElementById("offres-chart").getContext('2d');
+    var ctx3 = document.getElementById("candidatures-chart").getContext('2d');
+    const rdvsEffectue = @json($doneRdvs);
+    const rdvsCancelled = @json($refusedRdvs);
+    const rdvsPending = @json($pendingRdvs);
+
+    let offersByDay = @json($offersByDay);
+    let offersByMonth = @json($offersByMonth);
+
+    let candidaturesByDay = @json($candidaturesByDay);
+    let candidaturesByMonth = @json($candidaturesByMonth);
+
+    console.log('rdvs', offersByDay);
+    console.log('rdvs', offersByMonth);
+
+    var labels = Object.keys(candidaturesByDay);
+    var data = Object.values(candidaturesByDay);
+    var myChartCandidatures = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Candidatures',
+                data: data,
+                backgroundColor: '#0049FC', 
+                borderColor: '#0049FC',
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            legend: {
+                display: true
+            },
+            scales: {
+                
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 6
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+                    }
+                }
+            },
+            layout: {
+                padding: 10
+            }
+        }
+    });
+
+    labels = Object.keys(offersByDay);
+    data = Object.values(offersByDay);
+    var myChartOffers = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Offres',
+                data: data,
+                backgroundColor: '#0049FC', 
+                borderColor: '#0049FC',
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            legend: {
+                display: true
+            },
+            scales: {
+                
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 6
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+                    }
+                }
+            },
+            layout: {
+                padding: 10
+            }
+        }
+    });
+
+    var myChartRdvs = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Rdv effectué", "Rdv annulé", "Rdv en attente"],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [rdvsEffectue, rdvsCancelled, rdvsPending],
+                backgroundColor: [
+                    '#0049FC',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            legend: {
+                display: true
+            },
+            scales: {
+                
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        // This more specific font property overrides the global property
+                        font: {
+                            size: 6
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+                    }
+                }
+            },
+            layout: {
+                padding: 10
+            }
+        }
+    });
+
+    
+})
+</script>
 @endpush

@@ -2195,6 +2195,20 @@ h6 {
     margin-left: 10px;
 }
 
+#data-table-draft_paginate{
+    text-align: left !important;
+}
+#data-table-draft_paginate span{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#data-table-draft_previous{
+    margin-right: 10px;
+}
+#data-table-draft_next{
+    margin-left: 10px;
+}
+
 #data-table-two tbody td{
     font-size: 15px;
     padding-top:12px;
@@ -2364,5 +2378,9 @@ input[type=checkbox]:checked:before {
     -webkit-transition: all 300ms ease;
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
+}
+
+.filepond--credits{
+    display: none !important;
 }
  /* NRD STYLES END */

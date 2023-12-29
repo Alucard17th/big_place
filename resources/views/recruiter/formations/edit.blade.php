@@ -31,8 +31,16 @@
 @section('content')
 <div class="user-dashboard bc-user-dashboard">
     <div class="dashboard-outer">
-        <div class="upper-title-box">
-            <h3>Modifier ma formation</h3>
+        <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+            <div class="d-flex align-items-center justify-content-center">
+                <h3>Ajouter une formation</h3>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="/mes-formations" class="bg-back-btn mr-2">
+                    <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
+                    Retour
+                </a>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12">

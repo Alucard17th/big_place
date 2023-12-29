@@ -118,8 +118,8 @@ input, select{
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
+                            <div class="chosen-outer search-container w-100">
+                                <form method="get" class="default-form form-inline w-100"
                                     action="">
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
@@ -166,7 +166,9 @@ input, select{
                                             <th>Date de fin</th>
                                             <th>Statut</th>
                                             <th>Description</th>
+                                            @unlessrole('restricted')
                                             <th>Actions</th>
+                                            @endunlessrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,6 +185,7 @@ input, select{
                                                 @endif
                                             </td>
                                             <td class="text-left">{{Str::limit($task->description, $limit = 30, $end = '...')}}</td>
+                                            @unlessrole('restricted')
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
@@ -204,6 +207,7 @@ input, select{
                                                 </a>
                                                 @endrole
                                             </td>
+                                            @endunlessrole
                                         </tr>
                                         @endforeach
                                     </tbody>

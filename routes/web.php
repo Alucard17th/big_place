@@ -177,6 +177,11 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
 
     // COMPTE ADMINISTRATEUR
     Route::get('/compte-administrateur', [RecruiterController::class, 'adminAccount'])->name('recruiter.admin.account');
+    Route::post('/compte-administrateur/update', [RecruiterController::class, 'updateProfile'])->name('recruiter.admin.account.update');
+    Route::get('/compte-administrateur/avatar/delete', [RecruiterController::class, 'deleteAvatar'])->name('recruiter.admin.account.avatar.delete');
+    Route::post('/compte-administrateur/update-password', [RecruiterController::class, 'updatePassword'])->name('recruiter.admin.password.update');
+    Route::post('/compte-administrateur/account-delete', [RecruiterController::class, 'deleteAccount'])->name('recruiter.admin.account.delete');
+    Route::get('/compte-administrateur/user-delete/{id}', [RecruiterController::class, 'deleteUser'])->name('recruiter.admin.user.delete');
     
     // USERS
     Route::post('/compte-administrateur/create-user', [AdminController::class, 'createUser'])->name('recruiter.user.create');

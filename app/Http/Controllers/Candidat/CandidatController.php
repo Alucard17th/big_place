@@ -8,7 +8,6 @@ use App\Models\Job;
 use App\Models\Candidature;
 use App\Models\RendezVous;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Hash;
 
 class CandidatController extends Controller

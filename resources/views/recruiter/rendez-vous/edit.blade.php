@@ -44,7 +44,7 @@
                             <h3>Mon Rendez-vous</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="/mes-rendez-vous" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>

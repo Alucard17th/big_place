@@ -203,7 +203,7 @@ jQuery(function ($) {
             success: function (data) {
                 const userRole = form.find('input[name=_role]').val()
                 if(userRole === 'recruiter'){
-                    window.location.href = '/recruiter-dashboard';
+                    window.location.href = '/ma-vitrine';
                 }else{
                     window.location.href = '/candidat-dashboard';
                 }

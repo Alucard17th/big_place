@@ -74,11 +74,6 @@
                         </div>
                     </div>
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                           
-                        </div>
-
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -152,10 +147,12 @@
                                                     <i class="las la-download"></i>
                                                     Documents
                                                 </a>
+                                                @role('recruiter')
                                                 <a href="{{ route('recruiter.events.delete', $event->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir supprimer cet événement?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
+                                                @endrole
                                             </td>
                                             @endunlessrole
 
@@ -231,7 +228,7 @@
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
-                        <label class="form-check-label" for="free_entry">Gratuit</label>
+                        <label class="form-check-label" for="free_entry">Gratuite</label>
                     </div>
                 </div>
                 <div class="col-6">
@@ -251,7 +248,7 @@
                         <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
                     </div> -->
                 <!-- </div> -->
-                <div class="col-6">
+                <div class="col-12">
                     <!-- Field: Required Documents -->
                     <div class="form-group">
                         <label class="text-dark" for="required_documents">Documents requis pour la participation</label>

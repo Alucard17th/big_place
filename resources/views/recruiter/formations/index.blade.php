@@ -124,11 +124,13 @@
                                                     <i class="las la-trash"></i>
                                                     Annuler
                                                 </a>
+                                                @role('recruiter')
                                                 <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
                                                 onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
+                                                @endrole
                                             </td>
                                             @endunlessrole
 

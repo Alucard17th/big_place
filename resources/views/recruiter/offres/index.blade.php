@@ -38,12 +38,6 @@
                         </div>
                     </div>
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer">
-                            </div>
-                        </div>
-
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -104,17 +98,6 @@
                         </div>
                     </div>
 
-                    <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer">
-                            </div>
-                        </div>
-
-                        <!-- TABLE AND GRID VIEW -->
-                       
-                    </div>
-
                
                 </div>
 
@@ -125,17 +108,11 @@
                         </div>
                     </div>
                     <div class="tabs-box">
-                        <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer">
-                            </div>
-                        </div>
-
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="table table-sm table-bordered" id="data-table">
+                                <table class="table table-sm table-bordered" id="data-table-draft">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>Nom projet</th>
@@ -307,6 +284,27 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#data-table-draft').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    })
+
+    $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 });
 </script>
 @endpush

@@ -83,11 +83,13 @@
                                                     <i class="las la-edit"></i>
                                                     Aperçu
                                                 </a>
-                                                <a href="{{ route('recruiter.document.delete', $document->id) }}" type="button" class="bg-btn-four">
+                                                @role('recruiter')
+                                                <a href="{{ route('recruiter.document.delete', $document->id) }}" type="button" class="bg-btn-four" onclick="return confirm('Etes vous sur de vouloir supprimer ce document?')">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
+                                                @endrole
                                             </td>
                                         </tr>
                                         @endforeach

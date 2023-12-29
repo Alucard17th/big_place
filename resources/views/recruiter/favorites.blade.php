@@ -169,11 +169,15 @@ input, select{
                                             <!-- <td class="text-left">XXX</td> -->
                                             
                                             <td class="text-left">
+                                                @if($curriculum->cv && $curriculum->cv != '')
                                                 <a href="{{ asset('storage'.$curriculum->cv) }}" type="button" class="bg-btn-nine" target="_blank">
                                                     <i class="las la-eye mr-2"></i>Consulter le profil
                                                 </a>
+                                                @endif
+                                                @unlessrole('restricted')
                                                 <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <br>
+                                                @endunlessrole
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->
                                                 <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
