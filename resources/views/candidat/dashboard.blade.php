@@ -22,12 +22,15 @@
     padding-top: 30px;
 }
 
+.dashboard-link {
+    width : 19vw !important;
+}
 .dashboard-link img {
     border-radius: 20px;
 }
 
 .dashboard-link:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     /* Scale the button on hover */
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
