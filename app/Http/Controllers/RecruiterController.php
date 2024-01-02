@@ -28,6 +28,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Vues;
 
 class RecruiterController extends Controller
 {   
@@ -35,7 +36,65 @@ class RecruiterController extends Controller
     // DASHBOARD
     public function dashboard(){
         $jobs = Job::all();
-        return view('recruiter.dashboard', compact('jobs'));
+        $user = auth()->user();
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $entreprise = $user->entreprise->first();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+        }
+        $entrepriseViews = $entreprise->vues;
+
+        $vuesByDay = Vues::where('entreprise_id', $entreprise->id)
+        ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+        ->groupBy('date')
+        ->orderBy('date', 'desc')
+        ->get();
+        $vuesByWeek = Vues::where('entreprise_id', $entreprise->id)
+        ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
+        ->groupBy('week')
+        ->orderBy('week', 'desc')
+        ->get();
+        foreach($vuesByWeek as $key => $value){
+            // echo ($value->week . '<br>');
+            // echo ($key . '<br>');
+            $year = substr($value->week, 0, 4);
+            $week = substr($value->week, -2);
+            echo ($year . '<br>');
+            echo ($week . '<br>');
+            // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
+            // Start with the first day of the year
+            $date = Carbon::createFromDate(2023, 1, 1);
+
+            // Move to the desired ISO week
+            $weekStart = $date->setISODate($year, $week);
+            $weekEnd = $weekStart->addDays(6);
+
+            // echo ($weekStart . '<br>');
+            // echo ($weekEnd . '<br>');
+
+        }
+        $vuesByMonth = Vues::where('entreprise_id', $entreprise->id)
+        ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
+        ->groupBy('month', 'year')
+        ->orderBy('year', 'desc')
+        ->orderBy('month', 'desc')
+        ->get();
+        // dd($vuesByDay, $vuesByWeek, $vuesByMonth);
+        // dd($jobs);
+        return view('recruiter.dashboard', compact('jobs', 'entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
+    }
+    public function getJobsJson(){
+        $page = request('page', 1); // Get page number from request
+        $perPage = 20; // Adjust as needed
+
+        $jobs = Job::paginate($perPage, ['*'], 'page', $page);
+        return response()->json([
+            'items' => $jobs->items(),
+            'total_count' => $jobs->total(),
+        ]);
     }
     // CV THEQUE
     public function cvtheque(){
@@ -53,40 +112,108 @@ class RecruiterController extends Controller
         $jobs = Job::all();
         return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
-    public function cvthequeSearch(Request $request){
-        $searchTerm = $request->all();
+    // public function cvthequeSearch(Request $request){
+    //     $searchTerm = $request->all();
 
+    //     // Create a query builder instance
+    //     $query = Curriculum::query();
+    //     // $score = 0;
+
+    //     // Apply search conditions for each field
+    //     // if (!empty($searchTerm['metier_recherche']) && $searchTerm['metier_recherche'] != '') {
+    //     //     $query->where('metier_recherche', 'like', '%' . $searchTerm['metier_recherche'] . '%');
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+    //     // if (!empty($searchTerm['ville_domiciliation']) && $searchTerm['ville_domiciliation'] != '') {
+    //     //     $query->where('ville_domiciliation', 'like', '%' . $searchTerm['ville_domiciliation'] . '%')
+    //     //     ->orWhere('address', 'like', '%' . $searchTerm['ville_domiciliation'] . '%');
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+    //     // if (!empty($searchTerm['annees_experience']) && $searchTerm['annees_experience'] != '') {
+    //     //     $query->where('annees_experience', 'like', '%' . $searchTerm['annees_experience'] . '%');
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+    //     // if (!empty($searchTerm['niveau_etudes']) && $searchTerm['niveau_etudes'] != '') {
+    //     //     $query->where('niveau_etudes', 'like', '%' . $searchTerm['niveau_etudes'] . '%');
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+    //     // if (!empty($searchTerm['pretentions_salariales']) && $searchTerm['pretentions_salariales'] != '') {
+    //     //     $query->where('pretentions_salariales', 'like', '%' . $searchTerm['pretentions_salariales'] . '%');
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+    //     // if (!empty($searchTerm['valeurs']) && $searchTerm['valeurs'] != '') {
+    //     //     $query->where(function ($query) use ($searchTerm) {
+    //     //         $query->orWhereJsonContains('valeurs', $searchTerm['valeurs']);
+    //     //     });
+    //     //     $score += $query->count() > 0 ? 10 : 0;
+    //     //     echo $query->count() > 0 ? 10 : 0;
+    //     // }
+
+        
+
+    //     // $curriculums = $query->get();
+    //     // $total_possible_score = 60;
+    //     // foreach ($curriculums as $curriculum) {
+    //     //     $curriculum->matching_percentage = ($score / $total_possible_score) * 100;
+    //     // }
+
+    //     dd($curriculums);
+
+    //     $jobs = Job::all();
+
+    //     return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
+    // }
+    public function cvthequeSearch(Request $request)
+    {
+        $searchTerm = $request->all();
+        
         // Create a query builder instance
         $query = Curriculum::query();
-
-        // Apply search conditions for each field
-        if (!empty($searchTerm['metier_recherche'])) {
-            $query->where('metier_recherche', 'like', '%' . $searchTerm['metier_recherche'] . '%');
-        }
-        if (!empty($searchTerm['ville_domiciliation'])) {
-            $query->where('ville_domiciliation', 'like', '%' . $searchTerm['ville_domiciliation'] . '%')
-            ->orWhere('address', 'like', '%' . $searchTerm['ville_domiciliation'] . '%');
-        }
-        if (!empty($searchTerm['annees_experience'])) {
-            $query->where('annees_experience', 'like', '%' . $searchTerm['annees_experience'] . '%');
-        }
-        if (!empty($searchTerm['niveau_etudes'])) {
-            $query->where('niveau_etudes', 'like', '%' . $searchTerm['niveau_etudes'] . '%');
-        }
-        if (!empty($searchTerm['pretentions_salariales'])) {
-            $query->where('pretentions_salariales', 'like', '%' . $searchTerm['pretentions_salariales'] . '%');
-        }
-        if (!empty($searchTerm['valeurs'])) {
-            $query->where(function ($query) use ($searchTerm) {
-                $query->orWhereJsonContains('valeurs', $searchTerm['valeurs']);
-            });
-        }
-
+        
+        // Execute the query and get the results
         $curriculums = $query->get();
+        
+        $total_possible_score = 60;
+
+        // Calculate the matching percentage for each result
+        foreach ($curriculums as $curriculum) {
+            $score = 0; // Initialize score for each curriculum
+
+            // Apply search conditions for each field
+            if (!empty($searchTerm['metier_recherche']) && $searchTerm['metier_recherche'] != '') {
+                $score += strpos($curriculum->metier_recherche, $searchTerm['metier_recherche']) !== false ? 10 : 0;
+            }
+            if (!empty($searchTerm['ville_domiciliation']) && $searchTerm['ville_domiciliation'] != '') {
+                $score += (strpos($curriculum->ville_domiciliation, $searchTerm['ville_domiciliation']) !== false ||
+                        strpos($curriculum->address, $searchTerm['ville_domiciliation']) !== false) ? 10 : 0;
+            }
+            if (!empty($searchTerm['annees_experience']) && $searchTerm['annees_experience'] != '') {
+                $score += strpos($curriculum->annees_experience, $searchTerm['annees_experience']) !== false ? 10 : 0;
+            }
+            if (!empty($searchTerm['niveau_etudes']) && $searchTerm['niveau_etudes'] != '') {
+                $score += strpos($curriculum->niveau_etudes, $searchTerm['niveau_etudes']) !== false ? 10 : 0;
+            }
+            if (!empty($searchTerm['pretentions_salariales']) && $searchTerm['pretentions_salariales'] != '') {
+                $score += strpos($curriculum->pretentions_salariales, $searchTerm['pretentions_salariales']) !== false ? 10 : 0;
+            }
+            if (!empty($searchTerm['valeurs']) && $searchTerm['valeurs'] != '') {
+                $score += in_array($searchTerm['valeurs'], json_decode($curriculum->valeurs, true)) ? 10 : 0;
+            }
+
+            // Calculate the matching percentage for the current curriculum
+            $curriculum->matching_percentage = ($score / $total_possible_score) * 100;
+        }
+
 
         $jobs = Job::all();
+        $isSearch = true;
 
-        return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
+        return view('recruiter.cvtheque', compact('curriculums', 'jobs', 'isSearch'));
     }
 
     // FAVORIS

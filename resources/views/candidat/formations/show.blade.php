@@ -197,7 +197,7 @@ background: #13D527;
                             <h3>Détails de la formation</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="/candidat-formation" class="bg-back-btn mr-2">
                                 Retour
                             </a>
                         </div>

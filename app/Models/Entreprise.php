@@ -19,11 +19,17 @@ class Entreprise extends Model
         'effectif',
         'fondateurs',
         'chiffre_affaire',
-        'user_id'
+        'user_id',
+        'vues'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function vues()
+    {
+        return $this->hasMany(Vues::class, 'entreprise_id');
     }
 }

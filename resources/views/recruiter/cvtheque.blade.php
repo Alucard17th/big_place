@@ -84,7 +84,7 @@ input, select{
                                     <div class="row">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                            <select name="metier_recherche" id="metier_recherche" class="form-control" required>
+                                            <select name="metier_recherche" id="metier_recherche" class="form-control" >
                                                 <option value="" selected>Métier / Code Rome</option>
                                                 @foreach($jobs as $job)
                                                     <option value="{{$job->id}}" @if(request('metier_recherche') == $job->id) selected @endif>{{$job->id}} - {{$job->full_name}}</option>    
@@ -96,13 +96,13 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="ville_domiciliation" id="ville_domiciliation" placeholder="Ville / département"
-                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2" required>
+                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2" >
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <select class="form-control" id="annees_experience" name="annees_experience" required>
+                                                <select class="form-control" id="annees_experience" name="annees_experience" >
                                                     <option value=""  selected>Année d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
@@ -114,13 +114,13 @@ input, select{
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control" required>
+                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
                                                         <option value=""  selected>Niveau d'études</option>
                                                         <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                         <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
-                                                        <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
-                                                        <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
-                                                        <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                        <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
+                                                        <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
+                                                        <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                                     </select>
                                             </div>
                                         </div>
@@ -128,13 +128,13 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
-                                                    value="{{ request('pretentions_salariales') }}" class="form-control" required>
+                                                    value="{{ request('pretentions_salariales') }}" class="form-control" >
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0">
-                                                <select name="valeurs[]" id="values_select" class="" multiple required>
+                                                <select name="valeurs[]" id="values_select" class="" multiple >
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
                                                     <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
@@ -183,6 +183,9 @@ input, select{
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
+                                            @if(isset($isSearch) && $isSearch == true)
+                                            <th>Matching</th>
+                                            @endif
                                             <th>Nom</th>
                                             <th>Ville</th>
                                             <th>Années d’expérience</th>
@@ -196,7 +199,15 @@ input, select{
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$curriculum->id}}"></td>
-                                            <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
+                                            @if(isset($isSearch) && $isSearch == true)
+                                            <td>
+                                                <span class="matching-percentage badge badge-success">{{ number_format($curriculum->matching_percentage, 2) }} %</span>
+                                            </td>
+                                            @endif
+                                            <td class="text-left">
+                                                
+                                                {{$curriculum->nom}} {{$curriculum->prenom}}
+                                            </td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>

@@ -9,6 +9,7 @@ use App\Models\Offre;
 use App\Models\User;
 use App\Models\Entreprise;
 use App\Models\History;
+use App\Models\Vues;
 use Carbon\Carbon;
 
 class CandidatureController extends Controller
@@ -51,9 +52,28 @@ class CandidatureController extends Controller
 
     public function vitrineShow($id){
         $user = User::find($id);
-        $entreprise = $user->entreprise->first();
-        $offres = Offre::where('user_id', $id)->get();
-        // dd($offres);
+
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $entreprise = $user->entreprise->first();
+            $offres = Offre::where('user_id', $id)->get();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+            $offres = Offre::where('user_id', $user->parent_entreprise_id)->get();
+        }
+
+        $vue = new Vues();
+        $vue->count = 1;
+        $vue->entreprise_id = $entreprise->id;
+        $vue->save();
+        
+        // $entreprise->vues()->attach($vue);
+        
+        $entreprise->vues = $entreprise->vues + 1;
+
+        $entreprise->save();
+        
         return view('candidat.favorites.vitrine', compact('entreprise', 'offres'));
     }
 

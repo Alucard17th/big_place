@@ -241,7 +241,7 @@ select {
                                             <h4 class="offre-title">
                                                 {{$offer->job_title}}</h4>
                                             <div class="d-flex">
-                                                <a href="{{ route('candidat.dashboard') }}"
+                                                <a href="/candidat-offers"
                                                     class="bg-back-btn mr-2 pb-0">
                                                     Retour
                                                 </a>

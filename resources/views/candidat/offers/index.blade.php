@@ -180,6 +180,9 @@ input, select{
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
+                                            @if(isset($isSearch) && $isSearch == true)
+                                            <th>Matching</th>
+                                            @endif
                                             <th>Titre de l'offre</th>
                                             <th>Ville / département</th>
                                             <th>Années d'expérience</th>
@@ -189,10 +192,15 @@ input, select{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($offres as $offer)
+                                        @foreach ($offers as $offer)
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
+                                            @if(isset($isSearch) && $isSearch == true)
+                                            <td>
+                                                <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 2) }} %</span>
+                                            </td>
+                                            @endif
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>

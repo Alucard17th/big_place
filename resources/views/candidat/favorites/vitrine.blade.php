@@ -147,7 +147,7 @@
                 <h3>Vitrine d'entreprise</h3>
             </div>
             <div class="d-flex align-items-center">
-                <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                <a href="/candidat-offers" class="bg-back-btn mr-2">
                     <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                     Retour
                 </a>

@@ -77,7 +77,8 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
 Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
-
+    Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
+    
     //
     Route::get('/cv-theque', [RecruiterController::class, 'cvtheque'])->name('recruiter.cvtheque');
     Route::get('/cv-theque-search', [RecruiterController::class, 'cvthequeSearch'])->name('recruiter.cvtheque.search');

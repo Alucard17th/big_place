@@ -22,12 +22,15 @@
     padding-top:30px;
 }
 
+.dashboard-link {
+    width : 19vw !important;
+}
 .dashboard-link img {
     border-radius: 20px;
 }
 
 .dashboard-link:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     /* Scale the button on hover */
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
@@ -67,7 +70,7 @@
     padding-left:6px;
     font-weight: 400 !important;
     line-height: 1.5 !important;
-    color: #8f959b !important;
+    color: #000 !important;
     background-color: #fff !important;
     background-clip: padding-box !important;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
@@ -84,13 +87,17 @@
     padding-left: 25px !important;
 }
 #ville_domiciliation{
-    padding-left: 40px !important;
+    color: #000 !important;
+    padding-left: 37px !important;
+}
+#ville_domiciliation::placeholder, #pretentions_salariales::placeholder, #annees_experience::placeholder, #niveau_etudes::placeholder, #valeurs::placeholder, #metier_recherche::placeholder{
+    color: #000 !important; /* Choose your desired color */
 }
 .select2-search__field{
-    color:#8f959b !important;
+    color:#000 !important;
 }
 .select2-selection__rendered{
-    color:#8f959b !important;
+    color:#000 !important;
     padding-left:18px;
 }
 
@@ -108,14 +115,6 @@
 }
 .chartjs-render-monitor{
     height: 300px !important;
-}
-
-#annees_experience{
-    /* width:244.5px !important;
-    height: 48px !important;
-    border-radius: 8px;
-    border: 1px solid #1C1C1E7A;
-    padding : 7px 8px 5px 16px;  */
 }
 
 #search-btn{
@@ -150,7 +149,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6 px-2">
+            <div class="col-9 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                     <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -161,10 +160,10 @@
                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt="" 
                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                     <select name="metier_recherche" id="metier_recherche" class="form-control" required>
-                                    <option value="" selected>Métier / Code Rome</option>
-                                        @foreach($jobs as $job)
+                                        <option value="" selected>Métier / Code Rome</option>
+                                        <!-- @foreach($jobs as $job)
                                         <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
-                                        @endforeach
+                                        @endforeach -->
                                     </select>
                                 </div>
                                 <div class="form-group mb-2">
@@ -173,7 +172,7 @@
                                     <input type="text" name="ville_domiciliation" id="ville_domiciliation" value="" class="form-control mb-2" placeholder="Ville / Département" required>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <input type="text" name="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales" required>
+                                    <input type="text" name="pretentions_salariales" id="pretentions_salariales" value="" class="form-control" placeholder="Pretentions salariales (ke)" required>
                                 </div>
                             </div>
 
@@ -238,11 +237,31 @@
                 </div>
             </div>
 
-            <div class="col-6 px-2">
+            <div class="col-3 px-2">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="text-dark dashboard-card-title">Nombre de vues de la vitrine</h4>
-                        <canvas id="myChart" class="px-2 pt-2"></canvas>
+                        <h4 class="text-dark dashboard-card-title d-inline">Nombre de vues de la vitrine</h4>
+                        <div class="row w-100">
+                            <div class="col-12">Jour</div>
+                            @foreach($vuesByDay as $value)
+                            <div class="">
+                                {{$value['date']}} - {{$value['count']}} vues
+                            </div>
+                            @endforeach
+                                <div class="col-12">Semaine</div>
+                            @foreach($vuesByWeek as $value)
+                            <div class="">
+                                {{$value['week']}} - {{$value['count']}} vues
+                            </div>
+                            @endforeach
+                                <div class="col-12">Mois</div>
+                            @foreach($vuesByMonth as $value)
+                            <div class="">
+                                {{$value['month']}} - {{$value['year']}} - {{$value['count']}} vues
+                            </div>
+                            @endforeach
+                        </div>
+                        <!-- <canvas id="myChart" class="px-2 pt-2"></canvas> -->
                     </div>
                 </div>
             </div>
@@ -446,7 +465,84 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     });
     $("#niveau_etudes").select2({});
-    $("#metier_recherche").select2({});
+    $("#annees_experience").select2({});
+    $("#metier_recherche").select2({
+       
+    });
+
+        
+    var currentPage = 1;
+    var isFetching = false; // Flag to track request status
+
+    async function getJsonJobs(){
+       await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function (data) {
+                // Populate the Select2 dropdown with the received data
+                var options = data.items.map(function (job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                $('#metier_recherche').append(options).trigger("change");
+                isFetching = false;
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    async function refreshJsonJobs(){
+       await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function (data) {
+                // Populate the Select2 dropdown with the received data
+                var options = data.items.map(function (job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                const scrollTop = $('.select2-results__options').scrollTop();
+                $('#metier_recherche').append(options).trigger("change");
+
+                $('#metier_recherche').select2('close');
+                $('#metier_recherche').select2('open');
+                $('.select2-results__options').scrollTop(scrollTop + 1);
+
+                console.log(scrollTop);
+
+                isFetching = false;
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    getJsonJobs();
+    
+    $('#metier_recherche').on('select2:open',  function () {
+        const resultsContainer = $('.select2-results__options');
+        resultsContainer.on('scroll', function() {
+            // This function will be called whenever the user scrolls the options list
+            console.log("scroll");
+            const scrollTop = $(this).scrollTop();
+            const scrollHeight = $(this).prop('scrollHeight');
+            const clientHeight = $(this).innerHeight();
+
+            // Check if the user has scrolled near the bottom:
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
+                // Trigger infinite scrolling or other actions as needed
+                console.log('Near the bottom!');
+                currentPage++;
+                isFetching = true;
+                refreshJsonJobs();
+            }
+        });
+    });
 
     const valuesSelect = document.getElementById("values_select");
 
@@ -626,63 +722,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   calendar.render();
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [2, 9, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(245, 247, 252, 1)'
-                ],
-                borderColor: [
-                    '#0049FC'
-                ],
-                borderWidth: 3
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    },
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)",
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        color: "rgba(0, 0, 0, 0)",
-                    }
-                }]
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        font: {
-                            size: 6
-                            }
-                        }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-                    }
-                }
-            },
-            layout: {
-                padding: 10
-            }
-        }
-    });
+   
 });
 </script>
 @endpush
