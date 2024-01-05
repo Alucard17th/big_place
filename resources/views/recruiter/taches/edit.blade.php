@@ -45,7 +45,7 @@
                                 <input type="hidden" name="task_id" value="{{ $task->id }}">
 
                                 <div class="form-group">
-                                    <label for="nom_task">Nom tâches</label>
+                                    <label for="nom_task">Nom de la tâche</label>
                                     <input type="text" class="form-control" name="nom_task" id="nom_task"
                                         value="{{ $task->title }}">
                                 </div>
@@ -61,7 +61,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Statut</label>
                                         <select class="form-control" name="status" id="status">
                                             <option value="0" @if($task->completed == '0') selected @endif>En cours</option>
                                             <option value="1" @if($task->completed == '1') selected @endif>Terminée</option>
@@ -94,5 +94,11 @@
 @endsection
 
 @push('scripts')
-
+<script>
+    // when document is ready 
+    $(document).ready(function() {
+        document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+        document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    })
+</script>
 @endpush

@@ -223,7 +223,7 @@
                                                 <a href="{{ route('candidat.event.unsubscribe', $event->id) }}"
                                                     type="button" class="bg-btn-four mt-2"
                                                     onclick="return confirm('Etes vous sur de vouloir ne plus participer à cet événement?')">
-                                                    Annuler la participation
+                                                    Annuler ma participation
                                                 </a>
                                                 <a href="{{route('candidat.vitrine.show', $event->user_id)}}"
                                                     type="button" class="bg-btn-three mt-2">
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let eventName = getQrCodeBtn.getAttribute('data-event-name');
         let qrcodeImg = ''
         $.ajax({
-            url: "{{ route('candidat.event.qrcode', 4) }}",
+            url: "/event/candidat/qrcode/" + eventId,
             type: 'GET',
             dataType: 'text',
             success: function(data) {
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
         html2canvas(elementToSave).then(canvas => {
             const a = document.createElement("a");
             a.href = canvas.toDataURL("image/jpeg");
-            a.download = "image.jpeg";
+            a.download = "Mon-Badge.jpeg";
             a.click();
             loadingElement.style.display = 'none';
         });

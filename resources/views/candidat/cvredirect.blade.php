@@ -112,7 +112,7 @@ color: #2D2F30;
 
 #create-cv-form > div:nth-child(6) > div > div > span,
 #create-cv-form > div:nth-child(5) > div:nth-child(1) > div > span{
-    width: unset !important;
+    width: 100% !important;
 }
 </style>
 @endpush
@@ -340,7 +340,7 @@ color: #2D2F30;
                                         <label for="valeurs" class="form-label text-dark">Les valeurs</label>
                                         <!-- <textarea class="form-control" id="valeurs" name="valeurs" rows="3"
                                             required></textarea> -->
-                                        <select name="valeurs[]" id="values_select" class="form-control w-100" multiple>
+                                        <select name="valeurs[]" id="values_select" class="form-control" multiple>
                                             <option value="respect" @if(isset($curriculum->valeurs) && in_array('respect', json_decode($curriculum->valeurs))) selected @endif>Le respect
                                             </option>
                                             <option value="adaptabilite" @if(isset($curriculum->valeurs) &&
@@ -481,7 +481,15 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder: "Valeurs",
     });
     $("#values_select").select2({
-        placeholder: "Valeurs",
+        placeholder: "Vos valeurs",
+        width: '100%',
+        maximumSelectionLength: 5,
+        language: {
+            maximumSelected: function(e) {
+                return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
+            }
+        }
     });
 
     $('#edit-profile').click(function() {

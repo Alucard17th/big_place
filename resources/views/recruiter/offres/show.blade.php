@@ -98,17 +98,18 @@
                                         <h5 class="h6 mb-3">Intitulé du poste : <span
                                                 class="text-muted">{{ $offer->job_title }}</span></h5>
 
-                                        <h5 class="h6 mb-3">Date de début souhaitée : <span
-                                                class="text-muted">{{ $offer->start_date }}</span></h5>
+                                        <h5 class="h6 mb-3">Date de démarrage souhaitée : <span
+                                                class="text-muted">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</span></h5>
                                        
                                         <p class="small mb-3">
-                                            <h5 class="h6">Lieu : </h5>
+                                            <h5 class="h5 font-weight-bold">Lieu</h5>
                                             <span class="fw-bold">Ville :</span> {{ $offer->location_city }}<br>
                                             <span class="fw-bold">Code postal :</span>
                                             {{ $offer->location_postal_code }}<br>
                                             <span class="fw-bold">Adresse :</span> {{ $offer->location_address }}
                                         </p>
 
+                                        <h5 class="h5 font-weight-bold">Détails</h5>
                                         <h5 class="h6 mb-3">Type de contrat : <span
                                                 class="text-muted">{{ $offer->contract_type }}</span></h5>
 
@@ -147,6 +148,20 @@
 
                                         <h5 class="h6 mb-3">Secteur d'activité : <span
                                                 class="text-muted">{{ $offer->industry_sector }}</span></h5>
+                                        
+                                        <h5 class="h6 mb-3">Avantages : <span
+                                            class="text-muted">{{ $offer->benefits }}</span></h5>
+
+                                        <h5 class="h6 mb-3">Canaux de diffusions :
+                                            @if ($offer->selected_jobboards != null)
+                                                @foreach (json_decode($offer->selected_jobboards) as $jobboars)
+                                                <span class="text-muted">{{ ucfirst(str_replace('_', ' ', $jobboars)) }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
+                                                @endforeach
+                                            @else
+                                            <span class="text-muted">-</span>
+                                            @endif
+                                        </h5>   
+                                        
                                     </div>
                                 </div>
                             </div>

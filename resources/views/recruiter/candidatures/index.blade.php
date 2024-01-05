@@ -52,6 +52,7 @@
         </div>
     </div>
 </div>
+{{$candidatures}}
 @endsection
 
 @push('scripts')
@@ -63,19 +64,33 @@
         const candidature = @json($candidatures);
         console.log(candidature);
         // from this array get objects where status is 'refused'
-        const coming = candidature.filter((candidature) => candidature.status === 'coming');
-        const refused = candidature.filter((candidature) => candidature.status === 'refused');
-        const waiting = candidature.filter((candidature) => candidature.status === 'waiting');
-        const reflection = candidature.filter((candidature) => candidature.status === 'reflection');
-        const done = candidature.filter((candidature) => candidature.status === 'done');
-        console.log(coming);
+        // const coming = candidature.filter((candidature) => candidature.status === 'coming');
+        const coming = candidature.filter((candidature) => candidature.status === 'coming').map((candidature) => ({
+            title: candidature.candidat_name + '<br/>' + candidature.title, // Assuming name is the current title
+        }));
 
-var kanban1 = new jKanban({
+        const refused = candidature.filter((candidature) => candidature.status === 'refused').map((candidature) => ({
+            title: candidature.candidat_name + '<br/>' + candidature.title, // Assuming name is the current title
+        }));
+
+        const waiting = candidature.filter((candidature) => candidature.status === 'waiting').map((candidature) => ({
+            title: candidature.candidat_name + '<br/>' + candidature.title, // Assuming name is the current title
+        }));
+
+        const reflection = candidature.filter((candidature) => candidature.status === 'reflection').map((candidature) => ({
+            title: candidature.candidat_name + '<br/>' + candidature.title, // Assuming name is the current title
+        }));
+
+        const done = candidature.filter((candidature) => candidature.status === 'done').map((candidature) => ({
+            title: candidature.candidat_name + '<br/>' + candidature.title, // Assuming name is the current title
+        }));
+
+    var kanban1 = new jKanban({
         element:'#demo1',
         boards  :[
             {
                 'id' : 'coming',
-                'title'  : 'Entretiens à programmer',
+                'title'  : 'Entretiens programmés',
                 'class' : 'coming',
                 'item'  : coming
             },

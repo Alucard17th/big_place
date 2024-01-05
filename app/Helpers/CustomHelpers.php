@@ -18,6 +18,50 @@ if (!function_exists('getCurriculumById')) {
     }
 }
 
+if (!function_exists('getEntrepriseByUserId')) {
+    function getEntrepriseByUserId(string $id = null)
+    {
+        if ($id != null) {
+            $user = auth()->user();
+
+            if($user->parent_entreprise_id == null){
+                // USER IS ADMIN
+                $entreprise = Entreprise::where('user_id', $user->id)->first();
+
+            }else{
+                // OTHER TEAM MEMBERS
+                $entreprise = Entreprise::where('user_id', $user->parent_entreprise_id)->first();
+            }
+
+            return $entreprise->nom_entreprise;
+        } else {
+            return '';
+        }
+    }
+}
+
+if (!function_exists('getEntrepriseLogoByUserId')) {
+    function getEntrepriseLogoByUserId(string $id = null)
+    {
+        if ($id != null) {
+            $user = auth()->user();
+
+            if($user->parent_entreprise_id == null){
+                // USER IS ADMIN
+                $entreprise = Entreprise::where('user_id', $user->id)->first();
+
+            }else{
+                // OTHER TEAM MEMBERS
+                $entreprise = Entreprise::where('user_id', $user->parent_entreprise_id)->first();
+            }
+
+            return $entreprise;
+        } else {
+            return '';
+        }
+    }
+}
+
 if (!function_exists('getUserEmailById')) {
     function getUserEmailById(string $id = null)
     {
@@ -54,17 +98,17 @@ if (!function_exists('getOfferByCandidatId')) {
     }
 }
 
-if (!function_exists('getEntrepriseByUserID')) {
-    function getEntrepriseByUserID(string $id = null)
-    {
-        if ($id != null) {
-            $user = Entreprise::where('user_id', $id)->first();
-            return $user;
-        } else {
-            return '';
-        }
-    }
-}
+// if (!function_exists('getEntrepriseByUserID')) {
+//     function getEntrepriseByUserID(string $id = null)
+//     {
+//         if ($id != null) {
+//             $user = Entreprise::where('user_id', $id)->first();
+//             return $user;
+//         } else {
+//             return '';
+//         }
+//     }
+// }
 
 if (!function_exists('getFormationUserStatus')) {
     function getFormationUserStatus(string $user_id = null, string $formation_id = null)

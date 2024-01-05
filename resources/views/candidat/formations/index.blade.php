@@ -211,6 +211,9 @@ input, select{
                                             <td class="text-left">{{$formation->work_location}}</td>
                                             <td class="text-left">
                                                 <a href="" type="button" class="bg-btn-three proposez-rdv px-1">Consulter</a>
+                                                <a href="{{ route('candidat.formation.unsubscribe', $formation->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir ne plus participer à cet formation?')">
+                                                    Je me désinscris
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

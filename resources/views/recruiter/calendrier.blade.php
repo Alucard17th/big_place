@@ -1,7 +1,28 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-
+/* SCROLLBAR - START - */
+/* width */
+.fc-scroller::-webkit-scrollbar {
+     width: 10px;
+ }
+ /* Track */
+.fc-scroller::-webkit-scrollbar-track {
+     border-radius: 0px;
+ }
+/* Handle */
+.fc-scroller::-webkit-scrollbar-thumb {
+     background: #ff8b00; 
+ }
+/* Handle on hover */
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+     background: #ff8b00; 
+ }
+/* Firefox Integration */
+.fc-scroller{
+     scrollbar-color: #ff8b00 #fff;
+ }
+ /* SCROLLBAR - END - */
 </style>
 @endpush
 
@@ -279,9 +300,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {
-        left: 'prev,today,next',
-        right: 'title',
-        center: 'timeGridDay,timeGridWeek' 
+            left: 'prev,today,next',
+            right: 'title',
+            center: 'timeGridDay,timeGridWeek' 
         },
         events : rdvs,
         locale: initialLocaleCode,

@@ -12,7 +12,7 @@
             <li class="{{ Str::contains(Request::url(), 'candidat-offers') ? 'active' : '' }}">
                 <a href="/candidat-offers" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Offre D'emploi</span>
+                            src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Offres D'emploi</span>
                 </a>
             </li>
             <li class="{{ Str::contains(Request::url(), 'candidat-favoris') ? 'active' : '' }}">

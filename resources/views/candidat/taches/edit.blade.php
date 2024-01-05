@@ -60,7 +60,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="status">Status</label>
+                                    <label for="status">Statut</label>
                                     <select class="form-control" name="status" id="status">
                                         <option value="0" @if($task->completed == '0') selected @endif>En cours</option>
                                         <option value="1" @if($task->completed == '1') selected @endif>Terminée</option>
@@ -94,5 +94,10 @@
 @endsection
 
 @push('scripts')
-
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+})
+</script>
 @endpush

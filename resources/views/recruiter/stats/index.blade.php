@@ -18,6 +18,33 @@
 .stat-card {
     height: 100% !important;
 }
+.offer-day, .offer-month, .candidature-day, .candidature-month, .rdv-day, .rdv-month {
+    border-radius: 10.9204px !important;
+    font-family: 'Inter' !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    margin-left: 10px !important;
+    margin: 0px;
+    overflow: visible;
+    text-transform: none;
+    display: inline-block;
+    padding: 0.4em 0.65em;
+    text-align: center;
+    user-select: none;
+    vertical-align: middle;
+    cursor: pointer;
+    flex: 1 1 auto;
+    position: relative;
+    z-index: 1;
+    border: 0px;
+}
+.offer-day.active, .offer-month.active, .candidature-day.active, .candidature-month.active, .rdv-day.active, .rdv-month.active {
+    background-color: #302EA7 !important;
+    color: #FFFFFF !important;
+}
+
 </style>
 @endpush
 @section('content')
@@ -110,14 +137,16 @@
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="pt-3">Nombre d'offres publiées</h3>
+                                    <h3 class="py-4">Nombre d'offres publiées</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <button>Jours</button>
-                                            <button class="d-none">Mois</button>
+                                            <button class="offer-day active mr-3">Jours</button>
+                                            <button class="offer-month">Mois</button>
                                         </div>
                                     </div>
-                                    <canvas id="offres-chart" class="" width="600" height="500"></canvas>
+                                    <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
+                                    <div id="chart-offers"> </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -128,14 +157,15 @@
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="pt-3">Nombre de candidatures</h3>
+                                    <h3 class="py-4">Nombre de candidatures</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <button>Jours</button>
-                                            <button class="d-none">Mois</button>
+                                            <button class="candidature-day active mr-3">Jours</button>
+                                            <button class="candidature-month">Mois</button>
                                         </div>
                                     </div>
-                                    <canvas id="candidatures-chart" class="" width="600" height="500"></canvas>
+                                    <!-- <canvas id="candidatures-chart" class="" width="600" height="500"></canvas> -->
+                                    <div id="chart-candidatures"> </div>
                                 </div>
                             </div>
                         </div>
@@ -145,11 +175,11 @@
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="pt-3">Rendez-vous</h3>
+                                    <h3 class="py-4">Rendez-vous</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <button>Jours</button>
-                                            <button class="d-none">Mois</button>
+                                            <!-- <button class="rdv-day active mr-3">Jours</button>
+                                            <button class="rdv-month">Mois</button> -->
                                         </div>
                                     </div>
                                     <canvas id="rdvs-chart" class="" width="600" height="500"></canvas>
@@ -157,6 +187,24 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-6">
+                        <div class="ls-widget">
+                            <div class="tabs-box">
+                                <div class="widget-content">
+                                    <h3 class="py-4">Durée moyenne d’embauche par métier</h3>
+                                    <div class="actions row">
+                                        <div class="col-12 text-center">
+                                            <!-- <button class="rdv-day active mr-3">Jours</button>
+                                            <button class="rdv-month">Mois</button> -->
+                                        </div>
+                                    </div>
+                                    <canvas id="rdvs-chart" class="" width="600" height="500"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -167,9 +215,10 @@
 @endsection
 
 @push('scripts')
-<script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- <script>
 $(document).ready(function() {
-    var ctx = document.getElementById("rdvs-chart").getContext('2d');
+    // var ctx = document.getElementById("rdvs-chart").getContext('2d');
     var ctx2 = document.getElementById("offres-chart").getContext('2d');
     var ctx3 = document.getElementById("candidatures-chart").getContext('2d');
     const rdvsEffectue = @json($doneRdvs);
@@ -271,6 +320,230 @@ $(document).ready(function() {
         }
     });
 
+    // var myChartRdvs = new Chart(ctx, {
+    //     type: 'pie',
+    //     data: {
+    //         labels: ["Rdv effectué", "Rdv annulé", "Rdv en attente"],
+    //         datasets: [{
+    //             label: 'My First Dataset',
+    //             data: [rdvsEffectue, rdvsCancelled, rdvsPending],
+    //             backgroundColor: [
+    //                 '#0049FC',
+    //                 'rgb(255, 99, 132)',
+    //                 'rgb(255, 205, 86)'
+    //             ],
+    //             hoverOffset: 4
+    //         }]
+    //     },
+    //     options: {
+    //         legend: {
+    //             display: true
+    //         },
+    //         scales: {
+                
+    //         },
+    //         plugins: {
+    //             legend: {
+    //                 labels: {
+    //                     // This more specific font property overrides the global property
+    //                     font: {
+    //                         size: 6
+    //                     }
+    //                 }
+    //             },
+    //             plugins: {
+    //                 title: {
+    //                     display: true,
+    //                     text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+    //                 }
+    //             }
+    //         },
+    //         layout: {
+    //             padding: 10
+    //         }
+    //     }
+    // });
+
+    
+})
+</script> -->
+
+<script>
+// when document is ready
+$(document).ready(function() {
+    // OFFERS 
+    let offersByDay = @json($offersByDay);
+    let offersByMonth = @json($offersByMonth);
+    let labels = Object.keys(offersByDay);
+    let data = Object.values(offersByDay);
+    var options = {
+            chart: {
+                type: "line",
+                stacked: false
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: ['#22218c', '#ff8c00', '#66C7F4'],
+            series: [
+                {
+                name: 'Offres',
+                type: 'column',
+                data: data
+                },
+                {
+                name: "Offres",
+                type: 'line',
+                data: data
+                },
+            ],
+            stroke: {
+                width: [4, 4, 4]
+            },
+            xaxis: {
+                categories: labels
+            },
+            yaxis: [
+            
+            ],
+            tooltip: {
+                shared: false,
+                intersect: true,
+                x: {
+                show: false
+                }
+            },
+            legend: {
+              show: true,
+              position: 'top',
+            }
+       
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
+        chart.render();
+
+
+    const switchOffersDayBtn = document.querySelector('.offer-day');
+    const switchOffersMonthBtn = document.querySelector('.offer-month');
+
+    switchOffersDayBtn.addEventListener('click', () => {
+        // toggle the active class
+        switchOffersDayBtn.classList.toggle('active');
+        switchOffersMonthBtn.classList.toggle('active');
+
+        chart.updateOptions({
+            xaxis: {
+                categories: Object.keys(offersByDay)
+            },
+            series: [
+                {
+                    name: 'Offres',
+                    type: 'column',
+                    data: Object.values(offersByDay)
+                },
+                {
+                    name: "Offres",
+                    type: 'line',
+                    data: Object.values(offersByDay)
+                },
+            ],
+            
+        })
+    })
+
+    switchOffersMonthBtn.addEventListener('click', () => {
+        switchOffersMonthBtn.classList.toggle('active');
+        switchOffersDayBtn.classList.toggle('active');
+
+        chart.updateOptions({
+            xaxis: {
+                categories: Object.keys(offersByMonth)
+            },
+            series: [
+                {
+                    name: 'Offres',
+                    type: 'column',
+                    data: Object.values(offersByMonth)
+                },
+                {
+                    name: 'Offres',
+                    type: 'line',
+                    data: Object.values(offersByMonth)
+                }
+            ]
+        })
+    })
+
+    //CANDIDATURES
+    let candidaturesByDay = @json($candidaturesByDay);
+    let candidaturesByMonth = @json($candidaturesByMonth);
+    labels = Object.keys(candidaturesByDay);
+    data = Object.values(candidaturesByDay);
+    var candidaturesOptions = {
+        height: 450,
+        chart: {
+            type: 'line'
+        },
+        colors: ['#22218c'],
+        series: [{
+            name: 'Candidatures',
+            data: data
+        }],
+        xaxis: {
+            categories: labels
+        }
+    }
+    var candidaturesChart = new ApexCharts(document.querySelector("#chart-candidatures"), candidaturesOptions);
+    candidaturesChart.render();
+
+    const switchCandidaturesDayBtn = document.querySelector('.candidature-day');
+    const switchCandidaturesMonthBtn = document.querySelector('.candidature-month');
+
+    switchCandidaturesDayBtn.addEventListener('click', () => {
+        // toggle the active class
+        switchCandidaturesDayBtn.classList.toggle('active');
+        switchCandidaturesMonthBtn.classList.toggle('active');
+
+        candidaturesChart.updateOptions({
+            xaxis: {
+                categories: Object.keys(candidaturesByDay)
+            },
+            series: [
+                {
+                    name: 'Candidatures',
+                    type: 'column',
+                    data: Object.values(candidaturesByDay)
+                }
+            ],
+            
+        })
+    })
+
+    switchCandidaturesMonthBtn.addEventListener('click', () => {
+        switchCandidaturesMonthBtn.classList.toggle('active');
+        switchCandidaturesDayBtn.classList.toggle('active');
+
+        candidaturesChart.updateOptions({
+            xaxis: {
+                categories: Object.keys(candidaturesByMonth)
+            },
+            series: [
+                {
+                    name: 'Candidatures',
+                    type: 'column',
+                    data: Object.values(candidaturesByMonth)
+                }
+            ]
+        })
+    })
+
+
+    //RENDEZ-VOUS
+    var ctx = document.getElementById("rdvs-chart").getContext('2d');
+    const rdvsEffectue = @json($doneRdvs);
+    const rdvsCancelled = @json($refusedRdvs);
+    const rdvsPending = @json($pendingRdvs);
     var myChartRdvs = new Chart(ctx, {
         type: 'pie',
         data: {
@@ -314,8 +587,6 @@ $(document).ready(function() {
             }
         }
     });
-
-    
-})
+});
 </script>
 @endpush

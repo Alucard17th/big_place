@@ -2160,7 +2160,7 @@ h6 {
 }
 
 .bg-back-btn{
-    padding: 2px 25px;
+    padding: 4px 32px;
     background: rgba(255, 140, 0, 0.1);
     border: 1px solid #FF8C00;
     border-radius: 50px;
@@ -2168,6 +2168,7 @@ h6 {
     font-family: 'Jost';
     font-style: normal;
     font-weight: 500;
+    font-size: 24px;
 }
 
 
@@ -2382,5 +2383,13 @@ input[type=checkbox]:checked:before {
 
 .filepond--credits{
     display: none !important;
+}
+
+.field-icon {
+    float: right;
+    margin-right: 10px;
+    margin-top: -35px;
+    position: relative;
+    z-index: 2;
 }
  /* NRD STYLES END */

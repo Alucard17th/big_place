@@ -25,6 +25,7 @@ class TaskController extends Controller
         $task->user_id = auth()->user()->id;
         $task->start_date = $request->start_date;
         $task->due_date = $request->end_date;
+        $task->hour = $request->hour;
         $task->save();
 
         toast('Tâche ajoutée','success')->autoClose(5000);
@@ -46,7 +47,7 @@ class TaskController extends Controller
         $task->start_date = $request->date_debut;
         $task->save();
         toast('Tâche modifiée','success')->autoClose(5000);
-        return redirect()->back();
+        return redirect()->route('candidat.tasks');
     }
 
     public function completeTask($id){

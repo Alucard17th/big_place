@@ -184,7 +184,7 @@
 
         <div class="col-12 text-center py-3">
             <h5>Evénement  : {{ $event->job_position }}</h5>
-            <h4 class="text-dark py-4">Nom d'invité</h4>
+            <h4 class="text-dark py-4">Nom du candidat</h4>
             <div>{{$qrcode}}</div>
         </div>
     </div>

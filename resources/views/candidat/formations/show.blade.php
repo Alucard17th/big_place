@@ -216,9 +216,9 @@ background: #13D527;
                                                 {{$formation->job_title}}</h4>
                                         </div>
                                         <div class="offre-subtitle my-1">
-                                            <img src="{{asset('storage'.getEntrepriseByUserID($formation->user_id)->logo)}}"
+                                            <img src="{{asset('storage'.getEntrepriseLogoByUserId($formation->user_id)->logo)}}"
                                                 alt="" class="mr-2">
-                                            {{getEntrepriseByUserID($formation->user_id)->nom_entreprise}} ,
+                                            {{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}} ,
                                             {{$formation->work_location}}
                                         </div>
                                         <h5 class="offre-time-subtitle">Publiée le
@@ -255,15 +255,15 @@ background: #13D527;
                                                 <div class="row">
                                                     <div class="col-2 pr-0">
                                                         <div class="entreprise-logo"><img
-                                                                src="{{asset('storage'.getEntrepriseByUserID($formation->user_id)->logo)}}"
+                                                                src="{{asset('storage'.getEntrepriseLogoByUserId($formation->user_id)->logo)}}"
                                                                 alt=""></div>
                                                     </div>
                                                     <div class="col-7 pl-0">
                                                         <div class="entreprise-name">
-                                                            {{getEntrepriseByUserID($formation->user_id)->nom_entreprise}}
+                                                            {{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}
                                                         </div>
                                                         <div class="entreprise-info">
-                                                            {{getEntrepriseByUserID($formation->user_id)->effectif}}
+                                                            {{getEntrepriseLogoByUserId($formation->user_id)->effectif}}
                                                             Employés</div>
                                                     </div>
                                                     <div class="col-12 mt-3">

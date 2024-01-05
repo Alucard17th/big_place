@@ -220,14 +220,14 @@ select {
                                             <li class="list-group-item d-flex border-0 {{ $key == 0 ? 'active' : '' }}">
                                                 <div class="list-img">
                                                     <img class="list-item-img"
-                                                        src="{{asset('storage'.getEntrepriseByUserID($candidature->user_id)->logo)}}"
+                                                        src="{{asset('storage'.getEntrepriseLogoByUserId($candidature->user_id)->logo)}}"
                                                         alt="">
                                                 </div>
                                                 <div class="list-content ml-2">
                                                     <h4 class="list-title">
                                                         {{getOfferByCandidatId($candidature->offer_id)->job_title}}</h4>
                                                     <span
-                                                        class="list-subtitle">{{getEntrepriseByUserID($candidature->user_id)->nom_entreprise}}
+                                                        class="list-subtitle">{{getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise}}
                                                         ,
                                                         {{getOfferByCandidatId($candidature->offer_id)->location_city}}</span>
                                                     <h5 class="list-time-subtitle">Déposé le
@@ -252,10 +252,10 @@ select {
                                                     </h4>
                                                 </div>
                                                 <div class="offre-subtitle my-1">
-                                                    <img src="{{ asset('storage' . getEntrepriseByUserID($candidature->user_id)->logo) }}"
+                                                    <img src="{{ asset('storage' . getEntrepriseLogoByUserId($candidature->user_id)->logo) }}"
                                                         alt="" class="mr-2 offre-subtitle-img">
                                                     <span
-                                                        class="entreprise-title">{{ getEntrepriseByUserID($candidature->user_id)->nom_entreprise }}</span>
+                                                        class="entreprise-title">{{ getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise }}</span>
                                                     ,
                                                     <span
                                                         class="entreprise-location">{{ getOfferByCandidatId($candidature->offer_id)->location_city }}</span>
@@ -291,15 +291,15 @@ select {
                                                             <div class="col-2 pr-0">
                                                                 <div class="entreprise-logo"><img
                                                                         class="entreprise-logo-img"
-                                                                        src="{{ asset('storage' . getEntrepriseByUserID($candidature->user_id)->logo) }}"
+                                                                        src="{{ asset('storage' . getEntrepriseLogoByUserId($candidature->user_id)->logo) }}"
                                                                         alt=""></div>
                                                             </div>
                                                             <div class="col-7 pl-0">
                                                                 <div class="entreprise-name">
-                                                                    {{ getEntrepriseByUserID($candidature->user_id)->nom_entreprise }}
+                                                                    {{ getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise }}
                                                                 </div>
                                                                 <div class="entreprise-info">
-                                                                    {{ getEntrepriseByUserID($candidature->user_id)->effectif }}
+                                                                    {{ getEntrepriseLogoByUserId($candidature->user_id)->effectif }}
                                                                     Employés</div>
                                                             </div>
                                                             <div class="col-3">

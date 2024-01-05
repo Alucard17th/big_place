@@ -195,9 +195,9 @@ input, select{
                                                 <a href="{{route('candidat.task.complete', $task->id)}}" type="button" class="bg-btn-five">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
-                                                    Terminé
+                                                    Terminer
                                                 </a>
-                                                <a href="{{route('candidat.task.delete', $task->id)}}" type="button" class="bg-btn-four"
+                                                <a href="{{route('candidat.task.delete', $task->id)}}" type="button" class="bg-btn-four mt-2"
                                                 onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
@@ -246,7 +246,12 @@ input, select{
             </div>
 
             <div class="form-group">
-                <label class="text-dark" for="candidate">Status</label>
+                <label class="text-dark" for="candidate">Heure</label>
+                <input class="form-control mb-2" type="time" name="hour" id="hour" required>
+            </div>
+
+            <div class="form-group">
+                <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
                     <option value="1">Terminée</option>
@@ -272,6 +277,9 @@ input, select{
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+
     $('#add-task').click(function() {
         // Send the data 
         $("#ex1").modal({

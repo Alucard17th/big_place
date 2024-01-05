@@ -127,6 +127,29 @@
     padding: 10px 15px !important;
     text-align: center;
 }
+
+/* SCROLLBAR - START - */
+/* width */
+.fc-scroller::-webkit-scrollbar {
+     width: 10px;
+ }
+ /* Track */
+.fc-scroller::-webkit-scrollbar-track {
+     border-radius: 0px;
+ }
+/* Handle */
+.fc-scroller::-webkit-scrollbar-thumb {
+     background: #ff8b00; 
+ }
+/* Handle on hover */
+.fc-scroller::-webkit-scrollbar-thumb:hover {
+     background: #ff8b00; 
+ }
+/* Firefox Integration */
+.fc-scroller{
+     scrollbar-color: #ff8b00 #fff;
+ }
+ /* SCROLLBAR - END - */
 </style>
 @endpush
 
@@ -139,7 +162,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6 px-2">
+            <div class="col-12 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                         <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
@@ -152,9 +175,9 @@
                                         <!-- <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;"> -->
                                         <select name="job_title" id="job_title" class="form-control">
                                             <option value="" selected value="">Poste recherchés</option>
-                                            @foreach($jobs as $job)
+                                            <!-- @foreach($jobs as $job)
                                             <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
-                                            @endforeach
+                                            @endforeach -->
                                         </select>
                                     </div>
                                     <div class="form-group mb-2">
@@ -206,7 +229,7 @@
                                 <div class="col-12 pl-1">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="values_select" name="valeurs[]" multiple>
-                                            <option value="" selected>Valeurs attendues</option>
+                                            <option value="" selected>Vos valeurs</option>
                                             <option value="respect">Le respect</option>
                                             <option value="adaptabilite">L’adaptabilité</option>
                                             <option value="consideration">La considération</option>
@@ -241,7 +264,7 @@
                 </div>
             </div>
 
-            <div class="col-6 px-2">
+            <div class="col-12 px-2 mt-3">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="text-dark dashboard-card-title">Nombre de vues de candidatures</h4>
@@ -436,7 +459,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     $("#values_select").select2({
-        placeholder: "Valeurs Attendues",
+        placeholder: "Vos valeurs",
         maximumSelectionLength: 5,
         language: {
             maximumSelected: function(e) {
@@ -446,7 +469,93 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     $("#niveau_etudes").select2({});
-    $("#job_title").select2({});
+
+    $("#job_title").select2({
+
+    });
+
+    var currentPage = 1;
+    var isFetching = false; // Flag to track request status
+
+    async function getJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                $('#job_title').append(options).trigger("change");
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    async function refreshJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                const scrollTop = $('.select2-results__options').scrollTop();
+                $('#job_title').append(options).trigger("change");
+
+                $('#job_title').select2('close');
+                $('#job_title').select2('open');
+                $('.select2-results__options').scrollTop(scrollTop + 1);
+
+                console.log(scrollTop);
+
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    getJsonJobs();
+
+    $('#job_title').on('select2:open', function() {
+        const resultsContainer = $('.select2-results__options');
+        resultsContainer.on('scroll', function() {
+            // This function will be called whenever the user scrolls the options list
+            console.log("scroll");
+            const scrollTop = $(this).scrollTop();
+            const scrollHeight = $(this).prop('scrollHeight');
+            const clientHeight = $(this).innerHeight();
+
+            // Check if the user has scrolled near the bottom:
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
+                // Trigger infinite scrolling or other actions as needed
+                console.log('Near the bottom!');
+                currentPage++;
+                isFetching = true;
+                refreshJsonJobs();
+            }
+        });
+    });
 })
 </script>
 

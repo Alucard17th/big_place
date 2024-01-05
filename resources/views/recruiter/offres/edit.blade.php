@@ -134,9 +134,7 @@
                                 <div class="form-group">
                                     <label for="rome_code">Code ROME</label>
                                     <select name="rome_code" id="rome_code" class="form-control" required>
-                                        @foreach($jobs as $job)
-                                        <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
-                                        @endforeach
+                                        <option value="" selected>Métier / Code Rome</option>
                                     </select>
                                 </div>
 
@@ -377,7 +375,92 @@
         $("#work_schedule").select2({
         });
 
-        $("#rome_code").select2({});
+        $("#rome_code").select2({
+            placeholder: "Sélectionnez votre code Rome",
+        });
+
+        var currentPage = 1;
+    var isFetching = false; // Flag to track request status
+
+    async function getJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                $('#rome_code').append(options).trigger("change");
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    async function refreshJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                const scrollTop = $('.select2-results__options').scrollTop();
+                $('#rome_code').append(options).trigger("change");
+
+                $('#rome_code').select2('close');
+                $('#rome_code').select2('open');
+                $('.select2-results__options').scrollTop(scrollTop + 1);
+
+                console.log(scrollTop);
+
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    getJsonJobs();
+
+    $('#rome_code').on('select2:open', function() {
+        const resultsContainer = $('.select2-results__options');
+        resultsContainer.on('scroll', function() {
+            // This function will be called whenever the user scrolls the options list
+            console.log("scroll");
+            const scrollTop = $(this).scrollTop();
+            const scrollHeight = $(this).prop('scrollHeight');
+            const clientHeight = $(this).innerHeight();
+
+            // Check if the user has scrolled near the bottom:
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
+                // Trigger infinite scrolling or other actions as needed
+                console.log('Near the bottom!');
+                currentPage++;
+                isFetching = true;
+                refreshJsonJobs();
+            }
+        });
+    });
 
         $('#desired_languages').on('change', function() {
             if (this.value.includes('Autre')) {

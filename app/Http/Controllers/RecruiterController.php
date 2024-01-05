@@ -654,7 +654,7 @@ class RecruiterController extends Controller
         $task->hour = $request->hour;
         $task->save();
         toast('Tâche modifiée','success')->autoClose(5000);
-        return redirect()->back();
+        return redirect()->route('recruiter.tasks');
     }
     public function completeTask($id){
         $task = Task::find($id);
@@ -752,7 +752,7 @@ class RecruiterController extends Controller
         $offer->publish = false;
         $offer->save();
 
-        toast('Offre ajoutée','success')->autoClose(5000);
+        toast('Offre ajoutée au brouillon','success')->autoClose(5000);
         return redirect()->route('recruiter.offers');
     }
     public function updateDraftOffer(Request $request){
@@ -1107,7 +1107,7 @@ class RecruiterController extends Controller
 
         toast('Formation mise à jour','success')->autoClose(5000);
 
-        return redirect()->back();
+        return redirect()->route('recruiter.formation');
     }
     public function myFormationDeleteDoc(Request $request, $id, $userId, $docname)
     {
@@ -1161,9 +1161,12 @@ class RecruiterController extends Controller
             $emails = $entreprise->user->emails;
             $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->get();
         }
-
+        $draftEmails = $emails->where('draft', true);
+        $emails = $emails->where('trash', false)->where('draft', false);
+        $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
+        
         $receivers = User::all();
-        return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers'));
+        return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails'));
     }
     public function getMyMail(Request $request){
         $email = Email::find($request->id);
@@ -1172,6 +1175,17 @@ class RecruiterController extends Controller
     public function createMail(){
         $receivers = User::all();
         return view('recruiter.emails.create', compact('receivers'));
+    }
+    public function myMailsShow($id){
+        $email = Email::find($id);
+        return response()->json($email);
+    }
+    public function myMailsDelete($id){
+        $email = Email::find($id);
+        $email->trash = true;
+        $email->save();
+        toast('Email supprimé','success')->autoClose(5000);
+        return redirect()->back();
     }
 
     // STATS
@@ -1284,6 +1298,13 @@ class RecruiterController extends Controller
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
             $candidatures = $entreprise->user->candidatures;
         }
+
+        foreach ($candidatures as $candidature) {
+            $candidatUser = User::find($candidature->candidat_id);
+            echo ($candidatUser->name . '<br>');
+            $candidature->candidat_name = $candidatUser->name;
+        }
+
         return view('recruiter.candidatures.index', compact('candidatures'));
     }
     public function updateCandidatureStatus(Request $request){

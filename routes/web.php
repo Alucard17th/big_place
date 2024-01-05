@@ -72,12 +72,12 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])->name('register-as-candidat');
 Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter'])->name('register-as-recruiter');
 
+Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
-    Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
     
     //
     Route::get('/cv-theque', [RecruiterController::class, 'cvtheque'])->name('recruiter.cvtheque');
@@ -161,6 +161,9 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-mails/create', [RecruiterController::class, 'createMail'])->name('recruiter.email.create');
     Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
     Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
+    Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
+    Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
+
 
     // STATS
     Route::get('/mes-stats', [RecruiterController::class, 'stats'])->name('recruiter.stats');
@@ -255,6 +258,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
     // FORMATIONS
     Route::get('/formation/candidat/subscribe/{id}', [FormationController::class, 'subscribeToFormation'])->name('candidat.formation.subscribe');
+    Route::get('/formation/candidat/unsubscribe/{id}', [FormationController::class, 'unsubscribeFromFormation'])->name('candidat.formation.unsubscribe');
     Route::get('/formation/candidat/show/{id}', [FormationController::class, 'show'])->name('candidat.formation.show');
 
     // EMAILS

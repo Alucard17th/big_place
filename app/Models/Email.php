@@ -14,6 +14,8 @@ class Email extends Model
         'subject',
         'message',
         'receiver_id',
+        'draft',
+        'trash'
     ];
     
     public function user()

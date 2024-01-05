@@ -119,9 +119,8 @@
             </div>
             <div class="form-group">
                 <label for="document">Document</label>
-                <input type="file" name="document" id="document">
+                <input type="file" name="document" id="document" required>
             </div>
-          
 
             <div class="form-group">
                 <button class="theme-btn btn-style-one upload-doc" type="submit" id="upload-doc-btn">Enregistrer</button>

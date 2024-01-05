@@ -72,12 +72,14 @@
                     <div class="form-group">
                         <label>Mot de passe</label>
                         <input id="password-field" type="password" name="password" value="" placeholder="Mot de passe">
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         <span class="invalid-feedback error error-password"></span>
                     </div>
                     <div class="form-group">
                         <label>Répétez votre mot de passe</label>
                         <input id="re-password-field" type="password" name="password_confirmation" value=""
                             placeholder="Répétez votre mot de passe">
+                        <span toggle="#re-password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         <span class="invalid-feedback error error-password_confirmation"></span>
                     </div>
 

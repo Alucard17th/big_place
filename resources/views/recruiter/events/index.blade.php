@@ -118,7 +118,7 @@
                                                 @elseif($event->statut == 'Suspendu')
                                                 <span class="badge badge-warning">Suspendu</span>
                                                 @elseif($event->statut == 'Annulé')
-                                                <span class="badge badge-danger">Inactif</span>
+                                                <span class="badge badge-danger">Annulé</span>
                                                 @endif
                                             </td>
                                             
@@ -128,6 +128,7 @@
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                
                                                 @if($event->statut == 'Suspendu')
                                                 <a href="{{ route('recruiter.events.resume', $event->id) }}" type="button" class="bg-btn-nine mt-2">
                                                     <i class="las la-braille"></i>
@@ -139,10 +140,19 @@
                                                     Suspendre
                                                 </a>
                                                 @endif
+
+                                                @if($event->statut == 'Annulé')
+                                                <a href="{{ route('recruiter.events.resume', $event->id) }}" type="button" class="bg-btn-nine mt-2">
+                                                    <i class="las la-braille"></i>
+                                                    Reprendre
+                                                </a>
+                                                @else
                                                 <a href="{{ route('recruiter.events.cancel', $event->id) }}" type="button" class="bg-btn-eight mt-2">
                                                     <i class="las la-times"></i>
                                                     Annuler
                                                 </a>
+                                                @endif
+
                                                 <a type="button" class="bg-btn-seven mt-2 docs-modal-btn" data-required-docs="{{$event->required_documents}}">
                                                     <i class="las la-download"></i>
                                                     Documents

@@ -38,6 +38,14 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function unsubscribeFromFormation($id){
+        $formation = Formation::find($id);
+        $user = auth()->user();
+        $user->participationFormations()->detach($formation);
+        toast('Votre souscription a bien été annulée.', 'success');
+        return redirect()->back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

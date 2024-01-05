@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label>Prénom</label>
                                 <input type="text" class="form-control" name="first_name" autocomplete="off"
-                                    placeholder="Prénom">
+                                    placeholder="Prénom" required>
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
                                 <span class="invalid-feedback error error-name"></span>
                             </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label>Nom</label>
                                 <input type="text" class="form-control" name="last_name" autocomplete="off"
-                                    placeholder="Nom">
+                                    placeholder="Nom" required>
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
                                 <span class="invalid-feedback error error-name"></span>
                             </div>
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label>N° Siret</label>
                                 <input type="text" class="form-control" name="siret" autocomplete="off"
-                                    placeholder="N° Siret">
+                                    placeholder="N° Siret" required>
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
                                 <span class="invalid-feedback error error-name"></span>
                             </div>
@@ -84,13 +84,15 @@
 
                     <div class="form-group">
                         <label>Mot de passe</label>
-                        <input id="password-field" type="password" name="password" value="" placeholder="Mot de passe">
+                        <input id="password-field" type="password" name="password" value="" placeholder="Mot de passe" required>
+                        <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         <span class="invalid-feedback error error-password"></span>
                     </div>
                     <div class="form-group">
                         <label>Répétez votre mot de passe</label>
                         <input id="re-password-field" type="password" name="password_confirmation" value=""
-                            placeholder="Répétez votre mot de passe">
+                            placeholder="Répétez votre mot de passe" required>
+                        <span toggle="#re-password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         <span class="invalid-feedback error error-password_confirmation"></span>
                     </div>
 

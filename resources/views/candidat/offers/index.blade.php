@@ -85,8 +85,9 @@ input, select{
                                     <div class="row">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="job_title" id="job_title" placeholder="Poste recherché"
-                                                    value="{{ request('job_title') }}" class="form-control mb-2">
+                                                <select name="job_title" id="job_title" class="form-control">
+                                                    <option value="" selected>Poste recherchés</option>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -209,7 +210,7 @@ input, select{
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
-                                                    Consulter la vitrine entreprise
+                                                    Consulter l'entreprise
                                                 </a>
                                                 <a href="{{route('candidat.candidature.apply', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
@@ -298,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $("#values_select").select2({
-        placeholder: "Valeurs Attendues",
+        placeholder: "Vos valeurs",
         maximumSelectionLength: 5,
         language: {
             maximumSelected: function (e) {
@@ -306,6 +307,94 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Replace this string with your custom error message
             }
         }
+    });
+
+    $("#job_title").select2({
+
+    });
+
+
+    var currentPage = 1;
+    var isFetching = false; // Flag to track request status
+
+    async function getJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                $('#job_title').append(options).trigger("change");
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    async function refreshJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                const scrollTop = $('.select2-results__options').scrollTop();
+                $('#job_title').append(options).trigger("change");
+
+                $('#job_title').select2('close');
+                $('#job_title').select2('open');
+                $('.select2-results__options').scrollTop(scrollTop + 1);
+
+                console.log(scrollTop);
+
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    getJsonJobs();
+
+    $('#job_title').on('select2:open', function() {
+        const resultsContainer = $('.select2-results__options');
+        resultsContainer.on('scroll', function() {
+            // This function will be called whenever the user scrolls the options list
+            console.log("scroll");
+            const scrollTop = $(this).scrollTop();
+            const scrollHeight = $(this).prop('scrollHeight');
+            const clientHeight = $(this).innerHeight();
+
+            // Check if the user has scrolled near the bottom:
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
+                // Trigger infinite scrolling or other actions as needed
+                console.log('Near the bottom!');
+                currentPage++;
+                isFetching = true;
+                refreshJsonJobs();
+            }
+        });
     });
 
     $('#data-table').DataTable({

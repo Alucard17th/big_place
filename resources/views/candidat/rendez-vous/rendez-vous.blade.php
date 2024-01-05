@@ -159,7 +159,7 @@ input, select{
                             <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Nom du candidat</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Type</th>
                                             <th>Date de rendez-vous</th>
                                             <th>Statut</th>
@@ -170,7 +170,7 @@ input, select{
                                     <tbody>
                                         @foreach ($rdvs as $rdv)
                                         <tr>
-                                            <td class="text-left">{{getUserById($rdv->participant)->name}}</td>
+                                            <td class="text-left">{{getEntrepriseByUserId($rdv->user_id)}}</td>
                                             <td class="text-left">
                                                 @if($rdv->is_type_distanciel)
                                                     Visio

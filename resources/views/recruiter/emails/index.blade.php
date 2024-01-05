@@ -33,6 +33,14 @@
     background-color: #f5f5f5;
 }
 
+#draft-btn.active {
+    background-color: #f5f5f5;
+}
+
+#deleted-btn.active {
+    background-color: #f5f5f5;
+}
+
 .email-container {
     padding: 20px;
     background-color: #f5f5f5;
@@ -104,6 +112,8 @@
                                 <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
                                     <button type="button" class="btn" id="sent-btn">Messages Envoyés</button>
+                                    <button type="button" class="btn" id="deleted-btn">Messages Supprimés</button>
+                                    <button type="button" class="btn" id="draft-btn">Brouillons</button>
                                 </div>
                                 
                                 <div class="inbox">
@@ -113,6 +123,7 @@
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -121,6 +132,15 @@
                                                 <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('recruiter.emails.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('recruiter.emails.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                    onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        Supprimer
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -138,6 +158,48 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($emails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="deleted" style="display: none">
+                                    <table class="table table-sm table-bordered" id="data-table-sent">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- <tbody>
+                                            @foreach ($emails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody> -->
+                                    </table>
+                                </div>
+
+                                <div class="draft" style="display: none">
+                                    <table class="table table-sm table-bordered" id="data-table-draft">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($draftEmails as $email)
                                             <tr>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
@@ -243,19 +305,51 @@ $(document).ready(function() {
     $('#inbox-btn').on('click', function() {
         $('.inbox').show();
         $('.sent').hide();
-        // add active class to the clicked button
+        $('.deleted').hide();
+        $('.draft').hide();
+
         $(this).addClass('active');
         $('#sent-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
     })
 
     $('#sent-btn').on('click', function() {
         $('.inbox').hide();
         $('.sent').show();
-        // add active class to the clicked button
+        $('.deleted').hide();
+        $('.draft').hide();
+
         $(this).addClass('active');
-        // remove active class from inbox button
         $('#inbox-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
     })
+
+    $('#deleted-btn').on('click', function() {
+        $('.inbox').hide();
+        $('.sent').hide();
+        $('.deleted').show();
+        $('.draft').hide();
+
+        $(this).addClass('active');
+        $('#inbox-btn').removeClass('active');
+        $('#sent-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
+    })
+
+    $('#draft-btn').on('click', function() {
+        $('.inbox').hide();
+        $('.sent').hide();
+        $('.deleted').hide();
+        $('.draft').show();
+
+        $(this).addClass('active');
+        $('#inbox-btn').removeClass('active');
+        $('#sent-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+    })
+
 
     $('#data-table-inbox').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
@@ -299,6 +393,49 @@ $(document).ready(function() {
     });
 
     $('#data-table-sent_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#data-table-deleted').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-deleted_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+
+    $('#data-table-draft').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
 })
 </script>

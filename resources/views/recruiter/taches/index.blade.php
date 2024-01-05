@@ -258,7 +258,7 @@ input, select{
                 <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
-                    <option value="1">Terminée</option>
+                    <option value="1">Terminér</option>
                 </select>
             </div>
 
@@ -294,6 +294,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Modal Should Be Closed');
         $.modal.close();
     });
+
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
 })
 </script>
 <script>

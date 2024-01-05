@@ -104,7 +104,7 @@
             </div>
             <div class="form-group">
                 <label for="candidate">Document</label>
-                <input type="file" name="document" id="document">
+                <input type="file" name="document" id="document" required>
             </div>
           
 
