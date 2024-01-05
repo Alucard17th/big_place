@@ -410,10 +410,10 @@
                                                     <h5 class="text-dark">{{ $offer->job_title }}</h5>
                                                 </div>
                                                 <div class="text-dark">
-                                                    {{ getEntrepriseByUserID($offer->user_id)->domiciliation }}
+                                                    {{ getEntrepriseLogoByUserId($offer->user_id)->domiciliation }}
                                                 </div>
                                                 <div class="text-dark">
-                                                    {{ getEntrepriseByUserID($offer->user_id)->siege_social }}
+                                                    {{ getEntrepriseLogoByUserId($offer->user_id)->siege_social }}
                                                 </div>
                                                 <div class="text-dark">
                                                     Il y a
