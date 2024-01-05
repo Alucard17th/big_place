@@ -27,10 +27,13 @@ if (!function_exists('getEntrepriseByUserId')) {
             if($user->parent_entreprise_id == null){
                 // USER IS ADMIN
                 $entreprise = Entreprise::where('user_id', $user->id)->first();
-
             }else{
                 // OTHER TEAM MEMBERS
                 $entreprise = Entreprise::where('user_id', $user->parent_entreprise_id)->first();
+            }
+
+            if($entreprise == null){
+                return '';
             }
 
             return $entreprise->nom_entreprise;
