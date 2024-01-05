@@ -115,9 +115,18 @@ class OfferController extends Controller
         }
 
         // Sort the offers by matching percentage
+        // $offers = $offers->toArray();
         // usort($offers, function ($a, $b) {
-        //     return $b->matching_percentage <=> $a->matching_percentage;
+        //     return $b['matching_percentage'] <=> $a['matching_percentage'];
         // });
+
+        // Sort offers by matching percentage in descending order
+        $offers = $offers->sortByDesc('matching_percentage');
+
+        // Filter out offers with a matching percentage of 0
+        $offers = $offers->filter(function ($offer) {
+            return $offer->matching_percentage > 0;
+        });
 
         $isSearch = true;
         // Return the results or pass them to a view

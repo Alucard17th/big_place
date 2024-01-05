@@ -229,6 +229,12 @@ class RecruiterController extends Controller
 
         $jobs = Job::all();
         $isSearch = true;
+        $curriculums = $curriculums->sortByDesc('matching_percentage');
+
+        // Filter out offers with a matching percentage of 0
+        $curriculums = $curriculums->filter(function ($curriculum) {
+            return $curriculum->matching_percentage > 0;
+        });
 
         return view('recruiter.cvtheque', compact('curriculums', 'jobs', 'isSearch'));
     }
