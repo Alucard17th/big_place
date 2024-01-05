@@ -13,10 +13,9 @@ class FormationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         //
-        $formations = Formation::all();
+        $formations = Formation::where('status', 'Active')->get();
         $userFormations = auth()->user()->participationFormations;
         return view('candidat.formations.index', compact('formations', 'userFormations'));
     }

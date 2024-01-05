@@ -114,14 +114,14 @@ input, select{
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                    <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
-                                                        <option value=""  selected>Niveau d'études</option>
-                                                        <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
-                                                        <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
-                                                        <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
-                                                        <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
-                                                        <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
-                                                    </select>
+                                                <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
+                                                    <option value=""  selected>Niveau d'études</option>
+                                                    <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                    <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
+                                                    <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
+                                                    <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
+                                                    <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                                </select>
                                             </div>
                                         </div>
 

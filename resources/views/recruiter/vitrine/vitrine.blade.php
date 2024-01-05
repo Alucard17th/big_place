@@ -432,7 +432,8 @@
                         <div class="row justify-content-left align-items-left px-3" style="display:none"
                             id="company-container">
                             <div class="col-12 mt-2 mb-1">
-                                <p class="">{{ $entreprise->domiciliation }}, {{ $entreprise->siege_social }}</p>
+                                <h4 class="text-dark">{{ $entreprise->nom_entreprise }}</h4>
+                                <p class="text-dark">{{ $entreprise->domiciliation }}, {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
                                     <li>Date de création : {{ $entreprise->date_creation }}</li>
                                     <!-- <li>{{ $entreprise->domiciliation }}</li> -->

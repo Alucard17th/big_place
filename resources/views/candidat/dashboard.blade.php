@@ -198,9 +198,9 @@
                                             <option value="" selected>Niveau d'études</option>
                                             <option value="CAP / BEP">CAP / BEP</option>
                                             <option value="Bac">Bac</option>
-                                            <option value="Bac + 2">Bac + 2</option>
-                                            <option value="Bac + 4">Bac + 4</option>
-                                            <option value="Bac + 5 et plus">Bac + 5 et plus</option>
+                                            <option value="Bac+2">Bac + 2</option>
+                                            <option value="Bac+4">Bac + 4</option>
+                                            <option value="Bac+5">Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -229,7 +229,6 @@
                                 <div class="col-12 pl-1">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="values_select" name="valeurs[]" multiple>
-                                            <option value="" selected>Vos valeurs</option>
                                             <option value="respect">Le respect</option>
                                             <option value="adaptabilite">L’adaptabilité</option>
                                             <option value="consideration">La considération</option>

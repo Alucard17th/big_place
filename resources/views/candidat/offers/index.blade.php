@@ -111,9 +111,9 @@ input, select{
                                                         <option value=""  selected>Niveau d'études</option>
                                                         <option value="CAP / BEP" @if(request('education_level') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                         <option value="Bac" @if(request('education_level') == 'Bac') selected @endif>Bac</option>
-                                                        <option value="Bac + 2" @if(request('education_level') == 'Bac + 2') selected @endif>Bac + 2</option>
-                                                        <option value="Bac + 4" @if(request('education_level') == 'Bac + 4') selected @endif>Bac + 4</option>
-                                                        <option value="Bac + 5 et plus" @if(request('education_level') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                        <option value="Bac+2" @if(request('education_level') == 'Bac+2') selected @endif>Bac + 2</option>
+                                                        <option value="Bac+4" @if(request('education_level') == 'Bac+4') selected @endif>Bac + 4</option>
+                                                        <option value="Bac+5" @if(request('education_level') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                                     </select>
                                             </div>
                                         </div>
@@ -132,29 +132,29 @@ input, select{
 
                                         <div class="col-4 pl-1">
                                             <div class="form-group mb-2">
-                                                <select class="form-control" id="values_select" name="valeurs[]" multiple>
-                                                    <option value="respect">Le respect</option>
-                                                    <option value="adaptabilite">L’adaptabilité</option>
-                                                    <option value="consideration">La considération</option>
-                                                    <option value="altruisme">L’altruisme</option>
-                                                    <option value="assertivite">L’assertivité</option>
-                                                    <option value="entraide">L'entraide</option>
-                                                    <option value="solidarite">La solidarité</option>
-                                                    <option value="ecoute">L'écoute</option>
-                                                    <option value="bienveillance">La bienveillance</option>
-                                                    <option value="empathie">L'empathie</option>
-                                                    <option value="creativite">La créativité</option>
-                                                    <option value="justice">La justice</option>
-                                                    <option value="tolerance">La tolérance</option>
-                                                    <option value="equite">L’équité</option>
-                                                    <option value="honnetete">L’honnêteté</option>
-                                                    <option value="responsabilite">La responsabilité</option>
-                                                    <option value="loyaute">La loyauté</option>
-                                                    <option value="determination">La détermination</option>
-                                                    <option value="perseverance">La persévérance</option>
-                                                    <option value="rigueur">La rigueur</option>
-                                                    <option value="generosite">La générosité</option>
-                                                    <option value="stabilite">La stabilité</option>
+                                                <select name="valeurs[]" id="values_select" class="" multiple >
+                                                    <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
+                                                    <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
+                                                    <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
+                                                    <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
+                                                    <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
+                                                    <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
+                                                    <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
+                                                    <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
+                                                    <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
+                                                    <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
+                                                    <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
+                                                    <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
+                                                    <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
+                                                    <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
+                                                    <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
+                                                    <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
+                                                    <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
+                                                    <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
+                                                    <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
+                                                    <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
+                                                    <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
+                                                    <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
                                                 </select>
                                             </div>
                                         </div>

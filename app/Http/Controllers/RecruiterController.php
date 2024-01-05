@@ -96,6 +96,23 @@ class RecruiterController extends Controller
             'total_count' => $jobs->total(),
         ]);
     }
+    public function searchJobsJson(){
+        $term = request('term'); // Get search term from request
+        $page = request('page', 1); // Get page number from request
+        $perPage = 20; // Adjust as needed
+    
+        // Perform search based on the search term
+        $jobs = Job::where(function ($query) use ($term) {
+            $query->where('full_name', 'like', '%' . $term . '%')
+                // Add more fields to search as needed
+            ;
+        })->paginate($perPage, ['*'], 'page', $page);
+    
+        return response()->json([
+            'items' => $jobs->items(),
+            'total_count' => $jobs->total(),
+        ]);
+    }
     // CV THEQUE
     public function cvtheque(){
         // $user = auth()->user();

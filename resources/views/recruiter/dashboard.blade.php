@@ -565,8 +565,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     $("#niveau_etudes").select2({});
     $("#annees_experience").select2({});
+    
     $("#metier_recherche").select2({
-
+       
     });
 
 
@@ -651,7 +652,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 refreshJsonJobs();
             }
         });
+
+        
     });
+
+    $('.select2-search__field').on('change', function() {
+            // This function will be called whenever the user types in the input field
+            const searchTerm = $(this).val(); // Get the current search term
+
+            // Perform actions based on the search term, e.g., trigger AJAX search
+            console.log("User typed:", searchTerm);
+        });
+
 
 })
 </script>

@@ -289,9 +289,13 @@ color: #2D2F30;
                                     <div class="mb-3">
                                         <label for="experience" class="form-label text-dark">Nombre d'années
                                             d'expérience</label>
-                                        <input type="number" class="form-control" id="experience"
-                                            value="{{isset($curriculum->annees_experience) ? $curriculum->annees_experience : ''}}"
-                                            name="annees_experience" required>
+                                        <select class="form-control" id="annees_experience" name="annees_experience" required>
+                                            <option value=""  selected>Année d'expérience</option>
+                                            <option value="Débutant (0 – 2 ans)" @if($curriculum->annees_experience == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
+                                            <option value="Intermédiaire (2 – 5 ans)" @if($curriculum->annees_experience == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
+                                            <option value="Confirmé (5 -10 ans)" @if($curriculum->annees_experience == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
+                                            <option value="Sénior (+ 10 ans)" @if($curriculum->annees_experience == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -317,17 +321,13 @@ color: #2D2F30;
                                     <!-- Niveau d'études -->
                                     <div class="mb-3 d-flex flex-column">
                                         <label for="etudes" class="form-label text-dark">Niveau d'études</label>
-                                        <select class="" id="etudes" name="niveau_etudes" required>
-                                            <option value="bac" @if(isset($curriculum->niveau_etudes) &&
-                                                $curriculum->niveau_etudes == 'bac') selected @endif>Bac</option>
-                                            <option value="licence" @if(isset($curriculum->niveau_etudes) &&
-                                                $curriculum->niveau_etudes == 'licence') selected @endif>Licence
-                                            </option>
-                                            <option value="master" @if(isset($curriculum->niveau_etudes) &&
-                                                $curriculum->niveau_etudes == 'master') selected @endif>Master</option>
-                                            <option value="doctorat" @if(isset($curriculum->niveau_etudes) &&
-                                                $curriculum->niveau_etudes == 'doctorat') selected @endif>Doctorat
-                                            </option>
+                                        <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
+                                            <option value=""  selected>Niveau d'études</option>
+                                            <option value="CAP / BEP" @if($curriculum->niveau_etudes == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                            <option value="Bac" @if($curriculum->niveau_etudes == 'Bac') selected @endif>Bac</option>
+                                            <option value="Bac+2" @if($curriculum->niveau_etudes == 'Bac+2') selected @endif>Bac + 2</option>
+                                            <option value="Bac+4" @if($curriculum->niveau_etudes == 'Bac+4') selected @endif>Bac + 4</option>
+                                            <option value="Bac+5" @if($curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -338,8 +338,6 @@ color: #2D2F30;
                                     <!-- Les valeurs -->
                                     <div class="mb-3">
                                         <label for="valeurs" class="form-label text-dark">Les valeurs</label>
-                                        <!-- <textarea class="form-control" id="valeurs" name="valeurs" rows="3"
-                                            required></textarea> -->
                                         <select name="valeurs[]" id="values_select" class="form-control" multiple>
                                             <option value="respect" @if(isset($curriculum->valeurs) && in_array('respect', json_decode($curriculum->valeurs))) selected @endif>Le respect
                                             </option>
