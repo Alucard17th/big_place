@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Offre;
 use App\Models\Entreprise;
 use App\Models\Curriculum;
+use App\Models\Job;
 use Illuminate\Support\Facades\DB;
 
 if (!function_exists('getCurriculumById')) {
@@ -23,7 +24,6 @@ if (!function_exists('getEntrepriseByUserId')) {
     {
         if ($id != null) {
             $user = auth()->user();
-
             if($user->parent_entreprise_id == null){
                 // USER IS ADMIN
                 $entreprise = Entreprise::where('user_id', $user->id)->first();
@@ -127,3 +127,20 @@ if (!function_exists('getFormationUserStatus')) {
         }
     }
 }
+
+if (!function_exists('getJobByCode')) {
+    function getJobByCode(string $codeOgr = null)
+    {   
+        if ($codeOgr != null && $codeOgr != '') {
+            // return $codeOgr;
+            // return Job::where('code_ogr', $codeOgr)->value('full_name');
+            $job = Job::where('code_ogr', 10473)->first();
+          
+          
+            return $job->full_name;
+        } else {
+            return '';
+        }
+    }
+}
+

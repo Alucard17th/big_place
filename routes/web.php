@@ -74,6 +74,7 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
 
 Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
 Route::get('/recruiter-dashboard/jobs/search', [RecruiterController::class, 'searchJobsJson'])->name('recruiter.dashboard.jobs.search');
+Route::get('/candidat-profile/jobs/search', [RecruiterController::class, 'searchJobsJsonCandidatProfil'])->name('recruiter.dashboard.candidat.jobs.search');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
@@ -130,6 +131,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::post('/mes-evenements-create', [RecruiterController::class, 'myEventsStore'])->name('recruiter.events.store');
     Route::get('/mes-evenements/edit/{id}', [RecruiterController::class, 'myEventsEdit'])->name('recruiter.events.edit');
     Route::post('/mes-evenements/update', [RecruiterController::class, 'myEventsUpdate'])->name('recruiter.events.update');
+    Route::get('/mes-evenements/show/{id}', [RecruiterController::class, 'MyEventsShow'])->name('recruiter.events.show');
     Route::get('/mes-evenements/delete/{id}', [RecruiterController::class, 'myEventsDelete'])->name('recruiter.events.delete');
     
     Route::get('/mes-evenements/suspend/{id}', [RecruiterController::class, 'myEventsSuspend'])->name('recruiter.events.suspend');
@@ -162,8 +164,10 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-mails/create', [RecruiterController::class, 'createMail'])->name('recruiter.email.create');
     Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
     Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
+    Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
     Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
     Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
+    Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
 
 
     // STATS
@@ -250,6 +254,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     // OFFERS
     Route::get('/candidat-offers', [OfferController::class, 'index'])->name('candidat.offers');
     Route::get('/candidat-offers/search', [OfferController::class, 'search'])->name('candidat.offers.search');
+    Route::get('/candidat-offers/show/{id}', [OfferController::class, 'show'])->name('candidat.offers.show');
 
     // EVENTS
     Route::get('/event/candidat/subscribe/{id}', [EventController::class, 'subscribeToEvent'])->name('candidat.event.subscribe');

@@ -151,7 +151,9 @@ input, select{
                                                 @endif
                                             </td>
                                             <td class="text-left">
+                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()))
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
+                                                @endif
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>
                                             </td>
                                         </tr>

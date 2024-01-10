@@ -22,7 +22,7 @@
 #ex1{
     background: #f8f8f8;
     max-width: 100%;
-    width:600px;
+    width:700px;
     padding: 50px;
 }
 #add-event-form > h4{
@@ -124,6 +124,10 @@
                                             
                                             @unlessrole('restricted')
                                             <td class="text-left">
+                                                <a href="{{route('recruiter.events.show', $event->id)}}"
+                                                    type="button" class="bg-btn-five">
+                                                    Consulter l'événement
+                                                </a>
                                                 <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
@@ -194,7 +198,7 @@
                 <div class="col-6">
                     <!-- Field: Organizer Name -->
                     <div class="form-group">
-                        <label class="text-dark" for="organizer_name">Organisateur</label>
+                        <label class="text-dark" for="organizer_name">Organisateur de l'événement</label>
                         <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
                     </div>
                 </div>

@@ -62,8 +62,35 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:8', 'confirmed'],
             'company' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
+            'siret' => ['required', 'string', 'max:255'],
+        ], [
+            // General validation errors
+            // 'required' => 'Le champ :attribute est obligatoire.',
+            'email' => 'Le champ :attribute doit être une adresse e-mail valide.',
+            'max' => [
+                'string' => 'Le champ :attribute ne peut pas dépasser :max caractères.',
+            ],
+            'min' => [
+                'string' => 'Le champ :attribute doit contenir au moins :min caractères.',
+            ],
+            'confirmed' => 'Les champs :attribute et :attribute confirmation ne correspondent pas.',
+            'unique' => 'Le champ :attribute est déjà utilisé.',
+
+            // Specific field errors
+            'name.required' => 'Veuillez saisir votre nom.',
+            'email.required' => 'Veuillez saisir votre adresse e-mail.',
+            'password.required' => 'Veuillez saisir votre mot de passe.',
+            'password_confirmation.required' => 'Veuillez confirmer votre mot de passe.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'company.required' => 'Veuillez saisir le nom de l\'entreprise.',
+            'phone.required' => 'Veuillez saisir votre numéro de téléphone.',
+            'phone.min' => 'Le numéro de téléphone doit contenir au moins 10 chiffres.',
+            'phone.max' => 'Le numéro de téléphone ne peut pas dépasser 10 chiffres.',
+            'siret.required' => 'Veuillez saisir le numéro SIRET.',
+            'siret.max' => 'Le numéro SIRET ne peut pas dépasser 14 caractères.',
         ]);
     }
 

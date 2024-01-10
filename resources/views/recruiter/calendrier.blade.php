@@ -23,6 +23,14 @@
      scrollbar-color: #ff8b00 #fff;
  }
  /* SCROLLBAR - END - */
+
+/* MONTH CALENDAR VIEW */
+#calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr > td > div > div > div > table{
+    width: 100% !important;
+}
+#calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
+    display: table-row !important;
+}
 </style>
 @endpush
 
@@ -302,7 +310,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         headerToolbar: {
             left: 'prev,today,next',
             right: 'title',
-            center: 'timeGridDay,timeGridWeek' 
+            center: 'timeGridDay,timeGridWeek,dayGridMonth' 
         },
         events : rdvs,
         locale: initialLocaleCode,

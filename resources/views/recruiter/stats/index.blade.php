@@ -18,7 +18,7 @@
 .stat-card {
     height: 100% !important;
 }
-.offer-day, .offer-month, .candidature-day, .candidature-month, .rdv-day, .rdv-month {
+.offer-day, .offer-week, .offer-month, .candidature-day, .candidature-week, .candidature-month, .rdv-day, .rdv-month {
     border-radius: 10.9204px !important;
     font-family: 'Inter' !important;
     font-style: normal !important;
@@ -40,7 +40,9 @@
     z-index: 1;
     border: 0px;
 }
-.offer-day.active, .offer-month.active, .candidature-day.active, .candidature-month.active, .rdv-day.active, .rdv-month.active {
+.offer-day.active, .offer-month.active, .offer-week.active,
+.candidature-day.active, .candidature-month.active, .candidature-week.active,
+.rdv-day.active, .rdv-month.active {
     background-color: #302EA7 !important;
     color: #FFFFFF !important;
 }
@@ -95,37 +97,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- <div class="col-3">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Offres d’emploi par métier</h5>
-                                            <p class="card-text">
-                                                @foreach($offresByMetier as $key => $value)
-                                                {{$key}} : {{$value}}
-                                                @endforeach
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-                                <!-- <div class="col-3">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Durée moyenne d’embauche</h5>
-                                            <p class="card-text">{{$moyenneDureeRecrutement}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-3 mt-3">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Durée de souscription du pack:::</h5>
-                                            <p class="card-text">{{$dureeSusbcription}}</p>
-                                        </div>
-                                    </div>
-                                </div> -->
+                               
                             </div>
                         </div>
                     </div>
@@ -141,17 +113,16 @@
                                     <div class="actions row">
                                         <div class="col-12 text-center">
                                             <button class="offer-day active mr-3">Jours</button>
+                                            <button class="offer-week">Semaine</button>
                                             <button class="offer-month">Mois</button>
                                         </div>
                                     </div>
                                     <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
                                     <div id="chart-offers"> </div>
-                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-                
 
                     <div class="col-6">
                         <div class="ls-widget">
@@ -161,6 +132,7 @@
                                     <div class="actions row">
                                         <div class="col-12 text-center">
                                             <button class="candidature-day active mr-3">Jours</button>
+                                            <button class="candidature-week mr-3">Semaine</button>
                                             <button class="candidature-month">Mois</button>
                                         </div>
                                     </div>
@@ -182,28 +154,26 @@
                                             <button class="rdv-month">Mois</button> -->
                                         </div>
                                     </div>
-                                    <canvas id="rdvs-chart" class="" width="600" height="500"></canvas>
+                                    <div id="rdvs-chart" class="" width="600" height="500"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-6">
+                    <!-- <div class="col-6">
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
                                     <h3 class="py-4">Durée moyenne d’embauche par métier</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <!-- <button class="rdv-day active mr-3">Jours</button>
-                                            <button class="rdv-month">Mois</button> -->
                                         </div>
                                     </div>
-                                    <canvas id="rdvs-chart" class="" width="600" height="500"></canvas>
+                                    <canvas id="" class="" width="600" height="500"></canvas>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -216,6 +186,7 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 <!-- <script>
 $(document).ready(function() {
     // var ctx = document.getElementById("rdvs-chart").getContext('2d');
@@ -373,6 +344,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     // OFFERS 
     let offersByDay = @json($offersByDay);
+    let offersByWeek = @json($offersByWeek);
     let offersByMonth = @json($offersByMonth);
     let labels = Object.keys(offersByDay);
     let data = Object.values(offersByDay);
@@ -420,17 +392,18 @@ $(document).ready(function() {
        
         };
 
-        var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
-        chart.render();
-
+    var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
+    chart.render();
 
     const switchOffersDayBtn = document.querySelector('.offer-day');
+    const switchOffersWeekBtn = document.querySelector('.offer-week');
     const switchOffersMonthBtn = document.querySelector('.offer-month');
 
     switchOffersDayBtn.addEventListener('click', () => {
         // toggle the active class
-        switchOffersDayBtn.classList.toggle('active');
-        switchOffersMonthBtn.classList.toggle('active');
+        switchOffersDayBtn.classList.add('active');
+        switchOffersMonthBtn.classList.remove('active');
+        switchOffersWeekBtn.classList.remove('active');
 
         chart.updateOptions({
             xaxis: {
@@ -452,9 +425,34 @@ $(document).ready(function() {
         })
     })
 
+    switchOffersWeekBtn.addEventListener('click', () => {
+        switchOffersMonthBtn.classList.remove('active');
+        switchOffersWeekBtn.classList.add('active');
+        switchOffersDayBtn.classList.remove('active');
+
+        chart.updateOptions({
+            xaxis: {
+                categories: Object.keys(offersByWeek)
+            },
+            series: [
+                {
+                    name: 'Offres',
+                    type: 'column',
+                    data: Object.values(offersByWeek)
+                },
+                {
+                    name: 'Offres',
+                    type: 'line',
+                    data: Object.values(offersByWeek)
+                }
+            ]
+        })
+    })
+
     switchOffersMonthBtn.addEventListener('click', () => {
-        switchOffersMonthBtn.classList.toggle('active');
-        switchOffersDayBtn.classList.toggle('active');
+        switchOffersMonthBtn.classList.add('active');
+        switchOffersDayBtn.classList.remove('active');
+        switchOffersWeekBtn.classList.remove('active');
 
         chart.updateOptions({
             xaxis: {
@@ -477,6 +475,7 @@ $(document).ready(function() {
 
     //CANDIDATURES
     let candidaturesByDay = @json($candidaturesByDay);
+    let candidaturesByWeek = @json($candidaturesByWeek);
     let candidaturesByMonth = @json($candidaturesByMonth);
     labels = Object.keys(candidaturesByDay);
     data = Object.values(candidaturesByDay);
@@ -498,12 +497,14 @@ $(document).ready(function() {
     candidaturesChart.render();
 
     const switchCandidaturesDayBtn = document.querySelector('.candidature-day');
+    const switchCandidaturesWeekBtn = document.querySelector('.candidature-week');
     const switchCandidaturesMonthBtn = document.querySelector('.candidature-month');
 
     switchCandidaturesDayBtn.addEventListener('click', () => {
         // toggle the active class
-        switchCandidaturesDayBtn.classList.toggle('active');
-        switchCandidaturesMonthBtn.classList.toggle('active');
+        switchCandidaturesDayBtn.classList.add('active');
+        switchCandidaturesWeekBtn.classList.remove('active');
+        switchCandidaturesMonthBtn.classList.remove('active');
 
         candidaturesChart.updateOptions({
             xaxis: {
@@ -520,9 +521,31 @@ $(document).ready(function() {
         })
     })
 
+    switchCandidaturesWeekBtn.addEventListener('click', () => {
+        // toggle the active class
+        switchCandidaturesDayBtn.classList.remove('active');
+        switchCandidaturesWeekBtn.classList.add('active');
+        switchCandidaturesMonthBtn.classList.remove('active');
+
+        candidaturesChart.updateOptions({
+            xaxis: {
+                categories: Object.keys(candidaturesByWeek)
+            },
+            series: [
+                {
+                    name: 'Candidatures',
+                    type: 'column',
+                    data: Object.values(candidaturesByWeek)
+                }
+            ],
+            
+        })
+    })
+
     switchCandidaturesMonthBtn.addEventListener('click', () => {
-        switchCandidaturesMonthBtn.classList.toggle('active');
-        switchCandidaturesDayBtn.classList.toggle('active');
+        switchCandidaturesMonthBtn.classList.add('active');
+        switchCandidaturesWeekBtn.classList.remove('active');
+        switchCandidaturesDayBtn.classList.remove('active');
 
         candidaturesChart.updateOptions({
             xaxis: {
@@ -538,55 +561,32 @@ $(document).ready(function() {
         })
     })
 
-
-    //RENDEZ-VOUS
-    var ctx = document.getElementById("rdvs-chart").getContext('2d');
     const rdvsEffectue = @json($doneRdvs);
     const rdvsCancelled = @json($refusedRdvs);
     const rdvsPending = @json($pendingRdvs);
-    var myChartRdvs = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ["Rdv effectué", "Rdv annulé", "Rdv en attente"],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [rdvsEffectue, rdvsCancelled, rdvsPending],
-                backgroundColor: [
-                    '#0049FC',
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 205, 86)'
-                ],
-                hoverOffset: 4
-            }]
+
+    var optionsPieChart = {
+          series: [rdvsEffectue, rdvsCancelled, rdvsPending],
+          chart: {
+          width: 380,
+          type: 'pie',
         },
-        options: {
+        labels: ["Rdv effectué", "Rdv annulé", "Rdv en attente"],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
             legend: {
-                display: true
-            },
-            scales: {
-                
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        font: {
-                            size: 6
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-                    }
-                }
-            },
-            layout: {
-                padding: 10
+              position: 'bottom'
             }
-        }
-    });
+          }
+        }]
+        };
+
+    var Piechart = new ApexCharts(document.querySelector("#rdvs-chart"), optionsPieChart);
+    Piechart.render();
 });
 </script>
 @endpush

@@ -391,7 +391,7 @@
                             use Carbon\Carbon;
                             @endphp
                             @foreach($entreprise->user->offers as $offer)
-                            <div class="col-6 mb-3">
+                            <div class="col-4 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="row">

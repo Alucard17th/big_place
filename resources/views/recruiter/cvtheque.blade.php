@@ -30,7 +30,7 @@ input, select{
     box-shadow: none;
     font-size: 14px;
     background: #fff !important;
-    width: 22vw;
+    width: 100% !important;
 }
 .select2-search__field{
     padding: 0px 18px 10px 20px !important;
@@ -48,6 +48,15 @@ input, select{
 .form-group input, .form-group select{
     height: 45px ;
     background: #fff !important;
+}
+
+.bg-btn-visio.active{
+    background-color: #ff8b00; /* Change to your desired active background color */
+    color: white !important; /* Change to your desired active text color */
+}
+.bg-btn-physic.active{
+    background-color: #ff8b00; /* Change to your desired active background color */
+    color: white !important; /* Change to your desired active text color */
 }
 
 </style>
@@ -82,25 +91,29 @@ input, select{
                                 <form method="get" class="default-form form-inline"
                                     action="{{ route('recruiter.cvtheque.search') }}">
                                     <div class="row">
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                            <select name="metier_recherche" id="metier_recherche" class="form-control" >
-                                                <option value="" selected>Métier / Code Rome</option>
-                                                <!-- @foreach($jobs as $job)
-                                                    <option value="{{$job->id}}" @if(request('metier_recherche') == $job->id) selected @endif>{{$job->id}} - {{$job->full_name}}</option>    
-                                                @endforeach -->
-                                            </select>
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
+                                                <select name="metier_recherche" id="metier_recherche" class="form-control" >
+                                                    <option value="" selected>Métier / Code Rome</option>
+                                                </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
+                                                <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" 
+                                                value="{{ request('custom_job') }}" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="ville_domiciliation" id="ville_domiciliation" placeholder="Ville / département"
                                                     value="{{ request('ville_domiciliation') }}" class="form-control mb-2" >
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
+                                        <div class="col-6 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select class="form-control" id="annees_experience" name="annees_experience" >
                                                     <option value=""  selected>Année d'expérience</option>
@@ -112,7 +125,7 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
+                                        <div class="col-6 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
                                                     <option value=""  selected>Niveau d'études</option>
@@ -125,16 +138,16 @@ input, select{
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
                                                 <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
                                                     value="{{ request('pretentions_salariales') }}" class="form-control" >
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
+                                        <div class="col-12 px-1">
                                             <div class="form-group mb-0">
-                                                <select name="valeurs[]" id="values_select" class="" multiple >
+                                                <select name="valeurs[]" id="values_select" class="w-100" multiple >
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
                                                     <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
@@ -205,7 +218,6 @@ input, select{
                                             </td>
                                             @endif
                                             <td class="text-left">
-                                                
                                                 {{$curriculum->nom}} {{$curriculum->prenom}}
                                             </td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
@@ -214,21 +226,20 @@ input, select{
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
                                             <td class="text-left">
                                                 @if($curriculum->cv != null && $curriculum->cv != '')
-                                                <button class="bg-btn-three see-profile" data-url="{{ asset('storage'.$curriculum->cv) }}"
+                                                <button class="bg-btn-nine see-profile" data-url="{{ asset('storage'.$curriculum->cv) }}"
                                                 data-cvid="{{$curriculum->id}}">
                                                     Consulter le profil
                                                 </button>
                                                 @else
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
+                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
+                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="ls-pagination">
-                                   
-                                </div>
                             </div>
                         </div>
 
@@ -236,6 +247,99 @@ input, select{
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <div id="ex1" class="modal">
+       <form action="{{route('recruiter.invite.candidates')}}" method="POST" id="rdv-form">
+            @csrf
+            <div class="form-group d-flex align-items-center justify-content-between">
+                <h4 class="text-dark">Détails de rendez-vous :</h4>
+                <a href="#" id="close-modal"><i class="las la-times" style="font-size: 30px;"></i></a>
+            </div>
+           
+            <label for="candidate" class="text-dark">Type du rendez-vous</label>
+            <div class="form-check align-items-center d-none">
+                <input class="form-check-input" type="checkbox" value="" name="is_type_presentiel" id="is_type_presentiel">
+                <label class="form-check-label ml-4" for="is_type_presentiel">
+                    Présentiel
+                </label>
+                
+            </div>
+            <div class="form-check form-check d-none align-items-center">
+                <input class="form-check-input" type="checkbox" value="" name="is_type_distanciel" id="is_type_distanciel">
+                <label class="form-check-label ml-4" for="is_type_distanciel">
+                    Distanciel
+                </label>
+            </div>
+
+
+            <div class="form-group">
+                <div class="choices d-flex">
+                    <button type="button" class="bg-btn-visio mr-2 d-flex align-items-center"><i class="las la-video mr-2" style="font-size: 24px;"></i>Proposer Rdv visio</button>
+                    <button type="button" class="bg-btn-physic mr-2">Proposer Rdv physique</button>
+                </div>
+            </div>
+
+            <div class="form-group" id="address-div" style="display: none">
+                <label class="text-dark" for="address">Adresse du rendez-vous</label>
+                <input class="form-control mb-1" type="text" name="rdv_address" id="rdv_address">
+            </div>
+
+            <hr style="padding: 0px 0;background-color: rgb(0 0 0);">
+
+            <div class="form-group">
+                <label for="candidate" class="text-dark">Crénau 1:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input class="form-control mb-1" type="date" name="crenau_1_date" id="crenau_1_date" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control mb-1" type="time" name="crenau_1_time" id="crenau_1_time" required>
+                    </div>
+                </div>
+                <p id="creanuea_1_msg" class="text-danger" style="font-size:18px;"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="candidate" class="text-dark">Crénau 2:</label>
+                <div class="row">
+                    <div class="col-6">
+                    <input class="form-control mb-1" type="date" name="crenau_2_date" id="crenau_2_date" required>
+                    </div>
+                    <div class="col-6">
+                    <input class="form-control mb-1" type="time" name="crenau_2_time" id="crenau_2_time" required>
+                    </div>
+                </div>
+                <p id="creanuea_2_msg" class="text-danger" style="font-size:18px;"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="candidate" class="text-dark">Crénau 3:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input class="form-control mb-1" type="date" name="crenau_3_date" id="crenau_3_date" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control mb-1" type="time" name="crenau_3_time" id="crenau_3_time" required>
+                    </div>
+                </div>
+                <p id="creanuea_3_msg" class="text-danger" style="font-size:18px;"></p>
+            </div>
+
+            <div class="form-group">
+                <div class="alert alert-success alert-dismissible" style="display: none;">
+                    <p id="success-msg">Les créneaux de rendez-vous pour le(s) candidat(s) ont été transmis avec succès.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="theme-btn btn-style-one create-rdv px-5 py-3" type="button" style="font-size: 16px">Envoyer</button>
+            </div>
+            
+       </form>
+        
+        <a href="#"  class="custom-close-modal"></a>
     </div>
 </div>
 @endsection
@@ -374,89 +478,153 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    $("#metier_recherche").select2({});
-    var currentPage = 1;
-    var isFetching = false; // Flag to track request status
-
-    async function getJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                $('#metier_recherche').append(options).trigger("change");
-                isFetching = false;
+    $("#metier_recherche").select2({
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    async function refreshJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                const scrollTop = $('.select2-results__options').scrollTop();
-                $('#metier_recherche').append(options).trigger("change");
-
-                $('#metier_recherche').select2('close');
-                $('#metier_recherche').select2('open');
-                $('.select2-results__options').scrollTop(scrollTop + 1);
-
-                console.log(scrollTop);
-
-                isFetching = false;
+            noResults: function() {
+                return 'Aucun metier correspondant.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
+            searching: function() {
+                return 'Chargement...';
             }
-        });
-    }
-
-    getJsonJobs();
-
-    $('#metier_recherche').on('select2:open', function() {
-        const resultsContainer = $('.select2-results__options');
-        resultsContainer.on('scroll', function() {
-            // This function will be called whenever the user scrolls the options list
-            console.log("scroll");
-            const scrollTop = $(this).scrollTop();
-            const scrollHeight = $(this).prop('scrollHeight');
-            const clientHeight = $(this).innerHeight();
-
-            // Check if the user has scrolled near the bottom:
-            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
-                // Trigger infinite scrolling or other actions as needed
-                console.log('Near the bottom!');
-                currentPage++;
-                isFetching = true;
-                refreshJsonJobs();
-            }
-        });
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
     });
+
+    // PROPOSEZ UN RDV
+    let selectedCandidates = [];
+    const proposezRendezVousButton = $('.proposez-rdv');
+    const createRendezVousButton = document.querySelector('.create-rdv');
+
+    proposezRendezVousButton.on('click', function() {
+        event.preventDefault();
+        const cvidValue = $(this).data('cvid');
+        $("#ex1").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+
+        selectedCandidates.push(cvidValue);
+    })
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
+
+    // Initially hide checkboxes
+    $('.form-check').hide();
+
+    $('.bg-btn-visio').click(function() {
+        $('#is_type_distanciel').prop('checked', true);
+        $('.bg-btn-visio').addClass('active');
+        $('.bg-btn-physic').removeClass('active');  // Remove active class from the other button
+        $('#is_type_presentiel').prop('checked', false);  // Uncheck the other checkbox
+        $('#address-div').hide();
+    });
+
+    $('.bg-btn-physic').click(function() {
+        $('#is_type_presentiel').prop('checked', true);
+        $('.bg-btn-physic').addClass('active');
+        $('.bg-btn-visio').removeClass('active');  // Remove active class from the other button
+        $('#is_type_distanciel').prop('checked', false);  // Uncheck the other checkbox
+        $('#address-div').show();
+    });
+
+    createRendezVousButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        console.log('kjhds')
+        // make the button disabled
+        createRendezVousButton.disabled = true;
+        // show the loading 
+        createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        sendRdv(selectedCandidates);
+    })
+
+    function sendRdv(selectedValues) {
+        if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
+            
+                // Create a FormData object to store the form data
+                const formData = new FormData();
+
+                // Add the form fields to the formData
+                formData.append('crenau_1_date', document.getElementById('crenau_1_date').value);
+                formData.append('crenau_1_time', document.getElementById('crenau_1_time').value);
+                formData.append('crenau_2_date', document.getElementById('crenau_2_date').value);
+                formData.append('crenau_2_time', document.getElementById('crenau_2_time').value);
+                formData.append('crenau_3_date', document.getElementById('crenau_3_date').value);
+                formData.append('crenau_3_time', document.getElementById('crenau_3_time').value);
+
+                formData.append('is_type_presentiel', document.getElementById('is_type_presentiel').checked);
+                formData.append('is_type_distanciel', document.getElementById('is_type_distanciel').checked);
+
+                formData.append('selectedValues', JSON.stringify(selectedValues));
+                formData.append('address', document.getElementById('rdv_address').value);
+
+                // Send the data using AJAX
+                fetch('{{ route('recruiter.invite.candidates') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+                    },
+                    body: formData, // Use formData as the body
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response, e.g., show a success message
+                        // refresh the current page
+                    
+                        creanuea_1_msg.innerHTML = '';
+                        creanuea_2_msg.innerHTML = '';
+                        creanuea_3_msg.innerHTML = '';
+                        for (const key in data.errors) {
+                            if (data.errors.hasOwnProperty(key)) {
+                                const errorMessage = data.errors[key];
+                                const element = document.querySelector(`#creanuea_${parseInt(key) + 1}_msg`);
+                                if (element) {
+                                    // Update the inner HTML of the corresponding element
+                                    element.innerHTML = 'Erreur: ' + errorMessage;
+                                }
+                            }
+                        }
+
+                        console.log(data.status);
+                            if(data.status == 'success'){
+                                $('.alert-success').show();
+                            }
+                            createRendezVousButton.disabled = false;
+        // show the loading 
+        createRendezVousButton.innerHTML = 'Envoyer';
+
+                    })
+                    .catch(error => {
+                        // Handle errors, e.g., show an error message
+                        console.error(error);
+                    });
+        }else {
+            // Show an error message to inform the user to select at least one checkbox
+            alert('Veuillez choisir au moins un type de RDV');
+        }
+        
+    }
     
 });
 </script>

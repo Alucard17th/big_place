@@ -230,7 +230,7 @@
                                                     Consulter la vitrine de l'entreprise
                                                 </a>
                                                 <a href="" data-event-id="{{$event->id}}"
-                                                    data-event-name="{{$event->job_position}}" type="button"
+                                                    data-event-organizer="{{getUserById($event->user_id)->name}}" type="button"
                                                     class="bg-btn-five mt-2" id="get-qr-code-btn">
                                                     Badge
                                                 </a>
@@ -262,8 +262,9 @@
             </div>
 
             <div class="col-12 text-center py-3">
-                <h5>Evénement : <span id="event-name"></span></h5>
-                <h4 class="text-dark py-4">{{auth()->user()->name}}</h4>
+                <h5>Organisateur de l'événement : <span id="event-organizer"></span></h5>
+                <hr>
+                <h4 class="text-dark pt-0 pb-3">Nom du candidat : <span class="text-muted">{{auth()->user()->name}}</span></h4>
                 <div id="qrcode-container"></div>
             </div>
         </div>
@@ -321,7 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
     getQrCodeBtn.addEventListener('click', function(event) {
         event.preventDefault();
         let eventId = getQrCodeBtn.getAttribute('data-event-id');
-        let eventName = getQrCodeBtn.getAttribute('data-event-name');
+        let eventOrganizer = getQrCodeBtn.getAttribute('data-event-organizer');
         let qrcodeImg = ''
         $.ajax({
             url: "/event/candidat/qrcode/" + eventId,
@@ -329,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
             dataType: 'text',
             success: function(data) {
                 $('#qrcode-container').html(data);
-                $('#event-name').html(eventName);
+                $('#event-organizer').html(eventOrganizer);
                 $("#ex1").modal({
                     escapeClose: false,
                     clickClose: true,

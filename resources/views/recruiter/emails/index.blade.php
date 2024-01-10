@@ -117,9 +117,11 @@
                                 </div>
                                 
                                 <div class="inbox">
+                                    <button class="bg-btn-four my-2 d-none" id="delete-all-btn">Supprimer</button>
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th></th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -129,6 +131,8 @@
                                         <tbody>
                                             @foreach ($receivedEmails as $email)
                                             <tr>
+                                                <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
@@ -154,6 +158,7 @@
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -162,6 +167,15 @@
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('recruiter.emails.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('recruiter.emails.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                    onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        Supprimer
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -169,23 +183,33 @@
                                 </div>
 
                                 <div class="deleted" style="display: none">
-                                    <table class="table table-sm table-bordered" id="data-table-sent">
+                                    <table class="table table-sm table-bordered" id="data-table-deleted">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <!-- <tbody>
-                                            @foreach ($emails as $email)
+                                        <tbody>
+                                            @foreach ($deletedEmails as $email)
                                             <tr>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('recruiter.emails.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('recruiter.emails.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                    Supprimer
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
-                                        </tbody> -->
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -196,6 +220,7 @@
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -204,6 +229,15 @@
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('recruiter.emails.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('recruiter.emails.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                    Supprimer
+                                                    </a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -216,53 +250,12 @@
             </div>
         </div>
     </div>
-<!-- Modal HTML embedded directly into document -->
-<div id="message-modal" class="modal">
-        <form action="{{route('recruiter.email.store')}}" method="POST" id="message-form">
-            @csrf
-            <div class="form-group">
-                <label for="candidate">Envoyé à</label>
-                <br>
-                <select name="receiver[]" id="receiver" class="form-control" multiple required>
-                    @foreach ($receivers as $user)
-                    <option value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Sujet</label>
-                <input type="text" name="subject" id="subject" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Message</label>
-                <textarea class="form-control" name="message" id="message" cols="30" rows="10" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit" id="create-message-btn">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
-    </div>
-
 </div>
 @endsection
 
 @push('scripts')
 <script>
 $(document).ready(function() {
-    // var addMessageBtn = document.getElementById('add-message-btn');
-
-    // addMessageBtn.addEventListener('click', function(event) {
-    //     event.preventDefault();
-    //     $("#message-modal").modal({
-    //         escapeClose: false,
-    //         clickClose: true,
-    //         showClose: false
-    //     });
-    // });
-
     $("#receiver").select2({
         width: '100%'
     });
@@ -436,6 +429,50 @@ $(document).ready(function() {
     });
 
     $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    // DELETE EMAIL CHECKBOXES
+    const checkboxes = document.querySelectorAll('.checkbox-item');
+    const deleteAllButton = document.querySelector('#delete-all-btn');
+    let selectedValues = [];
+    // Add an event listener to checkboxes to toggle the button visibility
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            console.log(this);
+            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+
+            deleteAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
+
+            selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
+                return checkbox.value;
+            });
+
+            console.log(selectedValues);
+
+        });
+
+    });
+
+    deleteAllButton.addEventListener('click', function() {
+        // Send the data using AJAX
+        fetch('{{ route('recruiter.emails.ajax.delete') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+            },
+            body: JSON.stringify(selectedValues),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response, e.g., show a success message
+            // refresh the current page
+            window.location.reload();
+        })
+        .catch(error => {
+            // Handle errors, e.g., show an error message
+            console.error(error);
+        });
+    })
 
 })
 </script>

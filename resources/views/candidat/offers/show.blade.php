@@ -1,71 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
-.select2-selection--single {
-    margin: 0 !important;
-    width: 100% !important;
-    height: 35px !important;
-    padding: .330rem .70rem !important;
-    font-weight: 400 !important;
-    line-height: 1.5 !important;
-    color: #495057 !important;
-    background-color: #fff !important;
-    background-clip: padding-box !important;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
-    margin-bottom: .5rem !important !important;
-    border: 1px solid #dae1e7 !important;
-    border-radius: 3px !important;
-    box-shadow: none !important;
-    font-size: 14px !important;
-}
-
-.select2-selection--multiple {
-    margin: 0 !important;
-    width: 100% !important;
-    height: 35px !important;
-    /* padding: .3rem .70rem !important; */
-    padding-top: 2px;
-    padding-left: 6px;
-    font-weight: 400 !important;
-    line-height: 1.5 !important;
-    color: #8f959b !important;
-    background-color: #fff !important;
-    background-clip: padding-box !important;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
-    margin-bottom: .5rem !important !important;
-    border: 1px solid #dae1e7 !important;
-    border-radius: 3px !important;
-    box-shadow: none !important;
-    font-size: 14px !important;
-}
-
-#edit-offer-form>h4 {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 41px;
-    /* identical to box height, or 102% */
-    color: #202124;
-}
-
-#edit-offer-form>div>label,
-#edit-offer-form>div.row>div>div>label {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 41px;
-    color: #202124;
-}
-
-#edit-offer-btn {
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 20px;
-}
 </style>
 @endpush
 
@@ -81,7 +16,7 @@
                             <h3>Mon offre d'emploi - Détails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="/mes-offres" class="bg-back-btn mr-2">
+                            <a href="/candidat-offers" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -156,16 +91,6 @@
                                             @if ($offer->post_tasks != null)
                                                 @foreach (json_decode($offer->post_tasks) as $task)
                                                 <span class="text-muted">{{ $task }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
-                                            @else
-                                            <span class="text-muted">-</span>
-                                            @endif
-                                        </h5>   
-
-                                        <h5 class="h6 mb-3">Canaux de diffusions :
-                                            @if ($offer->selected_jobboards != null)
-                                                @foreach (json_decode($offer->selected_jobboards) as $jobboars)
-                                                <span class="text-muted">{{ ucfirst(str_replace('_', ' ', $jobboars)) }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
                                                 @endforeach
                                             @else
                                             <span class="text-muted">-</span>

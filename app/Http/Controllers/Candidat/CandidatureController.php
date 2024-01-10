@@ -65,7 +65,8 @@ class CandidatureController extends Controller
 
         $vue = new Vues();
         $vue->count = 1;
-        $vue->entreprise_id = $entreprise->id;
+        $vue->viewable_id = $entreprise->id;
+        $vue->type = 'entreprise';
         $vue->save();
         
         // $entreprise->vues()->attach($vue);

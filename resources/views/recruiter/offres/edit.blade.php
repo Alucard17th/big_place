@@ -289,6 +289,11 @@
                                     <input type="date" class="form-control" id="unpublish_date" name="unpublish_date" value="{{ $offer->unpublish_date }}" required>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="other_language">Tâches à effectuer (séparées par une virgule)</label>
+                                    <textarea name="post_tasks" id="post_tasks" class="form-control" rows="6">{{implode(', ', json_decode($offer->post_tasks))}}</textarea>
+                                </div>
+
                                 <!-- Field: Choix des canaux de diffusion -->
                                 <div class="form-group">
                                     <label for="selected_jobboards">Choix des canaux de diffusion </label>

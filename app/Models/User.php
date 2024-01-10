@@ -25,6 +25,7 @@ class User extends Authenticatable
         'siret',
         'birth_date',
         'avatar',
+        'parent_entreprise_id'
     ];
 
     /**

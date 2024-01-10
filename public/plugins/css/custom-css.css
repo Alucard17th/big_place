@@ -89,7 +89,7 @@ h4{
 .fc-today-button{
     color: #18181B !important;
 }
-.fc-timeGridWeek-button, .fc-timeGridDay-button{
+.fc-timeGridWeek-button, .fc-timeGridDay-button, .fc-dayGridMonth-button{
     width: 122.68px !important;
     height: 38.92px !important;
     border-radius: 10.9204px !important;

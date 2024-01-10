@@ -94,9 +94,24 @@
     color: #8f959b !important;
 }
 
+.select2-selection__placeholder,
+#custom_job::placeholder,
+#location_city::placeholder,
+#brut_salary::placeholder,
+#education_level::placeholder,
+#experience_level::placeholder,
+.select2-search__field,
+#education_level, #experience_level
+{
+    color: #000 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
 .select2-selection__rendered {
     color: #8f959b !important;
     padding-left: 18px;
+    font-size: 16px !important;
 }
 
 .card {
@@ -150,6 +165,14 @@
      scrollbar-color: #ff8b00 #fff;
  }
  /* SCROLLBAR - END - */
+
+/* MONTH CALENDAR VIEW */
+#calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr > td > div > div > div > table{
+    width: 100% !important;
+}
+#calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
+    display: table-row !important;
+}
 </style>
 @endpush
 
@@ -172,13 +195,12 @@
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                             style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                        <!-- <input type="text" name="job_title" id="job_title" value="" class="form-control" placeholder="Titre de l'offre" style="padding-left: 36px !important;"> -->
                                         <select name="job_title" id="job_title" class="form-control">
                                             <option value="" selected value="">Poste recherchés</option>
-                                            <!-- @foreach($jobs as $job)
-                                            <option value="{{$job->id}}">{{$job->id}} - {{$job->full_name}}</option>
-                                            @endforeach -->
                                         </select>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier">
                                     </div>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
@@ -187,7 +209,7 @@
                                             class="form-control mb-2" placeholder="Ville / Département">
                                     </div>
                                     <div class="form-group mb-2">
-                                        <input type="text" name="brut_salary" value="" class="form-control"
+                                        <input type="text" name="brut_salary" value="" id="brut_salary" class="form-control"
                                             placeholder="Pretentions salariales">
                                     </div>
                                 </div>
@@ -470,91 +492,37 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#niveau_etudes").select2({});
 
     $("#job_title").select2({
-
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
+            },
+            noResults: function() {
+                return 'Aucun metier correspondant.';
+            },
+            searching: function() {
+                return 'Chargement...';
+            }
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
     });
 
-    var currentPage = 1;
-    var isFetching = false; // Flag to track request status
-
-    async function getJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                $('#job_title').append(options).trigger("change");
-                isFetching = false;
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    async function refreshJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                const scrollTop = $('.select2-results__options').scrollTop();
-                $('#job_title').append(options).trigger("change");
-
-                $('#job_title').select2('close');
-                $('#job_title').select2('open');
-                $('.select2-results__options').scrollTop(scrollTop + 1);
-
-                console.log(scrollTop);
-
-                isFetching = false;
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    getJsonJobs();
-
-    $('#job_title').on('select2:open', function() {
-        const resultsContainer = $('.select2-results__options');
-        resultsContainer.on('scroll', function() {
-            // This function will be called whenever the user scrolls the options list
-            console.log("scroll");
-            const scrollTop = $(this).scrollTop();
-            const scrollHeight = $(this).prop('scrollHeight');
-            const clientHeight = $(this).innerHeight();
-
-            // Check if the user has scrolled near the bottom:
-            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
-                // Trigger infinite scrolling or other actions as needed
-                console.log('Near the bottom!');
-                currentPage++;
-                isFetching = true;
-                refreshJsonJobs();
-            }
-        });
-    });
+   
 })
 </script>
 
@@ -647,7 +615,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         headerToolbar: {
             left: 'prev,today,next',
             right: 'title',
-            center: 'timeGridDay,timeGridWeek'
+            center: 'timeGridDay,timeGridWeek,dayGridMonth'
         },
         events: rdvs,
         locale: initialLocaleCode,

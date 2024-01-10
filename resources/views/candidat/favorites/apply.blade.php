@@ -248,9 +248,9 @@ select {
                                             </div>
                                         </div>
                                         <div class="offre-subtitle my-1">
-                                            <img src="{{asset('storage'.getEntrepriseByUserID($offer->user_id)->logo)}}"
+                                            <img src="{{asset('storage'.getEntrepriseLogoByUserId($offer->user_id)->logo)}}"
                                                 alt="" class="mr-2">
-                                            {{getEntrepriseByUserID($offer->user_id)->nom_entreprise}} ,
+                                            {{getEntrepriseLogoByUserId($offer->user_id)->nom_entreprise}} ,
                                             {{$offer->location_city}}
                                         </div>
                                         <h5 class="offre-time-subtitle">Publiée le
@@ -281,15 +281,15 @@ select {
                                                 <div class="row">
                                                     <div class="col-2 pr-0">
                                                         <div class="entreprise-logo"><img
-                                                                src="{{asset('storage'.getEntrepriseByUserID($offer->user_id)->logo)}}"
+                                                                src="{{asset('storage'.getEntrepriseLogoByUserId($offer->user_id)->logo)}}"
                                                                 alt=""></div>
                                                     </div>
                                                     <div class="col-7 pl-0">
                                                         <div class="entreprise-name">
-                                                            {{getEntrepriseByUserID($offer->user_id)->nom_entreprise}}
+                                                            {{getEntrepriseLogoByUserId($offer->user_id)->nom_entreprise}}
                                                         </div>
                                                         <div class="entreprise-info">
-                                                            {{getEntrepriseByUserID($offer->user_id)->effectif}}
+                                                            {{getEntrepriseLogoByUserId($offer->user_id)->effectif}}
                                                             Employés</div>
                                                     </div>
                                                     <div class="col-12 mt-3">

@@ -47,4 +47,30 @@ class EmailController extends Controller
         return redirect()->back();
         // return redirect()->back();
     }
+
+    public function draft(Request $request){
+        // Extract data from the request
+        $subject = $request->input('subject');
+        $message = $request->input('message');
+        $receivers = $request->input('receiver');
+        $user = auth()->user();
+        // Create an Email model for each selected receiver
+        foreach ($receivers as $receiverId) {
+            $email = new Email([
+                'subject' => $subject,
+                'message' => $message,
+                'receiver_id' => $receiverId,
+                'draft' => true,
+                // Add other fields as needed
+            ]);
+
+            // Assuming you have a relationship set up between Email and User models
+           
+            $user->emails()->save($email);
+        }
+       
+        toast('Email enregistré dans le brouillon', 'success');
+        return redirect()->back();
+        // return redirect()->back();
+    }
 }

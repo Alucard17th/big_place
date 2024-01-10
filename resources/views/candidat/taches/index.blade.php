@@ -252,7 +252,7 @@ input, select{
 
             <div class="form-group">
                 <label class="text-dark" for="candidate">Statut</label>
-                <select class="form-control" name="status" id="status">
+                <select class="form-control" name="status" id="status" required>
                     <option value="0" selected="">En cours</option>
                     <option value="1">Terminée</option>
                 </select>
@@ -260,7 +260,7 @@ input, select{
 
             <div class="form-group">
                 <label class="text-dark" for="candidate">Description</label>
-                <textarea name="description" id="description" cols="30" rows="5" class="form-control mb-2"></textarea>
+                <textarea name="description" id="description" cols="30" rows="5" class="form-control mb-2" required></textarea>
             </div>
 
             <div class="form-group">

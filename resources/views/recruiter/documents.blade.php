@@ -114,7 +114,7 @@
                 <label>Ajouter un Document :</label>
             </div>
             <div class="form-group">
-                <label for="label">Nom</label>
+                <label for="label">Nom du document</label>
                 <input type="text" class="form-control" name="label" id="label" required>
             </div>
             <div class="form-group">

@@ -66,7 +66,7 @@ input, select{
 #ex1{
     background: #f8f8f8;
     max-width: 100%;
-    width:600px;
+    width:750px;
     padding: 50px;
 }
 #add-task-form > h4{

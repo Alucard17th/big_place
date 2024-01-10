@@ -40,7 +40,7 @@
                                         @foreach ($histories as $history)
                                         <tr>
                                             <td class="text-left">{{getOfferByCandidatId($history->searchable)->job_title}}</td>
-                                            <td class="text-left">{{getEntrepriseByUserID(getOfferByCandidatId($history->searchable)->user_id)->nom_entreprise}}</td>
+                                            <td class="text-left">{{getEntrepriseLogoByUserId(getOfferByCandidatId($history->searchable)->user_id)->nom_entreprise}}</td>
                                             <td class="text-left">
                                                 <a href="{{route('candidat.candidature.apply', $history->searchable)}}" type="button" class="bg-btn-three mt-2">
                                                     Consulter l'offre

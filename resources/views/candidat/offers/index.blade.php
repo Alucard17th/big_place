@@ -55,6 +55,21 @@ input, select{
     background: #fff !important;
 }
 
+.select2-selection__placeholder,
+#custom_job::placeholder,
+#location_city::placeholder,
+#brut_salary::placeholder,
+#education_level::placeholder,
+#experience_level::placeholder,
+.select2-search__field,
+#education_level, #experience_level
+{
+    color: #000 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+
 </style>
 @endpush
 @section('content')
@@ -86,8 +101,13 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="job_title" id="job_title" class="form-control">
-                                                    <option value="" selected>Poste recherchés</option>
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4 px-1">
+                                            <div class="form-group mb-0 mr-1">
+                                                <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" value="{{ request('custom_job') }}">
                                             </div>
                                         </div>
 
@@ -101,7 +121,7 @@ input, select{
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <input type="text" name="brut_salary" placeholder="Niveau de salaire"
-                                                    value="{{ request('brut_salary') }}" class="form-control">
+                                                    value="{{ request('brut_salary') }}" class="form-control" id="brut_salary">
                                             </div>
                                         </div>
                                        
@@ -131,7 +151,7 @@ input, select{
                                         </div>
 
                                         <div class="col-4 pl-1">
-                                            <div class="form-group mb-2">
+                                            <div class="form-group mt-2">
                                                 <select name="valeurs[]" id="values_select" class="" multiple >
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
@@ -212,7 +232,7 @@ input, select{
                                                 type="button" class="bg-btn-three">
                                                     Consulter l'entreprise
                                                 </a>
-                                                <a href="{{route('candidat.candidature.apply', $offer->id)}}" 
+                                                <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
                                                 </a>
@@ -310,91 +330,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $("#job_title").select2({
-
-    });
-
-
-    var currentPage = 1;
-    var isFetching = false; // Flag to track request status
-
-    async function getJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                $('#job_title').append(options).trigger("change");
-                isFetching = false;
+        placeholder: "Poste recherché",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    async function refreshJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                const scrollTop = $('.select2-results__options').scrollTop();
-                $('#job_title').append(options).trigger("change");
-
-                $('#job_title').select2('close');
-                $('#job_title').select2('open');
-                $('.select2-results__options').scrollTop(scrollTop + 1);
-
-                console.log(scrollTop);
-
-                isFetching = false;
+            noResults: function() {
+                return 'Aucun metier correspondant.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
+            searching: function() {
+                return 'Chargement...';
             }
-        });
-    }
-
-    getJsonJobs();
-
-    $('#job_title').on('select2:open', function() {
-        const resultsContainer = $('.select2-results__options');
-        resultsContainer.on('scroll', function() {
-            // This function will be called whenever the user scrolls the options list
-            console.log("scroll");
-            const scrollTop = $(this).scrollTop();
-            const scrollHeight = $(this).prop('scrollHeight');
-            const clientHeight = $(this).innerHeight();
-
-            // Check if the user has scrolled near the bottom:
-            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
-                // Trigger infinite scrolling or other actions as needed
-                console.log('Near the bottom!');
-                currentPage++;
-                isFetching = true;
-                refreshJsonJobs();
-            }
-        });
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
     });
 
     $('#data-table').DataTable({

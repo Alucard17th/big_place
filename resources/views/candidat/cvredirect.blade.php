@@ -114,6 +114,14 @@ color: #2D2F30;
 #create-cv-form > div:nth-child(5) > div:nth-child(1) > div > span{
     width: 100% !important;
 }
+
+#create-cv-form > div:nth-child(3) > div:nth-child(2) > div > span{
+    width: 100% !important;
+}
+.select2-selection__placeholder{
+    color: #000 !important;
+    font-weight: 300 !important;
+}
 </style>
 @endpush
 
@@ -266,9 +274,9 @@ color: #2D2F30;
                                     <!-- Métier recherché -->
                                     <div class="mb-3">
                                         <label for="metier" class="form-label text-dark">Métier recherché</label>
-                                        <input type="text" class="form-control" id="metier" name="metier_recherche"
-                                            value="{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}"
-                                            required>
+                                        <select name="metier_recherche" id="metier_recherche" class="form-control w-100">
+                                            <option value="{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}" selected>{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -497,6 +505,37 @@ document.addEventListener('DOMContentLoaded', function() {
         var newText = currentText === "Aperçu" ? "Modifier" : "Aperçu";
         $('#edit-profile-span').text(newText);
     })
+
+    $("#metier_recherche").select2({
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
+            },
+            noResults: function() {
+                return 'Aucun metier correspondant.';
+            },
+            searching: function() {
+                return 'Chargement...';
+            }
+        },
+        ajax: {
+            url: '/candidat-profile/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+    });
 
 })
 </script>

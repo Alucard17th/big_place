@@ -81,7 +81,7 @@
 
                                 <!-- Field: Organizer Name -->
                                 <div class="form-group">
-                                    <label for="organizer_name">Nom d'Organisateur</label>
+                                    <label for="organizer_name">Organisateur de l'événement</label>
                                     <input type="text" class="form-control" id="organizer_name" name="organizer_name"
                                         required value="{{ $event->organizer_name }}">
                                 </div>
@@ -124,7 +124,7 @@
 
                                 <!-- Field: Digital Badge Download -->
                                 <div class="form-group">
-                                    <label for="digital_badge_download">Badge Digital</label>
+                                    <label for="digital_badge_download">Spécimen du badge</label>
                                     <button class="bg-back-btn" type="button" id="badge-modal">Voir le badge</button>
                                     <!-- <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download" value="{{ $event->digital_badge_download }}"> -->
                                 </div>

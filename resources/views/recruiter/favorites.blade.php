@@ -228,7 +228,7 @@ input, select{
             </div>
 
             <div class="form-group" id="address-div" style="display: none">
-                <label class="text-dark" for="address">Adresse</label>
+                <label class="text-dark" for="address">Adresse du rendez-vous</label>
                 <input class="form-control mb-1" type="text" name="rdv_address" id="rdv_address">
             </div>
 
@@ -509,9 +509,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
      // Initially hide checkboxes
-     $('.form-check').hide();
+    $('.form-check').hide();
 
-     $('.bg-btn-visio').click(function() {
+    $('.bg-btn-visio').click(function() {
         $('#is_type_distanciel').prop('checked', true);
         $('.bg-btn-visio').addClass('active');
         $('.bg-btn-physic').removeClass('active');  // Remove active class from the other button

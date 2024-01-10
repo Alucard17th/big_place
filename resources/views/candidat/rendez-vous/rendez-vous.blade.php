@@ -108,7 +108,7 @@ input, select{
                                     <div class="row w-100">
                                             <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
-                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom du candidat">
+                                                    <input type="text" name="name" id="name" class="form-control" placeholder="Nom de l'entreprise">
                                                 </div>
                                             </div>
 

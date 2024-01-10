@@ -47,12 +47,12 @@ class RecruiterController extends Controller
         }
         $entrepriseViews = $entreprise->vues;
 
-        $vuesByDay = Vues::where('entreprise_id', $entreprise->id)
+        $vuesByDay = Vues::where('viewable_id', $entreprise->id)
         ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
         ->groupBy('date')
         ->orderBy('date', 'desc')
         ->get();
-        $vuesByWeek = Vues::where('entreprise_id', $entreprise->id)
+        $vuesByWeek = Vues::where('viewable_id', $entreprise->id)
         ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
         ->groupBy('week')
         ->orderBy('week', 'desc')
@@ -76,7 +76,7 @@ class RecruiterController extends Controller
             // echo ($weekEnd . '<br>');
 
         }
-        $vuesByMonth = Vues::where('entreprise_id', $entreprise->id)
+        $vuesByMonth = Vues::where('viewable_id', $entreprise->id)
         ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
         ->groupBy('month', 'year')
         ->orderBy('year', 'desc')
@@ -97,21 +97,38 @@ class RecruiterController extends Controller
         ]);
     }
     public function searchJobsJson(){
-        $term = request('term'); // Get search term from request
-        $page = request('page', 1); // Get page number from request
-        $perPage = 20; // Adjust as needed
-    
-        // Perform search based on the search term
-        $jobs = Job::where(function ($query) use ($term) {
-            $query->where('full_name', 'like', '%' . $term . '%')
-                // Add more fields to search as needed
-            ;
-        })->paginate($perPage, ['*'], 'page', $page);
-    
-        return response()->json([
-            'items' => $jobs->items(),
-            'total_count' => $jobs->total(),
-        ]);
+        $term = trim(request('q'));
+
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $tags = Job::where('full_name', 'like', '%' . $term . '%')->get();
+
+        $formatted_tags = [];
+
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->full_name];
+        }
+
+        return \Response::json($formatted_tags);
+    }
+    public function searchJobsJsonCandidatProfil(){
+        $term = trim(request('q'));
+
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+
+        $tags = Job::where('full_name', 'like', '%' . $term . '%')->get();
+
+        $formatted_tags = [];
+
+        foreach ($tags as $tag) {
+            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name];
+        }
+
+        return \Response::json($formatted_tags);
     }
     // CV THEQUE
     public function cvtheque(){
@@ -195,7 +212,7 @@ class RecruiterController extends Controller
         // Execute the query and get the results
         $curriculums = $query->get();
         
-        $total_possible_score = 60;
+        $total_possible_score = 70;
 
         // Calculate the matching percentage for each result
         foreach ($curriculums as $curriculum) {
@@ -204,6 +221,9 @@ class RecruiterController extends Controller
             // Apply search conditions for each field
             if (!empty($searchTerm['metier_recherche']) && $searchTerm['metier_recherche'] != '') {
                 $score += strpos($curriculum->metier_recherche, $searchTerm['metier_recherche']) !== false ? 10 : 0;
+            }
+            if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
+                $score += strpos($curriculum->metier_recherche, $searchTerm['custom_job']) !== false ? 10 : 0;
             }
             if (!empty($searchTerm['ville_domiciliation']) && $searchTerm['ville_domiciliation'] != '') {
                 $score += (strpos($curriculum->ville_domiciliation, $searchTerm['ville_domiciliation']) !== false ||
@@ -740,6 +760,7 @@ class RecruiterController extends Controller
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
         $offer->user_id = auth()->user()->id;
+        $offer->post_tasks = json_encode(explode(',', $request->input('post_tasks')));
         $offer->publish = true;
         $offer->save();
 
@@ -772,6 +793,7 @@ class RecruiterController extends Controller
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
         $offer->user_id = auth()->user()->id;
+        $offer->post_tasks = json_encode(explode(',', $request->input('post_tasks')));
         $offer->publish = false;
         $offer->save();
 
@@ -806,6 +828,7 @@ class RecruiterController extends Controller
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
         $offer->user_id = auth()->user()->id;
+        $offer->post_tasks = json_encode(explode(',', $request->input('post_tasks')));
         $offer->publish = false;
         $offer->save();
 
@@ -846,6 +869,7 @@ class RecruiterController extends Controller
         $offer->unpublish_date = $request->input('unpublish_date');
         $offer->selected_jobboards = json_encode($request->input('selected_jobboards'));
         $offer->advertising_costs = $request->input('advertising_costs');
+        $offer->post_tasks = json_encode(explode(',', $request->input('post_tasks')));
         $offer->publish = true;
         $offer->save();
 
@@ -932,6 +956,10 @@ class RecruiterController extends Controller
         toast('Evenement modifié','success')->autoClose(5000);
 
         return redirect()->back();
+    }
+    public function MyEventsShow($id){
+        $event = Event::find($id);
+        return view('recruiter.events.show', compact('event'));
     }
     public function myEventsDelete($id){
         $event = Event::find($id);
@@ -1184,12 +1212,13 @@ class RecruiterController extends Controller
             $emails = $entreprise->user->emails;
             $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->get();
         }
-        $draftEmails = $emails->where('draft', true);
+        $draftEmails = $emails->where('draft', true)->where('trash', false);
+        $deletedEmails = $emails->where('trash', true);
         $emails = $emails->where('trash', false)->where('draft', false);
         $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
         
         $receivers = User::all();
-        return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails'));
+        return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
     public function getMyMail(Request $request){
         $email = Email::find($request->id);
@@ -1201,7 +1230,8 @@ class RecruiterController extends Controller
     }
     public function myMailsShow($id){
         $email = Email::find($id);
-        return response()->json($email);
+        return view('recruiter.emails.show', compact('email'));
+        // return response()->json($email);
     }
     public function myMailsDelete($id){
         $email = Email::find($id);
@@ -1209,6 +1239,11 @@ class RecruiterController extends Controller
         $email->save();
         toast('Email supprimé','success')->autoClose(5000);
         return redirect()->back();
+    }
+    public function myMailsAjaxDelete(Request $request){
+        $emailsIds = $request;
+        $emails = Email::whereIn('id', $emailsIds)->update(['trash' => true]);
+        return response()->json($emails);
     }
 
     // STATS
@@ -1247,7 +1282,6 @@ class RecruiterController extends Controller
         $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
         $pendingRdvs = $user->rendezvous()->where('status', 'En attente')->count();
 
-        $offresByMetier = $user->offers->groupBy('rome_code')->map->count();
         $offers = $user->offers;
         $candidatures = $user->candidatures;
 
@@ -1261,7 +1295,16 @@ class RecruiterController extends Controller
             $offersByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
         }
 
-        
+        // OFFERS BY WEEK
+        $groupedByWeek = $offers->groupBy(function ($item) {
+            return $item->created_at->startOfWeek()->format('Y-m-d');
+        });
+
+        $offersByWeek = [];
+        foreach ($groupedByWeek as $weekStartDate => $offersInWeek) {
+            $endDate = Carbon::createFromFormat('Y-m-d', $weekStartDate)->endOfWeek()->format('Y-m-d');
+            $offersByWeek[$weekStartDate . ' | ' . $endDate] = $offersInWeek->count();
+        }
 
         // OFFERS BY MONTH
         $offersByMonth = [];
@@ -1278,6 +1321,7 @@ class RecruiterController extends Controller
             $offersByMonth[$month] = $group->count();
         }
 
+        //___________________//
         // CANDIDATURES BY DAY
         $groupedByDay = $candidatures->groupBy(function ($item) {
             return $item->created_at->toDateString(); // Assuming 'created_at' is your timestamp field
@@ -1286,6 +1330,17 @@ class RecruiterController extends Controller
         foreach ($days as $day) {
             $dateString = Carbon::create($currentYear, $currentMonth, $day)->toDateString();
             $candidaturesByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
+        }
+
+        // CANDIDATURES BY WEEK
+        $groupedByWeek = $candidatures->groupBy(function ($item) {
+            return $item->created_at->startOfWeek()->format('Y-m-d');
+        });
+
+        $candidaturesByWeek = [];
+        foreach ($groupedByWeek as $weekStartDate => $candidaturesInWeek) {
+            $endDate = Carbon::createFromFormat('Y-m-d', $weekStartDate)->endOfWeek()->format('Y-m-d');
+            $candidaturesByWeek[$weekStartDate . ' | ' . $endDate] = $candidaturesInWeek->count();
         }
 
         // CANDIDATURES BY MONTH
@@ -1303,10 +1358,8 @@ class RecruiterController extends Controller
             $candidaturesByMonth[$month] = $group->count();
         }
 
-        // dd($candidaturesByDay, $candidaturesByMonth);
-        $moyenneDureeRecrutement = 555;
-        $dureeSusbcription = 555;
-        return view('recruiter.stats.index', compact('candidaturesByMonth', 'candidaturesByDay', 'offersByMonth', 'offersByDay', 'doneRdvs','refusedRdvs','pendingRdvs','offresByMetier', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+        // dd($offersByDay, $offersByWeek, $offersByMonth);
+        return view('recruiter.stats.index', compact('candidaturesByMonth', 'candidaturesByWeek',  'candidaturesByDay', 'offersByMonth', 'offersByWeek', 'offersByDay', 'doneRdvs','refusedRdvs','pendingRdvs'));
     }
 
     // CANDIDATURE

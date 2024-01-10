@@ -58,13 +58,13 @@
                                 <span class="invalid-feedback error error-name"></span>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-lg-12 col-md-12">
                             <div class="form-group">
                                 <label>N° Siret</label>
                                 <input type="text" class="form-control" name="siret" autocomplete="off"
                                     placeholder="N° Siret" required>
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
-                                <span class="invalid-feedback error error-name"></span>
+                                <span class="invalid-feedback error error-siret"></span>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,6 @@
                     </div>
 
                     <div class="message-error"></div>
-
 
                     <div class="form-group">
                         <button class="theme-btn btn-style-one " type="submit" name="Register">Inscription

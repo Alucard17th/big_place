@@ -65,6 +65,11 @@ class OfferController extends Controller
     //     // return view('candidat.offers.index', compact('offres'));
     // }
 
+    public function show($id){
+        $offer = Offre::find($id);
+        return view('candidat.offers.show', compact('offer'));
+    }
+
     public function search(Request $request)
     {
         $searchTerm = $request->all();
@@ -75,7 +80,7 @@ class OfferController extends Controller
         // Execute the query and get the results
         $offers = $query->get();
         
-        $total_possible_score = 60;
+        $total_possible_score = 70;
     
         // Iterate over the offers
         foreach ($offers as $offer) {
@@ -84,6 +89,10 @@ class OfferController extends Controller
             // Apply search conditions for each field
             if (!empty($searchTerm['job_title'])) {
                 $score += strpos($offer->rome_code, $searchTerm['job_title']) !== false ? 10 : 0;
+            }
+
+            if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
+                $score += strpos($offer->rome_code, $searchTerm['custom_job']) !== false ? 10 : 0;
             }
     
             if (!empty($searchTerm['location_city'])) {

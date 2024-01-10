@@ -6,6 +6,12 @@
     height: 200px;
 }
 
+.dashboard-small-img {
+    /* width: 100%; */
+    /* height: 150px; */
+
+}
+
 #icons>div>div>div>div>a {
     position: relative;
     bottom: 0px;
@@ -25,6 +31,8 @@
 }
 
 .dashboard-link:hover {
+    /* transform: scale(1.1); */
+    /* Scale the button on hover */
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
     border-radius: 20px;
 }
@@ -59,6 +67,7 @@
     margin: 0 !important;
     width: 100% !important;
     height: 100% !important;
+    /* padding: .3rem .70rem !important; */
     padding-top: 2px;
     padding-left: 6px;
     font-weight: 400 !important;
@@ -74,6 +83,8 @@
     font-size: 14px !important;
 }
 
+
+
 #select2-metier_recherche-container {
     padding-left: 25px !important;
 }
@@ -88,31 +99,14 @@
 #annees_experience::placeholder,
 #niveau_etudes::placeholder,
 #valeurs::placeholder,
-#metier_recherche::placeholder,
-#custom_job::placeholder {
+#metier_recherche::placeholder {
     color: #000 !important;
     font-size: 16px !important;
-}
-#ville_domiciliation,
-#pretentions_salariales,
-#annees_experience,
-#niveau_etudes,
-#valeurs,
-#metier_recherche,
-#custom_job {
-    color: #000 !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-
+    /* Choose your desired color */
 }
 
 .select2-search__field {
     color: #000 !important;
-}
-
-.select2-selection__placeholder{
-    color: #000 !important;
-    font-weight: 400 !important;
 }
 
 .select2-selection__rendered {
@@ -137,6 +131,19 @@
     line-height: 20px;
 }
 
+.fc-col-header-cell-cushion {
+    color: #000000 !important;
+}
+
+.fc-timegrid-slot-label-cushion {
+    color: #000000 !important;
+}
+
+.card-footer {
+    padding: 10px 15px !important;
+    text-align: center;
+}
+
 /* SCROLLBAR - START - */
 /* width */
 .fc-scroller::-webkit-scrollbar {
@@ -159,14 +166,6 @@
      scrollbar-color: #ff8b00 #fff;
  }
  /* SCROLLBAR - END - */
-
- /* MONTH CALENDAR VIEW */
- #calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr > td > div > div > div > table{
-    width: 100% !important;
- }
- #calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
-    display: table-row !important;
- }
 </style>
 @endpush
 
@@ -191,12 +190,9 @@
                                         <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                             style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                         <select name="metier_recherche" id="metier_recherche" class="form-control"
-                                            >
+                                            required>
                                             <option value="" selected>Métier / Code Rome</option>
                                         </select>
-                                    </div>
-                                    <div class="form-group mb-2">
-                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" >
                                     </div>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
@@ -595,41 +591,104 @@ document.addEventListener('DOMContentLoaded', function() {
         language: {
             maximumSelected: function(e) {
                 return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
             }
         }
     });
     $("#niveau_etudes").select2({});
     $("#annees_experience").select2({});
     $("#metier_recherche").select2({
-        placeholder: "Code ROME",
-        minimumInputLength: 2,
-        language: {
-            inputTooShort: function() {
-                return 'Veuillez entrer au moins 2 caractères.';
-            },
-            noResults: function() {
-                return 'Aucun metier correspondant.';
-            },
-            searching: function() {
-                return 'Chargement...';
-            }
-        },
-        ajax: {
-            url: '/recruiter-dashboard/jobs/search',
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    q: $.trim(params.term)
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        },
+        // font size 
+
     });
+       
+    var currentPage = 1;
+    var isFetching = false; // Flag to track request status
+
+    async function getJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                $('#metier_recherche').append(options).trigger("change");
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    async function refreshJsonJobs() {
+        await $.ajax({
+            url: "/recruiter-dashboard/jobs?page=" + currentPage,
+            dataType: "json",
+            success: function(data) {
+                // Populate the Select2 dropdown with the received data
+                // var options = data.items.map(function(job) {
+                //     return new Option(job.full_name, job.id, false, false);
+                // });
+                var options = data.items.filter(function(job) {
+                    return job.full_name !== null; // Filter out jobs with null full_name
+                }).map(function(job) {
+                    return new Option(job.full_name, job.id, false, false);
+                });
+
+                const scrollTop = $('.select2-results__options').scrollTop();
+                $('#metier_recherche').append(options).trigger("change");
+
+                $('#metier_recherche').select2('close');
+                $('#metier_recherche').select2('open');
+                $('.select2-results__options').scrollTop(scrollTop + 1);
+
+                console.log(scrollTop);
+
+                isFetching = false;
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                isFetching = false;
+            }
+        });
+    }
+
+    getJsonJobs();
+
+    $('#metier_recherche').on('select2:open', function() {
+        const resultsContainer = $('.select2-results__options');
+        resultsContainer.on('scroll', function() {
+            // This function will be called whenever the user scrolls the options list
+            console.log("scroll");
+            const scrollTop = $(this).scrollTop();
+            const scrollHeight = $(this).prop('scrollHeight');
+            const clientHeight = $(this).innerHeight();
+            // Check if the user has scrolled near the bottom:
+            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
+                // Trigger infinite scrolling or other actions as needed
+                console.log('Near the bottom!');
+                currentPage++;
+                isFetching = true;
+                refreshJsonJobs();
+            }
+        });
+    });
+
+    $('.select2-search__field').on('change', function() {
+            const searchTerm = $(this).val(); // Get the current search term
+            console.log("User typed:", searchTerm);
+    });
+
 })
 </script>
 
@@ -699,7 +758,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             data.forEach(function(event) {
                 rdvs.push({
                     title: 'Formation le : ' + event.start_date,
-                    start: event.start_date + 'T21:40:00',
+                    start: event.start_date,
                     backgroundColor: 'green',
                     borderColor: 'green',
                 });
@@ -710,26 +769,24 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     })
 
-    var today = new Date();
+    var today = new Date(); // Get current date
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
     var yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
     var initialLocaleCode = 'fr';
-    console.log('MY EVERYTHING : ')
-    console.log( rdvs)
     var calendar = new FullCalendar.Calendar(calendarEl, {
         height: '600px',
         width: '100%',
         // slotMinTime: "06:00:00",
         // slotMaxTime: "00:00:00",
-        initialView: 'dayGridMonth',
+        initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {
             left: 'prev,today,next',
             right: 'title',
-            center: 'timeGridDay,timeGridWeek,dayGridMonth'
+            center: 'timeGridDay,timeGridWeek'
         },
         events: rdvs,
         locale: initialLocaleCode,
@@ -796,9 +853,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             omitZeroMinute: false,
             hour12: false // Change to true if you want 12-hour format
         },
+        // title: function (info) {
+        //   return info.date.getFullYear().toString();
+        // }
     });
 
     calendar.render();
+
+
 });
 </script>
 @endpush

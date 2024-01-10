@@ -148,12 +148,11 @@ class CandidatController extends Controller
         // $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
         // $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
 
-        $candidature = Candidature::where('candidat_id', $user->id)->count();
-   
+        $candidature = Candidature::where('candidat_id', $user->id)->get();
+        dd($candidature, $user, $doneRdvs, $refusedRdvs);
         $moyenneDureeRecrutement = 555;
-
         $dureeSusbcription = 555;
-        return view('candidat.stats.index', compact('doneRdvs','refusedRdvs', 'candidature', 'dureeSusbcription', 'moyenneDureeRecrutement'));
+        return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'candidature', 'moyenneDureeRecrutement', 'dureeSusbcription'));
     }
 
     public function chooseCreneau($time){

@@ -51,6 +51,8 @@
                                             <li class="">Date: {{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} à
                                                 {{ $event->event_hour }}</li>
                                             <li class="">Adresse: {{ $event->event_address }}</li>
+                                            <li class="">Participants: {{ $event->registered_participants }} /
+                                                {{ $event->participants_count }}</li>
                                             @if ($event->required_documents)
                                             <li class="">Documents requis:
                                                 {{ $event->required_documents }}</li>
