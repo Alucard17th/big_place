@@ -126,7 +126,7 @@
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.events.show', $event->id)}}"
                                                     type="button" class="bg-btn-five">
-                                                    Consulter l'événement
+                                                    Editer
                                                 </a>
                                                 <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>

@@ -47,7 +47,7 @@ if (!function_exists('getEntrepriseLogoByUserId')) {
     function getEntrepriseLogoByUserId(string $id = null)
     {
         if ($id != null) {
-            $user = auth()->user();
+            $user = User::Find($id);
 
             if($user->parent_entreprise_id == null){
                 // USER IS ADMIN

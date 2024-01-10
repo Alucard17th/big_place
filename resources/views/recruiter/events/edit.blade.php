@@ -124,8 +124,7 @@
 
                                 <!-- Field: Digital Badge Download -->
                                 <div class="form-group">
-                                    <label for="digital_badge_download">Spécimen du badge</label>
-                                    <button class="bg-back-btn" type="button" id="badge-modal">Voir le badge</button>
+                                    <button class="bg-back-btn" type="button" id="badge-modal">Spécimen du badge</button>
                                     <!-- <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download" value="{{ $event->digital_badge_download }}"> -->
                                 </div>
 
@@ -183,8 +182,9 @@
         </div>
 
         <div class="col-12 text-center py-3">
-            <h5>Evénement  : {{ $event->job_position }}</h5>
-            <h4 class="text-dark py-4">Nom du candidat</h4>
+            <h5>Organisateur de l'événement : <span id="event-organizer">{{ $event->organizer_name }}</span></h5>
+            <hr>
+            <h5 class="text-dark pt-0 pb-3">Nom du candidat : <span class="text-muted">...</span></h5>
             <div>{{$qrcode}}</div>
         </div>
     </div>

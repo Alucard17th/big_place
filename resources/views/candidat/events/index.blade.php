@@ -264,7 +264,7 @@
             <div class="col-12 text-center py-3">
                 <h5>Organisateur de l'événement : <span id="event-organizer"></span></h5>
                 <hr>
-                <h4 class="text-dark pt-0 pb-3">Nom du candidat : <span class="text-muted">{{auth()->user()->name}}</span></h4>
+                <h5 class="text-dark pt-0 pb-3">Nom du candidat : <span class="text-muted">{{auth()->user()->name}}</span></h5>
                 <div id="qrcode-container"></div>
             </div>
         </div>

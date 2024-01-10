@@ -58,12 +58,8 @@ class RecruiterController extends Controller
         ->orderBy('week', 'desc')
         ->get();
         foreach($vuesByWeek as $key => $value){
-            // echo ($value->week . '<br>');
-            // echo ($key . '<br>');
             $year = substr($value->week, 0, 4);
             $week = substr($value->week, -2);
-            echo ($year . '<br>');
-            echo ($week . '<br>');
             // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
             // Start with the first day of the year
             $date = Carbon::createFromDate(2023, 1, 1);
@@ -71,9 +67,6 @@ class RecruiterController extends Controller
             // Move to the desired ISO week
             $weekStart = $date->setISODate($year, $week);
             $weekEnd = $weekStart->addDays(6);
-
-            // echo ($weekStart . '<br>');
-            // echo ($weekEnd . '<br>');
 
         }
         $vuesByMonth = Vues::where('viewable_id', $entreprise->id)
@@ -108,7 +101,7 @@ class RecruiterController extends Controller
         $formatted_tags = [];
 
         foreach ($tags as $tag) {
-            $formatted_tags[] = ['id' => $tag->id, 'text' => $tag->full_name];
+            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name];
         }
 
         return \Response::json($formatted_tags);
@@ -1377,7 +1370,6 @@ class RecruiterController extends Controller
 
         foreach ($candidatures as $candidature) {
             $candidatUser = User::find($candidature->candidat_id);
-            echo ($candidatUser->name . '<br>');
             $candidature->candidat_name = $candidatUser->name;
         }
 

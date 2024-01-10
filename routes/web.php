@@ -75,6 +75,7 @@ Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter']
 Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
 Route::get('/recruiter-dashboard/jobs/search', [RecruiterController::class, 'searchJobsJson'])->name('recruiter.dashboard.jobs.search');
 Route::get('/candidat-profile/jobs/search', [RecruiterController::class, 'searchJobsJsonCandidatProfil'])->name('recruiter.dashboard.candidat.jobs.search');
+Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->name('getUserById');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
@@ -141,7 +142,6 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/getRdvs', [RecruiterController::class, 'getUserRdvs'])->name('getUserRdvs');
     Route::get('/getFormations', [RecruiterController::class, 'getUserFormations'])->name('getUserFormations');
     Route::get('/getEvents', [RecruiterController::class, 'getUserEvents'])->name('getUserEvents');
-    Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->name('getUserById');
     
     // Factures And Contracts
     Route::get('/mes-factures-et-contrats', [RecruiterController::class, 'myFacturesAndContracts'])->name('recruiter.factures.and.contracts');

@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                     success: function(data) {
                         console.log('Candidat fetched successfully', data.avatar);
                         const imgString =
-                            `<img src="${data.avatar.replace('public', 'storage')}" width="50" height="50" style="border-radius: 50%;">`;
+                            `<img src="${data.avatar ? data.avatar.replace('public', 'storage') : ''}" width="50" height="50" style="border-radius: 50%;">`;
 
                         tooltip.innerHTML += imgString + '  ' + data.name + '<br>' +
                             'Email : ' + data.email + '<br>' +

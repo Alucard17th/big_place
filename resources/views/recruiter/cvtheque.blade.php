@@ -93,14 +93,19 @@ input, select{
                                     <div class="row">
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-2 mr-1">
+                                                <label>
+                                                    <input type="radio" id="use_select" @if(!request('custom_job')) checked @endif> Utiliser Code ROME
+                                                </label>
                                                 <select name="metier_recherche" id="metier_recherche" class="form-control" >
-                                                    <option value="" selected>Métier / Code Rome</option>
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-2 mr-1">
+                                                <label>
+                                                    <input type="radio" id="use_input" @if(request('custom_job')) checked @endif > Utiliser Métier
+                                                </label>
                                                 <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" 
                                                 value="{{ request('custom_job') }}" >
                                             </div>
@@ -478,6 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    var selectedMetier = getParameterByName('metier_recherche');
     $("#metier_recherche").select2({
         placeholder: "Code ROME",
         minimumInputLength: 2,
@@ -508,6 +514,22 @@ document.addEventListener('DOMContentLoaded', function() {
             cache: true
         },
     });
+    // Set the selected value in the select2 dropdown
+    if(selectedMetier){
+        $("#metier_recherche").append(new Option(selectedMetier, selectedMetier, true, true)).trigger('change');
+    }
+
+    // Function to get URL parameter value by name
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        console.log(results[2].replace(/\+/g, " "))
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
     // PROPOSEZ UN RDV
     let selectedCandidates = [];
@@ -625,6 +647,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
     }
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#metier_recherche").prop("disabled", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#metier_recherche").prop("disabled", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+    });
     
 });
 </script>

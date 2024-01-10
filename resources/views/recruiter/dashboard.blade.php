@@ -187,16 +187,20 @@
                         <form method="get" class="" action="{{route('recruiter.cvtheque.search')}}">
                             <div class="row no-gutters">
                                 <div class="col-12">
+                                    <label>
+                                        <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                    </label>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                             style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                        <select name="metier_recherche" id="metier_recherche" class="form-control"
-                                            >
-                                            <option value="" selected>Métier / Code Rome</option>
+                                        <select name="metier_recherche" id="metier_recherche" class="form-control">
                                         </select>
                                     </div>
                                     <div class="form-group mb-2">
-                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" >
+                                        <label>
+                                            <input type="radio" id="use_input"> Utiliser Métier
+                                        </label>
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
@@ -629,6 +633,22 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             cache: true
         },
+    })
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#metier_recherche").prop("disabled", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#metier_recherche").prop("disabled", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
     });
 })
 </script>
