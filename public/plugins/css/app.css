@@ -1022,7 +1022,7 @@ input[type=checkbox],
 input[type=radio] {
     background: #fff;
     border: 1px solid #b4b9be;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); */
     clear: none;
     color: #555;
     cursor: pointer;
@@ -1064,7 +1064,7 @@ input[type=radio] {
     margin-right: 4px
 }
 
-input[type=radio]:checked:before {
+/* input[type=radio]:checked:before {
     background-color: #1e8cbe;
     border-radius: 50px;
     content: "•";
@@ -1074,7 +1074,7 @@ input[type=radio]:checked:before {
     margin: 4px;
     text-indent: -9999px;
     width: 6px
-}
+} */
 
 .form-control {
     border: 1px solid #dae1e7;
@@ -1119,11 +1119,11 @@ input[type=radio]:checked:before {
     display: none
 }
 
-.checkboxes input[type=radio]:checked+label:before {
+/* .checkboxes input[type=radio]:checked+label:before {
     background-color: #1967d2;
     border: 1px solid #1967d2;
     content: "\f00c"
-}
+} */
 
 .apply-job-form.default-form .form-group textarea {
     overflow-y: auto

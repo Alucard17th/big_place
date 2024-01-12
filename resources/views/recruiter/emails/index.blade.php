@@ -202,7 +202,7 @@
                                                     <a href="{{route('recruiter.emails.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
-                                                    <a href="{{route('recruiter.emails.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                    <a href="{{route('recruiter.emails.destroy', $email->id)}}" class="bg-btn-four ml-2"
                                                         onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
                                                     Supprimer
                                                     </a>
@@ -358,6 +358,8 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
@@ -380,6 +382,8 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
@@ -401,6 +405,8 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
@@ -423,6 +429,8 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",

@@ -289,11 +289,13 @@
                                 <h2 class="text-center">Jour</h2>
                                 <div id="jour-carousel" class="carousel slide">
                                 <div class="carousel-inner">
+                                    @if(!empty($vuesByDay))
                                     @foreach($vuesByDay as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
                                         {{$value['date']}} - {{$value['count']}} vues
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                                 <button class="carousel-control-prev text-dark" type="button" data-target="#jour-carousel" data-slide="prev">
                                    <
@@ -308,11 +310,13 @@
                                 <h2 class="text-center">Semaine</h2>
                                 <div id="week-carousel" class="carousel slide">
                                 <div class="carousel-inner">
+                                    @if(!empty($vuesByWeek))
                                     @foreach($vuesByWeek as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
                                         {{$value['week']}} - {{$value['count']}} vues
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                                 <button class="carousel-control-prev text-dark" type="button" data-target="#week-carousel" data-slide="prev">
                                     <
@@ -327,11 +331,13 @@
                                 <h2 class="text-center">Mois</h2>
                                 <div id="mois-carousel" class="carousel slide">
                                 <div class="carousel-inner">
+                                    @if(!empty($vuesByMonth))
                                     @foreach($vuesByMonth as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
                                         {{$value['month']}} - {{$value['count']}} vues
                                     </div>
                                     @endforeach
+                                    @endif
                                 </div>
                                 <button class="carousel-control-prev text-dark" type="button" data-target="#mois-carousel" data-slide="prev">
                                     <

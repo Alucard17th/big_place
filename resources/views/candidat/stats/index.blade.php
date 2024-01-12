@@ -75,7 +75,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous effectués</h5>
-                                            <p class="card-text">{{$doneRdvs}}</p>
+                                            <p class="card-text"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous en attente</h5>
-                                            <p class="card-text">{{$pendingRdvs}}</p>
+                                            <p class="card-text"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous annulés</h5>
-                                            <p class="card-text">{{$refusedRdvs}}</p>
+                                            <p class="card-text"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -186,214 +186,61 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
-<!-- <script>
-$(document).ready(function() {
-    // var ctx = document.getElementById("rdvs-chart").getContext('2d');
-    var ctx2 = document.getElementById("offres-chart").getContext('2d');
-    var ctx3 = document.getElementById("candidatures-chart").getContext('2d');
-    const rdvsEffectue = @json($doneRdvs);
-    const rdvsCancelled = @json($refusedRdvs);
-    const rdvsPending = @json($pendingRdvs);
-
-    let offersByDay = @json($offersByDay);
-    let offersByMonth = @json($offersByMonth);
-
-    let candidaturesByDay = @json($candidaturesByDay);
-    let candidaturesByMonth = @json($candidaturesByMonth);
-
-    console.log('rdvs', offersByDay);
-    console.log('rdvs', offersByMonth);
-
-    var labels = Object.keys(candidaturesByDay);
-    var data = Object.values(candidaturesByDay);
-    var myChartCandidatures = new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Candidatures',
-                data: data,
-                backgroundColor: '#0049FC', 
-                borderColor: '#0049FC',
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            legend: {
-                display: true
-            },
-            scales: {
-                
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        font: {
-                            size: 6
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-                    }
-                }
-            },
-            layout: {
-                padding: 10
-            }
-        }
-    });
-
-    labels = Object.keys(offersByDay);
-    data = Object.values(offersByDay);
-    var myChartOffers = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Offres',
-                data: data,
-                backgroundColor: '#0049FC', 
-                borderColor: '#0049FC',
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            legend: {
-                display: true
-            },
-            scales: {
-                
-            },
-            plugins: {
-                legend: {
-                    labels: {
-                        // This more specific font property overrides the global property
-                        font: {
-                            size: 6
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-                    }
-                }
-            },
-            layout: {
-                padding: 10
-            }
-        }
-    });
-
-    // var myChartRdvs = new Chart(ctx, {
-    //     type: 'pie',
-    //     data: {
-    //         labels: ["Rdv effectué", "Rdv annulé", "Rdv en attente"],
-    //         datasets: [{
-    //             label: 'My First Dataset',
-    //             data: [rdvsEffectue, rdvsCancelled, rdvsPending],
-    //             backgroundColor: [
-    //                 '#0049FC',
-    //                 'rgb(255, 99, 132)',
-    //                 'rgb(255, 205, 86)'
-    //             ],
-    //             hoverOffset: 4
-    //         }]
-    //     },
-    //     options: {
-    //         legend: {
-    //             display: true
-    //         },
-    //         scales: {
-                
-    //         },
-    //         plugins: {
-    //             legend: {
-    //                 labels: {
-    //                     // This more specific font property overrides the global property
-    //                     font: {
-    //                         size: 6
-    //                     }
-    //                 }
-    //             },
-    //             plugins: {
-    //                 title: {
-    //                     display: true,
-    //                     text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
-    //                 }
-    //             }
-    //         },
-    //         layout: {
-    //             padding: 10
-    //         }
-    //     }
-    // });
-
-    
-})
-</script> -->
-
 <script>
 // when document is ready
 $(document).ready(function() {
     // OFFERS 
-    let offersByDay = @json($offersByDay);
-    let offersByWeek = @json($offersByWeek);
-    let offersByMonth = @json($offersByMonth);
-    let labels = Object.keys(offersByDay);
-    let data = Object.values(offersByDay);
-    var options = {
-            chart: {
-                type: "line",
-                stacked: false
-            },
-            dataLabels: {
-                enabled: false
-            },
-            colors: ['#22218c', '#ff8c00', '#66C7F4'],
-            series: [
-                {
-                name: 'Offres',
-                type: 'column',
-                data: data
-                },
-                {
-                name: "Offres",
-                type: 'line',
-                data: data
-                },
-            ],
-            stroke: {
-                width: [4, 4, 4]
-            },
-            xaxis: {
-                categories: labels
-            },
-            yaxis: [
+    // let offersByDay = @json($candidaturesByDay);
+    // let offersByWeek = @json($candidaturesByWeek);
+    // let candidaturesByMonth = @json($candidaturesByMonth);
+    // let labels = Object.keys(candidaturesByDay);
+    // let data = Object.values(candidaturesByDay);
+    // var options = {
+    //         chart: {
+    //             type: "line",
+    //             stacked: false
+    //         },
+    //         dataLabels: {
+    //             enabled: false
+    //         },
+    //         colors: ['#22218c', '#ff8c00', '#66C7F4'],
+    //         series: [
+    //             {
+    //             name: 'Offres',
+    //             type: 'column',
+    //             data: data
+    //             },
+    //             {
+    //             name: "Offres",
+    //             type: 'line',
+    //             data: data
+    //             },
+    //         ],
+    //         stroke: {
+    //             width: [4, 4, 4]
+    //         },
+    //         xaxis: {
+    //             categories: labels
+    //         },
+    //         yaxis: [
             
-            ],
-            tooltip: {
-                shared: false,
-                intersect: true,
-                x: {
-                show: false
-                }
-            },
-            legend: {
-              show: true,
-              position: 'top',
-            }
+    //         ],
+    //         tooltip: {
+    //             shared: false,
+    //             intersect: true,
+    //             x: {
+    //             show: false
+    //             }
+    //         },
+    //         legend: {
+    //           show: true,
+    //           position: 'top',
+    //         }
        
-        };
+    //     };
 
-    var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
-    chart.render();
+    // var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
+    // chart.render();
 
     const switchOffersDayBtn = document.querySelector('.offer-day');
     const switchOffersWeekBtn = document.querySelector('.offer-week');

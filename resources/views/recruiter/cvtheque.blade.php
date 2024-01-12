@@ -59,6 +59,44 @@ input, select{
     color: white !important; /* Change to your desired active text color */
 }
 
+#ville_domiciliation::placeholder,
+#pretentions_salariales::placeholder,
+#annees_experience::placeholder,
+#niveau_etudes::placeholder,
+#valeurs::placeholder,
+#metier_recherche::placeholder,
+#custom_job::placeholder {
+    color: #000 !important;
+    font-size: 16px !important;
+}
+#ville_domiciliation,
+#pretentions_salariales,
+#annees_experience,
+#niveau_etudes,
+#valeurs,
+#metier_recherche,
+#custom_job {
+    color: #000 !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+
+}
+
+.select2-search__field {
+    color: #000 !important;
+}
+
+.select2-selection__placeholder{
+    color: #000 !important;
+    font-weight: 400 !important;
+}
+
+.select2-selection__rendered {
+    color: #000 !important;
+    padding-left: 18px;
+    font-size: 16px !important;
+}
+
 </style>
 @endpush
 
@@ -120,7 +158,7 @@ input, select{
 
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-0 mr-1">
-                                                <select class="form-control" id="annees_experience" name="annees_experience" >
+                                                <select class="form-control pl-2" id="annees_experience" name="annees_experience" >
                                                     <option value=""  selected>Année d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
@@ -145,8 +183,8 @@ input, select{
 
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-2 mr-1">
-                                                <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire"
-                                                    value="{{ request('pretentions_salariales') }}" class="form-control" >
+                                                <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire" id="pretentions_salariales"
+                                                    value="{{ request('pretentions_salariales') }}" class="" >
                                             </div>
                                         </div>
 

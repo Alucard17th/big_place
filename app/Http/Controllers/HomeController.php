@@ -43,4 +43,11 @@ class HomeController extends Controller
     public function registerAsRecruiter(){
         return view('site.register-as-recruiter');
     }
+
+    public function candidatPlans(){
+        return view('site.candidat-plans');
+    }
+    public function recruiterPlans(){
+        return view('site.recruiter-plans');
+    }
 }

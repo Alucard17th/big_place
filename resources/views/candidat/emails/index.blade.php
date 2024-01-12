@@ -27,12 +27,18 @@
 
 #inbox-btn.active {
     background-color: #f5f5f5;
-    border-bottom: 7px solid #0369A1 !important;
 }
 
 #sent-btn.active {
     background-color: #f5f5f5;
-    border-bottom: 7px solid #0369A1 !important;
+}
+
+#draft-btn.active {
+    background-color: #f5f5f5;
+}
+
+#deleted-btn.active {
+    background-color: #f5f5f5;
 }
 
 .email-container {
@@ -73,104 +79,8 @@
     margin-left: 10px;
 }
 
-
-#data-table-sent tbody td{
-    font-size: 15px;
-    padding-top:12px;
-    color: #696969;
-}
-#data-table-sent_length > label > select{
-    border: 1px solid #000;
-    border-radius: 50px;
-    padding: 10px 20px;
-}
-#data-table-sent_paginate{
-    text-align: left !important;
-}
-#data-table-sent_paginate span{
-    margin-right: 10px;
-    margin-left: 10px;
-}
-#data-table-sent_previous{
-    margin-right: 10px;
-}
-#data-table-sent_next{
-    margin-left: 10px;
-}
-#data-table-sent_length > label{
-    color: #000 !important;
-}
-
-#data-table-inbox tbody td{
-    font-size: 15px;
-    padding-top:12px;
-    color: #696969;
-}
-#data-table-inbox_length > label > select{
-    border: 1px solid #000;
-    border-radius: 50px;
-    padding: 10px 20px;
-}
-#data-table-inbox_paginate{
-    text-align: left !important;
-}
-#data-table-inbox_paginate span{
-    margin-right: 10px;
-    margin-left: 10px;
-}
-#data-table-inbox_previous{
-    margin-right: 10px;
-}
-#data-table-inbox_next{
-    margin-left: 10px;
-}
-#data-table-inbox_length > label{
-    color: #000 !important;
-}
-
-.user-avatar{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    margin-right: 20px;
-}
-
-#message-form > h4{
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 41px;
-    /* identical to box height, or 102% */
-    color: #202124;
-}
-#message-form > div > label, #message-form > div.row > div > div > label{
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 41px;
-    color: #202124;
-}
-#create-message-btn{
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 20px;
-}
-
-#message-form > div:nth-child(2) > span{
-    width:100% !important;
-    color: #495057 !important;
-    background-color: #fff !important;
-    background-clip: padding-box !important;
-    border: 1px solid #dae1e7 !important;
-    border-radius: 3px !important;
-    box-shadow: none !important;
-    font-size: 14px !important;
+.#message-form > div:nth-child(2) > span{
+    width: 28rem;
 }
 </style>
 @endpush
@@ -186,11 +96,11 @@
                             <h3>Mes emails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="/candidat-emails" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
-                            <a href="{{ route('candidat.email.create') }}" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
+                            <a href="{{route('candidat.email.create')}}" class="btn-style-one bg-btn px-2" id="add-message-btn">+ Nouveau message</a>
                         </div>
                     </div>
                     <div class="tabs-box">
@@ -198,35 +108,49 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
+
                                 <div class="col-12 py-4">
                                     <button type="button" class="btn active" id="inbox-btn">Boite de réception</button>
                                     <button type="button" class="btn" id="sent-btn">Messages Envoyés</button>
+                                    <button type="button" class="btn" id="deleted-btn">Messages Supprimés</button>
+                                    <button type="button" class="btn" id="draft-btn">Brouillons</button>
                                 </div>
+                                
                                 <div class="inbox">
+                                    <button class="bg-btn-four my-2 d-none" id="delete-all-btn">Supprimer</button>
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th></th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($receivedEmails as $email)
                                             <tr>
-                                                <td class="d-flex align-items-center">
-                                                    <img src="https://i.pravatar.cc/300" alt="" class="user-avatar">
-                                                    {{getUserById($email->user_id)->name}}
-                                                </td>
+                                                <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$email->id}}"></td>
+                                                <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                                 <td>
-                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}
+                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
+                                                    onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        Supprimer
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
+
                                 <div class="sent" style="display: none">
                                     <table class="table table-sm table-bordered" id="data-table-sent">
                                         <thead class="thead-light">
@@ -234,18 +158,85 @@
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($emails as $email)
                                             <tr>
-                                                <td>
-                                                    <img src="https://i.pravatar.cc/300" alt="" class="user-avatar">
-                                                    {{getUserById($email->receiver_id)->name}}
-                                                </td>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
                                                 <td>
-                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}
+                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
+                                                    onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        Supprimer
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="deleted" style="display: none">
+                                    <table class="table table-sm table-bordered" id="data-table-deleted">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($deletedEmails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('candidat.email.delete', $email->id)}}" class="bg-btn-four ml-2"
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                    Supprimer
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="draft" style="display: none">
+                                    <table class="table table-sm table-bordered" id="data-table-draft">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Nom</th>
+                                                <th>Message</th>
+                                                <th>Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($draftEmails as $email)
+                                            <tr>
+                                                <td>{{getUserById($email->receiver_id)->name}}</td>
+                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td>
+                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                        Consulter
+                                                    </a>
+                                                    <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                    Supprimer
+                                                    </a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -259,74 +250,99 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal HTML embedded directly into document -->
-    <div id="message-modal" class="modal">
-        <form action="{{route('candidat.email.store')}}" method="POST" id="message-form">
-            @csrf
-            <div class="form-group">
-                <label for="candidate">Envoyé à</label>
-                <br>
-                <select name="receiver[]" id="receiver" class="form-control w-100" multiple required>
-                    @foreach ($receivers as $user)
-                    <option value="{{$user->id}}">{{$user->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Sujet</label>
-                <input type="text" name="subject" id="subject" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="candidate">Message</label>
-                <textarea class="form-control" name="message" id="message" cols="30" rows="10" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <button class="theme-btn btn-style-one" type="submit" id="create-message-btn">Envoyer</button>
-            </div>
-        </form>
-        <a href="#" id="close-modal">Fermer</a>
-        <a href="#" class="custom-close-modal"></a>
-    </div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
 $(document).ready(function() {
-    var addMessageBtn = document.getElementById('add-message-btn');
+    $("#receiver").select2({
+        width: '100%'
+    });
+
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
+
+    $('.email-item').on('click', function() {
+        var emailId = $(this).data('id');
+        $.ajax({
+            url: "{{route('recruiter.email.show')}}",
+            type: "GET",
+            data: {
+                id: emailId
+            },
+            success: function(data) {
+                $('#email-title').text(data.subject);
+                $('#email-content').text(data.message);
+            }
+        })
+    })
+
+    $('.email-item-received').on('click', function() {
+        var emailId = $(this).data('id');
+        $.ajax({
+            url: "{{route('recruiter.email.show')}}",
+            type: "GET",
+            data: {
+                id: emailId
+            },
+            success: function(data) {
+                $('#email-title-received').text(data.subject);
+                $('#email-content-received').text(data.message);
+            }
+        })
+    })
+
     $('#inbox-btn').on('click', function() {
         $('.inbox').show();
         $('.sent').hide();
-        // add active class to the clicked button
+        $('.deleted').hide();
+        $('.draft').hide();
+
         $(this).addClass('active');
         $('#sent-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
     })
 
     $('#sent-btn').on('click', function() {
         $('.inbox').hide();
         $('.sent').show();
-        // add active class to the clicked button
+        $('.deleted').hide();
+        $('.draft').hide();
+
         $(this).addClass('active');
-        // remove active class from inbox button
         $('#inbox-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
     })
 
-    $("#receiver").select2({});
+    $('#deleted-btn').on('click', function() {
+        $('.inbox').hide();
+        $('.sent').hide();
+        $('.deleted').show();
+        $('.draft').hide();
 
-    // addMessageBtn.addEventListener('click', function(event) {
-    //     event.preventDefault();
-    //     $("#message-modal").modal({
-    //         escapeClose: false,
-    //         clickClose: true,
-    //         showClose: false
-    //     });
-    // });
-    $('#close-modal, .custom-close-modal').click(function() {
-        console.log('Modal Should Be Closed');
-        $.modal.close();
-    });
+        $(this).addClass('active');
+        $('#inbox-btn').removeClass('active');
+        $('#sent-btn').removeClass('active');
+        $('#draft-btn').removeClass('active');
+    })
+
+    $('#draft-btn').on('click', function() {
+        $('.inbox').hide();
+        $('.sent').hide();
+        $('.deleted').hide();
+        $('.draft').show();
+
+        $(this).addClass('active');
+        $('#inbox-btn').removeClass('active');
+        $('#sent-btn').removeClass('active');
+        $('#deleted-btn').removeClass('active');
+    })
+
 
     $('#data-table-inbox').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
@@ -342,12 +358,15 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
-            "emptyTable": "Aucun email reçu",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
     $('#data-table-inbox_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
 
     $('#data-table-sent').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
@@ -363,12 +382,106 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
-            "emptyTable": "Aucun email envoyé",
+            "zeroRecords": "Aucun email envoyé",
+
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
     });
+
     $('#data-table-sent_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#data-table-deleted').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-deleted_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+
+    $('#data-table-draft').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun email envoyé",
+
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    // DELETE EMAIL CHECKBOXES
+    const checkboxes = document.querySelectorAll('.checkbox-item');
+    const deleteAllButton = document.querySelector('#delete-all-btn');
+    let selectedValues = [];
+    // Add an event listener to checkboxes to toggle the button visibility
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            console.log(this);
+            const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+
+            deleteAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
+
+            selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
+                return checkbox.value;
+            });
+
+            console.log(selectedValues);
+
+        });
+
+    });
+
+    deleteAllButton.addEventListener('click', function() {
+        // Send the data using AJAX
+        fetch('{{ route('recruiter.emails.ajax.delete') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+            },
+            body: JSON.stringify(selectedValues),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response, e.g., show a success message
+            // refresh the current page
+            window.location.reload();
+        })
+        .catch(error => {
+            // Handle errors, e.g., show an error message
+            console.error(error);
+        });
+    })
+
 })
 </script>
 @endpush

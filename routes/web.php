@@ -62,6 +62,9 @@ Route::get('/excel-import', function () {
     }
 });
 
+Auth::routes(['verify' => true]);
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/a-propos', [HomeController::class, 'about'])->name('about');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
@@ -77,8 +80,11 @@ Route::get('/recruiter-dashboard/jobs/search', [RecruiterController::class, 'sea
 Route::get('/candidat-profile/jobs/search', [RecruiterController::class, 'searchJobsJsonCandidatProfil'])->name('recruiter.dashboard.candidat.jobs.search');
 Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->name('getUserById');
 
+Route::get('/candidat-plans', [HomeController::class, 'candidatPlans'])->name('candidat.plans');
+Route::get('/recruiter-plans', [HomeController::class, 'recruiterPlans'])->name('recruiter.plans');
+
 // RECRUITER
-Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
+Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
     
@@ -167,6 +173,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
     Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
     Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
+    Route::get('/mes-mails/destroy/{id}', [RecruiterController::class, 'myMailsDestroy'])->name('recruiter.emails.destroy');
     Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
 
 
@@ -270,6 +277,11 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     // EMAILS
     Route::get('/email/candidate/create', [EmailController::class, 'create'])->name('candidat.email.create');
     Route::post('/email/candidate/store', [EmailController::class, 'store'])->name('candidat.email.store');
+    Route::get('/email/candidate/soft-delete/{id}', [EmailController::class, 'softDelete'])->name('candidat.email.softDelete');
+    Route::get('/email/candidate/show/{id}', [EmailController::class, 'show'])->name('candidat.email.show');
+    Route::get('/email/candidate/delete/{id}', [EmailController::class, 'delete'])->name('candidat.email.delete');
+    Route::post('/email/candidate/draft', [EmailController::class, 'draft'])->name('candidat.email.draft');
+
 
     // DOCUMENTS
     Route::post('/document/candidate/update', [DocumentController::class, 'store'])->name('candidat.document.store');

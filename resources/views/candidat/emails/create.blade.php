@@ -111,6 +111,8 @@
                                 </div>
 
                                 <div class="form-group">
+                                <button class="theme-btn btn-style-four" type="button" id="save-email-draft">Enregistrer en brouillon</button>
+
                                     <button class="theme-btn btn-style-one" type="submit"
                                         id="create-message-btn">Envoyer</button>
                                 </div>
@@ -129,6 +131,11 @@
 $(document).ready(function() {
     $("#receiver").select2({
         width: '100%'
+    });
+
+    document.getElementById("save-email-draft").addEventListener("click", function() {
+        document.getElementById("message-form").action = "{{ route('candidat.email.draft') }}"; // Replace with the actual route for saving drafts
+        document.getElementById("message-form").submit();
     });
 })
 </script>

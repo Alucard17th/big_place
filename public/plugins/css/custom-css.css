@@ -2392,4 +2392,9 @@ input[type=checkbox]:checked:before {
     position: relative;
     z-index: 2;
 }
+
+.input[type=radio]:checked:before {
+    display: none !important;
+    background-color: red !important;
+}
  /* NRD STYLES END */

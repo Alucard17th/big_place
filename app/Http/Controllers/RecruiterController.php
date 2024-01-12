@@ -45,36 +45,43 @@ class RecruiterController extends Controller
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
         }
-        $entrepriseViews = $entreprise->vues;
+        $entrepriseViews = $entreprise->vues ?? 0;
 
-        $vuesByDay = Vues::where('viewable_id', $entreprise->id)
-        ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-        ->groupBy('date')
-        ->orderBy('date', 'desc')
-        ->get();
-        $vuesByWeek = Vues::where('viewable_id', $entreprise->id)
-        ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
-        ->groupBy('week')
-        ->orderBy('week', 'desc')
-        ->get();
-        foreach($vuesByWeek as $key => $value){
-            $year = substr($value->week, 0, 4);
-            $week = substr($value->week, -2);
-            // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
-            // Start with the first day of the year
-            $date = Carbon::createFromDate(2023, 1, 1);
+        if($entrepriseViews != null){
+            $vuesByDay = Vues::where('viewable_id', $entreprise->id)
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->get();
+            $vuesByWeek = Vues::where('viewable_id', $entreprise->id)
+            ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
+            ->groupBy('week')
+            ->orderBy('week', 'desc')
+            ->get();
+            foreach($vuesByWeek as $key => $value){
+                $year = substr($value->week, 0, 4);
+                $week = substr($value->week, -2);
+                // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
+                // Start with the first day of the year
+                $date = Carbon::createFromDate(2023, 1, 1);
 
-            // Move to the desired ISO week
-            $weekStart = $date->setISODate($year, $week);
-            $weekEnd = $weekStart->addDays(6);
+                // Move to the desired ISO week
+                $weekStart = $date->setISODate($year, $week);
+                $weekEnd = $weekStart->addDays(6);
 
+            }
+            $vuesByMonth = Vues::where('viewable_id', $entreprise->id)
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
+            ->groupBy('month', 'year')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+        }else{
+            $vuesByDay = null;
+            $vuesByWeek = null;
+            $vuesByMonth = null;
         }
-        $vuesByMonth = Vues::where('viewable_id', $entreprise->id)
-        ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
-        ->groupBy('month', 'year')
-        ->orderBy('year', 'desc')
-        ->orderBy('month', 'desc')
-        ->get();
+        
         // dd($vuesByDay, $vuesByWeek, $vuesByMonth);
         // dd($jobs);
         return view('recruiter.dashboard', compact('jobs', 'entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
@@ -1237,6 +1244,12 @@ class RecruiterController extends Controller
         $emailsIds = $request;
         $emails = Email::whereIn('id', $emailsIds)->update(['trash' => true]);
         return response()->json($emails);
+    }
+    public function myMailsDestroy($id){
+        $email = Email::find($id);
+        $email->delete();
+        toast('Email supprimé','success')->autoClose(5000);
+        return redirect()->back();
     }
 
     // STATS

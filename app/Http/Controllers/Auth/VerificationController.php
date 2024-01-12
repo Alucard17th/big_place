@@ -28,6 +28,14 @@ class VerificationController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function redirectTo(){
+        $role = auth()->user()->roles->pluck('name')[0];
+        if($role == 'candidat'){
+            return route('candidat.plans');
+        }else{
+            return route('recruiter.plans');
+        }
+    }
     /**
      * Create a new controller instance.
      *

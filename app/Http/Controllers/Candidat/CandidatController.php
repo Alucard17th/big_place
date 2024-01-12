@@ -9,6 +9,7 @@ use App\Models\Candidature;
 use App\Models\RendezVous;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class CandidatController extends Controller
 {
@@ -145,14 +146,68 @@ class CandidatController extends Controller
         $user = auth()->user();
         $doneRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Effectué')->count();
         $refusedRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Annulé')->count();
+        $pendingRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'En attente')->count();
         // $doneRdvs = $user->rendezvous()->where('status', 'Effectué')->count();
         // $refusedRdvs = $user->rendezvous()->where('status', 'Annulé')->count();
 
-        $candidature = Candidature::where('candidat_id', $user->id)->get();
-        dd($candidature, $user, $doneRdvs, $refusedRdvs);
+        $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+        $days = range(1, Carbon::create($currentYear, $currentMonth)->daysInMonth);
+        $months = [
+            '01' => 'January',
+            '02' => 'February',
+            '03' => 'March',
+            '04' => 'April',
+            '05' => 'May',
+            '06' => 'June',
+            '07' => 'July',
+            '08' => 'August',
+            '09' => 'September',
+            '10' => 'October',
+            '11' => 'November',
+            '12' => 'December',
+        ];
+        // OFFERS BY DAY
+        $groupedByDay = $candidatures->groupBy(function ($item) {
+            return $item->created_at->toDateString(); // Assuming 'created_at' is your timestamp field
+        });
+        $candidaturesByDay = [];
+        foreach ($days as $day) {
+            $dateString = Carbon::create($currentYear, $currentMonth, $day)->toDateString();
+            $candidaturesByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
+        }
+        // OFFERS BY WEEK
+        $groupedByWeek = $candidatures->groupBy(function ($item) {
+            return $item->created_at->startOfWeek()->format('Y-m-d');
+        });
+
+        $candidaturesByWeek = [];
+        foreach ($groupedByWeek as $weekStartDate => $candidaturesInWeek) {
+            $endDate = Carbon::createFromFormat('Y-m-d', $weekStartDate)->endOfWeek()->format('Y-m-d');
+            $candidaturesByWeek[$weekStartDate . ' | ' . $endDate] = $candidaturesInWeek->count();
+        }
+
+        // OFFERS BY MONTH
+        $candidaturesByMonth = [];
+        // Initialize counts for all months
+        foreach ($months as $month => $monthName) {
+            $candidaturesByMonth[$month] = 0;
+        }
+        // Group the data by month
+        $groupedByMonth = $candidatures->groupBy(function ($item) {
+            return $item->created_at->format('m'); // Group by month
+        });
+        // Calculate the count for each group
+        foreach ($groupedByMonth as $month => $group) {
+            $candidaturesByMonth[$month] = $group->count();
+        }
+        // dd($candidaturesByDay, $candidaturesByWeek, $candidaturesByMonth);
         $moyenneDureeRecrutement = 555;
         $dureeSusbcription = 555;
-        return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'candidature', 'moyenneDureeRecrutement', 'dureeSusbcription'));
+        return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'pendingRdvs',
+        'candidaturesByDay', 'candidaturesByWeek', 'candidaturesByMonth',
+        'moyenneDureeRecrutement', 'dureeSusbcription'));
     }
 
     public function chooseCreneau($time){

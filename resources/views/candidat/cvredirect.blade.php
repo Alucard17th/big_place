@@ -153,6 +153,7 @@ color: #2D2F30;
             </div>
         </div>
 
+        @if(!empty($curriculum))
         <div class="row" id="preview-container">
             <div class="container">
                 <div class="card p-5 h-100">
@@ -214,8 +215,9 @@ color: #2D2F30;
                 </div>
             </div>
         </div>
+        @endif
         
-        <div class="row mt-3" id="editor-container" style="display:none">
+        <div class="row mt-3" id="editor-container" style="@if(!empty($curriculum))display:none; @endif">
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
@@ -223,12 +225,11 @@ color: #2D2F30;
                             @csrf
                             <h4 class="text-dark mb-3">Télécharger CV</h4>
                             <input type="file" name="cv" id="cv" class="py-3">
-
-                            @if(!empty($curriculum))
                             <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Enregistrer</button>
-                            @else
-                            Vous devez d'abord remplir le formulaire ci-dessus.
-                            @endif
+                            <!-- @if(!empty($curriculum)) -->
+                            <!-- @else -->
+                            <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
+                            <!-- @endif -->
                         </form>
                     </div>
                 </div>
@@ -299,10 +300,10 @@ color: #2D2F30;
                                             d'expérience</label>
                                         <select class="form-control" id="annees_experience" name="annees_experience" required>
                                             <option value=""  selected>Année d'expérience</option>
-                                            <option value="Débutant (0 – 2 ans)" @if($curriculum->annees_experience == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
-                                            <option value="Intermédiaire (2 – 5 ans)" @if($curriculum->annees_experience == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
-                                            <option value="Confirmé (5 -10 ans)" @if($curriculum->annees_experience == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
-                                            <option value="Sénior (+ 10 ans)" @if($curriculum->annees_experience == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                            <option value="Débutant (0 – 2 ans)" @if(isset($curriculum) && $curriculum->annees_experience == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
+                                            <option value="Intermédiaire (2 – 5 ans)" @if(isset($curriculum) && $curriculum->annees_experience == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
+                                            <option value="Confirmé (5 -10 ans)" @if(isset($curriculum) && $curriculum->annees_experience == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
+                                            <option value="Sénior (+ 10 ans)" @if(isset($curriculum) && $curriculum->annees_experience == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -331,11 +332,11 @@ color: #2D2F30;
                                         <label for="etudes" class="form-label text-dark">Niveau d'études</label>
                                         <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
                                             <option value=""  selected>Niveau d'études</option>
-                                            <option value="CAP / BEP" @if($curriculum->niveau_etudes == 'CAP / BEP') selected @endif>CAP / BEP</option>
-                                            <option value="Bac" @if($curriculum->niveau_etudes == 'Bac') selected @endif>Bac</option>
-                                            <option value="Bac+2" @if($curriculum->niveau_etudes == 'Bac+2') selected @endif>Bac + 2</option>
-                                            <option value="Bac+4" @if($curriculum->niveau_etudes == 'Bac+4') selected @endif>Bac + 4</option>
-                                            <option value="Bac+5" @if($curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                            <option value="CAP / BEP" @if(isset($curriculum) && $curriculum->niveau_etudes == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                            <option value="Bac" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac') selected @endif>Bac</option>
+                                            <option value="Bac+2" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+2') selected @endif>Bac + 2</option>
+                                            <option value="Bac+4" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+4') selected @endif>Bac + 4</option>
+                                            <option value="Bac+5" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -450,7 +451,7 @@ if( isset($curriculum) ){
 document.addEventListener('DOMContentLoaded', function() {
     const candidatCv = document.querySelector('#cv');
     const cv = @json($cv);
-
+    console.log('Mon Cv : ', cv);
     console.log(cv);
     if (Array.isArray(cv) && cv.length <= 0) {
         $("#cv-modal").modal({
@@ -476,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const pond_cv = FilePond.create(candidatCv, {
-        files: cv ? 'storage' + cv : null,
+        files: cv != null && cv.length > 0 ? 'storage' + cv : null,
         labelIdle: '<img class="mr-3" src="http://127.0.0.1:8000/plugins/images/candidat/cv-upload.png" alt="">+ Ajouter document',
     });
 

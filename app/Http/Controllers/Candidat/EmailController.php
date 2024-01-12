@@ -14,8 +14,15 @@ class EmailController extends Controller
         $user = auth()->user();
         $emails = $user->emails;
         $receivedEmails = Email::where('receiver_id', $user->id)->get();
+        
+
+        $draftEmails = $emails->where('draft', true)->where('trash', false);
+        $deletedEmails = $emails->where('trash', true);
+        $emails = $emails->where('trash', false)->where('draft', false);
+        $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
+
         $receivers = User::all();
-        return view('candidat.emails.index', compact('emails', 'receivedEmails', 'receivers'));
+        return view('candidat.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
 
     public function create(){
@@ -72,5 +79,25 @@ class EmailController extends Controller
         toast('Email enregistré dans le brouillon', 'success');
         return redirect()->back();
         // return redirect()->back();
+    }
+
+    public function show($id){
+        $email = Email::find($id);
+        return view('candidat.emails.show', compact('email'));
+    }
+
+    public function softDelete($id){
+        $email = Email::find($id);
+        $email->trash = true;
+        $email->save();
+        toast('Email supprimé','success')->autoClose(5000);
+        return redirect()->back();
+    }
+
+    public function delete($id){
+        $email = Email::find($id);
+        $email->delete();
+        toast('Email supprimé','success')->autoClose(5000);
+        return redirect()->back();
     }
 }
