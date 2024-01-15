@@ -2,6 +2,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TicketController;
 
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\Candidat\CurriculumController;
@@ -82,6 +83,12 @@ Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->na
 
 Route::get('/candidat-plans', [HomeController::class, 'candidatPlans'])->name('candidat.plans');
 Route::get('/recruiter-plans', [HomeController::class, 'recruiterPlans'])->name('recruiter.plans');
+
+Route::get('/support', [TicketController::class, 'index'])->name('support.index');
+Route::get('/support/create', [TicketController::class, 'create'])->name('support.create');
+Route::post('/support', [TicketController::class, 'store'])->name('support.store');
+Route::get('/support/show/{id}', [TicketController::class, 'show'])->name('support.show');
+
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
@@ -206,9 +213,16 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
 });
 
-Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect');
+
 Route::post('/mon-curriculum', [CurriculumController::class, 'curriculumStore'])->name('candidat.curriculum.store');
 Route::post('/mon-curriculum/cv/store', [CurriculumController::class, 'saveCvFile'])->name('candidat.cv.store');
+
+Route::get('/xml/lhotellerie-restauration', [RecruiterController::class, 'generateHotellerieRestaurationXml'])->name('xml.lhotellerie-restauration');
+Route::get('/xml/option-carriere', [RecruiterController::class, 'generateOptioncarriereXml'])->name('xml.optioncarriere');
+
+
+Route::get('/stream-contract/{id}', [RecruiterController::class, 'streamContract'])->name('contract.stream');
+
 // CANDIDAT
 Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function () {
 
@@ -223,7 +237,10 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-formation', [FormationController::class, 'index'])->name('candidat.formation');
     Route::get('/candidat-account', [CandidatController::class, 'account'])->name('candidat.account');
     Route::get('/candidat-stats', [CandidatController::class, 'stats'])->name('candidat.stats');
-    
+
+    // CURRICULUM
+    Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect')->middleware('verified');
+
     // CHoose Creneau
     Route::get('/candidat-creneau/choose/{time}', [CandidatController::class, 'chooseCreneau'])->name('candidat.creneau.choose');
     Route::get('/candidat-creneau/confirm/{id}', [CandidatController::class, 'confirmCreneau'])->name('candidat.creneau.confirm');

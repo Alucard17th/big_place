@@ -29,6 +29,9 @@
             $color = 'primary';
     }
 ?>
+@php
+    $currentRole = $actionUrl;
+@endphp
 @component('mail::button', ['url' => $actionUrl, 'color' => $color])
 {{ __('emails.verify_email_address') }}
 @endcomponent

@@ -22,6 +22,11 @@ class CheckCurriculum
             return $next($request);
         }
 
+        // Check if the current route is candidat.cvredirect
+        if ($request->route()->getName() === 'candidat.cvredirect') {
+            return $next($request);
+        }
+
         // Redirect to a page indicating that the user needs to set up a curriculum
         return redirect()->route('candidat.cvredirect');
     }

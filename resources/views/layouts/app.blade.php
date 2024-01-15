@@ -124,6 +124,7 @@
 
     <script src="//code.tidio.co/tzkeoku6ogisroezu2amei6mcqnb3tjm.js" async></script>
 
+    @stack('styles')
 </head>
 
 <body data-anm=".anm" class="frontend-page page   ">

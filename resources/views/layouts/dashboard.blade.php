@@ -213,6 +213,11 @@
                                 </li>
 
                                 <li class="dropdown-divider"></li>
+                                <li class="menu-hr"><a href="support/create">Support & Contact
+                                </a></li>
+
+
+                                <li class="dropdown-divider"></li>
                                 <li class="menu-hr"><a href="/compte-administrateur#change-password">Changer
                                         le mot de passe</a></li>
 

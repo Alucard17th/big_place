@@ -66,6 +66,7 @@
                             <h3>Mes Factures et Contrats</h3>
                         </div>
                         <div class="d-flex align-items-center">
+                        
                             <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
@@ -74,6 +75,7 @@
                         </div>
                     </div>
                     <div class="tabs-box">
+                    <h3 class="text-dark p-2 mb-3">Mes factures</h3>
                         <!-- TABLE AND GRID VIEW -->
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
@@ -100,6 +102,10 @@
                                                 <a type="button" class="bg-btn-three" target="_blank"
                                                     href="{{ asset(str_replace('public', 'storage', $document->file)) }}">
                                                     <i class="las la-eye mr-2"></i>Consulter
+                                                </a>
+                                                <a type="button" class="bg-btn-three" target="_blank"
+                                                    href="{{route('contract.stream', $document->id)}}">
+                                                    <i class="las la-eye mr-2"></i>Consulter PDF
                                                 </a>
                                                 <a type="button" class="bg-btn-five"
                                                     href="{{ asset(str_replace('public', 'storage', $document->file)) }}"

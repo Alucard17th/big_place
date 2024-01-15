@@ -29,6 +29,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Vues;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RecruiterController extends Controller
 {   
@@ -1532,4 +1533,123 @@ class RecruiterController extends Controller
     public function chat(){
         return view('recruiter.chat.index');
     }
+    
+    // CONTRACT GENERATION && FACTURE GENERATION && DOWNLOADS
+    public function streamContract($id){
+        ini_set('max_execution_time', 120); // Set maximum execution time to 2 minutes
+
+        // $report = Contract::where('id', $id)->first();
+       
+        // view()->share('report', $report);
+        $reportHtml = view('templates.pdf.contract', [])->render();
+
+        $pdf = PDF::loadHTML($reportHtml);
+        $pdfName = 'contract-'.$id.'.pdf';
+        return $pdf->stream($pdfName);
+    }
+
+    //_________________________________________APIS____________________________________//
+    // API lhotellerie-restauration.fr
+    public function generateHotellerieRestaurationXml()
+    {
+        // Generate XML content
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="ISO-8859-1"?><root date="' . now()->format('d-m-Y') . '"></root>');
+
+        // Add job announcement data
+        $offre = $xml->addChild('offre');
+        $offre->addChild('id_client', 'your_id');
+        $offre->addChild('nom_client', 'Your Client Name');
+        $offre->addChild('code_annonce', 'your_code');
+        $offre->addChild('action', 'C'); // Action can be 'C' for creation, 'M' for Modification, 'S' for suppression
+        $offre->addChild('pays', 'FR');
+        $offre->addChild('code_postal', 'your_postal_code');
+        $offre->addChild('adresse', 'your_address');
+        $offre->addChild('ville', 'your_city');
+        $offre->addChild('ref_annonce', 'your_reference');
+        $offre->addChild('competence', '520');
+        $offre->addChild('contrat', '1');
+        $offre->addChild('texte_annonce', 'your_job_description');
+        $offre->addChild('texte_resume', 'your_job_summary');
+        $offre->addChild('email_reponse', 'your_email@example.com');
+        $offre->addChild('niveau_etude', '7');
+        $offre->addChild('experience', '4');
+        $offre->addChild('temps', '0'); // 0 or 1 for Partiel / complet
+        $offre->addChild('cdd_mini', 'your_cdd_min_duration');
+        $offre->addChild('cdd_maxi', 'your_cdd_max_duration');
+        $offre->addChild('salaire_min', 'your_min_salary');
+        $offre->addChild('salaire_max', 'your_max_salary');
+        $offre->addChild('devise', 'your_currency');
+        $offre->addChild('url_siteclient', 'your_job_url');
+
+        // Save XML content to a file
+        $filePath = storage_path('app/job_offer_lhotellerie_restauration.xml');
+        $xml->asXML($filePath);
+
+        // // Send the XML file via FTP
+        // $ftpServer = 'your_ftp_server';
+        // $ftpUsername = 'your_ftp_username';
+        // $ftpPassword = 'your_ftp_password';
+        // $ftpFilePath = '/path/to/remote/directory/job_announcements.xml';
+
+        // $connection = ftp_connect($ftpServer);
+        // ftp_login($connection, $ftpUsername, $ftpPassword);
+
+        // // Upload the file
+        // if (ftp_put($connection, $ftpFilePath, $filePath, FTP_ASCII)) {
+        //     return response()->json(['message' => 'XML file generated and sent via FTP successfully']);
+        // } else {
+        //     return response()->json(['message' => 'FTP upload failed'], 500);
+        // }
+
+        // // Close the FTP connection
+        // ftp_close($connection);
+
+        return response()->json(['message' => 'XML file generated and sent via FTP successfully']);
+    }
+
+    public function generateOptioncarriereXml()
+    {
+        // Create a SimpleXMLElement object
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><jobs></jobs>');
+
+        // Add job data to the XML
+        $job = $xml->addChild('job');
+        $job->addChild('title', 'Python Developer');
+        $job->addChild('url', 'https://www.example.com/view_job.php?id=12345');
+
+        $location = $job->addChild('location');
+        $location->addChild('city', 'London');
+        $location->addChild('region', 'Greater London');
+        $location->addChild('country', 'United Kingdom');
+
+        $job->addChild('company', 'BBC');
+        $job->addChild('company_url', 'https://www.bbc.co.uk/');
+        $job->addChild('description', 'complete job ad content <br> including <br> HTML formatting');
+        $job->addChild('contract_type', 'permanent');
+        $job->addChild('working_hours', 'full-time');
+        $job->addChild('salary', '£30000 - 33000');
+        $job->addChild('application_email', 'applyhere@example.com');
+        $job->addChild('job_reference', 'FXGT-4312');
+        $job->addChild('apply_url', 'https://www.example.com/job_application.php?id=12345');
+
+        $careerjetApplyData = $job->addChild('careerjet-apply-data');
+        $careerjetApplyDataNode = dom_import_simplexml($careerjetApplyData);
+        $careerjetApplyDataCdata = $careerjetApplyDataNode->ownerDocument->createCDATASection(
+            'apply_key=043762d616698aa9ddef8a93624ee314&jobTitle=Python%20Developer&jobLocation=London%2C%20Greater%20London%2C%20United%20Kingdom&jobCompanyName=BBC&postUrl=https%3A%2F%2Fwww.example.com%2Fapply%2Fcareerjet%3Fref%3DFXGT-4312&phone=optional&coverletter=optional&hl=en_US'
+        );
+        $careerjetApplyDataNode->appendChild($careerjetApplyDataCdata);
+
+        $programmatic = $job->addChild('programmatic');
+        $bid = $programmatic->addChild('bid');
+        $bid->addChild('cost_model', 'CPC');
+        $bid->addChild('currency_code', 'GBP');
+        $bid->addChild('amount', '2.50');
+
+        // Save XML content to a file
+        $filePath = storage_path('app/job_offer_option_carriere.xml');
+        $xml->asXML($filePath);
+
+        return response()->json(['message' => 'XML file generated successfully']);
+    }
+
 }

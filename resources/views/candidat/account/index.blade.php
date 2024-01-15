@@ -271,54 +271,55 @@
             </div>
 
         </div>
+    </div>
+</div>
 
+@endsection
 
-        @endsection
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    $("#toggle-1").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-1").toggle();
+    })
 
-        @push('scripts')
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            $("#toggle-1").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-1").toggle();
-            })
+    $("#toggle-2").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-2").toggle();
+    })
 
-            $("#toggle-2").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-2").toggle();
-            })
+    $("#toggle-3").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-3").toggle();
+    })
 
-            $("#toggle-3").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-3").toggle();
-            })
+    $("#toggle-4").click(function(event) {
+        event.preventDefault();
+        $("#toggleElement-4").toggle();
+    })
 
-            $("#toggle-4").click(function(event) {
-                event.preventDefault();
-                $("#toggleElement-4").toggle();
-            })
+    document.getElementById('change-avatar').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('avatar').click();
+    });
 
-            document.getElementById('change-avatar').addEventListener('click', function(event) {
-                event.preventDefault();
-                document.getElementById('avatar').click();
-            });
+    document.getElementById('avatar').addEventListener('change', function(event) {
+        var preview = document.getElementById('avatar-preview');
+        var input = event.target; // Use event.target to get the input element
+        var file = input.files[0];
 
-            document.getElementById('avatar').addEventListener('change', function(event) {
-                var preview = document.getElementById('avatar-preview');
-                var input = event.target; // Use event.target to get the input element
-                var file = input.files[0];
+        if (file) {
+            var reader = new FileReader();
 
-                if (file) {
-                    var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
 
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                    };
+            reader.readAsDataURL(file);
+        }
+    })
 
-                    reader.readAsDataURL(file);
-                }
-            })
-
-        })
-        </script>
-        @endpush
+})
+</script>
+@endpush

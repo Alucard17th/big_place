@@ -31,7 +31,7 @@ class VerificationController extends Controller
     protected function redirectTo(){
         $role = auth()->user()->roles->pluck('name')[0];
         if($role == 'candidat'){
-            return route('candidat.plans');
+            return route('candidat.cvredirect');
         }else{
             return route('recruiter.plans');
         }

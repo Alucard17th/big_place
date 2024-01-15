@@ -43,7 +43,7 @@ class VerifyEmail extends Notification
         return (new MailMessage)
             ->subject('Verify Your Email Address')
             ->line('Thanks for registering! Before you get started, you must verify your email address by clicking on the link below:')
-            ->action('Verify Email Address', $this->verificationUrl($notifiable))
+            ->action('Verify Email Address', $this->getActionUrl($notifiable))
             ->line('If you did not create an account, no further action is required.');
     }
 
@@ -58,6 +58,22 @@ class VerifyEmail extends Notification
         return [
             //
         ];
+    }
+
+    protected function getActionUrl($notifiable)
+    {
+        // Get the user roles
+        $roles = $notifiable->getRoleNames()->toArray();
+
+        // Determine the action URL based on the user roles
+        if (in_array('admin', $roles)) {
+            return url('/admin/verify/' . $notifiable->getKey() . '/' . $notifiable->getRememberToken());
+        } elseif (in_array('user', $roles)) {
+            return url('/user/verify/' . $notifiable->getKey() . '/' . $notifiable->getRememberToken());
+        }
+
+        // Default to the generic verification URL
+        return url('/verify/' . $notifiable->getKey() . '/' . $notifiable->getRememberToken());
     }
     
 }
