@@ -26,14 +26,16 @@
                             <h4>{{ $email->subject }}</h4>
 
                             @if($email->user_id == auth()->user()->id)
-                                <div>Envoyé à {{ getUserById($email->receiver_id)->name }}</div>
+                                <div class="mt-3">Envoyé à {{ getUserById($email->receiver_id)->name }}</div>
                             @else
-                                <div>Envoyé par {{ getUserById($email->user_id)->name }}</div>
+                                <div class="mt-3">Envoyé par {{ getUserById($email->user_id)->name }}</div>
                             @endif
                             
-                            <div>Date : {{ $email->created_at }}</div>
-
-                            <p>{{ $email->message }}</p>
+                            <div class="mt-3 text-muted">Date : {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</div>
+                                
+                            <p>
+                            <h5>Message : </h5>    
+                            {{ $email->message }}</p>
 
                         </div>
                     </div>

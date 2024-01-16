@@ -173,6 +173,10 @@
 #calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
     display: table-row !important;
 }
+
+.greyed-out{
+    background: #e9ecef !important;
+ }
 </style>
 @endpush
 
@@ -185,13 +189,16 @@
         </div>
 
         <div class="row">
-            <div class="col-12 px-2">
+            <div class="col-9 px-2">
                 <div class="card">
                     <div class="card-body px-4">
                         <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
                         <form method="get" class="" action="{{route('candidat.offers.search')}}">
                             <div class="row no-gutters">
                                 <div class="col-12">
+                                    <label>
+                                        <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                    </label>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                             style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
@@ -200,7 +207,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group mb-2">
-                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier">
+                                        <label>
+                                            <input type="radio" id="use_input"> Utiliser Métier
+                                        </label>
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
@@ -285,14 +295,81 @@
                 </div>
             </div>
 
-            <div class="col-12 px-2 mt-3">
+            <div class="col-3 px-2">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="text-dark dashboard-card-title">Nombre de vues de candidatures</h4>
-                        <canvas id="myChart"></canvas>
+                    <div class="card-body px-2">
+                        <h4 class="text-dark dashboard-card-title d-inline mb-4">Nombre des candidatures</h4>
+                        <div class="row w-100">
+
+                            <div class="col-12 pr-0 my-3">
+                                <h2 class="text-center">Jour</h2>
+                                <div id="jour-carousel" class="carousel slide">
+                                <div class="carousel-inner">
+                                    @if(!empty($vuesByDay))
+                                    @foreach($vuesByDay as $index => $value)
+                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
+                                        {{ \Carbon\Carbon::parse($value['date'])->formatLocalized('%d-%m-%Y')}} : {{$value['count']}} vues
+                                    </div>
+                                    @endforeach
+                                    @endif
+                                </div>
+                                <button class="carousel-control-prev text-dark" type="button" data-target="#jour-carousel" data-slide="prev">
+                                   <
+                                </button>
+                                <button class="carousel-control-next text-dark" type="button" data-target="#jour-carousel" data-slide="next">
+                                    >
+                                </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 pr-0 my-3">
+                                <h2 class="text-center">Semaine</h2>
+                                <div id="week-carousel" class="carousel slide">
+                                <div class="carousel-inner">
+                                    @if(!empty($vuesByWeek))
+                                    @foreach($vuesByWeek as $index => $value)
+                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
+                                        <div>{{getMonthDates($value['week'])['startOfWeek']}} - {{getMonthDates($value['week'])['endOfWeek']}} :</div> 
+                                        <div class="text-center">{{$value['count']}} vues</div>
+                                    </div>
+                                    @endforeach
+                                    @endif
+                                </div>
+                                <button class="carousel-control-prev text-dark" type="button" data-target="#week-carousel" data-slide="prev">
+                                    <
+                                </button>
+                                <button class="carousel-control-next text-dark" type="button" data-target="#week-carousel" data-slide="next">
+                                    >
+                                </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 pr-0 my-3">
+                                <h2 class="text-center">Mois</h2>
+                                <div id="mois-carousel" class="carousel slide">
+                                <div class="carousel-inner">
+                                    @if(!empty($vuesByMonth))
+                                    @foreach($vuesByMonth as $index => $value)
+                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
+                                        {{$value['month']}} - {{$value['year']}} : {{$value['count']}} vues
+                                    </div>
+                                    @endforeach
+                                    @endif
+                                </div>
+                                <button class="carousel-control-prev text-dark" type="button" data-target="#mois-carousel" data-slide="prev">
+                                    <
+                                </button>
+                                <button class="carousel-control-next text-dark" type="button" data-target="#mois-carousel" data-slide="next">
+                                   >
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <canvas id="myChart" class="px-2 pt-2"></canvas> -->
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="row mt-3">
@@ -712,6 +789,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }]
             }
         }
+    });
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
     });
 });
 </script>

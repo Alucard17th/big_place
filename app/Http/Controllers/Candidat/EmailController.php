@@ -13,15 +13,23 @@ class EmailController extends Controller
     public function emails(){
         $user = auth()->user();
         $emails = $user->emails;
+
         $receivedEmails = Email::where('receiver_id', $user->id)->get();
-        
 
         $draftEmails = $emails->where('draft', true)->where('trash', false);
+
         $deletedEmails = $emails->where('trash', true);
+
         $emails = $emails->where('trash', false)->where('draft', false);
+        
         $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
 
         $receivers = User::all();
+
+        if($deletedEmails->count() >= 20){
+            toast('Trop de messages supprimés, veuillez vider votre corbeille.','error')->autoClose(5000);
+        }
+        
         return view('candidat.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
 
@@ -46,11 +54,16 @@ class EmailController extends Controller
             ]);
 
             // Assuming you have a relationship set up between Email and User models
-           
             $user->emails()->save($email);
         }
        
         toast('Email envoyé', 'success');
+        
+        if($user->getRoleNames()->contains('candidat')){
+            return redirect()->route('candidat.emails');
+        }else{
+            return redirect()->route('recruiter.mails');
+        }
         return redirect()->back();
         // return redirect()->back();
     }
@@ -99,5 +112,21 @@ class EmailController extends Controller
         $email->delete();
         toast('Email supprimé','success')->autoClose(5000);
         return redirect()->back();
+    }
+
+    public function ajaxDelete(Request $request){
+        $selectedIds = $request->json()->all();
+
+        $emails = Email::whereIn('id', $selectedIds)->update(['trash' => true]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function ajaxDestroy(Request $request){
+        $selectedIds = $request->json()->all();
+
+        Email::whereIn('id', $selectedIds)->delete();
+
+        return response()->json(['success' => true]);
     }
 }

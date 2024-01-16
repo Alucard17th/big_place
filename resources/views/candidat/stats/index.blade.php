@@ -61,7 +61,7 @@
                             <h3>Statistiques</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -75,7 +75,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous effectués</h5>
-                                            <p class="card-text"></p>
+                                            <h6 class="text-success text-center mt-4">{{ $doneRdvs }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous en attente</h5>
-                                            <p class="card-text"></p>
+                                            <h6 class="text-warning text-center mt-4">{{ $pendingRdvs }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     <div class="card stat-card">
                                         <div class="card-body">
                                             <h5 class="card-title">Rendez-vous annulés</h5>
-                                            <p class="card-text"></p>
+                                            <h6 class="text-danger text-center mt-4">{{ $refusedRdvs }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -105,26 +105,41 @@
 
                 <!-- TABLE VIEW -->
                 <div class="row mb-5">
-                    <div class="col-6">
-                        <div class="ls-widget">
+                <div class="col-6">
+                        <div class="ls-widget h-100">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Nombre d'offres publiées</h3>
+                                    <h3 class="py-4">Rendez-vous</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <button class="offer-day active mr-3">Jours</button>
-                                            <button class="offer-week">Semaine</button>
-                                            <button class="offer-month">Mois</button>
+                                            <!-- <button class="rdv-day active mr-3">Jours</button>
+                                            <button class="rdv-month">Mois</button> -->
                                         </div>
                                     </div>
-                                    <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
-                                    <div id="chart-offers"> </div>
+                                    <div id="rdvs-chart" class="" width="600" height="500"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-6">
+                        <div class="ls-widget h-100">
+                            <div class="tabs-box">
+                                <div class="widget-content">
+                                    <h3 class="py-4">Candidatures</h3>
+                                    <div class="actions row">
+                                        <div class="col-12 text-center">
+                                            <!-- <button class="rdv-day active mr-3">Jours</button>
+                                            <button class="rdv-month">Mois</button> -->
+                                        </div>
+                                    </div>
+                                    <div id="candidatures-pie-chart" class="" width="600" height="500"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 mt-3">
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
@@ -143,40 +158,28 @@
                         </div>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-6 mt-3">
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Rendez-vous</h3>
+                                    <h3 class="py-4">Réponses aux candidatures envoyées</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <!-- <button class="rdv-day active mr-3">Jours</button>
-                                            <button class="rdv-month">Mois</button> -->
+                                            <button class="offer-day active mr-3">Jours</button>
+                                            <button class="offer-week">Semaine</button>
+                                            <button class="offer-month">Mois</button>
                                         </div>
                                     </div>
-                                    <div id="rdvs-chart" class="" width="600" height="500"></div>
+                                    <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
+                                    <div id="chart-offers"> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- <div class="col-6">
-                        <div class="ls-widget">
-                            <div class="tabs-box">
-                                <div class="widget-content">
-                                    <h3 class="py-4">Durée moyenne d’embauche par métier</h3>
-                                    <div class="actions row">
-                                        <div class="col-12 text-center">
-                                        </div>
-                                    </div>
-                                    <canvas id="" class="" width="600" height="500"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                   
 
                 </div>
-
             </div>
         </div>
     </div>
@@ -433,6 +436,34 @@ $(document).ready(function() {
         };
 
     var Piechart = new ApexCharts(document.querySelector("#rdvs-chart"), optionsPieChart);
+    Piechart.render();
+
+    // CANDIDATURES PIE CHART
+    const candidaturesEffectue = @json($doneCandidatures);
+    const candidaturesCancelled = @json($refusedCandidatures);
+    const candidaturesPending = @json($pendingCandidatures);
+
+    var optionsCandidaturesPieChart = {
+          series: [candidaturesEffectue, candidaturesCancelled, candidaturesPending],
+          chart: {
+          width: 380,
+          type: 'pie',
+        },
+        labels: ["Candidature envoyée", "Candidature refusée", "Candidature en attente"],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+    var Piechart = new ApexCharts(document.querySelector("#candidatures-pie-chart"), optionsCandidaturesPieChart);
     Piechart.render();
 });
 </script>

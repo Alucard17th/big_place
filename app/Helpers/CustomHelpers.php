@@ -6,6 +6,7 @@ use App\Models\Entreprise;
 use App\Models\Curriculum;
 use App\Models\Job;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 if (!function_exists('getCurriculumById')) {
     function getCurriculumById(string $id = null)
@@ -144,3 +145,18 @@ if (!function_exists('getJobByCode')) {
     }
 }
 
+if (!function_exists('getMonthDates')) {
+    function getMonthDates(int $yearAndWeek  = null)
+    {   
+        // $yearAndWeek = '202353';
+        list($year, $weekNumber) = sscanf($yearAndWeek, '%4s%2s');
+
+        $startOfWeek = Carbon::now()->year($year)->startOfYear()->addWeeks($weekNumber - 1)->startOfWeek();
+        $endOfWeek = Carbon::now()->year($year)->startOfYear()->addWeeks($weekNumber - 1)->endOfWeek();
+    
+        return [
+            'startOfWeek' => $startOfWeek->toDateString(),
+            'endOfWeek' => $endOfWeek->toDateString(),
+        ];
+    }
+}

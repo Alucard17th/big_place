@@ -96,7 +96,7 @@
                             <h3>Mes emails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="/candidat-emails" class="bg-back-btn mr-2">
+                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -115,9 +115,16 @@
                                     <button type="button" class="btn" id="deleted-btn">Messages Supprimés</button>
                                     <button type="button" class="btn" id="draft-btn">Brouillons</button>
                                 </div>
-                                
-                                <div class="inbox">
+
+                                <div class="col-12">
                                     <button class="bg-btn-four my-2 d-none" id="delete-all-btn">Supprimer</button>
+                                </div>
+
+                                <div class="col-12">
+                                    <button class="bg-btn-four my-2 d-none" id="destroy-all-btn">Supprimer Définitivement</button>
+                                </div>
+
+                                <div class="inbox table-container" id="inbox-container">
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
                                         <thead class="thead-light">
                                             <tr>
@@ -140,10 +147,17 @@
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
+                                                    @if($deletedEmails->count() < 20)
                                                     <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
                                                     onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
                                                         Supprimer
                                                     </a>
+                                                    @else 
+                                                    <a href="" class="bg-btn-four ml-2"
+                                                    onclick="event.preventDefault();return alert('Trop de messages supprimés, veuillez vider votre corbeille.');" disabled>
+                                                        Supprimer
+                                                    </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -151,10 +165,11 @@
                                     </table>
                                 </div>
 
-                                <div class="sent" style="display: none">
+                                <div class="sent table-container" style="display: none" id="sent-container">
                                     <table class="table table-sm table-bordered" id="data-table-sent">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th></th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -164,6 +179,8 @@
                                         <tbody>
                                             @foreach ($emails as $email)
                                             <tr>
+                                                <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
@@ -171,10 +188,17 @@
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
+                                                    @if($deletedEmails->count() < 20)
                                                     <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
                                                     onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
                                                         Supprimer
                                                     </a>
+                                                    @else 
+                                                    <a href="" class="bg-btn-four ml-2"
+                                                    onclick="event.preventDefault();return alert('Trop de messages supprimés, veuillez vider votre corbeille.');" disabled>
+                                                        Supprimer
+                                                    </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -182,10 +206,11 @@
                                     </table>
                                 </div>
 
-                                <div class="deleted" style="display: none">
+                                <div class="deleted table-container" style="display: none" id="deleted-container">
                                     <table class="table table-sm table-bordered" id="data-table-deleted">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th></th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -195,6 +220,8 @@
                                         <tbody>
                                             @foreach ($deletedEmails as $email)
                                             <tr>
+                                                <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
@@ -203,7 +230,7 @@
                                                         Consulter
                                                     </a>
                                                     <a href="{{route('candidat.email.delete', $email->id)}}" class="bg-btn-four ml-2"
-                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer définitivement ce message ?');">
                                                     Supprimer
                                                     </a>
                                                 </td>
@@ -213,10 +240,11 @@
                                     </table>
                                 </div>
 
-                                <div class="draft" style="display: none">
+                                <div class="draft table-container" style="display: none" id="draft-container">
                                     <table class="table table-sm table-bordered" id="data-table-draft">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th></th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -226,6 +254,8 @@
                                         <tbody>
                                             @foreach ($draftEmails as $email)
                                             <tr>
+                                                <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
@@ -233,10 +263,17 @@
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
+                                                    @if($deletedEmails->count() < 20)
                                                     <a href="{{route('candidat.email.softDelete', $email->id)}}" class="bg-btn-four ml-2"
-                                                        onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
-                                                    Supprimer
+                                                    onclick="return confirm('Etes-vous sur de vouloir supprimer ce message ?');">
+                                                        Supprimer
                                                     </a>
+                                                    @else 
+                                                    <a href="" class="bg-btn-four ml-2"
+                                                    onclick="event.preventDefault();return alert('Trop de messages supprimés, veuillez vider votre corbeille.');" disabled>
+                                                        Supprimer
+                                                    </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -256,6 +293,11 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    const checkboxes = document.querySelectorAll('.checkbox-item');
+    const deleteAllButton = document.querySelector('#delete-all-btn');
+    const destroyAllButton = document.querySelector('#destroy-all-btn');
+    let selectedValues = [];
+
     $("#receiver").select2({
         width: '100%'
     });
@@ -265,35 +307,19 @@ $(document).ready(function() {
         $.modal.close();
     });
 
-    $('.email-item').on('click', function() {
-        var emailId = $(this).data('id');
-        $.ajax({
-            url: "{{route('recruiter.email.show')}}",
-            type: "GET",
-            data: {
-                id: emailId
-            },
-            success: function(data) {
-                $('#email-title').text(data.subject);
-                $('#email-content').text(data.message);
-            }
-        })
-    })
+    function hasCheckedCheckboxes(tableId) {
+        const checkedCheckboxes = document.querySelectorAll(`#${tableId} .checkbox-item:checked`);
+        return checkedCheckboxes.length > 0;
+    }
+    // Function to toggle the visibility of delete buttons based on checked checkboxes
+    function toggleDeleteButtons(tableId) {
+        deleteAllButton.classList.toggle('d-none', !hasCheckedCheckboxes(tableId));
+        destroyAllButton.classList.toggle('d-none', !hasCheckedCheckboxes(tableId));
 
-    $('.email-item-received').on('click', function() {
-        var emailId = $(this).data('id');
-        $.ajax({
-            url: "{{route('recruiter.email.show')}}",
-            type: "GET",
-            data: {
-                id: emailId
-            },
-            success: function(data) {
-                $('#email-title-received').text(data.subject);
-                $('#email-content-received').text(data.message);
-            }
-        })
-    })
+        if(tableId == 'data-table-deleted'){
+            deleteAllButton.classList.add('d-none');
+        }
+    }
 
     $('#inbox-btn').on('click', function() {
         $('.inbox').show();
@@ -305,6 +331,8 @@ $(document).ready(function() {
         $('#sent-btn').removeClass('active');
         $('#deleted-btn').removeClass('active');
         $('#draft-btn').removeClass('active');
+
+        toggleDeleteButtons('data-table-inbox');
     })
 
     $('#sent-btn').on('click', function() {
@@ -317,6 +345,8 @@ $(document).ready(function() {
         $('#inbox-btn').removeClass('active');
         $('#deleted-btn').removeClass('active');
         $('#draft-btn').removeClass('active');
+
+        toggleDeleteButtons('data-table-sent');
     })
 
     $('#deleted-btn').on('click', function() {
@@ -329,6 +359,8 @@ $(document).ready(function() {
         $('#inbox-btn').removeClass('active');
         $('#sent-btn').removeClass('active');
         $('#draft-btn').removeClass('active');
+
+        toggleDeleteButtons('data-table-deleted');
     })
 
     $('#draft-btn').on('click', function() {
@@ -341,6 +373,8 @@ $(document).ready(function() {
         $('#inbox-btn').removeClass('active');
         $('#sent-btn').removeClass('active');
         $('#deleted-btn').removeClass('active');
+
+        toggleDeleteButtons('data-table-draft');
     })
 
 
@@ -438,31 +472,63 @@ $(document).ready(function() {
 
     $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
-    // DELETE EMAIL CHECKBOXES
-    const checkboxes = document.querySelectorAll('.checkbox-item');
-    const deleteAllButton = document.querySelector('#delete-all-btn');
-    let selectedValues = [];
-    // Add an event listener to checkboxes to toggle the button visibility
+   
+
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
-            console.log(this);
             const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
-
             deleteAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
-
             selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
                 return checkbox.value;
             });
 
-            console.log(selectedValues);
-
+            // Uncheck checkboxes in other tables
+            const currentTableContainer = this.closest('.table-container');
+            const tableContainers = document.querySelectorAll('.table-container');
+            tableContainers.forEach(function(container) {
+                if (container !== currentTableContainer) {
+                    container.querySelectorAll('.checkbox-item:checked').forEach(function(checkbox) {
+                        checkbox.checked = false;
+                        selectedValues = selectedValues.filter(function(value) {
+                            return value !== checkbox.value;
+                        })
+                    });
+                }
+            });
+            // if the current table container contain deleted class then show the delete button
+            if (currentTableContainer.classList.contains('deleted')) {
+                destroyAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
+                deleteAllButton.classList.add('d-none');
+            }
+            
         });
-
     });
 
     deleteAllButton.addEventListener('click', function() {
         // Send the data using AJAX
-        fetch('{{ route('recruiter.emails.ajax.delete') }}', {
+        fetch('{{ route('candidat.emails.ajax.delete') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+            },
+            body: JSON.stringify(selectedValues),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response, e.g., show a success message
+            // refresh the current page
+            window.location.reload();
+        })
+        .catch(error => {
+            // Handle errors, e.g., show an error message
+            console.error(error);
+        });
+    })
+
+    destroyAllButton.addEventListener('click', function() {
+        // Send the data using AJAX
+        fetch('{{ route('candidat.emails.ajax.destroy') }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

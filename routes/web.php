@@ -89,6 +89,9 @@ Route::get('/support/create', [TicketController::class, 'create'])->name('suppor
 Route::post('/support', [TicketController::class, 'store'])->name('support.store');
 Route::get('/support/show/{id}', [TicketController::class, 'show'])->name('support.show');
 
+// !! ===> CAS SPECIAL EMAILS
+Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
+Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
@@ -162,6 +165,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
 
     // FORMATIONS 
     Route::get('/mes-formations', [RecruiterController::class, 'myFormations'])->name('recruiter.formation');
+    Route::get('/mes-formations/show/{id}', [RecruiterController::class, 'myFormationsShow'])->name('recruiter.formation.show');
     Route::get('/mes-formations/create', [RecruiterController::class, 'myFormationsCreate'])->name('recruiter.formation.create');
     Route::post('/formation/add', [RecruiterController::class, 'addFormation'])->name('recruiter.formation.add');
     Route::get('/mes-formations/edit/{id}', [RecruiterController::class, 'myFormationsEdit'])->name('recruiter.formation.edit');
@@ -182,7 +186,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
     Route::get('/mes-mails/destroy/{id}', [RecruiterController::class, 'myMailsDestroy'])->name('recruiter.emails.destroy');
     Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
-
+    
 
     // STATS
     Route::get('/mes-stats', [RecruiterController::class, 'stats'])->name('recruiter.stats');
@@ -298,6 +302,8 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/email/candidate/show/{id}', [EmailController::class, 'show'])->name('candidat.email.show');
     Route::get('/email/candidate/delete/{id}', [EmailController::class, 'delete'])->name('candidat.email.delete');
     Route::post('/email/candidate/draft', [EmailController::class, 'draft'])->name('candidat.email.draft');
+    // Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
+    // Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');
 
 
     // DOCUMENTS

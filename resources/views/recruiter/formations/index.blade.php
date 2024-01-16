@@ -99,9 +99,14 @@
                                                     <span class="badge badge-danger">Inactive</span>
                                                 @endif
                                             </td>
-                                            @unlessrole('restricted')
+                                            
                                             <td class="text-left d-flex flex-column" style="width:8vw;">
-                                                <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="bg-btn-three">
+                                                <a href="{{route('recruiter.formation.show', $formation->id)}}" class="bg-btn-five">
+                                                    <i class="las la-eye"></i>
+                                                    Editer
+                                                </a>
+                                                @unlessrole('restricted')
+                                                <a href="{{route('recruiter.formation.edit', $formation->id)}}" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
@@ -124,15 +129,16 @@
                                                     <i class="las la-trash"></i>
                                                     Annuler
                                                 </a>
-                                                @role('recruiter')
-                                                <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
-                                                onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">
-                                                    <i class="las la-trash"></i>
-                                                    Supprimer
-                                                </a>
-                                                @endrole
+                                                    @role('recruiter')
+                                                    <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
+                                                    onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">
+                                                        <i class="las la-trash"></i>
+                                                        Supprimer
+                                                    </a>
+                                                    @endrole
+                                                @endunlessrole
+
                                             </td>
-                                            @endunlessrole
 
                                         </tr>
                                         @endforeach

@@ -83,8 +83,6 @@ class RecruiterController extends Controller
             $vuesByMonth = null;
         }
         
-        // dd($vuesByDay, $vuesByWeek, $vuesByMonth);
-        // dd($jobs);
         return view('recruiter.dashboard', compact('jobs', 'entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
     }
     public function getJobsJson(){
@@ -575,7 +573,8 @@ class RecruiterController extends Controller
     public function myVitrine(){
         $user = auth()->user();
         $entreprise = $user->entreprise->first();
-        return view('recruiter.vitrine.vitrine', compact('entreprise'));
+        $offers = $entreprise->user->offers()->paginate(9);
+        return view('recruiter.vitrine.vitrine', compact('entreprise', 'offers'));
     }
     public function updateVitrine(Request $request){
         $user = auth()->user();
@@ -1080,6 +1079,10 @@ class RecruiterController extends Controller
         }
         return view('recruiter.formations.index', compact('formations'));
     }
+    public function myFormationsShow($id){
+        $formation = Formation::find($id);
+        return view('recruiter.formations.show', compact('formation'));
+    }
     public function myFormationsCreate(){
         return view('recruiter.formations.create');
     }
@@ -1219,6 +1222,9 @@ class RecruiterController extends Controller
         $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
         
         $receivers = User::all();
+        if($deletedEmails->count() >= 20){
+            toast('Trop de messages supprimés, veuillez vider votre corbeille.','error')->autoClose(5000);
+        }
         return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
     public function getMyMail(Request $request){

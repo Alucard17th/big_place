@@ -56,11 +56,11 @@ class CandidatureController extends Controller
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
             $entreprise = $user->entreprise->first();
-            $offres = Offre::where('user_id', $id)->get();
+            $offres = Offre::where('user_id', $id)->paginate(9);
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $offres = Offre::where('user_id', $user->parent_entreprise_id)->get();
+            $offres = Offre::where('user_id', $user->parent_entreprise_id)->paginate(9);
         }
 
         $vue = new Vues();

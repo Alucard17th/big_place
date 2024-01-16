@@ -167,6 +167,10 @@
  #calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
     display: table-row !important;
  }
+
+ .greyed-out{
+    background: #e9ecef !important;
+ }
 </style>
 @endpush
 
@@ -292,7 +296,7 @@
                                     @if(!empty($vuesByDay))
                                     @foreach($vuesByDay as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['date']}} - {{$value['count']}} vues
+                                        {{$value['date']}} : {{$value['count']}} vues
                                     </div>
                                     @endforeach
                                     @endif
@@ -313,7 +317,8 @@
                                     @if(!empty($vuesByWeek))
                                     @foreach($vuesByWeek as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['week']}} - {{$value['count']}} vues
+                                        <div>{{getMonthDates($value['week'])['startOfWeek']}} - {{getMonthDates($value['week'])['endOfWeek']}}:</div> 
+                                        <div class="text-center">{{$value['count']}} vues</div>
                                     </div>
                                     @endforeach
                                     @endif
@@ -334,7 +339,7 @@
                                     @if(!empty($vuesByMonth))
                                     @foreach($vuesByMonth as $index => $value)
                                     <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['month']}} - {{$value['count']}} vues
+                                        {{$value['month']}} - {{$value['year']}} : {{$value['count']}} vues
                                     </div>
                                     @endforeach
                                     @endif
@@ -644,6 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#use_select").on("change", function() {
         $("#select_container").toggle(this.checked);
         $("#metier_recherche").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div.col-9.px-2 > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked
         $("#use_input").prop("checked", false);  // Uncheck input checkbox
@@ -653,6 +659,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#input_container").toggle(this.checked);
         $("#custom_job").prop("disabled", !this.checked);
         $("#metier_recherche").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div.col-9.px-2 > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
         $("#select_container").hide();  // Hide select container if input is checked
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
     });

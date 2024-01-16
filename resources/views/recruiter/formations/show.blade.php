@@ -226,10 +226,10 @@ background: #13D527;
                                         <h5 class="offre-time-subtitle">Publiée le
                                             {{ \Carbon\Carbon::parse($formation->created_at)->formatLocalized('%d-%m-%Y') }}</h5>
 
-                                        <div class="row my-4">
+                                        <!-- <div class="row my-4">
                                             <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" class="theme-btn btn-style-one bg-btn text-white">Participer à la formation</a>
                                             <a href="{{route('candidat.vitrine.show', $formation->user_id)}}" class="bg-btn-three bg-btn ml-3" style="padding-left:25px !important;padding-right:25px !important;">Consulter la vitrine de l'entreprise</a>
-                                        </div>
+                                        </div> -->
 
                                         <!-- <div class="offre-desc my-4">
                                             Responsabilités : Développer et maintenir des applications Java

@@ -17,7 +17,43 @@ class CandidatController extends Controller
     public function dashboard(){
         $user = auth()->user();
         $jobs = Job::all();
-        return view('candidat.dashboard', compact('jobs'));
+        $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        if($candidatures != null){
+            $vuesByDay = Candidature::where('candidat_id', $user->id)
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->get();
+            $vuesByWeek = Candidature::where('candidat_id', $user->id)
+            ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
+            ->groupBy('week')
+            ->orderBy('week', 'desc')
+            ->get();
+            foreach($vuesByWeek as $key => $value){
+                $year = substr($value->week, 0, 4);
+                $week = substr($value->week, -2);
+                // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
+                // Start with the first day of the year
+                $date = Carbon::createFromDate(2023, 1, 1);
+
+                // Move to the desired ISO week
+                $weekStart = $date->setISODate($year, $week);
+                $weekEnd = $weekStart->addDays(6);
+
+            }
+            $vuesByMonth = Candidature::where('candidat_id', $user->id)
+            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
+            ->groupBy('month', 'year')
+            ->orderBy('year', 'desc')
+            ->orderBy('month', 'desc')
+            ->get();
+        }else{
+            $vuesByDay = null;
+            $vuesByWeek = null;
+            $vuesByMonth = null;
+        }
+        // dd($candidatures, $vuesByDay, $vuesByWeek, $vuesByMonth);
+        return view('candidat.dashboard', compact('jobs', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
     }
 
     public function getCandidatRdvs(){
@@ -203,11 +239,14 @@ class CandidatController extends Controller
             $candidaturesByMonth[$month] = $group->count();
         }
         // dd($candidaturesByDay, $candidaturesByWeek, $candidaturesByMonth);
-        $moyenneDureeRecrutement = 555;
-        $dureeSusbcription = 555;
+       
+        $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')->count();
+        $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')->count();
+        $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')->count();
+
         return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'pendingRdvs',
-        'candidaturesByDay', 'candidaturesByWeek', 'candidaturesByMonth',
-        'moyenneDureeRecrutement', 'dureeSusbcription'));
+        'doneCandidatures', 'refusedCandidatures', 'pendingCandidatures',
+        'candidaturesByDay', 'candidaturesByWeek', 'candidaturesByMonth'));
     }
 
     public function chooseCreneau($time){

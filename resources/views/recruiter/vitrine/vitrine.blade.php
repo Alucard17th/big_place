@@ -3,8 +3,8 @@
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 <style>
 .vitrine-logo {
-    width: 100px;
-    height: 100px;
+    width:65px;
+    height:65px;
 }
 
 .vitrine-photos {
@@ -142,6 +142,22 @@
 #sent-btn.active {
     background-color: #f5f5f5;
     border-bottom: 7px solid #0369A1 !important;
+}
+
+.text-bg-blue{
+    color: #22218c !important;
+    font-weight: 800 !important;
+}
+.badge-bg-orange{
+    background-color: #ff8b00 !important;
+}
+nav > ul.pagination > li.page-item.active > span{
+    background-color: #ff8b00 !important;
+    border-color: #fff !important;
+}
+
+nav > ul.pagination > li > a{
+    color: #ff8b00 !important;
 }
 </style>
 @endpush
@@ -382,7 +398,7 @@
                             <div class="row p-5" id="offers-container-header">
                                 <h4 class="text-dark"><span style="color:#ff8c00;"
                                         class="mr-1">{{$entreprise->user->offers->count()}}
-                                    </span> Disponibles</h4>
+                                    </span>Offres disponibles</h4>
                             </div>
                         </div>
 
@@ -390,7 +406,7 @@
                             @php
                             use Carbon\Carbon;
                             @endphp
-                            @foreach($entreprise->user->offers as $offer)
+                            @foreach($offers as $offer)
                             <div class="col-4 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
@@ -406,27 +422,32 @@
                                                 @endif
                                             </div>
                                             <div class="col-8">
-                                                <div class="text-dark">
-                                                    <h5 class="text-dark">{{ $offer->job_title }}</h5>
+                                                <div class="">
+                                                    <h5 class="text-bg-blue">{{ $offer->job_title }}</h5>
                                                 </div>
-                                                <div class="text-dark">
-                                                    {{ getEntrepriseLogoByUserId($offer->user_id)->domiciliation }}
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="text-bg-blue">
+                                                    {{$offer->location_city}}
                                                 </div>
-                                                <div class="text-dark">
-                                                    {{ getEntrepriseLogoByUserId($offer->user_id)->siege_social }}
-                                                </div>
-                                                <div class="text-dark">
+                                                <div class="text-bg-blue">
                                                     Il y a
                                                     {{  now()->diffInDays(Carbon::parse($offer->created_at)) }}
                                                     jours
                                                 </div>
-                                                <p class="offer-description">{{$offer->description}}</p>
+                                                <div class="badges">
+                                                    <span class="badge badge-bg-orange text-white">{{$offer->contract_type}}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             @endforeach
+
+                            <div class="col-12 d-flex justify-content-center">
+                            {{ $offers->links() }}
+                            </div>
                         </div>
 
                         <div class="row justify-content-left align-items-left px-3" style="display:none"
