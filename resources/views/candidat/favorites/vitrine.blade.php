@@ -176,6 +176,10 @@ nav > ul.pagination > li.page-item.active > span{
 nav > ul.pagination > li > a{
     color: #ff8b00 !important;
 }
+
+.font-min{
+    font-size: 13px;
+}
 </style>
 @endpush
 
@@ -195,7 +199,7 @@ nav > ul.pagination > li > a{
         </div>
         <div id="preview-container">
             <div class="col-lg-12">
-                <div class="ls-widget">
+                <div class="">
                     <div class="tabs-box p-4">
                         <div class="row align-items-center justify-content-center">
                             @if(!isset($entreprise) || $entreprise->cover == '')
@@ -245,7 +249,7 @@ nav > ul.pagination > li > a{
                             @foreach($offres as $offer)
                             <div class="col-4 mb-3">
                                 <div class="card h-100">
-                                    <div class="card-body">
+                                    <div class="card-body p-2">
                                         <div class="row">
                                             <div class="col-4">
                                                 @if(!isset($entreprise->logo) || $entreprise->logo == '')
@@ -263,10 +267,12 @@ nav > ul.pagination > li > a{
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <div class="text-bg-blue">
+                                                <div class="text-bg-blue font-min">
+                                                    <img width="15" height="15" src="https://img.icons8.com/ios/50/marker--v1.png" alt="marker--v1"/>
                                                     {{$offer->location_city}}
                                                 </div>
-                                                <div class="text-bg-blue">
+                                                <div class="text-bg-blue font-min">
+                                                    <img width="15" height="15" src="https://img.icons8.com/dotty/80/time.png" alt="time"/>
                                                     Il y a
                                                     {{  now()->diffInDays(Carbon::parse($offer->created_at)) }}
                                                     jours

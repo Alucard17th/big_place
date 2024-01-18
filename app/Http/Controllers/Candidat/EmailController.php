@@ -90,7 +90,11 @@ class EmailController extends Controller
         }
        
         toast('Email enregistré dans le brouillon', 'success');
-        return redirect()->back();
+        if($user->getRoleNames()->contains('candidat')){
+            return redirect()->route('candidat.emails');
+        }else{
+            return redirect()->route('recruiter.mails');
+        }
         // return redirect()->back();
     }
 

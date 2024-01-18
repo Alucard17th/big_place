@@ -171,7 +171,10 @@ input, select{
                                                     Physique
                                                 @endif
                                             </td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($rdv->date)->formatLocalized('%d-%m-%Y') }} à {{$rdv->heure}}</td>
+                                            <td class="text-left" data-order="{{ $rdv->date}}">
+                                                {{ \Carbon\Carbon::parse($rdv->date)->formatLocalized('%d-%m-%Y') }} à 
+                                                {{ \Carbon\Carbon::parse($rdv->heure)->formatLocalized('%H:%M') }}
+                                            </td>
                                             <td class="text-left">{{$rdv->status}}</td>
                                             <td class="text-left">{{$rdv->commentaire}}</td>
                                             

@@ -308,8 +308,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {
-            left: 'prev,today,next',
-            right: 'title',
+            left: 'today',
+            right: 'title,prev,next',
             center: 'timeGridDay,timeGridWeek,dayGridMonth' 
         },
         events : rdvs,

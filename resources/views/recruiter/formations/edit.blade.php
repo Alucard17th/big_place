@@ -129,7 +129,7 @@
                                 <!-- Fermer les inscriptions si besoin. -->
                                 <div class="form-group form-inline">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="status" name="status" {{ $formation->status == 'on' ? 'checked' : ''}}>
+                                        <input type="checkbox" class="form-check-input" id="status" name="status" {{ $formation->status == 'Active' ? 'checked' : ''}}>
                                         <label class="form-check-label" for="status">Formation Ouverte</label>
                                     </div>
                                 </div>

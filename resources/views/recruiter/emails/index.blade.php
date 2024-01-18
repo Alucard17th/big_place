@@ -142,9 +142,11 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
+                                                </td>
                                                 <td>
-                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                    <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
                                                     @if($deletedEmails->count() < 20)
@@ -183,9 +185,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                 <td>
-                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                    <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
                                                     @if($deletedEmails->count() < 20)
@@ -224,9 +226,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                 <td>
-                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                    <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
                                                     <a href="{{route('candidat.email.delete', $email->id)}}" class="bg-btn-four ml-2"
@@ -258,9 +260,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                 <td>
-                                                    <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
+                                                    <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
                                                     </a>
                                                     @if($deletedEmails->count() < 20)

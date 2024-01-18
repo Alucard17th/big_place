@@ -171,6 +171,13 @@
  .greyed-out{
     background: #e9ecef !important;
  }
+
+ #todayVues{
+    color: #22218c !important;
+    font-weight: 700 !important;
+    font-size: 28px !important;
+    margin-top: 14px;
+ }
 </style>
 @endpush
 
@@ -190,7 +197,8 @@
                         <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
                         <form method="get" class="" action="{{route('recruiter.cvtheque.search')}}">
                             <div class="row no-gutters">
-                                <div class="col-12">
+
+                                <div class="col-6 pr-1">
                                     <label>
                                         <input type="radio" id="use_select" checked> Utiliser Code ROME
                                     </label>
@@ -200,22 +208,37 @@
                                         <select name="metier_recherche" id="metier_recherche" class="form-control">
                                         </select>
                                     </div>
+                                </div>
+
+                                <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
                                             <input type="radio" id="use_input"> Utiliser Métier
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
+                                </div>
+
+                                <div class="col-6 pr-1">
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
                                             style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
                                         <input type="text" name="ville_domiciliation" id="ville_domiciliation" value=""
                                             class="form-control mb-2" placeholder="Ville / Département" required>
                                     </div>
+                                </div>
+
+                               
+                                <div class="col-6">
                                     <div class="form-group mb-2">
-                                        <input type="text" name="pretentions_salariales" id="pretentions_salariales"
-                                            value="" class="form-control" placeholder="Pretentions salariales (ke)"
+                                        <select class="form-control" id="annees_experience" name="annees_experience"
                                             required>
+                                            <option value="" selected>Niveau d'éxpérience</option>
+                                            <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
+                                            <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
+                                            <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
+                                            <option value="Sénior (+ 10 ans)">Sénior (+ 10 ans)</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -232,16 +255,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6 pl-1">
+                                <div class="col-6">
                                     <div class="form-group mb-2">
-                                        <select class="form-control" id="annees_experience" name="annees_experience"
+                                        <input type="text" name="pretentions_salariales" id="pretentions_salariales"
+                                            value="" class="form-control" placeholder="Pretentions salariales (ke)"
                                             required>
-                                            <option value="" selected>Niveau d'éxpérience</option>
-                                            <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
-                                            <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
-                                            <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
-                                            <option value="Sénior (+ 10 ans)">Sénior (+ 10 ans)</option>
-                                        </select>
                                     </div>
                                 </div>
 
@@ -287,71 +305,17 @@
                 <div class="card">
                     <div class="card-body px-2">
                         <h4 class="text-dark dashboard-card-title d-inline mb-4">Nombre de vues de la vitrine</h4>
-                        <div class="row w-100">
-
+                        <div class="row w-100 mt-4">
                             <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Jour</h2>
-                                <div id="jour-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByDay))
-                                    @foreach($vuesByDay as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['date']}} : {{$value['count']}} vues
-                                    </div>
-                                    @endforeach
-                                    @endif
+                                <div class="form-group">
+                                    <input value="<?=date('Y-m-d')?>"  type="date" name="vue_day" id="vue_day" class="form-control">
                                 </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#jour-carousel" data-slide="prev">
-                                   <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#jour-carousel" data-slide="next">
-                                    >
-                                </button>
+                                <div class="d-flex justify-content-between align-items-center flex-column">
+                                    <h6>Nombre de vues du jour </h6>
+                                    <div id="todayVues">{{$todayVues}}</div>
                                 </div>
                             </div>
-
-                            <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Semaine</h2>
-                                <div id="week-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByWeek))
-                                    @foreach($vuesByWeek as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        <div>{{getMonthDates($value['week'])['startOfWeek']}} - {{getMonthDates($value['week'])['endOfWeek']}}:</div> 
-                                        <div class="text-center">{{$value['count']}} vues</div>
-                                    </div>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#week-carousel" data-slide="prev">
-                                    <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#week-carousel" data-slide="next">
-                                    >
-                                </button>
-                                </div>
-                            </div>
-
-                            <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Mois</h2>
-                                <div id="mois-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByMonth))
-                                    @foreach($vuesByMonth as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['month']}} - {{$value['year']}} : {{$value['count']}} vues
-                                    </div>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#mois-carousel" data-slide="prev">
-                                    <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#mois-carousel" data-slide="next">
-                                   >
-                                </button>
-                                </div>
-                            </div>
+                           
                         </div>
                         <!-- <canvas id="myChart" class="px-2 pt-2"></canvas> -->
                     </div>
@@ -670,6 +634,34 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/lang-all.js"></script>
 <script src="{{asset('plugins/js/locales-all.global.min.js')}}"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var viewsDateInput = document.getElementById('vue_day');
+        if (viewsDateInput) {
+            viewsDateInput.addEventListener('change', function() {
+                var selectedDate = this.value;
+                if (selectedDate) {
+                    $.ajax({
+                        url: "{{ route('recruiter.dashboard.ajax.views.per.day') }}",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            date: selectedDate,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            console.log('RDVS fetched successfully', data);
+                            document.getElementById('todayVues').innerHTML = data;
+                        },
+                        error: function() {
+                            console.log('Error fetching events');
+                        }
+                    })
+                }
+            })
+        }
+    })
+</script>
+<script>
 document.addEventListener('DOMContentLoaded', async function() {
     var calendarEl = document.getElementById('calendar-item');
     let rdvs = [];
@@ -760,9 +752,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         initialView: 'dayGridMonth',
         initialDate: today,
         headerToolbar: {
-            left: 'prev,today,next',
-            right: 'title',
-            center: 'timeGridDay,timeGridWeek,dayGridMonth'
+            left: 'today',
+            right: 'title,prev,next',
+            center: 'timeGridDay,timeGridWeek,dayGridMonth' 
         },
         events: rdvs,
         locale: initialLocaleCode,

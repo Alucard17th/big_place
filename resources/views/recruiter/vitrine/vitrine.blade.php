@@ -159,6 +159,10 @@ nav > ul.pagination > li.page-item.active > span{
 nav > ul.pagination > li > a{
     color: #ff8b00 !important;
 }
+
+.font-min{
+    font-size: 13px;
+}
 </style>
 @endpush
 
@@ -277,10 +281,10 @@ nav > ul.pagination > li > a{
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label class="text-dark" for="siege_social">Lieu du Siège Social</label>
-                                            <input type="text" class="form-control" name="siege_social"
-                                                id="siege_social"
-                                                value="{{ isset($entreprise) ? $entreprise->siege_social : ''}}">
+                                            <label class="text-dark" for="sector">Secteur d'activité</label>
+                                            <input type="text" class="form-control" name="sector"
+                                                id="sector"
+                                                value="{{ isset($entreprise) ? $entreprise->sector : ''}}">
                                         </div>
                                     </div>
 
@@ -321,21 +325,21 @@ nav > ul.pagination > li > a{
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label class="text-dark" for="chiffre_affaire">Chiffre d'Affaire</label>
+                                            <label class="text-dark" for="chiffre_affaire">Chiffre d'Affaires</label>
                                             <input type="text" class="form-control" name="chiffre_affaire"
                                                 id="chiffre_affaire"
                                                 value="{{ isset($entreprise) ? $entreprise->chiffre_affaire : ''}}">
                                         </div>
                                     </div>
 
-                                    <div class="col-12 my-4">
+                                    <div class="col-6 my-4">
                                         <label class="text-dark" for="photos_locaux">Photos des locaux et
                                             bureaux</label>
                                         <input type="file" class="" name="photos_locaux[]" id="photos_locaux" multiple>
 
                                     </div>
 
-                                    <div class="col-12 my-4">
+                                    <div class="col-6 my-4">
                                         <label class="text-dark" for="video">Vidéo</label>
                                         <input type="file" name="video" id="video" acceptedFileTypes={['video/*']}>
                                         <!-- <video width="320" height="240" controls
@@ -360,7 +364,7 @@ nav > ul.pagination > li > a{
 
         <div id="preview-container">
             <div class="col-lg-12">
-                <div class="ls-widget">
+                <div class="">
                     <div class="tabs-box p-4">
                         <div class="row align-items-center justify-content-center">
                             @if(!isset($entreprise) || $entreprise->cover == '')
@@ -409,7 +413,7 @@ nav > ul.pagination > li > a{
                             @foreach($offers as $offer)
                             <div class="col-4 mb-3">
                                 <div class="card h-100">
-                                    <div class="card-body">
+                                    <div class="card-body p-2">
                                         <div class="row">
                                             <div class="col-4">
                                                 @if(!isset($entreprise->logo) || $entreprise->logo == '')
@@ -423,17 +427,19 @@ nav > ul.pagination > li > a{
                                             </div>
                                             <div class="col-8">
                                                 <div class="">
-                                                    <h5 class="text-bg-blue">{{ $offer->job_title }}</h5>
+                                                    <a href="{{route('recruiter.show.vitrine.offer', $offer->id)}}" class="text-bg-blue">
+                                                       <h5> {{ $offer->job_title }}</h5>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <div class="text-bg-blue">
+                                                <div class="text-bg-blue font-min">
+                                                    <img width="15" height="15" src="https://img.icons8.com/ios/50/marker--v1.png" alt="marker--v1"/>
                                                     {{$offer->location_city}}
                                                 </div>
-                                                <div class="text-bg-blue">
-                                                    Il y a
-                                                    {{  now()->diffInDays(Carbon::parse($offer->created_at)) }}
-                                                    jours
+                                                <div class="text-bg-blue font-min">
+                                                    <img width="15" height="15" src="https://img.icons8.com/dotty/80/time.png" alt="time"/>
+                                                    {{ \Carbon\Carbon::parse($offer->created_at)->formatLocalized('%d-%m-%Y') }}
                                                 </div>
                                                 <div class="badges">
                                                     <span class="badge badge-bg-orange text-white">{{$offer->contract_type}}</span>
@@ -562,10 +568,7 @@ nav > ul.pagination > li > a{
                                                 <th>Adresse</th>
                                                 <th>Entrée gratuite</th>
                                                 <th>Date - Heure</th>
-                                                <th>Status</th>
-                                                @unlessrole('restricted')
-                                                <th>Actions</th>
-                                                @endunlessrole
+                                                <th>Statut</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -586,15 +589,7 @@ nav > ul.pagination > li > a{
                                                 <td class="text-left">
                                                     {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
-                                                <td class="text-left">
-                                                    @if($event->statut == 'Actif')
-                                                    <span class="badge badge-success">Actif</span>
-                                                    @elseif($event->statut == 'Suspendu')
-                                                    <span class="badge badge-warning">Suspendu</span>
-                                                    @elseif($event->statut == 'Annulé')
-                                                    <span class="badge badge-danger">Inactif</span>
-                                                    @endif
-                                                </td>
+                                                <td class="text-left">{{$event->statut}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>

@@ -62,11 +62,15 @@
                                         <tr>
                                             <td class="text-left">{{$offer->project_campaign_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->start_date)->format('Ymd') }}">
+                                                {{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}
+                                            </td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->publication_date)->format('Ymd') }}">
+                                                {{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}
+                                            </td>
 
                                             @unlessrole('restricted')
                                             <td class="text-left">

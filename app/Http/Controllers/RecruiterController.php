@@ -82,8 +82,26 @@ class RecruiterController extends Controller
             $vuesByWeek = null;
             $vuesByMonth = null;
         }
+
+        $todayVues = Vues::where('viewable_id', $entreprise->id)->whereDate('created_at', Carbon::today())->count();
         
-        return view('recruiter.dashboard', compact('jobs', 'entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
+        return view('recruiter.dashboard', compact('jobs', 'todayVues','entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
+    }
+
+    public function ajaxViewsPerDay(Request $request){
+        $date = Carbon::parse($request->date);
+        $user = auth()->user();
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $entreprise = $user->entreprise->first();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+        }
+
+        $todayVues = Vues::where('viewable_id', $entreprise->id)->whereDate('created_at', $request->date)->count();
+        
+        return response()->json($todayVues);
     }
     public function getJobsJson(){
         $page = request('page', 1); // Get page number from request
@@ -601,7 +619,8 @@ class RecruiterController extends Controller
                 'nombre_implementations' => $request->nombre_implementations,
                 'effectif' => $request->effectif,
                 'fondateurs' => $request->fondateurs,
-                'chiffre_affaire' => $request->chiffre_affaire
+                'chiffre_affaire' => $request->chiffre_affaire,
+                'sector' => $request->sector
             ]
         );
 
@@ -649,6 +668,11 @@ class RecruiterController extends Controller
         toast('La vitrine a bien été mise a jour','success')->autoClose(5000);
 
         return redirect()->back();
+    }
+
+    public function showVitrineOffer($id){
+        $offer = Offre::find($id);
+        return view('recruiter.vitrine.show', compact('offer'));
     }
 
     // TASKS
@@ -781,7 +805,7 @@ class RecruiterController extends Controller
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
-        $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
+        $offer->desired_languages = $request->input('desired_languages') != null && in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
          : json_encode($request->input('desired_languages'));
 
         $offer->education_level = $request->input('education_level');
@@ -1099,7 +1123,7 @@ class RecruiterController extends Controller
             'open_positions' => $request->open_positions,
             'registration_deadline' => $request->registration_deadline,
             // 'upload_documents' => json_encode($request->upload_documents),
-            'status' => 'Active',
+            'status' => $request->status=='on' ?'Active' : 'Ferme',
             'max_participants' => $request->max_participants
         ]);
 
@@ -1117,7 +1141,7 @@ class RecruiterController extends Controller
 
         toast('Formation ajoutée','success')->autoClose(5000);
 
-        return redirect()->back();
+        return redirect()->route('recruiter.formation');
     }
     public function myFormationsEdit($id){
         $formation = Formation::find($id);
@@ -1136,7 +1160,7 @@ class RecruiterController extends Controller
             'work_location' => $request->work_location,
             'open_positions' => $request->open_positions,
             'registration_deadline' => $request->registration_deadline,
-            'status' => $request->status,
+            'status' => $request->status=='on' ?'Active' : 'Ferme',
             'max_participants' => $request->max_participants
         ]);
 
@@ -1223,13 +1247,13 @@ class RecruiterController extends Controller
         
         $receivers = User::all();
         if($deletedEmails->count() >= 20){
-            toast('Trop de messages supprimés, veuillez vider votre corbeille.','error')->autoClose(5000);
+            toast('Vous avez atteint la limite de 20 mails supprimés, veuillez vider votre corbeille.','error')->autoClose(5000);
         }
         return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
-    public function getMyMail(Request $request){
-        $email = Email::find($request->id);
-        return response()->json($email);
+    public function getMyMail($id){
+        $email = Email::find($id);
+        return view('recruiter.emails.show', compact('email'));
     }
     public function createMail(){
         $receivers = User::all();

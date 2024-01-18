@@ -197,7 +197,7 @@ background: #13D527;
                             <h3>Détails de la formation</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="/candidat-formation" class="bg-back-btn mr-2">
+                            <a href="/mes-formations" class="bg-back-btn mr-2">
                                 Retour
                             </a>
                         </div>
@@ -259,14 +259,16 @@ background: #13D527;
                                             CDI à l'embauche:  {{$formation->cdi_at_hiring == 1 ? 'Oui' : 'Non'}}
                                         </div>
 
-                                        
-                                        <!-- <div class="offre-desc my-4">
-                                            Nombre de Participants : {{$formation->max_participants}} particpiants
-                                        </div> -->
-                                        <!-- <div class="offre-status">Status de l'offre :
-                                            {{$formation->status}}</div>
+                                        <div class="offre-desc my-4">
+                                            Nombre maximum de participants : {{$formation->max_participants}} 
+                                        </div>
+
+                                        <div class="offre-desc my-4">
+                                            Nombre de postes ouverts : {{$formation->open_positions}}
+                                        </div>
+
                                         <div class="offre-end-date">Date de limitation de candidature :
-                                            {{$formation->end_date}}</div> -->
+                                            {{$formation->end_date}}</div>
 
                                         <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">

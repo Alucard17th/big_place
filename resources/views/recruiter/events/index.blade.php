@@ -109,7 +109,7 @@
                                                     Non
                                                 @endif
                                             </td>
-                                            <td class="text-left">
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($event->event_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                             </td>
                                             <td class="text-left">

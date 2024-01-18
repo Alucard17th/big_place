@@ -763,33 +763,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     calendar.render();
 
-    var ctx = document.getElementById("myChart").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [2, 9, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(245, 247, 252, 1)'
-                ],
-                borderColor: [
-                    'rgba(12, 145, 253, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
+    
 
     $("#use_select").on("change", function() {
         $("#select_container").toggle(this.checked);

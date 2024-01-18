@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="location_postal_code">Code postal de la localisation du poste</label>
-                                    <input type="text" class="form-control" id="location_postal_code"
+                                    <input type="number" class="form-control" id="location_postal_code"
                                         name="location_postal_code" required>
                                 </div>
 
@@ -145,6 +145,7 @@
                                 <div class="form-group">
                                     <label for="contract_type">Type de contrat</label>
                                     <select class="form-control" id="contract_type" name="contract_type" required>
+                                        <option >Type de contrat</option>
                                         <option value="CDD">CDD</option>
                                         <option value="CDI">CDI</option>
                                         <option value="INTERIM">INTERIM</option>
@@ -169,6 +170,7 @@
                                 <div class="form-group">
                                     <label for="weekly_hours">Temps de travail</label>
                                     <select class="form-control" id="weekly_hours" name="weekly_hours" required>
+                                        <option >Temps de travail</option>
                                         <option value="35H">35H</option>
                                         <option value="39H">39H</option>
                                         <option value="Autre">Autre</option>
@@ -179,6 +181,7 @@
                                 <div class="form-group">
                                     <label for="experience_level">Niveau d’expérience</label>
                                     <select class="form-control" id="experience_level" name="experience_level" required>
+                                        <option >Niveau d’expérience</option>
                                         <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
                                         <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
                                         <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
@@ -189,7 +192,7 @@
                                 <!-- Field: Langues souhaitées -->
                                 <div class="form-group">
                                     <label for="desired_languages">Langues souhaitées</label>
-                                    <select class="form-control" id="desired_languages" name="desired_languages[]"
+                                    <select class="form-select" id="desired_languages" name="desired_languages[]"
                                         multiple required>
                                         <option value="Allemand">Allemand</option>
                                         <option value="Anglais">Anglais</option>
@@ -211,6 +214,7 @@
                                 <div class="form-group">
                                     <label for="education_level">Niveau d’éducation</label>
                                     <select class="form-control" id="education_level" name="education_level" required>
+                                        <option disabled selected>Niveau d'éducation</option>
                                         <option value="CAP / BEP">CAP / BEP</option>
                                         <option value="Bac">Bac</option>
                                         <option value="Bac+2">Bac + 2</option>
@@ -317,7 +321,7 @@
                                  <!-- Field: Couts de la diffusion -->
                                  <div class="form-group">
                                     <label for="advertising_costs">Coûts de la diffusion</label>
-                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" required>
+                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" disabled>
                                 </div>
 
                                 <!-- Field: Enregistrer en brouillon -->
@@ -363,6 +367,7 @@
         });
 
         $("#education_level").select2({
+            placeholder: "Horaire de travail",
         });
 
         $("#industry_sector").select2({
@@ -372,94 +377,43 @@
         });
 
         $("#work_schedule").select2({
+            placeholder: "Horaire de travail",
         });
+
+       
 
         $("#rome_code").select2({
-            placeholder: "Sélectionnez votre code Rome",
-        });
-
-        var currentPage = 1;
-    var isFetching = false; // Flag to track request status
-
-    async function getJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                $('#rome_code').append(options).trigger("change");
-                isFetching = false;
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    async function refreshJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                const scrollTop = $('.select2-results__options').scrollTop();
-                $('#rome_code').append(options).trigger("change");
-
-                $('#rome_code').select2('close');
-                $('#rome_code').select2('open');
-                $('.select2-results__options').scrollTop(scrollTop + 1);
-
-                console.log(scrollTop);
-
-                isFetching = false;
+            noResults: function() {
+                return 'Aucun metier correspondant.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
+            searching: function() {
+                return 'Chargement...';
             }
-        });
-    }
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+    })
 
-    getJsonJobs();
-
-    $('#rome_code').on('select2:open', function() {
-        const resultsContainer = $('.select2-results__options');
-        resultsContainer.on('scroll', function() {
-            // This function will be called whenever the user scrolls the options list
-            console.log("scroll");
-            const scrollTop = $(this).scrollTop();
-            const scrollHeight = $(this).prop('scrollHeight');
-            const clientHeight = $(this).innerHeight();
-
-            // Check if the user has scrolled near the bottom:
-            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
-                // Trigger infinite scrolling or other actions as needed
-                console.log('Near the bottom!');
-                currentPage++;
-                isFetching = true;
-                refreshJsonJobs();
-            }
-        });
-    });
+   
 
         $('#desired_languages').on('change', function() {
             if (this.value.includes('Autre')) {

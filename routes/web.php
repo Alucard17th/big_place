@@ -97,6 +97,7 @@ Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->nam
 Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
+    Route::post('/recruiter-dashboard/ajax-views-per-day', [RecruiterController::class, 'ajaxViewsPerDay'])->name('recruiter.dashboard.ajax.views.per.day');
     
     //
     Route::get('/cv-theque', [RecruiterController::class, 'cvtheque'])->name('recruiter.cvtheque');
@@ -125,6 +126,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
     
     Route::post('/ma-vitrine/update', [RecruiterController::class, 'updateVitrine'])->name('recruiter.update.vitrine');
+    Route::get('/ma-vitrine/offer/{id}', [RecruiterController::class, 'showVitrineOffer'])->name('recruiter.show.vitrine.offer');
 
     // TASKS
     Route::post('/task/add', [RecruiterController::class, 'addTask'])->name('recruiter.task.add');
@@ -179,7 +181,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     // EMAILS 
     Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
     Route::get('/mes-mails/create', [RecruiterController::class, 'createMail'])->name('recruiter.email.create');
-    Route::get('/mon-mail', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
+    Route::get('/mon-mail/show/{id}', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
     Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
     Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
     Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
@@ -227,6 +229,10 @@ Route::get('/xml/option-carriere', [RecruiterController::class, 'generateOptionc
 
 Route::get('/stream-contract/{id}', [RecruiterController::class, 'streamContract'])->name('contract.stream');
 
+Route::get('/email/candidate/delete/{id}', [EmailController::class, 'delete'])->name('candidat.email.delete');
+Route::get('/email/candidate/soft-delete/{id}', [EmailController::class, 'softDelete'])->name('candidat.email.softDelete');
+
+
 // CANDIDAT
 Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function () {
 
@@ -243,7 +249,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-stats', [CandidatController::class, 'stats'])->name('candidat.stats');
 
     // CURRICULUM
-    Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect')->middleware('verified');
+    Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect');
 
     // CHoose Creneau
     Route::get('/candidat-creneau/choose/{time}', [CandidatController::class, 'chooseCreneau'])->name('candidat.creneau.choose');
@@ -298,9 +304,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     // EMAILS
     Route::get('/email/candidate/create', [EmailController::class, 'create'])->name('candidat.email.create');
     Route::post('/email/candidate/store', [EmailController::class, 'store'])->name('candidat.email.store');
-    Route::get('/email/candidate/soft-delete/{id}', [EmailController::class, 'softDelete'])->name('candidat.email.softDelete');
     Route::get('/email/candidate/show/{id}', [EmailController::class, 'show'])->name('candidat.email.show');
-    Route::get('/email/candidate/delete/{id}', [EmailController::class, 'delete'])->name('candidat.email.delete');
     Route::post('/email/candidate/draft', [EmailController::class, 'draft'])->name('candidat.email.draft');
     // Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
     // Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');

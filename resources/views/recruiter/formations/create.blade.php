@@ -57,14 +57,14 @@
                                         <!-- Field: Nom du poste -->
                                         <div class="form-group">
                                             <label class="text-dark" for="job_title">Nom du poste</label>
-                                            <input type="text" class="form-control" id="job_title" name="job_title">
+                                            <input type="text" class="form-control" id="job_title" name="job_title" required>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <!-- Field: Durée de formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="training_duration">Durée de formation</label>
-                                            <input type="text" class="form-control" id="training_duration"
+                                            <input type="number" class="form-control" id="training_duration"
                                                 name="training_duration">
                                         </div>
                                     </div>
@@ -75,14 +75,14 @@
                                         <!-- Field: Date de démarrage de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="start_date">Date de démarrage de la formation</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date">
+                                            <input type="date" class="form-control" id="start_date" name="start_date" oninput="validateDate(this, 'start_date')" required>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <!-- Field: Date de fin de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="end_date">Date de fin de la formation</label>
-                                            <input type="date" class="form-control" id="end_date" name="end_date">
+                                            <input type="date" class="form-control" id="end_date" name="end_date" oninput="validateDate(this, 'end_date')">
                                         </div>
                                     </div>
                                 </div>
@@ -91,9 +91,9 @@
                                     <div class="col-6">
                                         <!-- Field: Max Participant de la formation -->
                                         <div class="form-group">
-                                            <label class="text-dark" for="max_participants">Nombre max de participants</label>
+                                            <label class="text-dark" for="max_participants">Nombre maximum de participants</label>
                                             <input type="number" class="form-control" id="max_participants"
-                                                name="max_participants">
+                                                name="max_participants" >
                                         </div>
                                     </div>
                                     <div class="col-6 pt-4 mt-2">
@@ -144,7 +144,7 @@
                                             <label class="text-dark" for="registration_deadline">Date de fin d’inscription pour les
                                                 candidats</label>
                                             <input type="date" class="form-control" id="registration_deadline"
-                                                name="registration_deadline">
+                                                name="registration_deadline" oninput="validateDate(this, 'registration_deadline')">
                                         </div>
                                     </div>
                                 </div>
@@ -186,5 +186,31 @@
 @endsection
 
 @push('scripts')
+<script>
+    $(document).ready(function() {
+        document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+        document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+        document.getElementById("registration_deadline").min = new Date().toISOString().slice(0, 10);
 
+        function validateDate(input, type) {
+            // Get the entered date value
+            const enteredDate = new Date(input.value);
+
+            // Get the current date
+            const currentDate = new Date();
+
+            // Set the minimum date based on the current date
+            const minDate = currentDate.toISOString().slice(0, 10);
+
+            // Check if the entered date is earlier than the minimum date
+            if (enteredDate < currentDate) {
+                // If so, update the input value to the minimum date
+                input.value = minDate;
+            }
+
+            // Set the min attribute to restrict the calendar selection
+            input.min = minDate;
+        }
+    })
+</script>
 @endpush

@@ -20,7 +20,8 @@ class Entreprise extends Model
         'fondateurs',
         'chiffre_affaire',
         'user_id',
-        'vues'
+        'vues',
+        'sector'
     ];
 
     public function user()
