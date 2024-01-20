@@ -13,7 +13,7 @@ class AdminController extends Controller
         $adminEntrepriseId = $adminUser->entreprise->first()->id;
 
         $user = new User();
-        $user->name = $request->input('name');
+        $user->name = $request->input('name') . ' ' . $request->input('last_name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->function = $request->input('function');

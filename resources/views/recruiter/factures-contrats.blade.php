@@ -100,15 +100,11 @@
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three" target="_blank"
-                                                    href="{{ asset(str_replace('public', 'storage', $document->file)) }}">
-                                                    <i class="las la-eye mr-2"></i>Consulter
-                                                </a>
-                                                <a type="button" class="bg-btn-three" target="_blank"
                                                     href="{{route('contract.stream', $document->id)}}">
                                                     <i class="las la-eye mr-2"></i>Consulter PDF
                                                 </a>
                                                 <a type="button" class="bg-btn-five"
-                                                    href="{{ asset(str_replace('public', 'storage', $document->file)) }}"
+                                                    href="{{route('contract.download', $document->id)}}"
                                                     download>
                                                     <i class="las la-download mr-2"></i>Télécharger
                                                 </a>
@@ -163,11 +159,11 @@
                                             <td class="text-left">{{$document->type}}</td>
                                             <td class="text-left">
                                                 <a type="button" class="bg-btn-three" target="_blank"
-                                                    href="{{ asset(str_replace('public', 'storage', $document->file)) }}">
-                                                    <i class="las la-eye mr-2"></i>Consulter
+                                                    href="{{route('contract.stream', $document->id)}}">
+                                                    <i class="las la-eye mr-2"></i>Consulter PDF
                                                 </a>
                                                 <a type="button" class="bg-btn-five"
-                                                    href="{{ asset(str_replace('public', 'storage', $document->file)) }}"
+                                                    href="{{route('contract.download', $document->id)}}"
                                                     download>
                                                     <i class="las la-download mr-2"></i>Télécharger
                                                 </a>

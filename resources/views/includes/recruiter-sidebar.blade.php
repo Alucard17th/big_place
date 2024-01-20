@@ -70,7 +70,7 @@
                 <a href="/mes-offres" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/offers.png')}}" alt=""> Mes offres
-                        d'emploi</span>
+                        d'emploi / Candidatures</span>
                 </a>
             </li>
             <!-- <li class="{{ Str::contains(Request::url(), 'mes-candidatures') ? 'active' : '' }}">

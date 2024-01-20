@@ -153,8 +153,9 @@ input, select{
                                             <th></th>
                                             <th>Nom du candidat</th>
                                             <th>Ville</th>
-                                            <th>Niveau d'études</th>
-                                            <!-- <th>Statut</th> -->
+                                            <th>Années d’expérience</th>
+                                            <th>Niveau</th>
+                                            <th>Niveau de salaire</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -165,9 +166,9 @@ input, select{
                                                     value="{{$curriculum->user_id}}"></td>
                                             <td class="text-left">{{$curriculum->nom}} {{$curriculum->prenom}}</td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
-                                            <td class="text-left">{{$curriculum->niveau_etudes}}</td>
-                                            <!-- <td class="text-left">XXX</td> -->
-                                            
+                                            <td class="text-left">{{$curriculum->annees_experience}}</td>
+                                            <td class="text-left">{{$curriculum->niveau}}</td>
+                                            <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
                                             <td class="text-left">
                                                 @if($curriculum->cv && $curriculum->cv != '')
                                                 <a href="{{ asset('storage'.$curriculum->cv) }}" type="button" class="bg-btn-nine" target="_blank">
@@ -175,7 +176,7 @@ input, select{
                                                 </a>
                                                 @endif
                                                 @unlessrole('restricted')
-                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
+                                                <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <br>
                                                 @endunlessrole
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->

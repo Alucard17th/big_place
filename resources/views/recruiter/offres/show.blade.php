@@ -99,14 +99,15 @@
                                                 class="text-muted">{{ $offer->job_title }}</span></h5>
 
                                         <h5 class="h6 mb-3">Date de démarrage souhaitée : <span
-                                                class="text-muted">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</span></h5>
-                                       
+                                                class="text-muted">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</span>
+                                        </h5>
+
                                         <p class="small mb-3">
-                                            <h5 class="h5 font-weight-bold">Lieu du poste</h5>
-                                            <span class="fw-bold">Ville :</span> {{ $offer->location_city }}<br>
-                                            <span class="fw-bold">Code postal :</span>
-                                            {{ $offer->location_postal_code }}<br>
-                                            <span class="fw-bold">Adresse :</span> {{ $offer->location_address }}
+                                        <h5 class="h5 font-weight-bold">Lieu du poste</h5>
+                                        <span class="fw-bold">Ville :</span> {{ $offer->location_city }}<br>
+                                        <span class="fw-bold">Code postal :</span>
+                                        {{ $offer->location_postal_code }}<br>
+                                        <span class="fw-bold">Adresse :</span> {{ $offer->location_address }}
                                         </p>
 
                                         <h5 class="h5 font-weight-bold">Détails</h5>
@@ -115,14 +116,15 @@
 
                                         <h5 class="h6 mb-3">Horaires de travail :
                                             @if ($offer->work_schedule != "null")
-                                                @foreach (json_decode($offer->work_schedule) as $schedule)
-                                                    <span class="text-muted">{{ $schedule }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
+                                            @foreach (json_decode($offer->work_schedule) as $schedule)
+                                            <span class="text-muted">{{ $schedule }}</span>@if(!$loop->last)<span
+                                                class="text-muted">,</span>@endif
+                                            @endforeach
                                             @else
-                                                <span class="text-muted">-</span>
+                                            <span class="text-muted">-</span>
                                             @endif
                                         </h5>
-                                                
+
 
                                         <h5 class="h6 mb-3">Nombre d'heures par semaine : <span
                                                 class="text-muted">{{ $offer->weekly_hours }}</span></h5>
@@ -132,13 +134,14 @@
 
                                         <h5 class="h6 mb-3">Langues souhaitées :
                                             @if ($offer->desired_languages != null)
-                                                @foreach (json_decode($offer->desired_languages) as $language)
-                                                <span class="text-muted">{{ $language }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
+                                            @foreach (json_decode($offer->desired_languages) as $language)
+                                            <span class="text-muted">{{ $language }}</span>@if(!$loop->last)<span
+                                                class="text-muted">,</span>@endif
+                                            @endforeach
                                             @else
                                             <span class="text-muted">-</span>
                                             @endif
-                                        </h5>   
+                                        </h5>
 
                                         <h5 class="h6 mb-3">Niveau d'études requis : <span
                                                 class="text-muted">{{ $offer->education_level }}</span></h5>
@@ -148,30 +151,33 @@
 
                                         <h5 class="h6 mb-3">Secteur d'activité : <span
                                                 class="text-muted">{{ $offer->industry_sector }}</span></h5>
-                                        
+
                                         <h5 class="h6 mb-3">Avantages : <span
-                                            class="text-muted">{{ $offer->benefits }}</span></h5>
+                                                class="text-muted">{{ $offer->benefits }}</span></h5>
 
                                         <h5 class="h6 mb-3">Tâches à effectuer :
                                             @if ($offer->post_tasks != null)
-                                                @foreach (json_decode($offer->post_tasks) as $task)
-                                                <span class="text-muted">{{ $task }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
+                                            @foreach (json_decode($offer->post_tasks) as $task)
+                                            <span class="text-muted">{{ $task }}</span>@if(!$loop->last)<span
+                                                class="text-muted">,</span>@endif
+                                            @endforeach
                                             @else
                                             <span class="text-muted">-</span>
                                             @endif
-                                        </h5>   
+                                        </h5>
 
                                         <h5 class="h6 mb-3">Canaux de diffusions :
                                             @if ($offer->selected_jobboards != null)
-                                                @foreach (json_decode($offer->selected_jobboards) as $jobboars)
-                                                <span class="text-muted">{{ ucfirst(str_replace('_', ' ', $jobboars)) }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
+                                            @foreach (json_decode($offer->selected_jobboards) as $jobboars)
+                                            <span
+                                                class="text-muted">{{ ucfirst(str_replace('_', ' ', $jobboars)) }}</span>@if(!$loop->last)<span
+                                                class="text-muted">,</span>@endif
+                                            @endforeach
                                             @else
                                             <span class="text-muted">-</span>
                                             @endif
-                                        </h5>   
-                                        
+                                        </h5>
+
                                     </div>
                                 </div>
                             </div>
@@ -179,6 +185,64 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-12">
+                <div class="ls-widget">
+                    <div class="upper-title-box d-flex justify-content-between align-items-center p-3">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h3>Candidatures</h3>
+                        </div>
+                    </div>
+                    <div class="tabs-box">
+                        <div class="widget-content">
+                            <div class="table-outer">
+                                <table class="table table-sm table-bordered" id="data-table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Candidat</th>
+                                            <th>Statut</th>
+                                            <th>Crée le</th>
+                                            
+                                            <!-- @unlessrole('restricted')
+                                            <th>Actions</th>
+                                            @endunlessrole -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($candidatures as $candidature)
+                                        <tr>
+                                            <td class="text-left">{{getUserById($candidature->candidat_id)->name}}</td>
+                                            <td class="text-left">{{$candidature->status}}</td>
+                                            <td class="text-left">{{$candidature->created_at}}</td>
+                                            <!-- @unlessrole('restricted')
+                                            <td class="text-left">
+                                                <a href="" type="button"
+                                                    class="bg-btn-five ml-2">
+                                                    <i class="las la-eye"></i>
+                                                    Editer
+                                                </a>
+                                              
+                                                @role('recruiter')
+                                                <a href="" type="button"
+                                                    class="bg-btn-four ml-2 mt-2"
+                                                    onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                    <i class="las la-trash"></i>
+                                                    Supprimer
+                                                </a>
+                                                @endrole
+                                            </td>
+                                            @endunlessrole -->
+
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

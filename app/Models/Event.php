@@ -19,7 +19,8 @@ class Event extends Model
         'required_documents' ,
         'event_date' ,
         'event_hour' ,
-        'user_id' 
+        'user_id',
+        'description', 
     ];
     
     public function user()

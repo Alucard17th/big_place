@@ -242,7 +242,7 @@ input, select{
                                             @if(isset($isSearch) && $isSearch == true)
                                             <th>Matching</th>
                                             @endif
-                                            <th>Nom</th>
+                                            <th>Nom du candidat</th>
                                             <th>Ville</th>
                                             <th>Années d’expérience</th>
                                             <th>Niveau</th>
@@ -276,7 +276,7 @@ input, select{
                                                 @else
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
-                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
+                                                <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>

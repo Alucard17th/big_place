@@ -321,8 +321,14 @@ nav > ul.pagination > li > a{
                                 </div>
                             </div>
                             <div class="video-container" style="display: none">
-                                <video width="320" height="240" controls
-                                    src="{{ isset($entreprise) ? asset('storage/'. $entreprise->video) : '' }}">
+                                <div class="row">
+                                    @foreach(json_decode($entreprise->video) as $key => $video)
+                                        <div class="col-6">
+                                            <video width="320" height="240" controls 
+                                            src="{{ isset($entreprise) ? asset('storage/'. $video) : '' }}" alt="">
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
 

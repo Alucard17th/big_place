@@ -74,14 +74,19 @@
 
                                             @unlessrole('restricted')
                                             <td class="text-left">
-                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine ml-2">
-                                                    <i class="las la-edit"></i>
+                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-five ml-2">
+                                                    <i class="las la-eye"></i>
                                                     Editer
                                                 </a>
                                                
                                                 <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
+                                                </a>
+
+                                                <a href="{{route('recruiter.offers.show.candidatures', $offer->id)}}" type="button" class="bg-btn-nine ml-2 mt-2">
+                                                <i class="las la-eye"></i>
+                                                    Voir les candidatures
                                                 </a>
                                                 
                                                 @role('recruiter')

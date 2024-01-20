@@ -1,6 +1,13 @@
 @extends('layouts.dashboard')
 @push('styles')
 <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+  integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 <style>
 .vitrine-logo {
     width:65px;
@@ -318,8 +325,13 @@ nav > ul.pagination > li > a{
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label class="text-dark" for="fondateurs">Fondateurs</label>
-                                            <input type="text" class="form-control" name="fondateurs" id="fondateurs"
-                                                value="{{ isset($entreprise) ? $entreprise->fondateurs : ''}}">
+                                            <!-- <input type="text" class="form-control" name="fondateurs" id="fondateurs"
+                                                value="{{ isset($entreprise) ? $entreprise->fondateurs : ''}}"> -->
+                                            <select id='diacritics' name='fondateurs[]' class='' multiple>
+                                                @foreach (json_decode($entreprise->fondateurs, true) as $fondateur)
+                                                    <option value="{{ $fondateur }}" selected>{{ $fondateur }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -341,7 +353,7 @@ nav > ul.pagination > li > a{
 
                                     <div class="col-6 my-4">
                                         <label class="text-dark" for="video">Vidéo</label>
-                                        <input type="file" name="video" id="video" acceptedFileTypes={['video/*']}>
+                                        <input type="file" name="video[]" id="video" acceptedFileTypes={['video/*']} multiple>
                                         <!-- <video width="320" height="240" controls
                                             src="{{ isset($entreprise) ? 'storage/'. $entreprise->video : '' }}"> -->
                                     </div>
@@ -486,8 +498,14 @@ nav > ul.pagination > li > a{
 
                             </div>
                             <div class="video-container" style="display: none">
-                                <video width="320" height="240" controls
-                                    src="{{ isset($entreprise) ? asset('storage/'. $entreprise->video) : '' }}">
+                                <div class="row">
+                                    @foreach(json_decode($entreprise->video) as $key => $video)
+                                        <div class="col-6">
+                                            <video width="320" height="240" controls 
+                                            src="{{ isset($entreprise) ? asset('storage/'. $video) : '' }}" alt="">
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
 
@@ -625,6 +643,12 @@ $cover = [];
 @push('scripts')
 <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+  integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const photos_locaux = document.querySelector('#photos_locaux');
@@ -711,6 +735,18 @@ $(document).ready(function() {
     let offersContainerHeader = $('#offers-container-header');
     let companyContainer = $('#company-container');
     let newsContainer = $('#news-container');
+
+    $("#diacritics").selectize({
+        delimiter: ",",
+        persist: false,
+        maxItems: null,
+        create: function (input) {
+            return {
+            value: input,
+            text: input,
+            };
+        }
+    });
 
     offersBtn.on('click', function() {
         offersBtn.addClass('active');

@@ -81,14 +81,14 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Organisateur</th>
+                                            <th>Entreprise</th>
                                             <th>Poste</th>
                                             <th>N° Max de Participants</th>
                                             <th>Participants Inscrits</th>
                                             <th>Adresse</th>
                                             <th>Entrée gratuite</th>
                                             <th>Date - Heure</th>
-                                            <th>Status</th>
+                                            <th>Statut</th>
                                             @unlessrole('restricted')
                                             <th>Actions</th>
                                             @endunlessrole
@@ -126,6 +126,7 @@
                                             <td class="text-left">
                                                 <a href="{{route('recruiter.events.show', $event->id)}}"
                                                     type="button" class="bg-btn-five">
+                                                    <i class="las la-eye"></i>
                                                     Editer
                                                 </a>
                                                 <a href="{{ route('recruiter.events.edit', $event->id) }}" type="button" class="bg-btn-three mt-2">
@@ -198,7 +199,7 @@
                 <div class="col-6">
                     <!-- Field: Organizer Name -->
                     <div class="form-group">
-                        <label class="text-dark" for="organizer_name">Organisateur de l'événement</label>
+                        <label class="text-dark" for="organizer_name">Nom de l'Entreprise</label>
                         <input type="text" class="form-control" id="organizer_name" name="organizer_name" required>
                     </div>
                 </div>
@@ -255,18 +256,21 @@
             </div>
 
             <div class="row">
-                <!-- <div class="col-6"> -->
-                    <!-- Field: Digital Badge Download -->
-                    <!-- <div class="form-group">
-                        <label class="text-dark" for="digital_badge_download">Badge Digital</label>
-                        <input type="text" class="form-control" id="digital_badge_download" name="digital_badge_download">
-                    </div> -->
-                <!-- </div> -->
                 <div class="col-12">
                     <!-- Field: Required Documents -->
                     <div class="form-group">
                         <label class="text-dark" for="required_documents">Documents requis pour la participation</label>
                         <input type="text" class="form-control" id="required_documents" name="required_documents">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <!-- Field: Description -->
+                    <div class="form-group">
+                        <label class="text-dark" for="description">Decriptif de l'évenement</label>
+                        <textarea class="form-control" name="description" id="description" cols="30" rows="4"></textarea>
                     </div>
                 </div>
             </div>
@@ -355,5 +359,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 })
+</script>
+<script>
+    // when document is ready 
+    $(document).ready(function() {
+        document.getElementById("event_date").min = new Date().toISOString().slice(0, 10);
+    })
 </script>
 @endpush

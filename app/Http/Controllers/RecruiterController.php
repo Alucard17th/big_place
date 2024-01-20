@@ -596,18 +596,6 @@ class RecruiterController extends Controller
     }
     public function updateVitrine(Request $request){
         $user = auth()->user();
-        // $user->entreprise()->update([
-        //     'nom_entreprise' => $request->nom_entreprise,
-        //     'date_creation' => $request->date_creation,
-        //     'domiciliation' => $request->domiciliation,
-        //     'siege_social' => $request->siege_social,
-        //     'valeurs_fortes' => $request->valeurs_fortes,
-        //     'nombre_implementations' => $request->nombre_implementations,
-        //     'effectif' => $request->effectif,
-        //     'fondateurs' => $request->fondateurs,
-        //     'chiffre_affaire' => $request->chiffre_affaire
-        // ]);
-
         $user->entreprise()->updateOrCreate(
             ['user_id' => $user->id], // Assuming 'user_id' is the foreign key linking the user and entreprise tables
             [
@@ -618,7 +606,7 @@ class RecruiterController extends Controller
                 'valeurs_fortes' => $request->valeurs_fortes,
                 'nombre_implementations' => $request->nombre_implementations,
                 'effectif' => $request->effectif,
-                'fondateurs' => $request->fondateurs,
+                'fondateurs' => json_encode($request->fondateurs), 
                 'chiffre_affaire' => $request->chiffre_affaire,
                 'sector' => $request->sector
             ]
@@ -626,7 +614,6 @@ class RecruiterController extends Controller
 
         $userId = auth()->user()->id;
         $entreprise = Entreprise::where('user_id', $userId)->first();
-
       
         if($request->has('cover') && $request->cover != null) {
             $fileInfos = Filepond::field($request->cover)->moveTo('/uploads/'.$userId.'/cover_'.uniqid());
@@ -638,10 +625,27 @@ class RecruiterController extends Controller
             $entreprise->logo = $fileInfos['location'];
         }
 
+        // if($request->has('video')) {
+        //     $fileInfos = Filepond::field($request->video)->moveTo('/uploads/'.$userId.'/video_'.uniqid());
+        //     $entreprise->video = $fileInfos['location'];
+        // }
+
         if($request->has('video')) {
-            $fileInfos = Filepond::field($request->video)->moveTo('/uploads/'.$userId.'/video_'.uniqid());
-            // dd($fileInfos['location']);
-            $entreprise->video = $fileInfos['location'];
+            $videosLocaux = $entreprise->video;
+            if (!is_array($videosLocaux)) {
+                $videosLocaux = [];
+            }
+            $newFilePaths = [];
+
+            foreach ($request->video as $file) {
+                $fileInfos = Filepond::field($file)->moveTo('/uploads/'.$userId.'/video_'.uniqid());
+                $newFilePaths[] = $fileInfos['location'];
+            }
+            // Merge the new file paths into the existing JSON array
+            $videosLocaux = array_merge($videosLocaux, $newFilePaths);
+            // Set the updated JSON array back to the model
+            $entreprise->video = $videosLocaux;
+            $entreprise->save();
         }
 
         if ($request->has('photos_locaux')) {
@@ -861,7 +865,8 @@ class RecruiterController extends Controller
     }
     public function myOffersShow($id){
         $offer = Offre::find($id);
-        return view('recruiter.offres.show', compact('offer'));
+        $candidatures = Candidature::where('offer_id', $id)->get();
+        return view('recruiter.offres.show', compact('offer', 'candidatures'));
     }
     public function myOffersEdit($id){
         $offer = Offre::find($id);
@@ -917,6 +922,14 @@ class RecruiterController extends Controller
         
         return response()->json($romes);
     }
+    public function myOffersShowCandidatures($id){
+        $offer = Offre::find($id);
+        $candidatures = Candidature::where('offer_id', $id)->get();
+        $userIds = $candidatures->pluck('user_id');
+        $curriculums = Curriculum::whereIn('user_id', $userIds)->get();
+
+        return view('recruiter.offres.candidatures', compact('offer', 'curriculums'));
+    }
 
     // EVENTS 
     public function myEvents(){
@@ -945,6 +958,7 @@ class RecruiterController extends Controller
             'required_documents' => $request->input('required_documents'),
             'event_date' => $request->input('event_date'),
             'event_hour' => $request->input('event_hour'),
+            'description' => $request->input('description'),
             'statut' => 'Active',
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
@@ -975,6 +989,7 @@ class RecruiterController extends Controller
         $event->required_documents = $request->input('required_documents');
         $event->event_date = $request->input('event_date');
         $event->event_hour = $request->input('event_hour');
+        $event->description = $request->input('description');
         $event->save();
 
         toast('Evenement modifié','success')->autoClose(5000);
@@ -1438,7 +1453,10 @@ class RecruiterController extends Controller
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
             $histories = $entreprise->user->history;
         }
-        return view('recruiter.history.index', compact('histories'));
+        $userIds = $histories->pluck('searchable');
+        $curriculums = Curriculum::whereIn('id', $userIds)->get();
+        // dd($histories);
+        return view('recruiter.history.index', compact('curriculums'));
     }
     public function addHistoryRecord(Request $request){
         $curriculum = Curriculum::find($request->cv_id);
@@ -1576,6 +1594,19 @@ class RecruiterController extends Controller
         $pdf = PDF::loadHTML($reportHtml);
         $pdfName = 'contract-'.$id.'.pdf';
         return $pdf->stream($pdfName);
+    }
+
+    public function downloadContract($id){
+        ini_set('max_execution_time', 120); // Set maximum execution time to 2 minutes
+
+        // $report = Contract::where('id', $id)->first();
+       
+        // view()->share('report', $report);
+        $reportHtml = view('templates.pdf.contract', [])->render();
+
+        $pdf = PDF::loadHTML($reportHtml);
+        $pdfName = 'contract-'.$id.'.pdf';
+        return $pdf->download($pdfName);
     }
 
     //_________________________________________APIS____________________________________//

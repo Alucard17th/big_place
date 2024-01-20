@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -164,6 +165,7 @@ input, select{
                                             <th>Nom de la tâche</th>
                                             <th>Date de début</th>
                                             <th>Date de fin</th>
+                                            <th>Heure de fin</th>
                                             <th>Statut</th>
                                             <th>Description</th>
                                             @unlessrole('restricted')
@@ -177,6 +179,7 @@ input, select{
                                             <td class="text-left">{{$task->title}}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($task->start_date)->format('Ymd') }}">{{ \Carbon\Carbon::parse($task->start_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($task->due_date)->format('Ymd') }}">{{ \Carbon\Carbon::parse($task->due_date)->formatLocalized('%d-%m-%Y') }}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($task->hour)->formatLocalized('%H:%M') }}</td>
                                             <td class="text-left">
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>
@@ -250,7 +253,7 @@ input, select{
             </div>
 
             <div class="form-group">
-                <label class="text-dark" for="candidate">Heure</label>
+                <label class="text-dark" for="candidate">Heure de fin</label>
                 <input class="form-control mb-2" type="time" name="hour" id="hour" required>
             </div>
 
@@ -279,6 +282,21 @@ input, select{
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-task-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     $('#add-task').click(function() {

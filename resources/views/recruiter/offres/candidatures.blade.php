@@ -111,7 +111,7 @@ input, select{
 
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
                         <div class="d-flex align-items-center justify-content-center">  
-                            <h3>Mes dernières recherches</h3>
+                            <h3>CVTHEQUE</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
@@ -125,7 +125,106 @@ input, select{
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-                          
+                            <!-- <div class="chosen-outer search-container">
+                                <form method="get" class="default-form form-inline"
+                                    action="{{ route('recruiter.cvtheque.search') }}">
+                                    <div class="row">
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
+                                                <label>
+                                                    <input type="radio" id="use_select" @if(!request('custom_job')) checked @endif> Utiliser Code ROME
+                                                </label>
+                                                <select name="metier_recherche" id="metier_recherche" class="form-control" >
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
+                                                <label>
+                                                    <input type="radio" id="use_input" @if(request('custom_job')) checked @endif > Utiliser Métier
+                                                </label>
+                                                <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" 
+                                                value="{{ request('custom_job') }}" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-0 mr-1">
+                                                <input type="text" name="ville_domiciliation" id="ville_domiciliation" placeholder="Ville / département"
+                                                    value="{{ request('ville_domiciliation') }}" class="form-control mb-2" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-0 mr-1">
+                                                <select class="form-control pl-2" id="annees_experience" name="annees_experience" >
+                                                    <option value=""  selected>Année d'expérience</option>
+                                                    <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
+                                                    <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
+                                                    <option value="Confirmé (5 -10 ans)" @if(request('annees_experience') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
+                                                    <option value="Sénior (+ 10 ans)" @if(request('annees_experience') == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-0 mr-1">
+                                                <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
+                                                    <option value=""  selected>Niveau d'études</option>
+                                                    <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                    <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
+                                                    <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
+                                                    <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
+                                                    <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 px-1">
+                                            <div class="form-group mb-2 mr-1">
+                                                <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire" id="pretentions_salariales"
+                                                    value="{{ request('pretentions_salariales') }}" class="" >
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 px-1">
+                                            <div class="form-group mb-0">
+                                                <select name="valeurs[]" id="values_select" class="w-100" multiple >
+                                                    <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
+                                                    <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
+                                                    <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
+                                                    <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
+                                                    <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
+                                                    <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
+                                                    <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
+                                                    <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
+                                                    <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
+                                                    <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
+                                                    <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
+                                                    <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
+                                                    <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
+                                                    <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
+                                                    <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
+                                                    <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
+                                                    <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
+                                                    <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
+                                                    <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
+                                                    <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
+                                                    <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
+                                                    <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                  <div class="form-group mt-3">
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
+                                  </div>
+                                   
+                                </form>
+
+                            </div> -->
                         </div>
 
                         <button type="button" class="btn-style-one bg-btn px-0 mb-2 ml-2 d-none add-to-favorites">Ajouter aux
@@ -177,9 +276,7 @@ input, select{
                                                 @else
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
-                                                <br>
-                                                <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
-                                                <br>
+                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
@@ -589,7 +686,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
     }
 
- 
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#metier_recherche").prop("disabled", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#metier_recherche").prop("disabled", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+    });
     
 });
 </script>

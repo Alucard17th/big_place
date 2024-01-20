@@ -149,23 +149,22 @@
                                         value="{{ $event->event_hour }}">
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-12">
+                                        <!-- Field: Description -->
+                                        <div class="form-group">
+                                            <label class="text-dark" for="description">Decriptif de l'évenement</label>
+                                            <textarea class="form-control" name="description" id="description" cols="30" rows="4">{{ $event->description }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <button class="theme-btn btn-style-one" type="submit"
                                     id="edit-event-btn">Modifier</button>
                                 </div>
                             </form>
 
-                            <!-- <div class="d-flex align-items-center">
-                                <form action="">
-                                    <button class="btn btn-warning ml-2">Annuler</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-info ml-2">Suspendre</button>
-                                </form>
-                                <form action="">
-                                    <button class="btn btn-danger ml-2">Supprimer</button>
-                                </form>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -210,5 +209,11 @@
         $.modal.close();
     });
 })
+</script>
+<script>
+    // when document is ready 
+    $(document).ready(function() {
+        document.getElementById("event_date").min = new Date().toISOString().slice(0, 10);
+    })
 </script>
 @endpush

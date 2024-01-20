@@ -144,6 +144,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     Route::get('/mes-offres/show/{id}', [RecruiterController::class, 'myOffersShow'])->name('recruiter.offers.show');
     Route::post('/offer/update', [RecruiterController::class, 'updateOffer'])->name('recruiter.offer.update');
     Route::get('/mes-offres/delete/{id}', [RecruiterController::class, 'myOffersDelete'])->name('recruiter.offers.delete');
+    Route::get('/mes-offres/show/candidatures/{id}', [RecruiterController::class, 'myOffersShowCandidatures'])->name('recruiter.offers.show.candidatures');
 
     // EVENTS
     Route::get('/mes-evenements', [RecruiterController::class, 'myEvents'])->name('recruiter.events');
@@ -228,6 +229,7 @@ Route::get('/xml/option-carriere', [RecruiterController::class, 'generateOptionc
 
 
 Route::get('/stream-contract/{id}', [RecruiterController::class, 'streamContract'])->name('contract.stream');
+Route::get('/download-contract/{id}', [RecruiterController::class, 'downloadContract'])->name('contract.download');
 
 Route::get('/email/candidate/delete/{id}', [EmailController::class, 'delete'])->name('candidat.email.delete');
 Route::get('/email/candidate/soft-delete/{id}', [EmailController::class, 'softDelete'])->name('candidat.email.softDelete');

@@ -300,25 +300,30 @@
                 
                 <div class="form-group">
                     <label class="text-dark" for="name">Nom</label>
-                    <input type="text" class="form-control" name="name" id="name" value="">
+                    <input type="text" class="form-control" name="name" id="name" value="" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="text-dark" for="last_name">Prénom</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" value="" required>
                 </div>
 
                 <div class="form-group">
                     <label class="text-dark" for="email">Email</label>
-                    <input type="email" class="form-control" name="email" id="email" value="">
+                    <input type="email" class="form-control" name="email" id="email" value="" required>
                 </div>
 
                 <div class="form-group">
                     <label class="text-dark" for="password">Mot de passe</label>
-                    <input type="password" class="form-control" name="password" id="password" value="">
+                    <input type="password" class="form-control" name="password" id="password" value="" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="text-dark" for="nom">Rôle</label>
-                    <select class="form-control" name="role" id="role">
+                    <label class="text-dark" for="nom">Permission</label>
+                    <select class="form-control" name="role" id="role" required>
                         <!-- <option value="candidate">Candidat</option> -->
-                        <option value="limited">Limité</option>
-                        <option value="restricted">Restreint</option>
+                        <option value="limited">Consulter</option>
+                        <option value="restricted">Modifier</option>
                     </select>
                 </div>
 
