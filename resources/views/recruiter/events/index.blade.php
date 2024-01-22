@@ -297,7 +297,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('#add-event');
-    const docModalBtn = document.querySelector('.docs-modal-btn');
+    const docModalBtn = document.querySelectorAll('.docs-modal-btn');
 
     searchBtn.addEventListener('click', function() {
         $("#ex1").modal({
@@ -306,27 +306,29 @@ document.addEventListener('DOMContentLoaded', function() {
             showClose: false
         });
     })
-
-    docModalBtn.addEventListener('click', function() {
-        
-        const requiredDocs = $(this).data('requiredDocs')
-        const docsList = document.getElementById("modal-docs-list");
-        const docsArray = requiredDocs.split(",");
-        docsArray.forEach(doc => {
-            const listItem = document.createElement("li");
-            listItem.textContent = doc.trim(); // Trim whitespace
-            docsList.appendChild(listItem);
-        });
-        // Use the retrieved value
-        console.log("Required documents:", requiredDocs);
-        $("#docs-modal").modal({
-            escapeClose: false,
-            clickClose: true,
-            showClose: false
-        });
+    docModalBtn.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const requiredDocs = $(this).data('requiredDocs')
+            const docsList = document.getElementById("modal-docs-list");
+            const docsArray = requiredDocs.split(",");
+            docsList.innerHTML = '';
+            docsArray.forEach(doc => {
+                const listItem = document.createElement("li");
+                listItem.textContent = doc.trim(); // Trim whitespace
+                docsList.appendChild(listItem);
+            });
+            // Use the retrieved value
+            console.log("Required documents:", requiredDocs);
+            $("#docs-modal").modal({
+                escapeClose: false,
+                clickClose: true,
+                showClose: false
+            });
+        })
     })
 
-    $('#close-modal, .custom-close-modal').click(function() {
+    $('#close-modal, .custom-close-modal').click(function(event) {
+        event.preventDefault();
         $.modal.close();
     });
 

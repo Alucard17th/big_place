@@ -178,6 +178,13 @@
     font-size: 28px !important;
     margin-top: 14px;
  }
+
+ .sub-card-text{
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    /* line-height: 1.5 !important; */
+    color: #000 !important;
+ }
 </style>
 @endpush
 
@@ -304,20 +311,19 @@
             <div class="col-3 px-2">
                 <div class="card">
                     <div class="card-body px-2">
-                        <h4 class="text-dark dashboard-card-title d-inline mb-4">Nombre de vues de la vitrine</h4>
+                        <h4 class="text-dark dashboard-card-title d-inline mb-3">Nombre de vues de la vitrine</h4>
                         <div class="row w-100 mt-4">
-                            <div class="col-12 pr-0 my-3">
+                            <div class="col-12 pr-0">
                                 <div class="form-group">
+                                    <label for="vue_day">Choisir une date</label>
                                     <input value="<?=date('Y-m-d')?>"  type="date" name="vue_day" id="vue_day" class="form-control">
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center flex-column">
-                                    <h6>Nombre de vues du jour </h6>
+                                    <h6 class="sub-card-text">Nombre de vues du jour </h6>
                                     <div id="todayVues">{{$todayVues}}</div>
                                 </div>
                             </div>
-                           
                         </div>
-                        <!-- <canvas id="myChart" class="px-2 pt-2"></canvas> -->
                     </div>
                 </div>
             </div>

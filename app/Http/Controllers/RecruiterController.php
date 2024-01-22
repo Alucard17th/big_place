@@ -1299,7 +1299,7 @@ class RecruiterController extends Controller
     }
 
     // STATS
-    public function stats(){
+    public function stats(Request $request){
         $user = auth()->user();
 
         if($user->parent_entreprise_id == null){
@@ -1346,6 +1346,8 @@ class RecruiterController extends Controller
             $dateString = Carbon::create($currentYear, $currentMonth, $day)->toDateString();
             $offersByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
         }
+
+        // dd($offersByDay);
 
         // OFFERS BY WEEK
         $groupedByWeek = $offers->groupBy(function ($item) {
@@ -1408,6 +1410,91 @@ class RecruiterController extends Controller
         // Calculate the count for each group
         foreach ($groupedByMonth as $month => $group) {
             $candidaturesByMonth[$month] = $group->count();
+        }
+
+        if($request->has('group_by') && $request->has('start_date') && $request->has('end_date')){
+            // OFFERS !
+            if($request->group_by == 'day' && $request->start_date != null && $request->end_date != null){
+                $queryStartDate = $request->start_date;
+                $queryEndDate = $request->end_date;
+
+                $offers = $user->offers()->whereBetween('created_at', [$queryStartDate, $queryEndDate])->get();
+
+                // Group offers by date and count them
+                $offersByDate = $offers->groupBy(function ($offer) {
+                    return $offer->created_at->toDateString(); // assuming created_at is a Carbon instance
+                })->map(function ($group) {
+                    return $group->count();
+                });
+
+                // order by date 
+                $offersByDate = $offersByDate->sortKeys();
+              
+                $offersByDay = $offersByDate->toArray();
+            }
+            elseif($request->group_by == 'week' && $request->week_start != null && $request->week_end != null)
+            {
+                $startWeek = $request->week_start;
+                $endWeek = $request->week_end;
+
+                $filteredOffers = [];
+
+                foreach ($offersByWeek as $weekRange => $value) {
+                    // Debug information
+                    // Swap values if start week is greater than end week
+                    if ($startWeek > $endWeek) {
+                        list($startWeek, $endWeek) = [$endWeek, $startWeek];
+                    }
+
+                    // Compare the date ranges
+                    if ($weekRange >= $startWeek && $weekRange <= $endWeek) {
+                        // Add the value to the filtered array
+                        $filteredOffers[$weekRange] = $value;
+                    }
+                }
+                $offersByDay = $filteredOffers;
+            }
+            elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
+            {
+                $startMonth = $request->month_start;
+                $endMonth = $request->month_end;
+
+                $filteredOffers = [];
+
+                foreach ($offersByMonth as $monthRange => $value) {
+                    // Debug information
+                    // Swap values if start week is greater than end week
+                    if ($startMonth > $endMonth) {
+                        list($startMonth, $endMonth) = [$endMonth, $startMonth];
+                    }
+
+                    // Compare the date ranges
+                    if ($monthRange >= $startMonth && $monthRange <= $endMonth) {
+                        // Add the value to the filtered array
+                        $filteredOffers[$monthRange] = $value;
+                    }
+                }
+                $offersByDay = $filteredOffers;
+
+            }
+
+            // CANDIDATURES !
+            if($request->group_by == 'day' && $request->start_date != null && $request->end_date != null){
+                $queryStartDate = $request->start_date;
+                $queryEndDate = $request->end_date;
+                $candidatures = $user->candidatures()->whereBetween('created_at', [$queryStartDate, $queryEndDate])->get();
+
+                
+                $candidaturesByDate = $candidatures->groupBy(function ($offer) {
+                    return $offer->created_at->toDateString(); // assuming created_at is a Carbon instance
+                })->map(function ($group) {
+                    return $group->count();
+                });
+                
+                // order by date 
+                $candidaturesByDate = $candidaturesByDate->sortKeys();
+                $candidaturesByDay = $candidaturesByDate->toArray();
+            }
         }
 
         // dd($offersByDay, $offersByWeek, $offersByMonth);
