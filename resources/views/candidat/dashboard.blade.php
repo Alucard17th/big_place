@@ -109,7 +109,7 @@
 }
 
 .select2-selection__rendered {
-    color: #8f959b !important;
+    color: #000 !important;
     padding-left: 18px;
     font-size: 16px !important;
 }
@@ -177,6 +177,19 @@
 .greyed-out{
     background: #e9ecef !important;
  }
+
+ #todayVues{
+    color: #22218c !important;
+    font-weight: 700 !important;
+    font-size: 28px !important;
+    margin-top: 14px;
+ }
+ .sub-card-text{
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    /* line-height: 1.5 !important; */
+    color: #000 !important;
+ }
 </style>
 @endpush
 
@@ -195,7 +208,7 @@
                         <h4 class="text-dark dashboard-card-title mb-4">Moteur de recherche</h4>
                         <form method="get" class="" action="{{route('candidat.offers.search')}}">
                             <div class="row no-gutters">
-                                <div class="col-12">
+                                <div class="col-6 pr-1">
                                     <label>
                                         <input type="radio" id="use_select" checked> Utiliser Code ROME
                                     </label>
@@ -206,38 +219,27 @@
                                             <option value="" selected value="">Poste recherchés</option>
                                         </select>
                                     </div>
+                                </div>
+
+                                <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
                                             <input type="radio" id="use_input"> Utiliser Métier
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
+                                </div>
+
+                                <div class="col-6 pr-1">
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
                                             style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
                                         <input type="text" name="location_city" id="location_city" value=""
                                             class="form-control mb-2" placeholder="Ville / Département">
                                     </div>
-                                    <div class="form-group mb-2">
-                                        <input type="text" name="brut_salary" value="" id="brut_salary" class="form-control"
-                                            placeholder="Pretentions salariales">
-                                    </div>
                                 </div>
 
-                                <div class="col-6 pr-1">
-                                    <div class="form-group mb-2">
-                                        <select name="education_level" id="education_level" class="form-control">
-                                            <option value="" selected>Niveau d'études</option>
-                                            <option value="CAP / BEP">CAP / BEP</option>
-                                            <option value="Bac">Bac</option>
-                                            <option value="Bac+2">Bac + 2</option>
-                                            <option value="Bac+4">Bac + 4</option>
-                                            <option value="Bac+5">Bac + 5 et plus</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-6 pl-1">
+                                <div class="col-6">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="experience_level" name="experience_level">
                                             <option value="" selected>Année d'expérience</option>
@@ -258,7 +260,27 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 pl-1">
+                                <div class="col-6 pr-1">
+                                    <div class="form-group mb-2">
+                                        <select name="education_level" id="education_level" class="form-control">
+                                            <option value="" selected>Niveau d'études</option>
+                                            <option value="CAP / BEP">CAP / BEP</option>
+                                            <option value="Bac">Bac</option>
+                                            <option value="Bac+2">Bac + 2</option>
+                                            <option value="Bac+4">Bac + 4</option>
+                                            <option value="Bac+5">Bac + 5 et plus</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mb-2">
+                                        <input type="text" name="brut_salary" value="" id="brut_salary" class="form-control"
+                                            placeholder="Pretentions salariales">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="values_select" name="valeurs[]" multiple>
                                             <option value="respect">Le respect</option>
@@ -298,74 +320,19 @@
             <div class="col-3 px-2">
                 <div class="card">
                     <div class="card-body px-2">
-                        <h4 class="text-dark dashboard-card-title d-inline mb-4">Nombre des candidatures</h4>
-                        <div class="row w-100">
-
-                            <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Jour</h2>
-                                <div id="jour-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByDay))
-                                    @foreach($vuesByDay as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{ \Carbon\Carbon::parse($value['date'])->formatLocalized('%d-%m-%Y')}} : {{$value['count']}} vues
-                                    </div>
-                                    @endforeach
-                                    @endif
+                        <h4 class="text-dark dashboard-card-title d-inline mb-3">Nombre de vues de la vitrine</h4>
+                        <div class="row w-100 mt-4">
+                            <div class="col-12 pr-0">
+                                <div class="form-group">
+                                    <label for="vue_day">Choisir une date</label>
+                                    <input value="<?=date('Y-m-d')?>"  type="date" name="vue_day" id="vue_day" class="form-control">
                                 </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#jour-carousel" data-slide="prev">
-                                   <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#jour-carousel" data-slide="next">
-                                    >
-                                </button>
-                                </div>
-                            </div>
-
-                            <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Semaine</h2>
-                                <div id="week-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByWeek))
-                                    @foreach($vuesByWeek as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        <div>{{getMonthDates($value['week'])['startOfWeek']}} - {{getMonthDates($value['week'])['endOfWeek']}} :</div> 
-                                        <div class="text-center">{{$value['count']}} vues</div>
-                                    </div>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#week-carousel" data-slide="prev">
-                                    <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#week-carousel" data-slide="next">
-                                    >
-                                </button>
-                                </div>
-                            </div>
-
-                            <div class="col-12 pr-0 my-3">
-                                <h2 class="text-center">Mois</h2>
-                                <div id="mois-carousel" class="carousel slide">
-                                <div class="carousel-inner">
-                                    @if(!empty($vuesByMonth))
-                                    @foreach($vuesByMonth as $index => $value)
-                                    <div class="carousel-item @if($index == 0) active @endif" style="padding-left:30px!important">
-                                        {{$value['month']}} - {{$value['year']}} : {{$value['count']}} vues
-                                    </div>
-                                    @endforeach
-                                    @endif
-                                </div>
-                                <button class="carousel-control-prev text-dark" type="button" data-target="#mois-carousel" data-slide="prev">
-                                    <
-                                </button>
-                                <button class="carousel-control-next text-dark" type="button" data-target="#mois-carousel" data-slide="next">
-                                   >
-                                </button>
+                                <div class="d-flex justify-content-between align-items-center flex-column">
+                                    <h6 class="sub-card-text">Nombre de vues du jour </h6>
+                                    <div id="todayVues">{{$candidaturesCount}}</div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <canvas id="myChart" class="px-2 pt-2"></canvas> -->
                     </div>
                 </div>
             </div>
@@ -598,8 +565,6 @@ document.addEventListener('DOMContentLoaded', function() {
             cache: true
         },
     });
-
-   
 })
 </script>
 
@@ -611,7 +576,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     var calendarEl = document.getElementById('calendar-item');
     let rdvs = [];
 
-    // fetch events from a laravel route using ajax
     await $.ajax({
         url: "{{ route('getCandidatRdvs') }}",
         type: 'GET',
@@ -690,9 +654,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         initialView: 'timeGridWeek',
         initialDate: today,
         headerToolbar: {
-            left: 'prev,today,next',
-            right: 'title',
-            center: 'timeGridDay,timeGridWeek,dayGridMonth'
+            left: 'today',
+            right: 'title,prev,next',
+            center: 'timeGridDay,timeGridWeek,dayGridMonth' 
         },
         events: rdvs,
         locale: initialLocaleCode,
@@ -712,16 +676,16 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             if (info.event.extendedProps.candidat_id != null) {
                 await $.ajax({
-                    url: "/getUserById" + '/' + info.event.extendedProps.candidat_id,
+                    url: "/getEntrepriseByUserId" + '/' + info.event.extendedProps.candidat_id,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        console.log('Candidat fetched successfully', data.avatar);
+                        console.log('Entreprise :', data);
                         const imgString =
-                            `<img src="${data.avatar ? data.avatar.replace('public', 'storage') : ''}" width="50" height="50" style="border-radius: 50%;">`;
+                            `<img src="${data.logo ? '/storage' + data.logo.replace('public', 'storage') : ''}" width="50" height="50" style="border-radius: 50%;">`;
 
-                        tooltip.innerHTML += imgString + '  ' + data.name + '<br>' +
-                            'Email : ' + data.email + '<br>' +
+                        tooltip.innerHTML += imgString + '  ' + data.nom_entreprise + '<br>' +
+                            'Siège Social : ' + data.siege_social + '<br>' +
                             info.event.title + '<br>' +
                             info.event.extendedProps.description;
                     },
@@ -763,8 +727,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     calendar.render();
 
-    
-
     $("#use_select").on("change", function() {
         $("#select_container").toggle(this.checked);
         $("#job_title").prop("disabled", !this.checked);
@@ -772,6 +734,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked
         $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
     });
 
     $("#use_input").on("change", function() {
@@ -781,7 +744,37 @@ document.addEventListener('DOMContentLoaded', async function() {
         $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
         $("#select_container").hide();  // Hide select container if input is checked
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#job_title").val([]).trigger('change');
     });
 });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var viewsDateInput = document.getElementById('vue_day');
+    if (viewsDateInput) {
+        viewsDateInput.addEventListener('change', function() {
+            var selectedDate = this.value;
+            if (selectedDate) {
+                $.ajax({
+                    url: "{{ route('candidat.dashboard.ajax.views.per.day') }}",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        date: selectedDate,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        console.log('RDVS fetched successfully', data);
+                        document.getElementById('todayVues').innerHTML = data;
+                    },
+                    error: function() {
+                        console.log('Error fetching events');
+                    }
+                })
+            }
+        })
+    }
+})
 </script>
 @endpush

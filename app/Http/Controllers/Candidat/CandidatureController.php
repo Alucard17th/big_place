@@ -17,7 +17,7 @@ class CandidatureController extends Controller
     //
     public function candidatures(){
         $user = auth()->user();
-        $candidatures = Candidature::where('candidat_id', $user->id)->simplePaginate(5);
+        $candidatures = Candidature::where('candidat_id', $user->id)->paginate(5);
         return view('candidat.candidatures.candidature', compact('candidatures'));
     }
 
@@ -46,8 +46,10 @@ class CandidatureController extends Controller
             $history->searchable = $offer->id;
             $history->save();
         }
+
+        $routeName = url()->previous();
         
-        return view('candidat.favorites.apply', compact('offer'));
+        return view('candidat.favorites.apply', compact('offer', 'routeName'));
     }
 
     public function vitrineShow($id){
@@ -74,8 +76,13 @@ class CandidatureController extends Controller
         $entreprise->vues = $entreprise->vues + 1;
 
         $entreprise->save();
-        
-        return view('candidat.favorites.vitrine', compact('entreprise', 'offres'));
+
+       
+        $routeName = url()->previous();
+        // $matchedRoute = app('router')->getRoutes()->match(app('request')->create($routeName));
+        // $previousRouteName = $matchedRoute ? $matchedRoute->getName() : null;
+
+        return view('candidat.favorites.vitrine', compact('entreprise', 'offres', 'routeName'));
     }
 
     public function store(Request $request){

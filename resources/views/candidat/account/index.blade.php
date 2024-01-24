@@ -101,9 +101,14 @@
                                         <div class="col-12">
                                             <div class="row align-items-center pt-4 pb-5">
                                                 <div class="col-2">
+                                                    @if(!empty($user->avatar))
                                                     <img class="img-fluid rounded-circle" id="avatar-preview"
                                                         src="{{ asset(str_replace('/public', '', '/storage/' . $user->avatar)) }}"
                                                         alt="">
+                                                    @else
+                                                    <img src="https://ui-avatars.com/api/?name={{ $user->name }}"
+                                                        class="img-fluid rounded-circle" id="avatar-preview">
+                                                    @endif
 
                                                 </div>
                                                 <div class="col-10">

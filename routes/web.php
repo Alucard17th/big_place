@@ -80,6 +80,7 @@ Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJso
 Route::get('/recruiter-dashboard/jobs/search', [RecruiterController::class, 'searchJobsJson'])->name('recruiter.dashboard.jobs.search');
 Route::get('/candidat-profile/jobs/search', [RecruiterController::class, 'searchJobsJsonCandidatProfil'])->name('recruiter.dashboard.candidat.jobs.search');
 Route::get('/getUserById/{id}', [RecruiterController::class, 'getUserById'])->name('getUserById');
+Route::get('/getEntrepriseByUserId/{id}', [RecruiterController::class, 'getEntrepriseByUserId'])->name('getEntrepriseByUserId');
 
 Route::get('/candidat-plans', [HomeController::class, 'candidatPlans'])->name('candidat.plans');
 Route::get('/recruiter-plans', [HomeController::class, 'recruiterPlans'])->name('recruiter.plans');
@@ -92,6 +93,7 @@ Route::get('/support/show/{id}', [TicketController::class, 'show'])->name('suppo
 // !! ===> CAS SPECIAL EMAILS
 Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
 Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');
+Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
@@ -123,7 +125,6 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']]
     Route::post('/document/add', [RecruiterController::class, 'addDocument'])->name('recruiter.document.add');
     Route::get('/document/delete/{id}', [RecruiterController::class, 'deleteDocument'])->name('recruiter.document.delete');
     
-    Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
     
     Route::post('/ma-vitrine/update', [RecruiterController::class, 'updateVitrine'])->name('recruiter.update.vitrine');
     Route::get('/ma-vitrine/offer/{id}', [RecruiterController::class, 'showVitrineOffer'])->name('recruiter.show.vitrine.offer');
@@ -249,6 +250,8 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-formation', [FormationController::class, 'index'])->name('candidat.formation');
     Route::get('/candidat-account', [CandidatController::class, 'account'])->name('candidat.account');
     Route::get('/candidat-stats', [CandidatController::class, 'stats'])->name('candidat.stats');
+
+    Route::post('/candidat-dashboard/ajax-views-per-day', [CandidatController::class, 'ajaxViewsPerDay'])->name('candidat.dashboard.ajax.views.per.day');
 
     // CURRICULUM
     Route::get('/candidat-cvredirect', [CurriculumController::class, 'cvredirect'])->name('candidat.cvredirect');

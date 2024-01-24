@@ -187,11 +187,16 @@ input, select{
                                                     <i class="las la-video"></i>
                                                     Rejoindre
                                                 </a>
-                                                <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four"
+                                                <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2"
                                                 onclick="return confirm('Etes-vous sur de vouloir annuler ce rendez-vous ?');">
                                                     <!-- Détails -->
                                                     Annuler
                                                 </a>
+                                                <button class="bg-btn-five add-comment-modal mt-2"
+                                                    data-rdv-id="{{$rdv->id}}" data-rdv-commentaire="{{$rdv->commentaire}}">
+                                                    <i class="las la-comment"></i>
+                                                    Commentaire
+                                                </button>
                                                 <!-- <button class="theme-btn p-2 text-white add-comment-modal custom-btn"
                                                     data-rdv-id="{{$rdv->id}}">
                                                     <i class="las la-comment"></i>
@@ -209,8 +214,8 @@ input, select{
         </div>
     </div>
 
-    <!-- Modal HTML embedded directly into document -->
-    <div id="commentaire-modal" class="modal">
+     <!-- Modal HTML embedded directly into document -->
+     <div id="commentaire-modal" class="modal">
         <form action="{{route('recruiter.invite.candidates')}}" method="POST">
             @csrf
             <div class="form-group">
@@ -249,7 +254,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 showClose: false
             });
             $('#rdv_id').val($(this).data('rdv-id'));
+
             document.getElementById('commentaire').value = '';
+            
+            $('#commentaire').val($(this).data('rdv-commentaire'));
         });
     });
 
@@ -271,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 // Handle the response, e.g., show a success message
                 // refresh the current page
-                //    window.location.reload();
+                   window.location.reload();
             })
             .catch(error => {
                 // Handle errors, e.g., show an error message

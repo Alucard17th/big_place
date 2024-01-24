@@ -50,11 +50,13 @@ class RecruiterController extends Controller
 
         if($entrepriseViews != null){
             $vuesByDay = Vues::where('viewable_id', $entreprise->id)
+            ->where('type', 'entreprise')
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
             ->groupBy('date')
             ->orderBy('date', 'desc')
             ->get();
             $vuesByWeek = Vues::where('viewable_id', $entreprise->id)
+            ->where('type', 'entreprise')
             ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
             ->groupBy('week')
             ->orderBy('week', 'desc')
@@ -72,6 +74,7 @@ class RecruiterController extends Controller
 
             }
             $vuesByMonth = Vues::where('viewable_id', $entreprise->id)
+            ->where('type', 'entreprise')
             ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
             ->groupBy('month', 'year')
             ->orderBy('year', 'desc')
@@ -83,7 +86,10 @@ class RecruiterController extends Controller
             $vuesByMonth = null;
         }
 
-        $todayVues = Vues::where('viewable_id', $entreprise->id)->whereDate('created_at', Carbon::today())->count();
+        $todayVues = Vues::where('viewable_id', $entreprise->id)
+        ->where('type', 'entreprise')
+        ->whereDate('created_at', Carbon::today())
+        ->count();
         
         return view('recruiter.dashboard', compact('jobs', 'todayVues','entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
     }
@@ -1026,6 +1032,17 @@ class RecruiterController extends Controller
         $user = User::find($id);
         return response()->json($user);
     }
+    public function getEntrepriseByUserId($id){
+        $user = User::find($id);
+        if($user->parent_entreprise_id == null){
+            // USER IS ADMIN
+            $entreprise = Entreprise::where('user_id', $user->id)->first();
+        }else{
+            // OTHER TEAM MEMBERS
+            $entreprise = Entreprise::where('user_id', $user->parent_entreprise_id)->first();
+        }
+        return response()->json($entreprise);
+    }
     public function myEventsSuspend($id){
         $event = Event::find($id);
         $event->statut = 'Suspendu';
@@ -1495,6 +1512,81 @@ class RecruiterController extends Controller
                 $candidaturesByDate = $candidaturesByDate->sortKeys();
                 $candidaturesByDay = $candidaturesByDate->toArray();
             }
+            elseif($request->group_by == 'week' && $request->week_start != null && $request->week_end != null)
+            {
+                $startWeek = $request->week_start;
+                $endWeek = $request->week_end;
+
+                $filteredCandidatures = [];
+
+                foreach ($candidaturesByWeek as $weekRange => $value) {
+                    // Debug information
+                    // Swap values if start week is greater than end week
+                    if ($startWeek > $endWeek) {
+                        list($startWeek, $endWeek) = [$endWeek, $startWeek];
+                    }
+
+                    // Compare the date ranges
+                    if ($weekRange >= $startWeek && $weekRange <= $endWeek) {
+                        // Add the value to the filtered array
+                        $filteredCandidatures[$weekRange] = $value;
+                    }
+                }
+                $candidaturesByDay = $filteredCandidatures;
+            }
+            elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
+            {
+                $startMonth = $request->month_start;
+                $endMonth = $request->month_end;
+
+                $filteredCandidatures = [];
+
+                foreach ($candidaturesByMonth as $monthRange => $value) {
+                    // Debug information
+                    // Swap values if start week is greater than end week
+                    if ($startMonth > $endMonth) {
+                        list($startMonth, $endMonth) = [$endMonth, $startMonth];
+                    }
+
+                    // Compare the date ranges
+                    if ($monthRange >= $startMonth && $monthRange <= $endMonth) {
+                        // Add the value to the filtered array
+                        $filteredCandidatures[$monthRange] = $value;
+                    }
+                }
+                $candidaturesByDay = $filteredCandidatures;
+            }
+
+            // RDVS
+            if($request->group_by == 'day' && $request->start_date != null && $request->end_date != null){
+                $queryStartDate = $request->start_date;
+                $queryEndDate = $request->end_date;
+
+                $doneRdvs = $user->rendezvous()
+                    ->where('status', 'Effectué')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+                $refusedRdvs = $user->rendezvous()
+                    ->where('status', 'Annulé')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+                $pendingRdvs = $user->rendezvous()
+                    ->where('status', 'En attente')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+            }
+            elseif($request->group_by == 'week' && $request->week_start != null && $request->week_end != null)
+            {
+                
+            }
+            elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
+            {
+               
+            }
+
         }
 
         // dd($offersByDay, $offersByWeek, $offersByMonth);

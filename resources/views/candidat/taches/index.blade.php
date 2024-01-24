@@ -167,6 +167,7 @@ input, select{
                                             <th>Nom de la tâche</th>
                                             <th>Date de début</th>
                                             <th>Date de fin</th>
+                                            <th>Heure</th>
                                             <th>Statut</th>
                                             <th>Description</th>
                                             <th>Actions</th>
@@ -178,6 +179,7 @@ input, select{
                                             <td class="text-left">{{$task->title}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($task->start_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($task->due_date)->formatLocalized('%d-%m-%Y') }}</td>
+                                            <td class="text-left">{{$task->hour}}</td>
                                             <td class="text-left">
                                                 @if($task->completed == '0')
                                                 <span class="badge badge-danger">En cours</span>
@@ -192,11 +194,13 @@ input, select{
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="{{route('candidat.task.complete', $task->id)}}" type="button" class="bg-btn-five">
+                                                @if($task->completed == '0')
+                                                <a href="{{route('candidat.task.complete', $task->id)}}" type="button" class="bg-btn-five mt-2">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Terminer
                                                 </a>
+                                                @endif
                                                 <a href="{{route('candidat.task.delete', $task->id)}}" type="button" class="bg-btn-four mt-2"
                                                 onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');">
                                                     <!-- Détails -->

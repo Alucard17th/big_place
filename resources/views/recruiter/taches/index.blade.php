@@ -195,11 +195,13 @@ input, select{
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
+                                                @if($task->completed == '0')
                                                 <a href="{{route('recruiter.task.complete', $task->id)}}" type="button" class="bg-btn-five">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Terminé
                                                 </a>
+                                                @endif
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.task.delete', $task->id)}}" type="button"
                                                 onclick="return confirm('Etes-vous sur de vouloir supprimer cette tâche ?');" 

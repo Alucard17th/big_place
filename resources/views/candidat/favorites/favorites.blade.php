@@ -158,11 +158,9 @@ input, select{
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th>Nom du Poste</th>
                                             <th>Ville/département</th>
                                             <th>Niveau d'études</th>
-                                            <!-- <th>Etat</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -172,11 +170,8 @@ input, select{
                                             <td class="text-left">{{$offre->job_title}}</td>
                                             <td class="text-left">{{$offre->location_city}}</td>
                                             <td class="text-left">{{$offre->experience_level}}</td>
-                                            <!-- <td class="text-left">{{$offre->status}}</td> -->
-                                            
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offre->user_id)}}" type="button" class="bg-btn-three proposez-rdv px-1">Vitrine entreprise</a>
-                                                <br>
                                                 <a href="{{route('candidat.candidature.apply', $offre->id)}}" type="button" class="bg-btn-seven mt-2 px-4">Je postule</a>
                                             </td>
                                         </tr>

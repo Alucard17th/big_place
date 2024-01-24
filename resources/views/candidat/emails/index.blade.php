@@ -142,7 +142,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->user_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
+                                                </td>
                                                 <td>
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
@@ -183,7 +185,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
+                                                </td>
                                                 <td>
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
@@ -224,7 +228,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
+                                                </td>
                                                 <td>
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter
@@ -258,7 +264,9 @@
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
                                                 <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y') }}</td>
+                                                <td data-order="{{ $email->created_at}}">
+                                                    {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
+                                                </td>
                                                 <td>
                                                     <a href="{{route('candidat.email.show', $email->id)}}" class="bg-btn-five">
                                                         Consulter

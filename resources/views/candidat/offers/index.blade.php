@@ -204,6 +204,7 @@ input, select{
                                             @if(isset($isSearch) && $isSearch == true)
                                             <th>Matching</th>
                                             @endif
+                                            <th>Nom de l'entreprise</th>
                                             <th>Titre de l'offre</th>
                                             <th>Ville / département</th>
                                             <th>Années d'expérience</th>
@@ -222,6 +223,7 @@ input, select{
                                                 <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 2) }} %</span>
                                             </td>
                                             @endif
+                                            <td class="text-left">{{getEntrepriseByUserId($offer->user_id)}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>
@@ -230,7 +232,7 @@ input, select{
                                             <td class="text-left">
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
-                                                    Consulter l'entreprise
+                                                    Vitrine de l'entreprise 
                                                 </a>
                                                 <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">

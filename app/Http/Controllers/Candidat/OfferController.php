@@ -67,7 +67,9 @@ class OfferController extends Controller
 
     public function show($id){
         $offer = Offre::find($id);
-        return view('candidat.offers.show', compact('offer'));
+        $routeName = url()->previous();
+
+        return view('candidat.offers.show', compact('offer', 'routeName'));
     }
 
     public function search(Request $request)

@@ -16,7 +16,7 @@
                             <h3>Mon offre d'emploi - Détails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="/candidat-offers" class="bg-back-btn mr-2">
+                            <a href="{{$routeName}}" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
@@ -25,6 +25,15 @@
                     <div class="tabs-box">
                         <div class="widget-content">
                             <div class="container">
+                                <div class="row my-4">
+                                    <a class="theme-btn btn-style-one bg-btn text-white"
+                                        id="open-apply-modal">Je Postule</a>
+                                    <a href="{{route('candidat.vitrine.show', $offer->user_id)}}"
+                                        class="bg-btn-three bg-btn ml-3"
+                                        style="padding-left:25px !important;padding-right:25px !important;">Consulter
+                                        la vitrine de l'entreprise</a>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-8 offset-md-1">
                                         <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
@@ -106,9 +115,74 @@
             </div>
         </div>
     </div>
+
+    <div id="ex1" class="modal">
+        <form action="{{ route('candidat.candidature.store') }}" method="POST" id="apply-form">
+            @csrf
+            <div class="form-tags d-none">
+                <input type="hidden" name="entreprise_owner_id" value="{{$offer->user_id}}">
+                <input type="hidden" name="title" value="{{$offer->job_title}}">
+                <input type="hidden" name="offer_id" value="{{$offer->id}}">
+            </div>
+            <h4 class="text-dark mb-3">Postuler </h4>
+
+            <div class="row">
+                <h4 class="offre-title col-12">
+                    {{$offer->job_title}}</h4>
+                <div class="offre-status col-12">Status de l'offre :
+                    {{$offer->status}}</div>
+                <div class="offre-end-date col-12">Date de limitation de candidature :
+                    {{$offer->unpublish_date}}</div>
+            </div>
+
+            <div class="row my-4">
+                <h4 class="offre-title col-12">Mes informations </h4>
+                <div class="col-12 offre-desc">
+                    Nom : {{auth()->user()->name}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Email : {{auth()->user()->email}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Date de naissance : {{auth()->user()->birth_date}}
+                </div>
+                <div class="col-12 offre-desc">
+                    Mon CV : 
+                    <a href="{{asset('storage'.auth()->user()->curriculum[0]->cv)}}" class="" target="_blank">
+                    <i class="las la-eye"></i>
+                        Voir
+                    </a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="theme-btn btn-style-one" type="submit" id="apply-btn">Postuler</button>
+            </div>
+        </form>
+
+        <a href="#" class="custom-close-modal"></a>
+    </div>
+
 </div>
 @endsection
 
 @push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
 
+    $('#open-apply-modal').click(function() {
+        // Send the data 
+        $("#ex1").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+    })
+
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
+    });
+});
+</script>
 @endpush

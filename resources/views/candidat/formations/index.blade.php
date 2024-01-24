@@ -111,6 +111,7 @@ input, select{
                                             <th>Durée de la formation</th>
                                             <th>Période de la formation</th>
                                             <th>Lieu</th>
+                                            <th>Statut</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -129,6 +130,7 @@ input, select{
                                                 {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                             </td>
                                             <td class="text-left">{{$formation->work_location}}</td>
+                                            <td class="text-left">{{$formation->status}}</td>
                                             <td class="text-left">
                                                 @if (!$formation->participants->pluck('id')->contains(Auth::id()))
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
@@ -154,7 +156,7 @@ input, select{
                 <div class="ls-widget">
                     <div class="upper-title-box d-flex justify-content-between align-items-center p-4">
                         <div class="d-flex align-items-center justify-content-center">
-                            <h3>Les formations auquelles je participe</h3>
+                            <h3>Les formations auxquelles je participe</h3>
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
@@ -178,6 +180,7 @@ input, select{
                                             <th>Période de la formation</th>
                                             <!-- <th>Statut de l'inscription</th> -->
                                             <th>Lieu</th>
+                                            <th>Statut</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -193,7 +196,14 @@ input, select{
                                             <!-- <td class="text-left">{{getFormationUserStatus(auth()->user()->id,$formation->id)}}</td> -->
                                             <td class="text-left">{{$formation->work_location}}</td>
                                             <td class="text-left">
-                                                <a href="" type="button" class="bg-btn-three proposez-rdv px-1">Consulter</a>
+                                                @if($formation->status == 'Active')
+                                                    Active
+                                                @else
+                                                    Inactive
+                                                @endif
+                                            </td>
+                                            <td class="text-left">
+                                                <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter</a>
                                                 <a href="{{ route('candidat.formation.unsubscribe', $formation->id) }}" type="button" class="bg-btn-four mt-2" onclick="return confirm('Etes vous sur de vouloir ne plus participer à cet formation?')">
                                                     Je me désinscris
                                                 </a>

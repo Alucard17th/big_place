@@ -107,7 +107,6 @@
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
-
                         </div>
 
                         <!-- TABLE AND GRID VIEW -->
@@ -117,10 +116,11 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Organisateur</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Adresse</th>
                                             <th>Date - Heure</th>
+                                            <th>Statut</th>
                                             <th>Entrée gratuite</th>
                                             <th>Actions</th>
                                         </tr>
@@ -133,6 +133,7 @@
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}</td>
+                                            <td>{{$event->statut}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)
                                                 Oui
@@ -177,12 +178,6 @@
                         <div class="d-flex align-items-center justify-content-center">
                             <h3>Mes évènemements / jobdatings</h3>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
-                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
-                                Retour
-                            </a>
-                        </div>
                     </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
@@ -197,10 +192,11 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Organisateur</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Adresse</th>
                                             <th>Date - Heure</th>
+                                            <th>Statut</th>
                                             <th>Entrée gratuite</th>
                                             <th>Actions</th>
                                         </tr>
@@ -211,7 +207,8 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
-                                            <td class="text-left">{{$event->event_date}} - {{$event->event_hour}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}</td>
+                                            <td>{{$event->statut}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)
                                                 Oui
@@ -262,7 +259,7 @@
             </div>
 
             <div class="col-12 text-center py-3">
-                <h5>Organisateur de l'événement : <span id="event-organizer"></span></h5>
+                <h5>Nom de l'entreprise : <span id="event-organizer"></span></h5>
                 <hr>
                 <h5 class="text-dark pt-0 pb-3">Nom du candidat : <span class="text-muted">{{auth()->user()->name}}</span></h5>
                 <div id="qrcode-container"></div>

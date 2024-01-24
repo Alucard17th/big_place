@@ -17,43 +17,60 @@ class CandidatController extends Controller
     public function dashboard(){
         $user = auth()->user();
         $jobs = Job::all();
-        $candidatures = Candidature::where('candidat_id', $user->id)->get();
-        if($candidatures != null){
-            $vuesByDay = Candidature::where('candidat_id', $user->id)
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('date')
-            ->orderBy('date', 'desc')
-            ->get();
-            $vuesByWeek = Candidature::where('candidat_id', $user->id)
-            ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
-            ->groupBy('week')
-            ->orderBy('week', 'desc')
-            ->get();
-            foreach($vuesByWeek as $key => $value){
-                $year = substr($value->week, 0, 4);
-                $week = substr($value->week, -2);
-                // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
-                // Start with the first day of the year
-                $date = Carbon::createFromDate(2023, 1, 1);
+        // $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        
+        // if($candidatures != null){
+        //     $vuesByDay = Candidature::where('candidat_id', $user->id)
+        //     ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+        //     ->groupBy('date')
+        //     ->orderBy('date', 'desc')
+        //     ->get();
+        //     $vuesByWeek = Candidature::where('candidat_id', $user->id)
+        //     ->select(DB::raw('YEARWEEK(created_at) as week'), DB::raw('COUNT(*) as count'))
+        //     ->groupBy('week')
+        //     ->orderBy('week', 'desc')
+        //     ->get();
+        //     foreach($vuesByWeek as $key => $value){
+        //         $year = substr($value->week, 0, 4);
+        //         $week = substr($value->week, -2);
+        //         // $weekStart = Carbon::createFromIsoWeekYear($year, $week);
+        //         // Start with the first day of the year
+        //         $date = Carbon::createFromDate(2023, 1, 1);
 
-                // Move to the desired ISO week
-                $weekStart = $date->setISODate($year, $week);
-                $weekEnd = $weekStart->addDays(6);
+        //         // Move to the desired ISO week
+        //         $weekStart = $date->setISODate($year, $week);
+        //         $weekEnd = $weekStart->addDays(6);
 
-            }
-            $vuesByMonth = Candidature::where('candidat_id', $user->id)
-            ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
-            ->groupBy('month', 'year')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
-            ->get();
-        }else{
-            $vuesByDay = null;
-            $vuesByWeek = null;
-            $vuesByMonth = null;
-        }
+        //     }
+        //     $vuesByMonth = Candidature::where('candidat_id', $user->id)
+        //     ->select(DB::raw('MONTH(created_at) as month'), DB::raw('YEAR(created_at) as year'), DB::raw('COUNT(*) as count'))
+        //     ->groupBy('month', 'year')
+        //     ->orderBy('year', 'desc')
+        //     ->orderBy('month', 'desc')
+        //     ->get();
+        // }else{
+        //     $vuesByDay = null;
+        //     $vuesByWeek = null;
+        //     $vuesByMonth = null;
+        // }
+
+        $candidatures = Candidature::where('candidat_id', $user->id)
+        ->whereDate('created_at', now()->toDateString())
+        ->get();
+        $candidaturesCount = $candidatures->count();
         // dd($candidatures, $vuesByDay, $vuesByWeek, $vuesByMonth);
-        return view('candidat.dashboard', compact('jobs', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
+        return view('candidat.dashboard', compact('jobs', 'candidaturesCount'));
+    }
+
+    public function ajaxViewsPerDay(Request $request){
+        $user = auth()->user();
+        $candidatures = Candidature::where('candidat_id', $user->id)
+        ->whereDate('created_at', $request->date)
+        ->count();
+
+        $todayVues = $candidatures; 
+        
+        return response()->json($todayVues);
     }
 
     public function getCandidatRdvs(){

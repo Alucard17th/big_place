@@ -99,7 +99,7 @@
                 <h4>Ajouter un Document :</h4>
             </div>
             <div class="form-group">
-                <label for="label">Nom</label>
+                <label for="label">Nom du Document</label>
                 <input type="text" class="form-control" name="label" id="label" required>
             </div>
             <div class="form-group">

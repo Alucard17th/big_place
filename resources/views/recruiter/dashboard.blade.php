@@ -623,6 +623,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked
         $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
+
     });
 
     $("#use_input").on("change", function() {
@@ -632,6 +634,8 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div.col-9.px-2 > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
         $("#select_container").hide();  // Hide select container if input is checked
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#metier_recherche").val([]).trigger('change');
+
     });
 })
 </script>

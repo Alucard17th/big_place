@@ -191,7 +191,7 @@ nav > ul.pagination > li > a{
                 <h3>Vitrine d'entreprise</h3>
             </div>
             <div class="d-flex align-items-center">
-                <a href="/candidat-offers" class="bg-back-btn mr-2">
+                <a href="{{$routeName}}" class="bg-back-btn mr-2">
                     <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                     Retour
                 </a>
@@ -237,7 +237,7 @@ nav > ul.pagination > li > a{
                             <div class="row p-5" id="offers-container-header">
                                 <h4 class="text-dark"><span style="color:#ff8c00;"
                                         class="mr-1">{{$entreprise->user->offers->count()}}
-                                    </span> Disponibles</h4>
+                                    </span> Offres Disponibles</h4>
                             </div>
                         </div>
 
@@ -263,7 +263,9 @@ nav > ul.pagination > li > a{
                                             </div>
                                             <div class="col-8">
                                                 <div class="">
-                                                    <h5 class="text-bg-blue">{{ $offer->job_title }}</h5>
+                                                    <a href="{{route('candidat.offers.show', $offer->id)}}" >
+                                                        <h5 class="text-bg-blue">{{ $offer->job_title }}</h5>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -273,9 +275,7 @@ nav > ul.pagination > li > a{
                                                 </div>
                                                 <div class="text-bg-blue font-min">
                                                     <img width="15" height="15" src="https://img.icons8.com/dotty/80/time.png" alt="time"/>
-                                                    Il y a
-                                                    {{  now()->diffInDays(Carbon::parse($offer->created_at)) }}
-                                                    jours
+                                                    {{ \Carbon\Carbon::parse($offer->created_at)->formatLocalized('%d-%m-%Y') }}
                                                 </div>
                                                 <div class="badges">
                                                     <span class="badge badge-bg-orange text-white">{{$offer->contract_type}}</span>
@@ -336,7 +336,7 @@ nav > ul.pagination > li > a{
                             id="news-container">
                             <div class="col-12 mt-5" id="table-formations">
                                 <div class="d-flex my-4">
-                                    <h3>Mes formations proposées</h3>
+                                    <h3>Les formations proposées</h3>
                                 </div>
                                 <div class="table-outer">
                                     <table class="table table-sm table-bordered" id="data-table">
@@ -396,7 +396,7 @@ nav > ul.pagination > li > a{
 
                             <div class="col-12 mt-5" id="table-jobdatings">
                                 <div class="d-flex my-4">
-                                    <h3>Mes évènemements / jobdatings</h3>
+                                    <h3>Les évènemements / jobdatings</h3>
                                 </div>
                                 <div class="table-outer">
                                     <table class="table table-sm table-bordered" id="data-table">
