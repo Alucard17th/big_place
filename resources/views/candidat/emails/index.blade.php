@@ -327,6 +327,10 @@ $(document).ready(function() {
         if(tableId == 'data-table-deleted'){
             deleteAllButton.classList.add('d-none');
         }
+
+        if(tableId != 'data-table-deleted'){
+            destroyAllButton.classList.add('d-none');
+        }
     }
 
     $('#inbox-btn').on('click', function() {
@@ -409,7 +413,6 @@ $(document).ready(function() {
 
     $('#data-table-inbox_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
-
     $('#data-table-sent').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
@@ -456,7 +459,6 @@ $(document).ready(function() {
 
     $('#data-table-deleted_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
-
     $('#data-table-draft').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
@@ -480,7 +482,6 @@ $(document).ready(function() {
 
     $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
-   
 
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
@@ -503,6 +504,7 @@ $(document).ready(function() {
                     });
                 }
             });
+
             // if the current table container contain deleted class then show the delete button
             if (currentTableContainer.classList.contains('deleted')) {
                 destroyAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);

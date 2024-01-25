@@ -123,7 +123,7 @@ input, select{
                                             $durationInDays = $startDate->diffInDays($endDate);
                                         @endphp
                                         <tr>
-                                            <td class="text-left">{{$formation->job_title}}</td>
+                                            <td class="text-left">{{$formation->job_title}} ____  {{$formation->subscribers }} ____ {{$formation->max_participants}} </td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
                                             <td class="text-left">{{$formation->training_duration}}</td>
                                             <td class="text-left">
@@ -132,7 +132,10 @@ input, select{
                                             <td class="text-left">{{$formation->work_location}}</td>
                                             <td class="text-left">{{$formation->status}}</td>
                                             <td class="text-left">
-                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()))
+                                                @if($formation->subscribers == $formation->max_participants)
+                                                    <span class="text-danger">Inscription fermée.</span>
+                                                @endif
+                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) && !$formation->subscribers == $formation->max_participants)
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
                                                 @endif
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>

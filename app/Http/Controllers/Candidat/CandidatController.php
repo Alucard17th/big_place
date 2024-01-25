@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Candidature;
 use App\Models\RendezVous;
+use App\Models\Offre;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -192,10 +193,13 @@ class CandidatController extends Controller
                   });
         })
         ->get();
-        return view('candidat.history.index', compact('histories'));
+        $offerIds = $histories->pluck('searchable')->toArray();
+        $offers = Offre::whereIn('id', $offerIds)->get();
+
+        return view('candidat.history.index', compact('offers'));
     }
 
-    public function stats(){
+    public function stats(Request $request){
         $user = auth()->user();
         $doneRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Effectué')->count();
         $refusedRdvs = RendezVous::where('candidat_it', $user->id)->where('status', 'Annulé')->count();
@@ -235,11 +239,11 @@ class CandidatController extends Controller
             return $item->created_at->startOfWeek()->format('Y-m-d');
         });
 
-        $candidaturesByWeek = [];
-        foreach ($groupedByWeek as $weekStartDate => $candidaturesInWeek) {
-            $endDate = Carbon::createFromFormat('Y-m-d', $weekStartDate)->endOfWeek()->format('Y-m-d');
-            $candidaturesByWeek[$weekStartDate . ' | ' . $endDate] = $candidaturesInWeek->count();
-        }
+        // $candidaturesByWeek = [];
+        // foreach ($groupedByWeek as $weekStartDate => $candidaturesInWeek) {
+        //     $endDate = Carbon::createFromFormat('Y-m-d', $weekStartDate)->endOfWeek()->format('Y-m-d');
+        //     $candidaturesByWeek[$weekStartDate . ' | ' . $endDate] = $candidaturesInWeek->count();
+        // }
 
         // OFFERS BY MONTH
         $candidaturesByMonth = [];
@@ -257,13 +261,191 @@ class CandidatController extends Controller
         }
         // dd($candidaturesByDay, $candidaturesByWeek, $candidaturesByMonth);
        
-        $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')->count();
-        $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')->count();
-        $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')->count();
+        $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')
+            ->count();
+        $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')
+            ->count();
+        $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')
+            ->count();
+
+        if($request->has('group_by') && $request->has('start_date') && $request->has('end_date')){
+            // CANDIDATURES !
+            if($request->group_by == 'day' && $request->start_date != null && $request->end_date != null)
+            {
+                $queryStartDate = $request->start_date;
+                $queryEndDate = $request->end_date;
+                $candidatures = Candidature::where('candidat_id', $user->id)->whereBetween('created_at', [$queryStartDate, $queryEndDate])->get();
+
+                $candidaturesByDate = $candidatures->groupBy(function ($offer) {
+                    return $offer->created_at->format('d-m-Y'); // assuming created_at is a Carbon instance
+                })->map(function ($group) {
+                    return $group->count();
+                });
+                
+                // order by date 
+                $candidaturesByDate = $candidaturesByDate->sortKeys();
+                $candidaturesByDay = $candidaturesByDate->toArray();
+
+                $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')
+                ->whereBetween('created_at', [$queryStartDate, $queryEndDate])
+                ->count();
+                $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')
+                ->whereBetween('created_at', [$queryStartDate, $queryEndDate])
+                ->count();
+                $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')
+                ->whereBetween('created_at', [$queryStartDate, $queryEndDate])
+                ->count();
+            }
+            elseif($request->group_by == 'week' && $request->week_start != null && $request->week_end != null)
+            {
+                // Extract year and week from the input
+                list($startYear, $startWeek) = explode('-W', $request->week_start);
+                list($endYear, $endWeek) = explode('-W', $request->week_end);
+
+                // Convert the weeks to Carbon instances
+                $startDate = Carbon::create($startYear, 1, 1)->addWeek($startWeek - 1)->startOfWeek();
+                $endDate = Carbon::create($endYear, 1, 1)->addWeek($endWeek - 1)->endOfWeek();
+                // Query Candidature models between the selected weeks
+                $candidatures = Candidature::whereBetween('created_at', [$startDate, $endDate])->get();
+                
+                // Iterate through candidatures and populate the array
+                foreach ($candidatures as $candidature) {
+                    // Get the start and end dates of the week for the candidature's date
+                    $startOfWeek = $candidature->created_at->startOfWeek();
+                    $endOfWeek = $candidature->created_at->endOfWeek();
+
+                    // Create a date range string for the week
+                    $weekRange = $startOfWeek->format('d-m-Y') . ' - ' . $endOfWeek->format('d-m-Y');
+
+                    // Increment the count for the corresponding week in the array
+                    $candidaturesByWeek[$weekRange] = isset($candidaturesByWeek[$weekRange])
+                        ? $candidaturesByWeek[$weekRange] + 1
+                        : 1;
+                }
+                $candidaturesByDay = $candidaturesByWeek;
+
+                $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+                $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+                $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+            }
+            elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
+            {
+                 // Extract year and month from form inputs
+                list($startYear, $startMonth) = explode('-', $request->month_start);
+                list($endYear, $endMonth) = explode('-', $request->month_end);
+
+                // Convert the months to Carbon instances
+                $startDate = Carbon::createFromDate($startYear, $startMonth, 1)->startOfMonth();
+                $endDate = Carbon::createFromDate($endYear, $endMonth, 1)->endOfMonth();
+
+                // Query Candidature models between the selected months
+                $candidatures = Candidature::whereBetween('created_at', [$startDate, $endDate])->get();
+
+                // Initialize an array to store counts for each month
+                $candidaturesByMonth = [];
+
+                // Iterate through candidatures and populate the array
+                foreach ($candidatures as $candidature) {
+                    // Get the start and end dates of the month for the candidature's date
+                    $monthYear = $candidature->created_at->format('m-Y');
+
+                    // Increment the count for the corresponding month and year in the array
+                    $candidaturesByMonth[$monthYear] = isset($candidaturesByMonth[$monthYear])
+                    ? $candidaturesByMonth[$monthYear] + 1
+                    : 1;
+                }
+
+                // Now $candidaturesByMonth contains the count of candidatures for each month (start date - end date)
+                $candidaturesByDay = $candidaturesByMonth;
+
+                $doneCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'done')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+                $refusedCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'refused')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+                $pendingCandidatures = Candidature::where('candidat_id', $user->id)->where('status', 'coming')
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->count();
+            }
+
+            // RDVS
+            if($request->group_by == 'day' && $request->start_date != null && $request->end_date != null){
+                $queryStartDate = $request->start_date;
+                $queryEndDate = $request->end_date;
+
+                $doneRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Effectué')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+                $refusedRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Annulé')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+                $pendingRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'En attente')
+                    ->whereBetween('date', [$queryStartDate, $queryEndDate])
+                    ->count();
+
+            }
+            elseif ($request->group_by == 'week' && $request->week_start != null && $request->week_end != null) {
+                list($startYear, $startWeek) = explode('-W', $request->week_start);
+                list($endYear, $endWeek) = explode('-W', $request->week_end);
+            
+                $startDate = Carbon::create($startYear, 1, 1)->addWeek($startWeek - 1)->startOfWeek();
+                $endDate = Carbon::create($endYear, 1, 1)->addWeek($endWeek - 1)->endOfWeek();
+            
+                $doneRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Effectué')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
+            
+                $refusedRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Annulé')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
+            
+                $pendingRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'En attente')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
+            }
+            elseif ($request->group_by == 'month' && $request->month_start != null && $request->month_end != null) {
+                list($startYear, $startMonth) = explode('-', $request->month_start);
+                list($endYear, $endMonth) = explode('-', $request->month_end);
+            
+                $startDate = Carbon::create($startYear, $startMonth, 1)->startOfMonth();
+                $endDate = Carbon::create($endYear, $endMonth, 1)->endOfMonth();
+            
+                $doneRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Effectué')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
+            
+                $refusedRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'Annulé')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
+            
+                $pendingRdvs = RendezVous::where('candidat_it', $user->id)
+                    ->where('status', 'En attente')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
+            }
+
+        }
 
         return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'pendingRdvs',
         'doneCandidatures', 'refusedCandidatures', 'pendingCandidatures',
-        'candidaturesByDay', 'candidaturesByWeek', 'candidaturesByMonth'));
+        'candidaturesByDay', 'candidaturesByMonth'));
     }
 
     public function chooseCreneau($time){

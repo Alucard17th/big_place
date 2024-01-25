@@ -69,6 +69,70 @@
                     </div>
                     <div class="tabs-box">
                         <div class="widget-content">
+                            <div class="col-12">
+                                <form method="GET" action="">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="start_date">Groupé par:</label>
+                                        <select class="form-control" id="group_by" name="group_by">
+                                            <option value="day" @if(request()->get('group_by') == 'day') selected @endif>Jour</option>
+                                            <option value="week" @if(request()->get('group_by') == 'week') selected @endif>Semaine</option>
+                                            <option value="month" @if(request()->get('group_by') == 'month') selected @endif>Mois</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="filter-by-day" style="{{ request()->get('group_by') == 'day' || request()->get('group_by') == null ? '' : 'display:none' }}">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="start_date">Début:</label>
+                                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request()->get('start_date') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="end_date">Fin:</label>
+                                                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request()->get('end_date') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-by-week" style="{{ request()->get('group_by') == 'week' ? '' : 'display:none' }}">
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <label for="week_start">Début:</label>
+                                                <input type="week" class="form-control" id="week_start" name="week_start" value="{{ request()->get('week_start') }}">
+                                                
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="week_end">Fin:</label>
+                                                <input type="week" class="form-control" id="week_end" name="week_end" value="{{ request()->get('week_end') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-by-month" style="{{ request()->get('group_by') == 'month' ? '' : 'display:none' }}">
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <label for="month_start">Début:</label>
+                                                <input type="month" class="form-control" id="month_start" name="month_start" value="{{ request()->get('month_start') }}">
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label for="month_end">Fin:</label>
+                                                <input type="month" class="form-control" id="month_end" name="month_end" value="{{ request()->get('month_end') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="theme-btn btn-style-one bg-btn">Filtrer</button>
+                                    <a href="{{route('recruiter.stats')}}" type="button" class="theme-btn btn-style-one bg-btn"
+                                    style="background-color: rgba(255, 140, 0, 0.1) !important;
+                                    color: #ff8c00 !important; border: 1px solid #ff8c00 !important">Réinitialiser</a>
+                                </form>
+                            </div>
                             <!-- TABLE VIEW -->
                             <div class="row mb-5">
                                 <div class="col-4">
@@ -105,17 +169,11 @@
 
                 <!-- TABLE VIEW -->
                 <div class="row mb-5">
-                <div class="col-6">
+                    <div class="col-6">
                         <div class="ls-widget h-100">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Rendez-vous</h3>
-                                    <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <!-- <button class="rdv-day active mr-3">Jours</button>
-                                            <button class="rdv-month">Mois</button> -->
-                                        </div>
-                                    </div>
+                                    <h3 class="py-4">Répartition des rendez-vous</h3>
                                     <div id="rdvs-chart" class="" width="600" height="500"></div>
                                 </div>
                             </div>
@@ -126,13 +184,7 @@
                         <div class="ls-widget h-100">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Candidatures</h3>
-                                    <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <!-- <button class="rdv-day active mr-3">Jours</button>
-                                            <button class="rdv-month">Mois</button> -->
-                                        </div>
-                                    </div>
+                                    <h3 class="py-4">Répartition des candidatures</h3>
                                     <div id="candidatures-pie-chart" class="" width="600" height="500"></div>
                                 </div>
                             </div>
@@ -143,15 +195,7 @@
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Nombre de candidatures</h3>
-                                    <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <button class="candidature-day active mr-3">Jours</button>
-                                            <button class="candidature-week mr-3">Semaine</button>
-                                            <button class="candidature-month">Mois</button>
-                                        </div>
-                                    </div>
-                                    <!-- <canvas id="candidatures-chart" class="" width="600" height="500"></canvas> -->
+                                    <h3 class="py-4">Nombre de candidatures envoyées</h3>
                                     <div id="chart-candidatures"> </div>
                                 </div>
                             </div>
@@ -163,21 +207,11 @@
                             <div class="tabs-box">
                                 <div class="widget-content">
                                     <h3 class="py-4">Réponses aux candidatures envoyées</h3>
-                                    <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <button class="offer-day active mr-3">Jours</button>
-                                            <button class="offer-week">Semaine</button>
-                                            <button class="offer-month">Mois</button>
-                                        </div>
-                                    </div>
-                                    <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
                                     <div id="chart-offers"> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                   
 
                 </div>
             </div>
@@ -190,149 +224,28 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
+$(document).ready(function() {
+    $('#group_by').change(function () {
+        // Hide all divs initially
+        $('.filter-by-day, .filter-by-week, .filter-by-month').hide();
+
+        // Show the selected div
+        var selectedOption = $(this).val();
+        $('.filter-by-' + selectedOption).show();
+    });
+})
+</script> 
+<script>
 // when document is ready
 $(document).ready(function() {
-    // OFFERS 
-    // let offersByDay = @json($candidaturesByDay);
-    // let offersByWeek = @json($candidaturesByWeek);
-    // let candidaturesByMonth = @json($candidaturesByMonth);
-    // let labels = Object.keys(candidaturesByDay);
-    // let data = Object.values(candidaturesByDay);
-    // var options = {
-    //         chart: {
-    //             type: "line",
-    //             stacked: false
-    //         },
-    //         dataLabels: {
-    //             enabled: false
-    //         },
-    //         colors: ['#22218c', '#ff8c00', '#66C7F4'],
-    //         series: [
-    //             {
-    //             name: 'Offres',
-    //             type: 'column',
-    //             data: data
-    //             },
-    //             {
-    //             name: "Offres",
-    //             type: 'line',
-    //             data: data
-    //             },
-    //         ],
-    //         stroke: {
-    //             width: [4, 4, 4]
-    //         },
-    //         xaxis: {
-    //             categories: labels
-    //         },
-    //         yaxis: [
-            
-    //         ],
-    //         tooltip: {
-    //             shared: false,
-    //             intersect: true,
-    //             x: {
-    //             show: false
-    //             }
-    //         },
-    //         legend: {
-    //           show: true,
-    //           position: 'top',
-    //         }
-       
-    //     };
-
-    // var chart = new ApexCharts(document.querySelector("#chart-offers"), options);
-    // chart.render();
-
-    const switchOffersDayBtn = document.querySelector('.offer-day');
-    const switchOffersWeekBtn = document.querySelector('.offer-week');
-    const switchOffersMonthBtn = document.querySelector('.offer-month');
-
-    switchOffersDayBtn.addEventListener('click', () => {
-        // toggle the active class
-        switchOffersDayBtn.classList.add('active');
-        switchOffersMonthBtn.classList.remove('active');
-        switchOffersWeekBtn.classList.remove('active');
-
-        chart.updateOptions({
-            xaxis: {
-                categories: Object.keys(offersByDay)
-            },
-            series: [
-                {
-                    name: 'Offres',
-                    type: 'column',
-                    data: Object.values(offersByDay)
-                },
-                {
-                    name: "Offres",
-                    type: 'line',
-                    data: Object.values(offersByDay)
-                },
-            ],
-            
-        })
-    })
-
-    switchOffersWeekBtn.addEventListener('click', () => {
-        switchOffersMonthBtn.classList.remove('active');
-        switchOffersWeekBtn.classList.add('active');
-        switchOffersDayBtn.classList.remove('active');
-
-        chart.updateOptions({
-            xaxis: {
-                categories: Object.keys(offersByWeek)
-            },
-            series: [
-                {
-                    name: 'Offres',
-                    type: 'column',
-                    data: Object.values(offersByWeek)
-                },
-                {
-                    name: 'Offres',
-                    type: 'line',
-                    data: Object.values(offersByWeek)
-                }
-            ]
-        })
-    })
-
-    switchOffersMonthBtn.addEventListener('click', () => {
-        switchOffersMonthBtn.classList.add('active');
-        switchOffersDayBtn.classList.remove('active');
-        switchOffersWeekBtn.classList.remove('active');
-
-        chart.updateOptions({
-            xaxis: {
-                categories: Object.keys(offersByMonth)
-            },
-            series: [
-                {
-                    name: 'Offres',
-                    type: 'column',
-                    data: Object.values(offersByMonth)
-                },
-                {
-                    name: 'Offres',
-                    type: 'line',
-                    data: Object.values(offersByMonth)
-                }
-            ]
-        })
-    })
-
-    //CANDIDATURES
     let candidaturesByDay = @json($candidaturesByDay);
-    let candidaturesByWeek = @json($candidaturesByWeek);
     let candidaturesByMonth = @json($candidaturesByMonth);
     labels = Object.keys(candidaturesByDay);
     data = Object.values(candidaturesByDay);
     var candidaturesOptions = {
         height: 450,
         chart: {
-            type: 'line'
+            type: 'bar'
         },
         colors: ['#22218c'],
         series: [{
@@ -345,71 +258,6 @@ $(document).ready(function() {
     }
     var candidaturesChart = new ApexCharts(document.querySelector("#chart-candidatures"), candidaturesOptions);
     candidaturesChart.render();
-
-    const switchCandidaturesDayBtn = document.querySelector('.candidature-day');
-    const switchCandidaturesWeekBtn = document.querySelector('.candidature-week');
-    const switchCandidaturesMonthBtn = document.querySelector('.candidature-month');
-
-    switchCandidaturesDayBtn.addEventListener('click', () => {
-        // toggle the active class
-        switchCandidaturesDayBtn.classList.add('active');
-        switchCandidaturesWeekBtn.classList.remove('active');
-        switchCandidaturesMonthBtn.classList.remove('active');
-
-        candidaturesChart.updateOptions({
-            xaxis: {
-                categories: Object.keys(candidaturesByDay)
-            },
-            series: [
-                {
-                    name: 'Candidatures',
-                    type: 'column',
-                    data: Object.values(candidaturesByDay)
-                }
-            ],
-            
-        })
-    })
-
-    switchCandidaturesWeekBtn.addEventListener('click', () => {
-        // toggle the active class
-        switchCandidaturesDayBtn.classList.remove('active');
-        switchCandidaturesWeekBtn.classList.add('active');
-        switchCandidaturesMonthBtn.classList.remove('active');
-
-        candidaturesChart.updateOptions({
-            xaxis: {
-                categories: Object.keys(candidaturesByWeek)
-            },
-            series: [
-                {
-                    name: 'Candidatures',
-                    type: 'column',
-                    data: Object.values(candidaturesByWeek)
-                }
-            ],
-            
-        })
-    })
-
-    switchCandidaturesMonthBtn.addEventListener('click', () => {
-        switchCandidaturesMonthBtn.classList.add('active');
-        switchCandidaturesWeekBtn.classList.remove('active');
-        switchCandidaturesDayBtn.classList.remove('active');
-
-        candidaturesChart.updateOptions({
-            xaxis: {
-                categories: Object.keys(candidaturesByMonth)
-            },
-            series: [
-                {
-                    name: 'Candidatures',
-                    type: 'column',
-                    data: Object.values(candidaturesByMonth)
-                }
-            ]
-        })
-    })
 
     const rdvsEffectue = @json($doneRdvs);
     const rdvsCancelled = @json($refusedRdvs);

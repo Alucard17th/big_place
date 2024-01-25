@@ -28,6 +28,8 @@ class FormationController extends Controller
             // If not, attach the formation
             // $user->participationFormations()->syncWithoutDetaching($formation);
             $user->participationFormations()->attach($formation, ['status' => 'En Attente']);
+            $formation->subscribers = $formation->subscribers + 1;
+            $formation->save();
             // You can also perform additional actions if needed
             toast('Votre souscription a bien été prise en compte.', 'success');
         } else {
@@ -41,6 +43,8 @@ class FormationController extends Controller
         $formation = Formation::find($id);
         $user = auth()->user();
         $user->participationFormations()->detach($formation);
+        $formation->subscribers = $formation->subscribers - 1;
+        $formation->save();
         toast('Votre souscription a bien été annulée.', 'success');
         return redirect()->back();
     }

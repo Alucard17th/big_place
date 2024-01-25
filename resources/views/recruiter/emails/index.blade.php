@@ -321,6 +321,10 @@ $(document).ready(function() {
         if(tableId == 'data-table-deleted'){
             deleteAllButton.classList.add('d-none');
         }
+
+        if(tableId != 'data-table-deleted'){
+            destroyAllButton.classList.add('d-none');
+        }
     }
 
     $('#inbox-btn').on('click', function() {

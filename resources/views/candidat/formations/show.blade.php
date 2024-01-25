@@ -226,10 +226,10 @@ background: #13D527;
                                         <h5 class="offre-time-subtitle">Publiée le
                                             {{ \Carbon\Carbon::parse($formation->created_at)->formatLocalized('%d-%m-%Y') }}</h5>
 
-                                        <div class="row my-4">
+                                        <!-- <div class="row my-4">
                                             <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" class="theme-btn btn-style-one bg-btn text-white">Participer à la formation</a>
                                             <a href="{{route('candidat.vitrine.show', $formation->user_id)}}" class="bg-btn-three bg-btn ml-3" style="padding-left:25px !important;padding-right:25px !important;">Consulter la vitrine de l'entreprise</a>
-                                        </div>
+                                        </div> -->
 
                                         <!-- <div class="offre-desc my-4">
                                             Responsabilités : Développer et maintenir des applications Java
@@ -259,16 +259,18 @@ background: #13D527;
                                             CDI à l'embauche:  {{$formation->cdi_at_hiring == 1 ? 'Oui' : 'Non'}}
                                         </div>
 
-                                        
-                                        <!-- <div class="offre-desc my-4">
-                                            Nombre de Participants : {{$formation->max_participants}} particpiants
-                                        </div> -->
-                                        <!-- <div class="offre-status">Status de l'offre :
-                                            {{$formation->status}}</div>
-                                        <div class="offre-end-date">Date de limitation de candidature :
-                                            {{$formation->end_date}}</div> -->
+                                        <div class="offre-desc my-4">
+                                            Nombre maximum de participants : {{$formation->max_participants}} 
+                                        </div>
 
-                                        <div class="card mt-5" style="height:100%;">
+                                        <div class="offre-desc my-4">
+                                            Nombre de postes ouverts : {{$formation->open_positions}}
+                                        </div>
+
+                                        <div class="offre-end-date">Date de fin d'inscription :
+                                            {{$formation->end_date}}</div>
+
+                                        <!-- <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-2 pr-0">
@@ -297,7 +299,7 @@ background: #13D527;
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>

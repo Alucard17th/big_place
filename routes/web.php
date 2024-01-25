@@ -268,6 +268,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
     // FAVORITES
     Route::post('/candidat/favortie/add', [FavoritesController::class, 'addToFavorites'])->name('candidat.favorite.add');
+    Route::post('/candidat/favortie/remove', [FavoritesController::class, 'removeFromFavorites'])->name('candidat.favorite.remove');
    
     // RDV
     Route::get('/candidat-rdv/cancel/{id}', [RendezVousController::class, 'cancelRdv'])->name('candidat.rdv.cancel');

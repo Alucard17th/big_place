@@ -267,10 +267,10 @@ background: #13D527;
                                             Nombre de postes ouverts : {{$formation->open_positions}}
                                         </div>
 
-                                        <div class="offre-end-date">Date de limitation de candidature :
+                                        <div class="offre-end-date">Date de fin d'inscription :
                                             {{$formation->end_date}}</div>
 
-                                        <div class="card mt-5" style="height:100%;">
+                                        <!-- <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-2 pr-0">
@@ -299,7 +299,7 @@ background: #13D527;
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>

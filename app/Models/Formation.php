@@ -21,7 +21,9 @@ class Formation extends Model
         'registration_deadline',
         'upload_documents',
         'status',
-        'user_id'
+        'user_id',
+        'max_participants',
+        'subscribers'
     ];
 
     public function user()

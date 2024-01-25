@@ -41,4 +41,16 @@ class FavoritesController extends Controller
              'status' => 'success',
          ]);
     }
+
+    public function removeFromFavorites(Request $request){
+        $favorite = Favorite::where('user_id', auth()->user()->id)->first();
+        $favsMerged = array_diff(json_decode($favorite->favorites), $request->selectedValues);
+        $favorite->favorites = $favsMerged;
+        $favorite->save();
+        toast('Les favoris ont bien été supprimés.','success')->autoClose(5000);
+        // return a json success response 
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
 }
