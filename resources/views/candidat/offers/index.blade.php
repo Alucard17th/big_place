@@ -14,45 +14,66 @@
     background-position: center center;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
 }
-input, select{
-    height:45px !important;
-    padding-top: 10px !important;
+.select2-container {
+    width: 100% !important;
 }
-.select2-selection--single{
-    max-height: 45px !important;
+
+.select2-search__field {
+    padding-left: 5px;
+}
+
+.select2-selection--single {
+    margin: 0 !important;
+    width: 100% !important;
+    height: 35px !important;
+    padding: .330rem .70rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem !important !important;
     border: 1px solid #dae1e7 !important;
-    border-radius: 3px;
-    box-shadow: none;
-    font-size: 14px;
-    background: #fff !important;
-    padding: 8px 15px 0px 20px !important;
-    width: 22vw;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
 }
+
 .select2-selection--multiple {
+    margin: 0 !important;
+    width: 100% !important;
     height: 100% !important;
+    /* padding: .3rem .70rem !important; */
+    padding-top: 2px;
+    padding-left: 6px;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #8f959b !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
+    margin-bottom: .5rem !important !important;
     border: 1px solid #dae1e7 !important;
-    border-radius: 3px;
-    box-shadow: none;
-    font-size: 14px;
-    background: #fff !important;
-    width: 22vw;
-}
-.select2-search__field{
-    padding: 0px 18px 10px 20px !important;
-    height: 37px !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
 }
 
-#search-btn{
-    font-family: 'Jost';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 20px;
+#select2-job_title-container {
+    padding-left: 25px !important;
 }
 
-.form-group input, .form-group select{
-    height: 45px ;
-    background: #fff !important;
+#location_city {
+    padding-left: 38px !important;
+    color: #000 !important;
+}
+#brut_salary {
+    color: #000 !important;
+}
+
+.select2-search__field {
+    color: #8f959b !important;
 }
 
 .select2-selection__placeholder,
@@ -67,6 +88,12 @@ input, select{
     color: #000 !important;
     font-size: 16px !important;
     font-weight: 400 !important;
+}
+
+.select2-selection__rendered {
+    color: #000 !important;
+    padding-left: 18px;
+    font-size: 16px !important;
 }
 
 
@@ -95,63 +122,83 @@ input, select{
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer search-container">
-                                <form method="get" class="default-form form-inline"
-                                    action="{{ route('candidat.offers.search') }}">
-                                    <div class="row">
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
+                                <form method="get" class="" action="{{route('candidat.offers.search')}}">
+                                    <div class="row no-gutters">
+                                        <div class="col-6 pr-1">
+                                            <label>
+                                                <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                            </label>
+                                            <div class="form-group mb-2">
+                                                <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
+                                                    style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
                                                 <select name="job_title" id="job_title" class="form-control">
+                                                    <option value="" selected value="">Poste recherchés</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                                <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" value="{{ request('custom_job') }}">
+                                        <div class="col-6">
+                                            <div class="form-group mb-2">
+                                                <label>
+                                                    <input type="radio" id="use_input"> Utiliser Métier
+                                                </label>
+                                                <input name="custom_job" id="custom_job" class="form-control" 
+                                                placeholder="Métier" value="{{request('custom_job')}}" disabled>
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="location_city" id="location_city" placeholder="Ville / Département"
-                                                    value="{{ request('location_city') }}" class="form-control mb-2">
+                                        <div class="col-6 pr-1">
+                                            <div class="form-group mb-2">
+                                                <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
+                                                    style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
+                                                <input type="text" name="location_city" id="location_city" value="{{request('location_city')}}"
+                                                    class="form-control mb-2" placeholder="Ville / Département">
                                             </div>
                                         </div>
 
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                                <input type="text" name="brut_salary" placeholder="Niveau de salaire"
-                                                    value="{{ request('brut_salary') }}" class="form-control" id="brut_salary">
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
-                                                    <select name="education_level" id="education_level" class="form-control">
-                                                        <option value=""  selected>Niveau d'études</option>
-                                                        <option value="CAP / BEP" @if(request('education_level') == 'CAP / BEP') selected @endif>CAP / BEP</option>
-                                                        <option value="Bac" @if(request('education_level') == 'Bac') selected @endif>Bac</option>
-                                                        <option value="Bac+2" @if(request('education_level') == 'Bac+2') selected @endif>Bac + 2</option>
-                                                        <option value="Bac+4" @if(request('education_level') == 'Bac+4') selected @endif>Bac + 4</option>
-                                                        <option value="Bac+5" @if(request('education_level') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
-                                                    </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-4 px-1">
-                                            <div class="form-group mb-0 mr-1">
+                                        <div class="col-6">
+                                            <div class="form-group mb-2">
                                                 <select class="form-control" id="experience_level" name="experience_level">
-                                                    <option value=""  selected>Année d'expérience</option>
-                                                    <option value="Débutant (0 – 2 ans)"  @if(request('experience_level') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
-                                                    <option value="Intermédiaire (2 – 5 ans)" @if(request('experience_level') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
-                                                    <option value="Confirmé (5 -10 ans)" @if(request('experience_level') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
-                                                    <option value="Sénior (+ 10 ans)" @if(request('experience_level') == 'Sénior (+ 10 ans)') selected @endif>Sénior (+ 10 ans)</option>
+                                                    <option value="" selected>Année d'expérience</option>
+                                                    <option value="Débutant (0 – 2 ans)"
+                                                        @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
+                                                        @endif>Débutant (0 – 2 ans)</option>
+                                                    <option value="Intermédiaire (2 – 5 ans)"
+                                                        @if(request('experience_level')=='Intermédiaire (2 – 5 ans)' ) selected
+                                                        @endif>Intermédiaire (2 – 5 ans)</option>
+                                                    <option value="Confirmé (5 -10 ans)"
+                                                        @if(request('experience_level')=='Confirmé (5 -10 ans)' ) selected
+                                                        @endif>Confirmé (5 -10 ans)</option>
+                                                    <option value="Sénior (+ 10 ans)"
+                                                        @if(request('experience_level')=='Sénior (+ 10 ans)' ) selected @endif>
+                                                        Sénior (+ 10 ans)</option>
+                                                </select>
+                                                <!-- <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience"> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 pr-1">
+                                            <div class="form-group mb-2">
+                                                <select name="education_level" id="education_level" class="form-control">
+                                                    <option value="">Niveau d'études</option>
+                                                    <option value="CAP / BEP" @if(request('education_level')=='CAP / BEP' ) selected @endif>CAP / BEP</option>
+                                                    <option value="Bac" @if(request('education_level')=='Bac' ) selected @endif>Bac</option>
+                                                    <option value="Bac+2" @if(request('education_level')=='Bac+2' ) selected @endif>Bac + 2</option>
+                                                    <option value="Bac+4" @if(request('education_level')=='Bac+4' ) selected @endif>Bac + 4</option>
+                                                    <option value="Bac+5" @if(request('education_level')=='Bac+5' ) selected @endif>Bac + 5 et plus</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-4 pl-1">
-                                            <div class="form-group mt-2">
+                                        <div class="col-6">
+                                            <div class="form-group mb-2">
+                                                <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
+                                                    placeholder="Pretentions salariales">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group mb-2">
                                                 <select name="valeurs[]" id="values_select" class="" multiple >
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
                                                     <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
@@ -178,13 +225,10 @@ input, select{
                                                 </select>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
-                                   
-                                  <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div>
-                                   
+                                    <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"
+                                        id="search-btn">Chercher</button>
                                 </form>
                             </div>
                         </div>
@@ -220,7 +264,7 @@ input, select{
                                                     value="{{$offer->id}}"></td>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <td>
-                                                <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 2) }} %</span>
+                                                <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 0) }} %</span>
                                             </td>
                                             @endif
                                             <td class="text-left">{{getEntrepriseByUserId($offer->user_id)}}</td>
@@ -383,6 +427,42 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#job_title").val([]).trigger('change');
+    });
+
+    var selectedMetier = getParameterByName('job_title');
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        console.log(results[2].replace(/\+/g, " "))
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    if(selectedMetier){
+        $("#job_title").append(new Option(selectedMetier, selectedMetier, true, true)).trigger('change');
+    }
 });
 </script>
 @endpush

@@ -148,7 +148,7 @@ color: #2D2F30;
             <div class="col-md-12">
                 <button id="edit-profile">
                     <i class="las la-user-edit mr-1" style="font-size: 30px;"></i> 
-                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Modifier</span>
+                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Aperçu</span>
                 </button>
             </div>
         </div>

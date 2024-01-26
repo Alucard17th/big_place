@@ -257,7 +257,7 @@ input, select{
                                                     value="{{$curriculum->id}}"></td>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <td>
-                                                <span class="matching-percentage badge badge-success">{{ number_format($curriculum->matching_percentage, 2) }} %</span>
+                                                <span class="matching-percentage badge badge-success">{{ number_format($curriculum->matching_percentage, 0) }} %</span>
                                             </td>
                                             @endif
                                             <td class="text-left">

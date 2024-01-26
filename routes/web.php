@@ -75,6 +75,7 @@ Route::get('/parrainage', [HomeController::class, 'parrainage'])->name('parraina
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])->name('register-as-candidat');
 Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter'])->name('register-as-recruiter');
+Route::get('/rgpd', [HomeController::class, 'rgpd'])->name('rgpd');
 
 Route::get('/recruiter-dashboard/jobs', [RecruiterController::class, 'getJobsJson'])->name('recruiter.dashboard.jobs');
 Route::get('/recruiter-dashboard/jobs/search', [RecruiterController::class, 'searchJobsJson'])->name('recruiter.dashboard.jobs.search');

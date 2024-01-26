@@ -132,10 +132,10 @@ input, select{
                                             <td class="text-left">{{$formation->work_location}}</td>
                                             <td class="text-left">{{$formation->status}}</td>
                                             <td class="text-left">
-                                                @if($formation->subscribers == $formation->max_participants)
+                                                @if($formation->subscribers >= $formation->max_participants)
                                                     <span class="text-danger">Inscription fermée.</span>
                                                 @endif
-                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) && !$formation->subscribers == $formation->max_participants)
+                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) && !$formation->subscribers >= $formation->max_participants)
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
                                                 @endif
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>
@@ -163,7 +163,6 @@ input, select{
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('candidat.dashboard') }}" class="bg-back-btn mr-2">
-                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
                         </div>

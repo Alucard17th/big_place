@@ -50,4 +50,8 @@ class HomeController extends Controller
     public function recruiterPlans(){
         return view('site.recruiter-plans');
     }
+
+    public function rgpd(){
+        return view('site.rgpd');
+    }
 }

@@ -41,7 +41,7 @@
                                 <input type="text" class="form-control" name="first_name" autocomplete="off"
                                     placeholder="Prénom">
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
-                                <span class="invalid-feedback error error-first_name error-name"></span>
+                                <span class="invalid-feedback error error-first_name error-last_name"></span>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -50,7 +50,7 @@
                                 <input type="text" class="form-control" name="last_name" autocomplete="off"
                                     placeholder="Nom">
                                 <i class="input-icon field-icon icofont-waiter-alt"></i>
-                                <span class="invalid-feedback error error-last_name error-name"></span>
+                                <span class="invalid-feedback error error-name"></span>
                             </div>
                         </div>
                     </div>
@@ -80,6 +80,20 @@
                             placeholder="Répétez votre mot de passe">
                         <span toggle="#re-password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         <span class="invalid-feedback error error-password_confirmation"></span>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="rgpd-consent" name="rgpd-consent" required>
+                        <label class="form-check-label" for="rgpd-consent" style="margin-top: -12px; margin-left: 25px;">
+                            Je consens à ce que mes données soient collectées et utilisées 
+                            dans le cadre de la solution BIG PLACE conformément à la politique RGPD en 
+                            <a href="/rgpd" target="_blank" style="color:#ff8b00;">pièce jointe</a>.
+                        </label>
+                    </div>
+
+                    <div class="from-group">
+                        <div class="invalid-feedback error-rgpd-consent">
+                        </div>
                     </div>
 
                     <div class="form-group">
