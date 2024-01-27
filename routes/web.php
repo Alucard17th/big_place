@@ -95,6 +95,7 @@ Route::get('/support/show/{id}', [TicketController::class, 'show'])->name('suppo
 Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
 Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');
 Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])->name('recruiter.commentaire.add');
+Route::get('/email/ajax-remove-from-draft/{id}', [EmailController::class, 'ajaxRemoveFromDraft'])->name('emails.ajax.remove.from.draft');
 
 // RECRUITER
 Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {

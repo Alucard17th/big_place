@@ -24,7 +24,7 @@ if (!function_exists('getEntrepriseByUserId')) {
     function getEntrepriseByUserId(string $id = null)
     {
         if ($id != null) {
-            $user = auth()->user();
+            $user = User::Find($id);
             if($user->parent_entreprise_id == null){
                 // USER IS ADMIN
                 $entreprise = Entreprise::where('user_id', $user->id)->first();

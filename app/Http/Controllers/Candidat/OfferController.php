@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Candidat;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Offre;
+use App\Models\History;
+use Carbon\Carbon;
 
 class OfferController extends Controller
 {
@@ -68,6 +70,18 @@ class OfferController extends Controller
     public function show($id){
         $offer = Offre::find($id);
         $routeName = url()->previous();
+
+        $user = auth()->user();
+        $existingRecord = History::where('user_id', $user->id)
+        ->where('searchable', $id)
+        ->where('created_at', '>', Carbon::now()->subDay())
+        ->first();
+        if (!$existingRecord) {
+            $history = new History();
+            $history->user_id = $user->id;
+            $history->searchable = $id;
+            $history->save();
+        }
 
         return view('candidat.offers.show', compact('offer', 'routeName'));
     }

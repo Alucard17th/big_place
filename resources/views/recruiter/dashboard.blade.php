@@ -253,11 +253,11 @@
                                     <div class="form-group mb-2">
                                         <select name="niveau_etudes" id="niveau_etudes" class="form-control" required>
                                             <option value="" selected>Niveau d'études</option>
-                                            <option value="CAP / BEP">CAP / BEP</option>
+                                            <option value="CAP/BEP">CAP / BEP</option>
                                             <option value="Bac">Bac</option>
-                                            <option value="Bac + 2">Bac + 2</option>
-                                            <option value="Bac + 4">Bac + 4</option>
-                                            <option value="Bac + 5 et plus">Bac + 5 et plus</option>
+                                            <option value="Bac+2">Bac + 2</option>
+                                            <option value="Bac+4">Bac + 4</option>
+                                            <option value="Bac+5 et plus">Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -347,7 +347,7 @@
                         <div class="card-body text-center">
                             <a href="/cv-theque">
                                 <img class="img-fluid dashboard-small-img"
-                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
+                                    src="{{asset('/plugins/images/dashboard/cvtheq.png')}}" alt="">
 
                             </a>
                         </div>
@@ -361,7 +361,7 @@
                         <div class="card-body text-center">
                             <a href="/mes-favoris">
                                 <img class="img-fluid dashboard-small-img"
-                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
+                                    src="{{asset('/plugins/images/dashboard/mes-favoris.png')}}" alt="">
 
                             </a>
                         </div>
@@ -375,7 +375,7 @@
                         <div class="card-body text-center">
                             <a href="/historique">
                                 <img class="img-fluid dashboard-small-img"
-                                    src="{{asset('/plugins/images/dashboard/mes-emails.png')}}" alt="">
+                                    src="{{asset('/plugins/images/dashboard/my-history.png')}}" alt="">
 
                             </a>
                         </div>
@@ -419,7 +419,7 @@
                         <div class="card-body text-center">
                             <a href="/mon-calendrier">
                                 <img class="img-fluid dashboard-small-img"
-                                    src="{{asset('/plugins/images/dashboard/mes-rdvs.png')}}" alt="">
+                                    src="{{asset('/plugins/images/dashboard/mes-rdvs-1.png')}}" alt="">
                             </a>
                         </div>
                         <div class="card-footer text-muted">

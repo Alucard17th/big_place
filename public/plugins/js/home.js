@@ -149,22 +149,33 @@ jQuery(function ($) {
                 form.find('.icon-loading').css("display", 'inline-block');
             },
             success: function (data) {
+                console.log(data);
                 form.find('.icon-loading').hide();
                 window.location.href = '/';
-                if (data.error === true) {
-                    if (data.messages !== undefined) {
-                        for(var item in data.messages) {
-                            var msg = data.messages[item];
-                            form.find('.error-'+item).show().text(msg[0]);
+                
+            },
+            error: function (e) {
+                console.log(e.responseJSON);
+                if (typeof e.responseJSON !== 'undefined') {
+                    if (e.responseJSON.message) {
+                        // Handle general error message
+                        form.find('.message-error').show().html('<div class="alert alert-danger">' + e.responseJSON.message + '</div>');
+                    }
+                
+                    if (e.responseJSON.errors) {
+                        // Handle field-specific errors
+                        for (var field in e.responseJSON.errors) {
+                            var errorMessages = e.responseJSON.errors[field];
+                            for (var i = 0; i < errorMessages.length; i++) {
+                                form.find('.error-' + field).show().html('<div class="alert alert-danger">Les identifiants saisis sont incorrects. Veuillez vérifier votre adresse e-mail et votre mot de passe, puis réessayer.</div>');
+                            }
                         }
                     }
-                    if (data.messages.message_error !== undefined) {
-                        form.find('.message-error').show().html('<div class="alert alert-danger">' + data.messages.message_error[0] + '</div>');
-                    }
-
-                }
-                if (typeof data.redirect !== 'undefined' && data.redirect) {
-                    window.location.href = data.redirect
+                    form.find('.icon-loading').css("display", 'none');
+                    // if (typeof e.responseJSON.redirect !== 'undefined' && e.responseJSON.redirect) {
+                    //     // Redirect if needed
+                    //     window.location.href = e.responseJSON.redirect;
+                    // }
                 }
             }
         });
@@ -195,6 +206,7 @@ jQuery(function ($) {
                 'role': form.find('input[name=_role]').val(),
                 'siret': form.find('input[name=siret]').val(),
                 'g-recaptcha-response': form.find('[name=g-recaptcha-response]').val(),
+                'rgpd-consent': form.find('input[name=rgpd-consent]').is(":checked") ? 1 : '',
             },
             'type': 'POST',
             beforeSend: function () {

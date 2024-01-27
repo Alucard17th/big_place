@@ -148,7 +148,7 @@ color: #2D2F30;
             <div class="col-md-12">
                 <button id="edit-profile">
                     <i class="las la-user-edit mr-1" style="font-size: 30px;"></i> 
-                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Aperçu</span>
+                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Modifier</span>
                 </button>
             </div>
         </div>
@@ -164,8 +164,9 @@ color: #2D2F30;
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-12 text-center mb-5 pb-5 pt-2"><h2>Fiche Candidat</h2></div>
-                                <div class="col-4">
-                                    <img src="{{ asset(str_replace('public', 'storage', $curriculum->user->avatar)) }}" alt="">
+                                <div class="col-4 text-center">
+                                    <img src="{{ asset(str_replace('public', 'storage', $curriculum->user->avatar)) }}" alt=""
+                                    style="width: 200px; height: 200px;border-radius: 50%;">
                                 </div>
 
                                 <div class="col-8">
@@ -315,13 +316,13 @@ color: #2D2F30;
                                     <div class="mb-3 d-flex flex-column">
                                         <label for="niveau" class="form-label text-dark">Niveau</label>
                                         <select class="w-100" id="niveau" name="niveau" required>
-                                            <option value="debutant" @if(isset($curriculum->niveau) &&
-                                                $curriculum->niveau == 'debutant') selected @endif>Débutant</option>
-                                            <option value="intermediaire" @if(isset($curriculum->niveau) &&
-                                                $curriculum->niveau == 'intermediaire') selected @endif>Intermédiaire
+                                            <option value="Débutant" @if(isset($curriculum->niveau) &&
+                                                $curriculum->niveau == 'Débutant') selected @endif>Débutant</option>
+                                            <option value="Intermédiaire" @if(isset($curriculum->niveau) &&
+                                                $curriculum->niveau == 'Intermédiaire') selected @endif>Intermédiaire
                                             </option>
-                                            <option value="confirme" @if(isset($curriculum->niveau) &&
-                                                $curriculum->niveau == 'confirme') selected @endif>Confirmé</option>
+                                            <option value="Confirmé" @if(isset($curriculum->niveau) &&
+                                                $curriculum->niveau == 'Confirmé') selected @endif>Confirmé</option>
                                         </select>
                                     </div>
                                 </div>
@@ -332,11 +333,11 @@ color: #2D2F30;
                                         <label for="etudes" class="form-label text-dark">Niveau d'études</label>
                                         <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
                                             <option value=""  selected>Niveau d'études</option>
-                                            <option value="CAP / BEP" @if(isset($curriculum) && $curriculum->niveau_etudes == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                            <option value="CAP/BEP" @if(isset($curriculum) && $curriculum->niveau_etudes == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                             <option value="Bac" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac') selected @endif>Bac</option>
                                             <option value="Bac+2" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+2') selected @endif>Bac + 2</option>
                                             <option value="Bac+4" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+4') selected @endif>Bac + 4</option>
-                                            <option value="Bac+5" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                            <option value="Bac+5 et plus" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>

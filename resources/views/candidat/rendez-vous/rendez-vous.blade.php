@@ -103,8 +103,7 @@ input, select{
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer search-container w-100">
-                                <form method="get" class="default-form form-inline w-100"
-                                    action="{{ route('recruiter.cvtheque.search') }}">
+                                
                                     <div class="row w-100">
                                             <div class="col-4 px-1">
                                                 <div class="form-group mb-0 mr-1">
@@ -140,12 +139,6 @@ input, select{
                                                 </div>
                                             </div>
                                     </div>
-                                   
-                                  <!-- <div class="form-group mt-3">
-                                    <button type="submit" class="theme-btn btn-style-one bg-btn" id="search-btn">Chercher</button>
-                                  </div> -->
-                                   
-                                </form>
                             </div>
                         </div>
 

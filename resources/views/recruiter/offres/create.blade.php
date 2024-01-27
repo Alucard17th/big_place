@@ -229,11 +229,11 @@
                                     <label for="education_level">Niveau d’éducation</label>
                                     <select class="form-control" id="education_level" name="education_level" required data-parsley-errors-container="#education_level_error_container">
                                         <option disabled selected>Niveau d'éducation</option>
-                                        <option value="CAP / BEP">CAP / BEP</option>
+                                        <option value="CAP/BEP">CAP / BEP</option>
                                         <option value="Bac">Bac</option>
                                         <option value="Bac+2">Bac + 2</option>
                                         <option value="Bac+4">Bac + 4</option>
-                                        <option value="Bac+5">Bac + 5 et plus</option>
+                                        <option value="Bac+5 et plus">Bac + 5 et plus</option>
                                     </select>
                                     <div id="education_level_error_container"></div>
                                 </div>

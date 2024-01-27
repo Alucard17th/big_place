@@ -176,7 +176,7 @@ input, select{
                                                     <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
                                                     <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
                                                     <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
-                                                    <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                                    <option value="Bac+5 et plus" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                                 </select>
                                             </div>
                                         </div>

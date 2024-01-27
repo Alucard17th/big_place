@@ -215,11 +215,11 @@
                                 <div class="form-group">
                                     <label for="education_level">Niveau d’éducation</label>
                                     <select class="form-control" id="education_level" name="education_level" required>
-                                        <option value="CAP / BEP" @if($offer->education_level == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                        <option value="CAP/BEP" @if($offer->education_level == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                         <option value="Bac" @if($offer->education_level == 'Bac') selected @endif>Bac</option>
-                                        <option value="Bac + 2" @if($offer->education_level == 'Bac + 3') selected @endif>Bac + 2</option>
-                                        <option value="Bac + 4" @if($offer->education_level == 'Bac + 4') selected @endif>Bac + 4</option>
-                                        <option value="Bac + 5 et plus" @if($offer->education_level == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                        <option value="Bac+2" @if($offer->education_level == 'Bac + 3') selected @endif>Bac + 2</option>
+                                        <option value="Bac+4" @if($offer->education_level == 'Bac + 4') selected @endif>Bac + 4</option>
+                                        <option value="Bac+5 et plus" @if($offer->education_level == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
                                     </select>
                                 </div>
 

@@ -264,11 +264,11 @@
                                     <div class="form-group mb-2">
                                         <select name="education_level" id="education_level" class="form-control">
                                             <option value="" selected>Niveau d'études</option>
-                                            <option value="CAP / BEP">CAP / BEP</option>
+                                            <option value="CAP/BEP">CAP / BEP</option>
                                             <option value="Bac">Bac</option>
                                             <option value="Bac+2">Bac + 2</option>
                                             <option value="Bac+4">Bac + 4</option>
-                                            <option value="Bac+5">Bac + 5 et plus</option>
+                                            <option value="Bac+5 et plus">Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -355,9 +355,22 @@
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
-                            <a href="/candidat-favoris">
+                            <a href="/candidat-offers">
                                 <img class="img-fluid dashboard-small-img"
                                     src="{{asset('/plugins/images/dashboard/mes-offres.png')}}" alt="">
+                            </a>
+                        </div>
+                        <div class="card-footer text-muted">
+                                <span class="text-dark">Les offres d'emploi</span>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-3 d-flex justify-content-center align-items-center flex-column">
+                    <div class="card dashboard-link">
+                        <div class="card-body text-center">
+                            <a href="/candidat-favoris">
+                                <img class="img-fluid dashboard-small-img"
+                                    src="{{asset('/plugins/images/dashboard/mes-favoris.png')}}" alt="">
                             </a>
                         </div>
                         <div class="card-footer text-muted">
@@ -391,6 +404,10 @@
                             </div>
                     </div>
                 </div>
+               
+            </div>
+
+            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -404,9 +421,6 @@
                             </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -446,6 +460,9 @@
                             </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -459,9 +476,6 @@
                             </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -501,6 +515,9 @@
                             </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row mt-5">
                 <div class="col-3 d-flex justify-content-center align-items-center flex-column">
                     <div class="card dashboard-link">
                         <div class="card-body text-center">
@@ -515,6 +532,7 @@
                     </div>
                 </div>
             </div>
+                
         </div>
     </div>
 </div>
@@ -583,6 +601,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         success: function(data) {
             console.log('RDVS fetched successfully', data);
             data.forEach(function(event) {
+                console.log('RDVS', event);
                 let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
                 let candidatId = event.candidat_it
                 rdvs.push({
@@ -592,7 +611,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                     borderColor: 'pink',
                     extendedProps: {
                         description: 'Type : ' + rdvType,
-                        candidat_id: candidatId
+                        candidat_id: candidatId,
+                        rdv_user_id : event.user_id
                     }
                 });
             })
@@ -674,9 +694,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 document.body.appendChild(tooltip);
             }
 
-            if (info.event.extendedProps.candidat_id != null) {
+            if (info.event.extendedProps.rdv_user_id != null) {
                 await $.ajax({
-                    url: "/getEntrepriseByUserId" + '/' + info.event.extendedProps.candidat_id,
+                    url: "/getEntrepriseByUserId" + '/' + info.event.extendedProps.rdv_user_id,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {

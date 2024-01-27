@@ -129,11 +129,11 @@ input, select{
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control">
                                                     <option value=""  selected>Niveau d'études</option>
-                                                    <option value="CAP/BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                    <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                     <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
-                                                    <option value="Bac+2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
-                                                    <option value="Bac+4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
-                                                    <option value="Bac+5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
+                                                    <option value="Bac + 2" @if(request('niveau_etudes') == 'Bac + 2') selected @endif>Bac + 2</option>
+                                                    <option value="Bac + 4" @if(request('niveau_etudes') == 'Bac + 4') selected @endif>Bac + 4</option>
+                                                    <option value="Bac + 5 et plus" @if(request('niveau_etudes') == 'Bac + 5 et plus') selected @endif>Bac + 5 et plus</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -379,11 +379,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#name').on('input', function () {
         // Trigger DataTable search on the "Nom" column
-        $('#data-table').DataTable().columns(1).search(this.value).draw();
+        $('#data-table').DataTable().columns(2).search(this.value).draw();
     });
     $('#address').on('input', function () {
         // Trigger DataTable search on the "Nom" column
-        $('#data-table').DataTable().columns(2).search(this.value).draw();
+        $('#data-table').DataTable().columns(3).search(this.value).draw();
     });
     $('#niveau_etudes').on('change', function () {
         // Get the DataTable instance
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Define a custom search function for exact match
         $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
             var selectedValue = $('#niveau_etudes').val().trim().toLowerCase();
-            var columnValue = data[3].toLowerCase(); // Assuming "Niveau d'études" is the fourth column
+            var columnValue = data[5].toLowerCase(); // Assuming "Niveau d'études" is the fourth column
 
             // Perform an exact match
             return selectedValue === '' || columnValue === selectedValue;

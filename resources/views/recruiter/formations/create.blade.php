@@ -93,7 +93,7 @@
                                         <div class="form-group">
                                             <label class="text-dark" for="max_participants">Nombre maximum de participants</label>
                                             <input type="number" class="form-control" id="max_participants"
-                                                name="max_participants" >
+                                                name="max_participants" required>
                                         </div>
                                     </div>
                                     <div class="col-6 pt-4 mt-2">

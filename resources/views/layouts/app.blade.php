@@ -159,13 +159,12 @@
                             <div class="form-group">
                                 <label>Adresse e-mail</label>
                                 <input type="text" name="email" placeholder="Adresse e-mail" required>
-                                <span class="invalid-feedback error error-email"></span>
+                                
                             </div>
 
                             <div class="form-group">
                                 <label>Mot de passe</label>
                                 <input type="password" name="password" value="" placeholder="Mot de passe">
-                                <span class="invalid-feedback error error-password"></span>
                             </div>
 
                             <div class="form-group">
@@ -180,11 +179,17 @@
                             </div>
 
                             <div class="form-group">
+                                <span class="invalid-feedback error error-email"></span>
+                                <span class="invalid-feedback error error-password"></span>
+                            </div>
+
+                            <div class="form-group">
                                 <button class="theme-btn btn-style-one" type="submit" name="log-in">Connexion
                                     <span class="spinner-grow spinner-grow-sm icon-loading" role="status"
                                         aria-hidden="true"></span>
                                 </button>
                             </div>
+
                             <div class="bottom-box">
                                 <div class="text">Vous n&#039;avez pas de compte ? <a
                                         href="/register"

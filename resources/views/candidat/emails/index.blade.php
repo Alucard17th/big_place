@@ -141,7 +141,7 @@
                                                 <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->user_id)->name}}</td>
-                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>Sujet: <span class="text-muted">{{$email->subject}}</span> <br> Message: <span class="text-muted">{{Str::limit($email->message, 50)}}</span></td>
                                                 <td data-order="{{ $email->created_at}}">
                                                     {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
@@ -184,7 +184,7 @@
                                                 <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>Sujet: <span class="text-muted">{{$email->subject}}</span> <br> Message: <span class="text-muted">{{Str::limit($email->message, 50)}}</span></td>
                                                 <td data-order="{{ $email->created_at}}">
                                                     {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
@@ -227,7 +227,7 @@
                                                 <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>Sujet: <span class="text-muted">{{$email->subject}}</span> <br> Message: <span class="text-muted">{{Str::limit($email->message, 50)}}</span></td>
                                                 <td data-order="{{ $email->created_at}}">
                                                     {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
@@ -263,7 +263,7 @@
                                                 <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$email->id}}"></td>
                                                 <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                <td>Sujet: <span class="text-muted">{{$email->subject}}</span> <br> Message: <span class="text-muted">{{Str::limit($email->message, 50)}}</span></td>
                                                 <td data-order="{{ $email->created_at}}">
                                                     {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>

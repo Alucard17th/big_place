@@ -123,7 +123,7 @@ input, select{
                                             $durationInDays = $startDate->diffInDays($endDate);
                                         @endphp
                                         <tr>
-                                            <td class="text-left">{{$formation->job_title}} ____  {{$formation->subscribers }} ____ {{$formation->max_participants}} </td>
+                                            <td class="text-left">{{$formation->job_title}}</td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
                                             <td class="text-left">{{$formation->training_duration}}</td>
                                             <td class="text-left">

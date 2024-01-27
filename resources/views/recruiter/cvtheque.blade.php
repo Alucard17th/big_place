@@ -172,11 +172,11 @@ input, select{
                                             <div class="form-group mb-0 mr-1">
                                                 <select name="niveau_etudes" id="niveau_etudes" class="form-control" >
                                                     <option value=""  selected>Niveau d'études</option>
-                                                    <option value="CAP / BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
+                                                    <option value="CAP/BEP" @if(request('niveau_etudes') == 'CAP / BEP') selected @endif>CAP / BEP</option>
                                                     <option value="Bac" @if(request('niveau_etudes') == 'Bac') selected @endif>Bac</option>
                                                     <option value="Bac+2" @if(request('niveau_etudes') == 'Bac+2') selected @endif>Bac + 2</option>
                                                     <option value="Bac+4" @if(request('niveau_etudes') == 'Bac+4') selected @endif>Bac + 4</option>
-                                                    <option value="Bac+5" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                                    <option value="Bac+5 et plus" @if(request('niveau_etudes') == 'Bac+5') selected @endif>Bac + 5 et plus</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -571,10 +571,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // PROPOSEZ UN RDV
     let selectedCandidates = [];
-    const proposezRendezVousButton = $('.proposez-rdv');
+    // const proposezRendezVousButton = $('.proposez-rdv');
     const createRendezVousButton = document.querySelector('.create-rdv');
-
-    proposezRendezVousButton.on('click', function() {
+    const dataTableContainer = $('#data-table');
+    dataTableContainer.on('click', '.proposez-rdv', function(event) {
+        console.log('SQUAD')
         event.preventDefault();
         const cvidValue = $(this).data('cvid');
         $("#ex1").modal({
@@ -585,7 +586,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         selectedCandidates.push(cvidValue);
     })
-    $('#close-modal, .custom-close-modal').click(function() {
+    $('#close-modal, .custom-close-modal').click(function(e) {
+        e.preventDefault();
         console.log('Modal Should Be Closed');
         $.modal.close();
     });
@@ -612,16 +614,16 @@ document.addEventListener('DOMContentLoaded', function() {
     createRendezVousButton.addEventListener('click', function(event) {
         event.preventDefault();
         console.log('kjhds')
-        // make the button disabled
-        createRendezVousButton.disabled = true;
-        // show the loading 
-        createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        
         sendRdv(selectedCandidates);
     })
 
     function sendRdv(selectedValues) {
         if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
-            
+                // make the button disabled
+                createRendezVousButton.disabled = true;
+                // show the loading 
+                createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
                 // Create a FormData object to store the form data
                 const formData = new FormData();
 

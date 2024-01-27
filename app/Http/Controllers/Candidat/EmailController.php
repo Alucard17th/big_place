@@ -133,4 +133,14 @@ class EmailController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function ajaxRemoveFromDraft($id){
+        $email = Email::find($id);
+        $email->draft = false;
+        $email->save();
+        toast('Email envoyé','success')->autoClose(5000);
+
+        return redirect()->back();
+
+    }
 }

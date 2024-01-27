@@ -171,7 +171,7 @@ input, select{
                                                     Physique
                                                 @endif
                                             </td>
-                                            <td class="text-left" data-order="{{ $rdv->date}}">
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($rdv->date)->format('Y-m-d') }}">
                                                 {{ \Carbon\Carbon::parse($rdv->date)->formatLocalized('%d-%m-%Y') }} à 
                                                 {{ \Carbon\Carbon::parse($rdv->heure)->formatLocalized('%H:%M') }}
                                             </td>
@@ -297,6 +297,9 @@ document.addEventListener('DOMContentLoaded', function() {
             "search": "",
             "searchPlaceholder": "Rechercher...",
             "zeroRecords": "Aucun résultat trouvé.",
+            "columnDefs": [
+                { "orderData": [2, 0], "targets": 0 } // Assuming the date column is the first one (index 0)
+            ],
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
