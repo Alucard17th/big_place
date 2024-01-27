@@ -24,12 +24,17 @@ class FormationController extends Controller
         $formation = Formation::find($id);
         $user = auth()->user();
         // Check if the user is already attached to the formation
+        if($formation->subscribers >= $formation->max_participants){
+            toast('La formation est pleine.', 'info');
+            return redirect()->back();
+        }
+
         if (!$user->participationFormations->contains($formation)) {
             // If not, attach the formation
-            // $user->participationFormations()->syncWithoutDetaching($formation);
             $user->participationFormations()->attach($formation, ['status' => 'En Attente']);
             $formation->subscribers = $formation->subscribers + 1;
             $formation->save();
+
             // You can also perform additional actions if needed
             toast('Votre souscription a bien été prise en compte.', 'success');
         } else {

@@ -43,7 +43,7 @@
             <li class="{{ Str::contains(Request::url(), 'mon-calendrier') ? 'active' : '' }}">
                 <a href="/mon-calendrier" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/tasks.png')}}" alt=""> Mon Calendrier</span>
+                            src="{{asset('/plugins/images/recruiter-sidebar/calendar.png')}}" alt=""> Mon Calendrier</span>
                 </a>
             </li>
             <li class="{{ Str::contains(Request::url(), 'mes-taches') ? 'active' : '' }}">
@@ -80,17 +80,17 @@
                         candidatures</span>
                 </a>
             </li> -->
-            <li class="{{ Str::contains(Request::url(), 'mes-candidatures') ? 'active' : '' }}">
+            <!-- <li class="{{ Str::contains(Request::url(), 'mes-candidatures') ? 'active' : '' }}">
                 <a href="" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/candidatures.png')}}" alt=""> Mes
                         candidatures</span>
                 </a>
-            </li>
+            </li> -->
             <li class="{{ Str::contains(Request::url(), 'mes-candidatures') ? 'active' : '' }}">
                 <a href="" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/candidatures.png')}}" alt=""> Gestion des
+                            src="{{asset('/plugins/images/recruiter-sidebar/gestion-candidature.png')}}" alt=""> Gestion des
                         candidatures</span>
                 </a>
             </li>
