@@ -91,7 +91,7 @@
                         <div class="widget-content">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-8 offset-md-1">
+                                    <div class="col-md-8">
                                         <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
 
@@ -199,9 +199,10 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Candidat</th>
+                                            <th>Nom du Candidat</th>
                                             <th>Statut</th>
                                             <th>Crée le</th>
+                                            <th>Action</th>
                                             
                                             <!-- @unlessrole('restricted')
                                             <th>Actions</th>
@@ -212,8 +213,25 @@
                                         @foreach ($candidatures as $candidature)
                                         <tr>
                                             <td class="text-left">{{getUserById($candidature->candidat_id)->name}}</td>
-                                            <td class="text-left">{{$candidature->status}}</td>
-                                            <td class="text-left">{{$candidature->created_at}}</td>
+                                            <td class="text-left">
+                                                @if($candidature->status == 'coming')
+                                                    A venir
+                                                @elseif($candidature->status == 'accepted')
+                                                    Acceptée
+                                                @elseif($candidature->status == 'refused')
+                                                    Refusée
+                                                @elseif($candidature->status == 'done')
+                                                    Terminée
+                                                @endif
+                                            </td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($candidature->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
+                                            <td class="text-left">
+                                                <a href="{{getUserCvById($candidature->candidat_id)}}" type="button"
+                                                    class="bg-btn-five ml-2" target="_blank">
+                                                    <i class="las la-eye"></i>
+                                                        Voir le CV
+                                                </a>
+                                            </td>
                                             <!-- @unlessrole('restricted')
                                             <td class="text-left">
                                                 <a href="" type="button"

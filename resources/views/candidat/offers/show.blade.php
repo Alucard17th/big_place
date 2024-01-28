@@ -35,7 +35,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-8 offset-md-1">
+                                    <div class="col-md-8">
                                         <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
 

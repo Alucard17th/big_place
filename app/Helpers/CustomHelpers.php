@@ -160,3 +160,18 @@ if (!function_exists('getMonthDates')) {
         ];
     }
 }
+
+if (!function_exists('getUserCvById')) {
+    function getUserCvById(int $id  = null)
+    {   
+        if ($id != null && $id != '') {
+           
+            $user = User::find($id);
+          
+          
+            return '/storage/' . $user->curriculum->first()->cv;
+        } else {
+            return '';
+        }
+    }
+}

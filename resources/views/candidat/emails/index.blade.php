@@ -128,7 +128,9 @@
                                     <table class="table table-sm table-bordered" id="data-table-inbox">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th></th>
+                                                <th>
+                                                    <input type="checkbox" class="select-all-checkbox" data-table="inbox">
+                                                </th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -171,7 +173,9 @@
                                     <table class="table table-sm table-bordered" id="data-table-sent">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th></th>
+                                                <th>
+                                                    <input type="checkbox" class="select-all-checkbox" data-table="sent">
+                                                </th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -214,7 +218,9 @@
                                     <table class="table table-sm table-bordered" id="data-table-deleted">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th></th>
+                                                <th>
+                                                    <input type="checkbox" class="select-all-checkbox" data-table="deleted">
+                                                </th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -250,7 +256,9 @@
                                     <table class="table table-sm table-bordered" id="data-table-draft">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th></th>
+                                                <th>
+                                                    <input type="checkbox" class="select-all-checkbox" data-table="draft">
+                                                </th>
                                                 <th>Nom</th>
                                                 <th>Message</th>
                                                 <th>Date</th>
@@ -482,6 +490,49 @@ $(document).ready(function() {
 
     $('#data-table-draft_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
+    var selectedCheckboxes = {};
+    var allTablesIDS = ['inbox', 'sent', 'deleted', 'draft'];
+    // Handle "Select All" checkbox click
+    $('.select-all-checkbox').on('change', function () {
+        var tableId = $(this).data('table');
+        var checkboxes = $('#' + tableId + '-container').find('.checkbox-item');
+
+        checkboxes.prop('checked', this.checked);
+
+        // Update the selectedCheckboxes object
+        selectedCheckboxes[tableId] = this.checked ? checkboxes.map(function () {
+            return $(this).val();
+        }).get() : [];
+
+        //Unselect all other checkboxes
+        for (var i = 0; i < allTablesIDS.length; i++) {
+            if(tableId != allTablesIDS[i]){
+                $('#' + allTablesIDS[i] + '-container').find('.checkbox-item').prop('checked', 0);
+                $('#' + allTablesIDS[i] + '-container').find('.select-all-checkbox').prop('checked', 0);
+            }
+        }
+        // loop through checkboxes and populate selectedValues with checked values
+        const checkedCheckboxes = document.querySelectorAll('.checkbox-item:checked');
+        selectedValues = Array.from(checkedCheckboxes).map(function(checkbox) {
+            return checkbox.value;
+        })
+
+        if(tableId == 'deleted'){
+            if(selectedValues.length > 0){
+                destroyAllButton.classList.remove('d-none');
+            }
+            else{
+                destroyAllButton.classList.add('d-none');
+            }
+        }
+        else{
+            if(selectedValues.length > 0){
+                deleteAllButton.classList.remove('d-none');
+            }else{
+                deleteAllButton.classList.add('d-none');
+            }
+        }
+    });
 
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
@@ -510,7 +561,6 @@ $(document).ready(function() {
                 destroyAllButton.classList.toggle('d-none', checkedCheckboxes.length === 0);
                 deleteAllButton.classList.add('d-none');
             }
-            
         });
     });
 
