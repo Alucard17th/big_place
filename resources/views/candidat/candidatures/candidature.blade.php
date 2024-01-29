@@ -285,7 +285,7 @@ select {
                                                     {{ \Carbon\Carbon::parse(getOfferByCandidatId($candidature->offer_id)->unpublish_date)->formatLocalized('%d-%m-%Y') }}
                                                 </div>
 
-                                                <div class="card mt-5" style="height:100%;">
+                                                <!-- <div class="card mt-5" style="height:100%;">
                                                     <div class="card-body">
                                                         <div class="row">
                                                             <div class="col-2 pr-0">
@@ -320,7 +320,7 @@ select {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
 
                                             </div>
                                         </div>

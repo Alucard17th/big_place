@@ -93,7 +93,6 @@
                                             <td>{{$formation->participants->count()}}</td>
                                             <td>{{$formation->work_location}}</td>
                                             <td>
-                                                {{$formation->status }} //--//
                                                 @if($formation->status == 'Active')
                                                     <span class="badge badge-success">Active</span>
                                                 @elseif($formation->status == 'Suspendue')

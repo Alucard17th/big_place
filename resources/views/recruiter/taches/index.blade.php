@@ -125,24 +125,28 @@ input, select{
                                     <div class="row w-100">
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
+                                                <label for="name">Tâche</label>
                                                 <input type="text" name="name" id="name" class="form-control" placeholder="Tâche">
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
+                                                <label for="start">Date de début</label>
                                                 <input type="date" name="start" id="start" class="form-control w-100">
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1">
                                             <div class="form-group mb-0 mr-1">
+                                                <label for="end">Date de fin</label>
                                                 <input type="date" name="end" id="end" class="form-control w-100">
                                             </div>
                                         </div>
 
                                         <div class="col-4 px-1 mt-3">
                                             <div class="form-group mb-0 mr-1">
+                                                <label for="status">Statut</label>
                                                 <select name="status" id="status" class="form-control">
                                                     <option value=""  selected>Tous</option>
                                                     <option value="Terminée">Terminée</option>
