@@ -175,25 +175,24 @@ input, select{
                                             <td class="text-left">{{$rdv->status}}</td>
                                             <td class="text-left">{{$rdv->commentaire}}</td>
                                             <td class="text-left">
+                                                @if($rdv->status != 'Annulé')
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-five">
                                                     <!-- Détails -->
                                                     <i class="las la-video"></i>
                                                     Rejoindre
                                                 </a>
+                                                
                                                 <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2"
                                                 onclick="return confirm('Etes-vous sur de vouloir annuler ce rendez-vous ?');">
                                                     <!-- Détails -->
                                                     Annuler
                                                 </a>
+                                                @endif
                                                 <button class="bg-btn-five add-comment-modal mt-2"
                                                     data-rdv-id="{{$rdv->id}}" data-rdv-commentaire="{{$rdv->commentaire}}">
                                                     <i class="las la-comment"></i>
                                                     Commentaire
                                                 </button>
-                                                <!-- <button class="theme-btn p-2 text-white add-comment-modal custom-btn"
-                                                    data-rdv-id="{{$rdv->id}}">
-                                                    <i class="las la-comment"></i>
-                                                </button> -->
                                             </td>
                                         </tr>
                                         @endforeach

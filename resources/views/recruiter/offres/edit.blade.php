@@ -273,7 +273,7 @@
                                 <!-- Field: Avantages proposés -->
                                 <div class="form-group">
                                     <label for="benefits">Avantages proposés</label>
-                                    <textarea class="form-control" id="benefits" name="benefits" rows="3" required> {{ $offer->benefits }}</textarea>
+                                    <textarea class="form-control" id="benefits" name="benefits" rows="3" required>{{ $offer->benefits }}</textarea>
                                 </div>
 
                                 <!-- Field: Date de publication de l’offre -->
@@ -291,7 +291,7 @@
 
                                 <div class="form-group">
                                     <label for="other_language">Tâches à effectuer (séparées par une virgule)</label>
-                                    <textarea name="post_tasks" id="post_tasks" class="form-control" rows="6">{{implode(', ', json_decode($offer->post_tasks))}}</textarea>
+                                    <textarea name="post_tasks" id="post_tasks" class="form-control" rows="6">@if ($offer->post_tasks && !empty(json_decode($offer->post_tasks))){{ implode(', ', json_decode($offer->post_tasks)) }}@endif</textarea>
                                 </div>
 
                                 <!-- Field: Choix des canaux de diffusion -->

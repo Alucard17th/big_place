@@ -96,14 +96,14 @@
                         documents</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-factures') ? 'active' : '' }}">
+            <li class="{{ Str::contains(Request::url(), '/mes-factures-et-contrats') ? 'active' : '' }}">
                 <a href="/mes-factures-et-contrats" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/factures.png')}}" alt=""> Mes factures et
                         contrats</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-statistiques') ? 'active' : '' }}">
+            <li class="{{ Str::contains(Request::url(), '/mes-stats') ? 'active' : '' }}">
                 <a href="/mes-stats" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/stats.png')}}" alt=""> Mes

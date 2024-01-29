@@ -76,6 +76,14 @@
                                     <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $formation->end_date }}">
                                 </div>
 
+                               
+                                <!-- Field: Max Participant de la formation -->
+                                <div class="form-group">
+                                    <label class="text-dark" for="max_participants">Nombre maximum de participants</label>
+                                    <input type="number" class="form-control" id="max_participants"
+                                        name="max_participants" required value="{{ $formation->max_participants }}">
+                                </div>
+
                                 <!-- Mention CDI à l’embauche -->
                                 <div class="form-group form-inline">
                                     <div class="form-check">

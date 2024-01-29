@@ -93,7 +93,6 @@ class RecruiterController extends Controller
         
         return view('recruiter.dashboard', compact('jobs', 'todayVues','entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
     }
-
     public function ajaxViewsPerDay(Request $request){
         $date = Carbon::parse($request->date);
         $user = auth()->user();
@@ -153,78 +152,13 @@ class RecruiterController extends Controller
 
         return \Response::json($formatted_tags);
     }
+
     // CV THEQUE
     public function cvtheque(){
-        // $user = auth()->user();
-
-        // if($user->parent_entreprise_id == null){
-        //     // USER IS ADMIN
-        //     $curriculums = Curriculum::where('user_id', $user->id)->get();
-        // }else{
-        //     // OTHER TEAM MEMBERS
-        //     $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-        //     $curriculums = Curriculum::where('user_id', $entreprise->user_id)->get();
-        // }
         $curriculums = Curriculum::all();
         $jobs = Job::all();
         return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
     }
-    // public function cvthequeSearch(Request $request){
-    //     $searchTerm = $request->all();
-
-    //     // Create a query builder instance
-    //     $query = Curriculum::query();
-    //     // $score = 0;
-
-    //     // Apply search conditions for each field
-    //     // if (!empty($searchTerm['metier_recherche']) && $searchTerm['metier_recherche'] != '') {
-    //     //     $query->where('metier_recherche', 'like', '%' . $searchTerm['metier_recherche'] . '%');
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-    //     // if (!empty($searchTerm['ville_domiciliation']) && $searchTerm['ville_domiciliation'] != '') {
-    //     //     $query->where('ville_domiciliation', 'like', '%' . $searchTerm['ville_domiciliation'] . '%')
-    //     //     ->orWhere('address', 'like', '%' . $searchTerm['ville_domiciliation'] . '%');
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-    //     // if (!empty($searchTerm['annees_experience']) && $searchTerm['annees_experience'] != '') {
-    //     //     $query->where('annees_experience', 'like', '%' . $searchTerm['annees_experience'] . '%');
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-    //     // if (!empty($searchTerm['niveau_etudes']) && $searchTerm['niveau_etudes'] != '') {
-    //     //     $query->where('niveau_etudes', 'like', '%' . $searchTerm['niveau_etudes'] . '%');
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-    //     // if (!empty($searchTerm['pretentions_salariales']) && $searchTerm['pretentions_salariales'] != '') {
-    //     //     $query->where('pretentions_salariales', 'like', '%' . $searchTerm['pretentions_salariales'] . '%');
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-    //     // if (!empty($searchTerm['valeurs']) && $searchTerm['valeurs'] != '') {
-    //     //     $query->where(function ($query) use ($searchTerm) {
-    //     //         $query->orWhereJsonContains('valeurs', $searchTerm['valeurs']);
-    //     //     });
-    //     //     $score += $query->count() > 0 ? 10 : 0;
-    //     //     echo $query->count() > 0 ? 10 : 0;
-    //     // }
-
-        
-
-    //     // $curriculums = $query->get();
-    //     // $total_possible_score = 60;
-    //     // foreach ($curriculums as $curriculum) {
-    //     //     $curriculum->matching_percentage = ($score / $total_possible_score) * 100;
-    //     // }
-
-    //     dd($curriculums);
-
-    //     $jobs = Job::all();
-
-    //     return view('recruiter.cvtheque', compact('curriculums', 'jobs'));
-    // }
     public function cvthequeSearch(Request $request)
     {
         $searchTerm = $request->all();
@@ -892,12 +826,10 @@ class RecruiterController extends Controller
         $offer->work_schedule = $request->input('work_schedule');
         $offer->weekly_hours = $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
-        // $offer->desired_languages = json_encode($request->input('desired_languages'));
         $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
          : json_encode($request->input('desired_languages'));
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        // $offer->industry_sector = $request->input('industry_sector');
         $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
@@ -931,10 +863,9 @@ class RecruiterController extends Controller
     public function myOffersShowCandidatures($id){
         $offer = Offre::find($id);
         $candidatures = Candidature::where('offer_id', $id)->get();
-        $userIds = $candidatures->pluck('user_id');
+        $userIds = $candidatures->pluck('candidat_id');
         $curriculums = Curriculum::whereIn('user_id', $userIds)->get();
-
-        return view('recruiter.offres.candidatures', compact('offer', 'curriculums'));
+        return view('recruiter.offres.candidatures', compact('offer', 'curriculums', 'candidatures'));
     }
 
     // EVENTS 
@@ -1473,26 +1404,33 @@ class RecruiterController extends Controller
             }
             elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
             {
-                $startMonth = $request->month_start;
-                $endMonth = $request->month_end;
+                // Extract year and month from form inputs
+                list($startYear, $startMonth) = explode('-', $request->month_start);
+                list($endYear, $endMonth) = explode('-', $request->month_end);
 
-                $filteredOffers = [];
+                // Convert the months to Carbon instances
+                $startDate = Carbon::createFromDate($startYear, $startMonth, 1)->startOfMonth();
+                $endDate = Carbon::createFromDate($endYear, $endMonth, 1)->endOfMonth();
 
-                foreach ($offersByMonth as $monthRange => $value) {
-                    // Debug information
-                    // Swap values if start week is greater than end week
-                    if ($startMonth > $endMonth) {
-                        list($startMonth, $endMonth) = [$endMonth, $startMonth];
-                    }
+                // Query Candidature models between the selected months
+                $offers = Offre::where('user_id', $user->id)->whereBetween('created_at', [$startDate, $endDate])->get();
 
-                    // Compare the date ranges
-                    if ($monthRange >= $startMonth && $monthRange <= $endMonth) {
-                        // Add the value to the filtered array
-                        $filteredOffers[$monthRange] = $value;
-                    }
+                // Initialize an array to store counts for each month
+                $offersByMonth = [];
+
+                // Iterate through offers and populate the array
+                foreach ($offers as $candidature) {
+                    // Get the start and end dates of the month for the candidature's date
+                    $monthYear = $candidature->created_at->format('m-Y');
+
+                    // Increment the count for the corresponding month and year in the array
+                    $offersByMonth[$monthYear] = isset($offersByMonth[$monthYear])
+                    ? $offersByMonth[$monthYear] + 1
+                    : 1;
                 }
-                $offersByDay = $filteredOffers;
 
+                // Now $offersByMonth contains the count of offers for each month (start date - end date)
+                $offersByDay = $offersByMonth;
             }
 
             // CANDIDATURES !
@@ -1535,26 +1473,34 @@ class RecruiterController extends Controller
                 $candidaturesByDay = $filteredCandidatures;
             }
             elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
-            {
-                $startMonth = $request->month_start;
-                $endMonth = $request->month_end;
+            { 
+                // Extract year and month from form inputs
+                list($startYear, $startMonth) = explode('-', $request->month_start);
+                list($endYear, $endMonth) = explode('-', $request->month_end);
 
-                $filteredCandidatures = [];
+                // Convert the months to Carbon instances
+                $startDate = Carbon::createFromDate($startYear, $startMonth, 1)->startOfMonth();
+                $endDate = Carbon::createFromDate($endYear, $endMonth, 1)->endOfMonth();
 
-                foreach ($candidaturesByMonth as $monthRange => $value) {
-                    // Debug information
-                    // Swap values if start week is greater than end week
-                    if ($startMonth > $endMonth) {
-                        list($startMonth, $endMonth) = [$endMonth, $startMonth];
-                    }
+                // Query Candidature models between the selected months
+                $candidatures = Candidature::whereBetween('created_at', [$startDate, $endDate])->get();
 
-                    // Compare the date ranges
-                    if ($monthRange >= $startMonth && $monthRange <= $endMonth) {
-                        // Add the value to the filtered array
-                        $filteredCandidatures[$monthRange] = $value;
-                    }
+                // Initialize an array to store counts for each month
+                $candidaturesByMonth = [];
+
+                // Iterate through candidatures and populate the array
+                foreach ($candidatures as $candidature) {
+                    // Get the start and end dates of the month for the candidature's date
+                    $monthYear = $candidature->created_at->format('m-Y');
+
+                    // Increment the count for the corresponding month and year in the array
+                    $candidaturesByMonth[$monthYear] = isset($candidaturesByMonth[$monthYear])
+                    ? $candidaturesByMonth[$monthYear] + 1
+                    : 1;
                 }
-                $candidaturesByDay = $filteredCandidatures;
+
+                // Now $candidaturesByMonth contains the count of candidatures for each month (start date - end date)
+                $candidaturesByDay = $candidaturesByMonth;
             }
 
             // RDVS
@@ -1580,11 +1526,49 @@ class RecruiterController extends Controller
             }
             elseif($request->group_by == 'week' && $request->week_start != null && $request->week_end != null)
             {
-                
+                list($startYear, $startWeek) = explode('-W', $request->week_start);
+                list($endYear, $endWeek) = explode('-W', $request->week_end);
+            
+                $startDate = Carbon::create($startYear, 1, 1)->addWeek($startWeek - 1)->startOfWeek();
+                $endDate = Carbon::create($endYear, 1, 1)->addWeek($endWeek - 1)->endOfWeek();
+            
+                $doneRdvs = $user->rendezvous()
+                    ->where('status', 'Effectué')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
+            
+                $refusedRdvs = $user->rendezvous()
+                    ->where('status', 'Annulé')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
+            
+                $pendingRdvs = $user->rendezvous()
+                    ->where('status', 'En attente')
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->count();
             }
             elseif($request->group_by == 'month' && $request->month_start != null && $request->month_end != null)
             {
-               
+                list($startYear, $startMonth) = explode('-', $request->month_start);
+                list($endYear, $endMonth) = explode('-', $request->month_end);
+            
+                $startDate = Carbon::create($startYear, $startMonth, 1)->startOfMonth();
+                $endDate = Carbon::create($endYear, $endMonth, 1)->endOfMonth();
+            
+                $doneRdvs = $user->rendezvous()
+                    ->where('status', 'Effectué')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
+            
+                $refusedRdvs = $user->rendezvous()
+                    ->where('status', 'Annulé')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
+            
+                $pendingRdvs = $user->rendezvous()
+                    ->where('status', 'En attente')
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->count();
             }
 
         }
@@ -1650,6 +1634,12 @@ class RecruiterController extends Controller
             $history->user_id = $user->id;
             $history->searchable = $curriculum->id;
             $history->save();
+            
+            $vue = new Vues();
+            $vue->count = 1;
+            $vue->viewable_id = $request->candidature_id;
+            $vue->type = 'candidature';
+            $vue->save();
         }
 
         return response()->json($existingRecord);

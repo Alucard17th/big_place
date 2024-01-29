@@ -8,6 +8,7 @@ use App\Models\Job;
 use App\Models\Candidature;
 use App\Models\RendezVous;
 use App\Models\Offre;
+use App\Models\Vues;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -58,18 +59,19 @@ class CandidatController extends Controller
         $candidatures = Candidature::where('candidat_id', $user->id)
         ->whereDate('created_at', now()->toDateString())
         ->get();
-        $candidaturesCount = $candidatures->count();
-        // dd($candidatures, $vuesByDay, $vuesByWeek, $vuesByMonth);
+        // $candidaturesCount = $candidatures->count();
+        $candidaturesCount = Vues::whereIn('viewable_id', $candidatures->pluck('id'))->whereDate('created_at', Carbon::today())->count();
         return view('candidat.dashboard', compact('jobs', 'candidaturesCount'));
     }
 
     public function ajaxViewsPerDay(Request $request){
         $user = auth()->user();
-        $candidatures = Candidature::where('candidat_id', $user->id)
-        ->whereDate('created_at', $request->date)
-        ->count();
+        // $candidatures = Candidature::where('candidat_id', $user->id)
+        // ->whereDate('created_at', $request->date)
+        // ->count();
 
-        $todayVues = $candidatures; 
+        $candidatures = Candidature::where('candidat_id', $user->id)->get();
+        $todayVues = Vues::whereIn('viewable_id', $candidatures->pluck('id'))->whereDate('created_at', $request->date)->count();
         
         return response()->json($todayVues);
     }

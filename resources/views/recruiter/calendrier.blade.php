@@ -31,6 +31,13 @@
 #calendar-item > div.fc-view-harness.fc-view-harness-active > div > table > tbody > tr{
     display: table-row !important;
 }
+
+.custom-tooltip{
+    font-size: 14px !important;
+    color: #000 !important;
+    line-height: 1.5 !important;
+    background-color: #fff !important;
+ }
 </style>
 @endpush
 
@@ -52,7 +59,7 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <div id='calendar-item'></div>
+                                <div id='calendar-item' ></div>
                             </div>
                         </div>
                     </div>
@@ -325,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (!tooltip) {
                 tooltip = document.createElement('div');
                 tooltip.id = 'custom-tooltip';
+                tooltip.className = 'custom-tooltip';
                 document.body.appendChild(tooltip);
             }
 
@@ -335,9 +343,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     dataType: 'json',
                     success: function(data) {
                         console.log('Candidat fetched successfully', data.avatar);
-                        const imgString = `<img src="${data.avatar.replace('public', 'storage')}" width="50" height="50" style="border-radius: 50%;">`;
+                        const imgString = `<img src="${data.avatar.replace('public', 'storage')}" style="border-radius: 50%;width: 50px;height: 50px;height: 50px;">`;
 
-                        tooltip.innerHTML += imgString + '  ' + data.name + '<br>' +
+                        tooltip.innerHTML += imgString + '  <h5>' + data.name + '</h5><br>' +
                         'Email : ' + data.email + '<br>' +
                         info.event.title + '<br>' +
                         info.event.extendedProps.description;

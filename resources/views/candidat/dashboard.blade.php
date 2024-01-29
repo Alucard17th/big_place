@@ -190,6 +190,13 @@
     /* line-height: 1.5 !important; */
     color: #000 !important;
  }
+ 
+ .custom-tooltip{
+    font-size: 14px !important;
+    color: #000 !important;
+    line-height: 1.5 !important;
+    background-color: #fff !important;
+ }
 </style>
 @endpush
 
@@ -320,7 +327,7 @@
             <div class="col-3 px-2">
                 <div class="card">
                     <div class="card-body px-2">
-                        <h4 class="text-dark dashboard-card-title d-inline mb-3">Nombre de vues de la vitrine</h4>
+                        <h4 class="text-dark dashboard-card-title d-inline mb-3">Nombre de vues des candidatures</h4>
                         <div class="row w-100 mt-4">
                             <div class="col-12 pr-0">
                                 <div class="form-group">
@@ -622,45 +629,45 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     })
 
-    await $.ajax({
-        url: "{{ route('getCandidatEvents') }}",
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            console.log('EVENTS fetched successfully', data);
-            data.forEach(function(event) {
-                rdvs.push({
-                    title: 'Evènement le : ' + event.event_date,
-                    start: event.event_date + 'T' + event.event_hour,
-                    backgroundColor: 'red',
-                    borderColor: 'red',
-                });
-            })
-        },
-        error: function() {
-            console.log('Error fetching events');
-        }
-    })
+    // await $.ajax({
+    //     url: "{{ route('getCandidatEvents') }}",
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     success: function(data) {
+    //         console.log('EVENTS fetched successfully', data);
+    //         data.forEach(function(event) {
+    //             rdvs.push({
+    //                 title: 'Evènement le : ' + event.event_date,
+    //                 start: event.event_date + 'T' + event.event_hour,
+    //                 backgroundColor: 'red',
+    //                 borderColor: 'red',
+    //             });
+    //         })
+    //     },
+    //     error: function() {
+    //         console.log('Error fetching events');
+    //     }
+    // })
 
-    await $.ajax({
-        url: "{{ route('getCandidatFormations') }}",
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            console.log('Formations fetched successfully', data);
-            data.forEach(function(event) {
-                rdvs.push({
-                    title: 'Formation le : ' + event.start_date,
-                    start: event.start_date,
-                    backgroundColor: 'green',
-                    borderColor: 'green',
-                });
-            })
-        },
-        error: function() {
-            console.log('Error fetching events');
-        }
-    })
+    // await $.ajax({
+    //     url: "{{ route('getCandidatFormations') }}",
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     success: function(data) {
+    //         console.log('Formations fetched successfully', data);
+    //         data.forEach(function(event) {
+    //             rdvs.push({
+    //                 title: 'Formation le : ' + event.start_date,
+    //                 start: event.start_date,
+    //                 backgroundColor: 'green',
+    //                 borderColor: 'green',
+    //             });
+    //         })
+    //     },
+    //     error: function() {
+    //         console.log('Error fetching events');
+    //     }
+    // })
 
     var today = new Date(); // Get current date
     var dd = String(today.getDate()).padStart(2, '0');
@@ -691,6 +698,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (!tooltip) {
                 tooltip = document.createElement('div');
                 tooltip.id = 'custom-tooltip';
+                tooltip.className = 'custom-tooltip';
                 document.body.appendChild(tooltip);
             }
 
@@ -702,9 +710,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     success: function(data) {
                         console.log('Entreprise :', data);
                         const imgString =
-                            `<img src="${data.logo ? '/storage' + data.logo.replace('public', 'storage') : ''}" width="50" height="50" style="border-radius: 50%;">`;
+                            `<img src="${data.logo ? '/storage' + data.logo.replace('public', 'storage') : ''}" style="border-radius: 50%;width: 50px;height: 50px;height: 50px;">`;
 
-                        tooltip.innerHTML += imgString + '  ' + data.nom_entreprise + '<br>' +
+                        tooltip.innerHTML += imgString + '  <h5>' + data.nom_entreprise + '</h5><br>' +
                             'Siège Social : ' + data.siege_social + '<br>' +
                             info.event.title + '<br>' +
                             info.event.extendedProps.description;

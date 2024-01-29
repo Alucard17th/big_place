@@ -123,21 +123,13 @@
                                     <div class="filter-by-month" style="{{ request()->get('group_by') == 'month' ? '' : 'display:none' }}">
                                         <div class="row mb-3">
                                             <div class="col-6">
-                                                <label for="end_date">Début:</label>
-                                                <select class="form-control" id="month_start" name="month_start">
-                                                    @foreach($offersByMonth as $key => $value)
-                                                        <option value="{{$key}}" @if(request()->get('month_start') == $key) selected @endif>{{$key}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <label for="month_start">Début:</label>
+                                                <input type="month" class="form-control" id="month_start" name="month_start" value="{{ request()->get('month_start') }}">
                                             </div>
 
                                             <div class="col-6">
-                                                <label for="end_date">Fin:</label>
-                                                <select class="form-control" id="month_end" name="month_end">
-                                                    @foreach($offersByMonth as $key => $value)
-                                                        <option value="{{$key}}" @if(request()->get('month_end') == $key) selected @endif>{{$key}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <label for="month_end">Fin:</label>
+                                                <input type="month" class="form-control" id="month_end" name="month_end" value="{{ request()->get('month_end') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -153,12 +145,13 @@
                 </div>
 
                 <div class="col-12 mb-5">
+
                     <div class="row">
                         <div class="col-4">
                             <div class="card stat-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Rendez-vous effectués</h5>
-                                    <p class="card-text">{{$doneRdvs}}</p>
+                                    <h6 class="text-success text-center mt-4">{{ $doneRdvs }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -167,7 +160,7 @@
                             <div class="card stat-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Rendez-vous en attente</h5>
-                                    <p class="card-text">{{$pendingRdvs}}</p>
+                                    <h6 class="text-warning text-center mt-4">{{ $pendingRdvs }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +169,7 @@
                             <div class="card stat-card">
                                 <div class="card-body">
                                     <h5 class="card-title">Rendez-vous annulés</h5>
-                                    <p class="card-text">{{$refusedRdvs}}</p>
+                                    <h6 class="text-danger text-center mt-4">{{ $refusedRdvs }}</h6>
                                 </div>
                             </div>
                         </div>

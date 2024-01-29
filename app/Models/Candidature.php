@@ -13,4 +13,10 @@ class Candidature extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function candidat()
+    {
+        return $this->belongsTo(User::class, 'candidat_id');
+    }
+    
 }

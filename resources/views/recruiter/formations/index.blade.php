@@ -93,6 +93,7 @@
                                             <td>{{$formation->participants->count()}}</td>
                                             <td>{{$formation->work_location}}</td>
                                             <td>
+                                                {{$formation->status }} //--//
                                                 @if($formation->status == 'Active')
                                                     <span class="badge badge-success">Active</span>
                                                 @elseif($formation->status == 'Suspendue')
@@ -127,10 +128,12 @@
                                                     <i class="las la-download"></i>
                                                     Documents
                                                 </a> -->
+                                                @if($formation->status != 'Ferme')
                                                 <a href="{{route('recruiter.formation.close', $formation->id)}}" class="bg-btn-five mt-2">
                                                     <i class="las la-trash"></i>
                                                     Annuler
                                                 </a>
+                                                @endif
                                                     @role('recruiter')
                                                     <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
                                                     onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">

@@ -33,7 +33,7 @@ input, select{
     width: 100% !important;
 }
 .select2-search__field{
-    padding: 0px 18px 10px 20px !important;
+    padding: 0px 18px 10px 12px !important;
     height: 37px !important;
 }
 
@@ -95,6 +95,7 @@ input, select{
     color: #000 !important;
     padding-left: 18px;
     font-size: 16px !important;
+    font-weight: 400 !important;
 }
 
 </style>

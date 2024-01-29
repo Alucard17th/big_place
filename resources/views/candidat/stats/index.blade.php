@@ -134,37 +134,39 @@
                                 </form>
                             </div>
                             <!-- TABLE VIEW -->
-                            <div class="row mb-5">
-                                <div class="col-4">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Rendez-vous effectués</h5>
-                                            <h6 class="text-success text-center mt-4">{{ $doneRdvs }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
 
-                                <div class="col-4">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Rendez-vous en attente</h5>
-                                            <h6 class="text-warning text-center mt-4">{{ $pendingRdvs }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-4">
-                                    <div class="card stat-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Rendez-vous annulés</h5>
-                                            <h6 class="text-danger text-center mt-4">{{ $refusedRdvs }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                               
+                <div class="row mb-5">
+                    <div class="col-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Rendez-vous effectués</h5>
+                                <h6 class="text-success text-center mt-4">{{ $doneRdvs }}</h6>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Rendez-vous en attente</h5>
+                                <h6 class="text-warning text-center mt-4">{{ $pendingRdvs }}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Rendez-vous annulés</h5>
+                                <h6 class="text-danger text-center mt-4">{{ $refusedRdvs }}</h6>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <!-- TABLE VIEW -->
