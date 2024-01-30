@@ -63,6 +63,9 @@ Route::get('/excel-import', function () {
     }
 });
 
+Route::get('/import-xml-offers', [RecruiterController::class, 'importXml'])->name('bigplace.importXml');
+
+
 Auth::routes(['verify' => true]);
 
 
@@ -98,7 +101,7 @@ Route::post('/commentaire/add', [RecruiterController::class, 'addCommentaire'])-
 Route::get('/email/ajax-remove-from-draft/{id}', [EmailController::class, 'ajaxRemoveFromDraft'])->name('emails.ajax.remove.from.draft');
 
 // RECRUITER
-Route::group(['middleware' => ['role:recruiter|limited|restricted', 'verified']], function () {
+Route::group(['middleware' => ['role:recruiter|limited|restricted']], function () {
     // DASHBOARD
     Route::get('/recruiter-dashboard', [RecruiterController::class, 'dashboard'])->name('recruiter.dashboard');
     Route::post('/recruiter-dashboard/ajax-views-per-day', [RecruiterController::class, 'ajaxViewsPerDay'])->name('recruiter.dashboard.ajax.views.per.day');
@@ -317,7 +320,6 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     // Route::post('/email/ajax-delete', [EmailController::class, 'ajaxDelete'])->name('candidat.emails.ajax.delete');
     // Route::post('/email/ajax-destroy', [EmailController::class, 'ajaxDestroy'])->name('candidat.emails.ajax.destroy');
 
-
     // DOCUMENTS
     Route::post('/document/candidate/update', [DocumentController::class, 'store'])->name('candidat.document.store');
     Route::get('/document/candidat/delete/{id}', [DocumentController::class, 'delete'])->name('candidat.document.delete');
@@ -330,7 +332,6 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
 
     // HISTORY
     Route::get('/candidat-history', [CandidatController::class, 'history'])->name('candidat.history');
-
 });
 
 

@@ -1,6 +1,14 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
+    .offer-desc p {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        margin-bottom: 0 !important;
+        margin-top: 3px !important;
+        font-size: 16px;
+        color: #000 !important;
+    }
 </style>
 @endpush
 
@@ -58,7 +66,7 @@
                                                 class="text-muted">{{ $offer->contract_type }}</span></h5>
 
                                         <h5 class="h6 mb-3">Horaires de travail :
-                                            @if ($offer->work_schedule != "null")
+                                            @if ($offer->work_schedule != null && $offer->work_schedule != '[]')
                                                 @foreach (json_decode($offer->work_schedule) as $schedule)
                                                     <span class="text-muted">{{ $schedule }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
                                                 @endforeach
@@ -96,14 +104,17 @@
                                         <h5 class="h6 mb-3">Avantages : <span
                                             class="text-muted">{{ $offer->benefits }}</span></h5>
 
-                                        <h5 class="h6 mb-3">Tâches à effectuer :
-                                            @if ($offer->post_tasks != null)
+                                        <h5 class="h6 mb-3">Descriptif du poste :
+                                            <div class="offer-desc text-dark mt-2">
+                                                {!! $offer->description !!}
+                                            </div>
+                                            <!-- @if ($offer->post_tasks != null)
                                                 @foreach (json_decode($offer->post_tasks) as $task)
                                                 <span class="text-muted">{{ $task }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
                                                 @endforeach
                                             @else
                                             <span class="text-muted">-</span>
-                                            @endif
+                                            @endif -->
                                         </h5>   
                                         
                                     </div>

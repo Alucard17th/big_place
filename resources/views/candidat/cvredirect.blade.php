@@ -226,7 +226,7 @@ color: #2D2F30;
                             @csrf
                             <h4 class="text-dark mb-3">Télécharger CV</h4>
                             <input type="file" name="cv" id="cv" class="py-3">
-                            <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Enregistrer</button>
+                            <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
                             <!-- @if(!empty($curriculum)) -->
                             <!-- @else -->
                             <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
@@ -337,7 +337,7 @@ color: #2D2F30;
                                             <option value="Bac" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac') selected @endif>Bac</option>
                                             <option value="Bac+2" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+2') selected @endif>Bac + 2</option>
                                             <option value="Bac+4" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+4') selected @endif>Bac + 4</option>
-                                            <option value="Bac+5 et plus" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+5') selected @endif>Bac + 5 et plus</option>
+                                            <option value="Bac+5 et plus" @if(isset($curriculum) && $curriculum->niveau_etudes == 'Bac+5 et plus') selected @endif>Bac + 5 et plus</option>
                                         </select>
                                     </div>
                                 </div>
@@ -414,7 +414,7 @@ color: #2D2F30;
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" id="create-cv-btn">Enregistrer</button>
+                            <button type="submit" class="btn btn-primary" id="create-cv-btn">Modifier mes informations</button>
                         </form>
                     </div>
                 </div>

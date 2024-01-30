@@ -296,13 +296,20 @@ nav > ul.pagination > li > a{
                             id="company-container">
                             <div class="col-12 mt-2 mb-1">
                                 <h4 class="text-dark">{{ $entreprise->nom_entreprise }}</h4>
-                                <p class="text-dark">{{ $entreprise->domiciliation }}, {{ $entreprise->siege_social }}</p>
+                                <p class="text-dark">{{ $entreprise->domiciliation }} <br> {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
                                     <li>Date de création : {{ $entreprise->date_creation }}</li>
                                     <!-- <li>{{ $entreprise->domiciliation }}</li> -->
                                     <li>Valeurs fortes : {{ $entreprise->valeurs_fortes }}</li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>
-                                    <li>Fondateurs : {{ $entreprise->fondateurs }}</li>
+                                    <li>Fondateurs : 
+                                        @if(count(json_decode($entreprise->fondateurs)) > 1)
+                                            @foreach(json_decode($entreprise->fondateurs) as $fondateur)
+                                            {{$fondateur}}
+                                            @if(!$loop->last)<span class="text-muted">,</span>@endif
+                                            @endforeach
+                                        @endif
+                                    </li>
                                     <li>Chiffre d'affaires : {{ $entreprise->chiffre_affaire }}</li>
                                 </ul>
                             </div>
@@ -311,6 +318,7 @@ nav > ul.pagination > li > a{
                                 <button type="button" class="btn" id="sent-btn">Vidéos</button>
                             </div>
 
+                            @if(isset($entreprise->photos_locaux) && count(json_decode($entreprise->photos_locaux)) > 0)
                             <div class="images-container">
                                 <div class="row">
                                     @foreach(json_decode($entreprise->photos_locaux) as $key => $photo)
@@ -320,6 +328,8 @@ nav > ul.pagination > li > a{
                                     @endforeach
                                 </div>
                             </div>
+                            @endif
+                            @if(isset($entreprise->video) && count(json_decode($entreprise->video)) > 0)
                             <div class="video-container" style="display: none">
                                 <div class="row">
                                     @foreach(json_decode($entreprise->video) as $key => $video)
@@ -330,6 +340,7 @@ nav > ul.pagination > li > a{
                                     @endforeach
                                 </div>
                             </div>
+                            @endif
                         </div>
 
                         <div class="row justify-content-left align-items-left px-3" style="display:none"

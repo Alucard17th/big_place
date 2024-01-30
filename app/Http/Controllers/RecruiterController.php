@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Vues;
 use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleXMLElement;
 
 class RecruiterController extends Controller
 {   
@@ -80,16 +81,17 @@ class RecruiterController extends Controller
             ->orderBy('year', 'desc')
             ->orderBy('month', 'desc')
             ->get();
+
+            $todayVues = Vues::where('viewable_id', $entreprise->id)
+        ->where('type', 'entreprise')
+        ->whereDate('created_at', Carbon::today())
+        ->count();
         }else{
             $vuesByDay = null;
             $vuesByWeek = null;
             $vuesByMonth = null;
+            $todayVues = 0;
         }
-
-        $todayVues = Vues::where('viewable_id', $entreprise->id)
-        ->where('type', 'entreprise')
-        ->whereDate('created_at', Carbon::today())
-        ->count();
         
         return view('recruiter.dashboard', compact('jobs', 'todayVues','entrepriseViews', 'vuesByDay', 'vuesByWeek', 'vuesByMonth'));
     }
@@ -531,7 +533,7 @@ class RecruiterController extends Controller
     public function myVitrine(){
         $user = auth()->user();
         $entreprise = $user->entreprise->first();
-        $offers = $entreprise->user->offers()->paginate(9);
+        $offers = $entreprise != null ? $entreprise->user->offers()->paginate(9) : null;
         return view('recruiter.vitrine.vitrine', compact('entreprise', 'offers'));
     }
     public function updateVitrine(Request $request){
@@ -1881,5 +1883,101 @@ class RecruiterController extends Controller
 
         return response()->json(['message' => 'XML file generated successfully']);
     }
+
+
+    // IMPORT THE XML OFFERS
+    public function importXml()
+    {
+        set_time_limit(0);
+        $xmlFilePath = storage_path('app/BigPlace_fr.xml'); // Update with the actual file path
+
+        if (!file_exists($xmlFilePath)) {
+            return response()->json(['error' => 'XML file not found.'], 404);
+        }
+
+        $xmlString = file_get_contents($xmlFilePath);
+        $xml = new SimpleXMLElement($xmlString);
+
+        foreach ($xml->job as $jobData) {
+            // Extract data from XML and create Offre model
+            $offer = new Offre([
+                'job_title' => (string)$jobData->title,
+
+                'location_country' => (string)$jobData->region->country,
+                'location_state' => (string)$jobData->region->state,
+                'location_city' => (string)$jobData->region->city,
+                'location_address' => (string)$jobData->region->state . ', ' . (string)$jobData->region->city . ', ' . (string)$jobData->region->country,
+                
+                'brut_salary' => (string)$jobData->salary->min . ' - ' . (string)$jobData->salary->max,
+                'description' => (string)$jobData->description,
+                'company_name' => (string)$jobData->company,
+                'url' => (string)$jobData->url,
+                'user_id' => 19,
+                'updated_at' => $jobData->date_updated ? $jobData->date_updated : now(),
+                'source' => 'Jooble',
+                // Add other fields accordingly
+            ]);
+
+            // Save the offer in the database
+            $offer->save();
+
+            // $offer->save();
+            print_r($jobData);
+        }
+
+        return response()->json(['message' => 'Offers imported successfully.'], 200);
+    }
+
+    // public function importXml()
+    // {
+    //     $xmlFilePath = storage_path('app/BigPlace_fr.xml'); // Update with the actual file path
+
+    //     if (!file_exists($xmlFilePath)) {
+    //         return response()->json(['error' => 'XML file not found.'], 404);
+    //     }
+
+    //     $xmlString = file_get_contents($xmlFilePath);
+    //     $xml = new SimpleXMLElement($xmlString);
+
+    //     $jobsArray = json_decode(json_encode($xml->jobs), true); // Convert SimpleXMLElement to array
+
+    //     $batchSize = 100; // Adjust the batch size based on your server capabilities
+
+    //     foreach (array_chunk($jobsArray, $batchSize) as $jobChunk) {
+    //         DB::beginTransaction();
+
+    //         try {
+    //             foreach ($jobChunk as $jobData) {
+    //                 // Extract data from XML and create Offre model
+    //                 $offer = new Offre([
+    //                     'job_title' => (string)$jobData['title'],
+    //                     'location_country' => (string)$jobData['region']['country'],
+    //                     'location_state' => (string)$jobData['region']['state'],
+    //                     'location_city' => (string)$jobData['region']['city'],
+    //                     'location_address' => (string)$jobData['region']['state'] . ', ' . (string)$jobData['region']['city'] . ', ' . (string)$jobData['region']['country'],
+    //                     'brut_salary' => (string)$jobData['salary']['min'] . ' - ' . (string)$jobData['salary']['max'],
+    //                     'description' => (string)$jobData['description'],
+    //                     'company_name' => (string)$jobData['company'],
+    //                     'url' => (string)$jobData['url'],
+    //                     'user_id' => 19,
+    //                     'updated_at' => $jobData['date_updated'] ? $jobData['date_updated'] : now(),
+    //                     'source' => 'Jooble',
+    //                     // Add other fields accordingly
+    //                 ]);
+
+    //                 // Save the offer in the database
+    //                 $offer->save();
+    //             }
+
+    //             DB::commit();
+    //         } catch (\Exception $e) {
+    //             DB::rollback();
+
+    //             return response()->json(['error' => 'Error occurred during import.', 'message' => $e->getMessage()], 500);
+    //         }
+    //     }
+
+    //     return response()->json(['message' => 'Offers imported successfully.'], 200);
+    // }
 
 }
