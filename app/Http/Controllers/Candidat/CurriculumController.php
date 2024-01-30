@@ -46,8 +46,16 @@ class CurriculumController extends Controller
         $curriculum = $user->curriculum()->first();
         if($request->has('cv')) {
             $fileInfos = Filepond::field($request->cv)->moveTo('/uploads/'.$user->id.'/cv_'.uniqid());
-            $curriculum->cv = $fileInfos['location'];
-            $curriculum->save();
+
+            $curriculum = $user->curriculum()->updateOrCreate(
+                // Search criteria to find the record to update
+                ['user_id' => $user->id],
+        
+                // Values to update or create
+                [
+                    'cv' => $fileInfos['location']
+                ]
+            );
 
             $user->documents()->create([
                 'name' => $fileInfos['basename'],
