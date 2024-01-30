@@ -329,7 +329,7 @@ nav > ul.pagination > li > a{
                                                 value="{{ isset($entreprise) ? $entreprise->fondateurs : ''}}"> -->
                                             <select id='diacritics' name='fondateurs[]' class='' multiple>
                                                 @if ($entreprise->fondateurs)
-                                                    @foreach (json_decode($entreprise->fondateurs, true) as $fondateur)
+                                                    @foreach (json_decode($entreprise->fondateurs, true) ?? [] as $fondateur)
                                                         <option value="{{ $fondateur }}" selected>{{ $fondateur }}</option>
                                                     @endforeach
                                                 @endif
