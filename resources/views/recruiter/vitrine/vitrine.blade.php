@@ -382,9 +382,9 @@ nav > ul.pagination > li > a{
                     <div class="tabs-box p-4">
                         <div class="row align-items-center justify-content-center">
                             @if(!isset($entreprise) || $entreprise->cover == '')
-                            <img src="https://placehold.co/900X313" alt="" style="border-radius: 15px">
+                            <img src="https://placehold.co/900X313" alt="" class="mt-2" style="border-radius: 15px">
                             @else
-                            <div
+                            <div class="mt-2"
                                 style="background-image: url({{ 'storage'.$entreprise->cover }});border-radius: 15px; width: 900px; height: 300px;background-repeat: no-repeat;background-size: cover;">
                             </div>
                             <!-- <img src="{{ 'storage'.$entreprise->cover }}" alt="" style="border-radius: 15px; width: 900px; height: 200px"> -->
