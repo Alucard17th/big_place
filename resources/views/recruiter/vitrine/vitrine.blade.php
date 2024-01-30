@@ -328,10 +328,10 @@ nav > ul.pagination > li > a{
                                             <!-- <input type="text" class="form-control" name="fondateurs" id="fondateurs"
                                                 value="{{ isset($entreprise) ? $entreprise->fondateurs : ''}}"> -->
                                             <select id='diacritics' name='fondateurs[]' class='' multiple>
-                                                @if($entreprise->fondateurs != null && isset($entreprise->fondateurs))
-                                                @foreach (json_decode($entreprise->fondateurs, true) as $fondateur)
-                                                    <option value="{{ $fondateur }}" selected>{{ $fondateur }}</option>
-                                                @endforeach
+                                                @if ($entreprise->fondateurs)
+                                                    @foreach (json_decode($entreprise->fondateurs, true) as $fondateur)
+                                                        <option value="{{ $fondateur }}" selected>{{ $fondateur }}</option>
+                                                    @endforeach
                                                 @endif
                                             </select>
                                         </div>
