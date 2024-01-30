@@ -192,10 +192,10 @@ color: #2D2F30;
                                         <li>Prétentions salariales: {{$curriculum->pretentions_salariales}}</li>
                                         <li>Valeurs: 
                                             @php 
-                                            if($curriculum->valeurs != null)
-                                            $valeursArray = json_decode($curriculum->valeurs, true);
-                                            echo implode(', ', $valeursArray);
-                                            endif
+                                            if($curriculum->valeurs != null){
+                                                $valeursArray = json_decode($curriculum->valeurs, true);
+                                                echo implode(', ', $valeursArray);
+                                            }
                                             @endphp
                                         </li>
                                     </ul>
