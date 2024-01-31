@@ -44,7 +44,7 @@ class FavoritesController extends Controller
 
     public function removeFromFavorites(Request $request){
         $favorite = Favorite::where('user_id', auth()->user()->id)->first();
-        $favsMerged = array_diff(json_decode($favorite->favorites), $request->selectedValues);
+        $favsMerged = array_diff(json_decode($favorite->favorites, true), $request->selectedValues);
         $favorite->favorites = $favsMerged;
         $favorite->save();
         toast('Les favoris ont bien été supprimés.','success')->autoClose(5000);
