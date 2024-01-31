@@ -22,6 +22,7 @@ class Curriculum extends Model
         'niveau_etudes',
         'valeurs',
         'user_id',
+        'cv'
     ];
 
     public function user()

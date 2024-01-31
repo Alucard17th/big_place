@@ -140,7 +140,7 @@
                                         <div class="col-6">
                                             <div class="form-group mb-2">
                                                 <label>
-                                                    <input type="radio" id="use_input"> Utiliser Métier
+                                                    <input type="radio" id="use_input"> Utiliser Code Métier
                                                 </label>
                                                 <input name="custom_job" id="custom_job" class="form-control" 
                                                 placeholder="Métier" value="{{request('custom_job')}}" disabled>
@@ -223,6 +223,7 @@
                                                     <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
                                                     <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
                                                 </select>
+                                                <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                             </div>
                                         </div>
 
@@ -267,7 +268,7 @@
                                                 <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 0) }} %</span>
                                             </td>
                                             @endif
-                                            <td class="text-left">{{getEntrepriseByUserId($offer->user_id)}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>
@@ -374,6 +375,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    $('form').on('submit', function(){
+        var minimum = 5;
+
+        if($("#values_select").select2('data').length>=minimum){
+            $('#values_select_help').addClass('text-muted')
+            $('#values_select_help').removeClass('text-danger')
+            return true;
+        }else {
+            $('#values_select_help').addClass('text-danger')
+            $('#values_select_help').removeClass('text-muted')
+            // toogle from text-muted to text-danger and vice versa in element with values_select_help id
+            return false;
+        }
+    })
 
     $("#job_title").select2({
         placeholder: "Poste recherché",

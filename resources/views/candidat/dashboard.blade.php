@@ -231,7 +231,7 @@
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
-                                            <input type="radio" id="use_input"> Utiliser Métier
+                                            <input type="radio" id="use_input"> Utiliser Code Métier
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
@@ -313,6 +313,7 @@
                                             <option value="generosite">La générosité</option>
                                             <option value="stabilite">La stabilité</option>
                                         </select>
+                                        <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                     </div>
                                 </div>
 
@@ -558,6 +559,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    $('form').on('submit', function(){
+        var minimum = 5;
+
+        if($("#values_select").select2('data').length>=minimum){
+            $('#values_select_help').addClass('text-muted')
+            $('#values_select_help').removeClass('text-danger')
+            return true;
+        }else {
+            $('#values_select_help').addClass('text-danger')
+            $('#values_select_help').removeClass('text-muted')
+            return false;
+        }
+    })
+
     $("#niveau_etudes").select2({});
 
     $("#job_title").select2({

@@ -299,7 +299,6 @@ nav > ul.pagination > li > a{
                                 <p class="text-dark">{{ $entreprise->domiciliation }} <br> {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
                                     <li>Date de création : {{ $entreprise->date_creation }}</li>
-                                    <!-- <li>{{ $entreprise->domiciliation }}</li> -->
                                     <li>Valeurs fortes : {{ $entreprise->valeurs_fortes }}</li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>
                                     <li>Fondateurs : 

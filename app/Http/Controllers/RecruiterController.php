@@ -706,7 +706,7 @@ class RecruiterController extends Controller
     }
     public function addOffer(Request $request){
         $offer = new Offre();
-        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->company_name = $request->input('company_name');
         $offer->job_title = $request->input('job_title');
         $offer->start_date = $request->input('start_date');
         $offer->location_city = $request->input('location_city');
@@ -739,7 +739,7 @@ class RecruiterController extends Controller
     }
     public function saveDraftOffer(Request $request){
         $offer = new Offre();
-        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->company_name = $request->input('company_name');
         $offer->job_title = $request->input('job_title');
         $offer->start_date = $request->input('start_date');
         $offer->location_city = $request->input('location_city');
@@ -772,7 +772,7 @@ class RecruiterController extends Controller
     }
     public function updateDraftOffer(Request $request){
         $offer = Offre::find($request->offer_id);
-        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->company_name = $request->input('company_name');
         $offer->job_title = $request->input('job_title');
         $offer->start_date = $request->input('start_date');
         $offer->location_city = $request->input('location_city');
@@ -817,7 +817,7 @@ class RecruiterController extends Controller
     }
     public function updateOffer(Request $request){
         $offer = Offre::find($request->offer_id);
-        $offer->project_campaign_name = $request->input('project_campaign_name');
+        $offer->company_name = $request->input('company_name');
         $offer->job_title = $request->input('job_title');
         $offer->start_date = $request->input('start_date');
         $offer->location_city = $request->input('location_city');

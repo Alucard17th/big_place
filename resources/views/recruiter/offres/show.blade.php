@@ -92,7 +92,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
+                                        <h2 class="h5 mb-3">Nom de l'entreprise : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
 
                                         <h5 class="h6 mb-3">Intitulé du poste : <span

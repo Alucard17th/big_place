@@ -66,7 +66,6 @@
                                         name="date" value="{{ optional(getUserById($rdv->participant))->name }}" disabled>
                                 </div>
 
-                                <!-- Field: Nom du projet ou de la campagne -->
                                 <div class="form-group">
                                     <label for="date">Date</label>
                                     <input type="date" class="form-control" id="date"

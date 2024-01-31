@@ -224,16 +224,18 @@ color: #2D2F30;
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
-                        <form action="{{ route('candidat.cv.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <h4 class="text-dark mb-3">Télécharger CV</h4>
-                            <input type="file" name="cv" id="cv" class="py-3">
-                            <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
-                            <!-- @if(!empty($curriculum)) -->
-                            <!-- @else -->
-                            <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
-                            <!-- @endif -->
-                        </form>
+                        <div class="col-4">
+                            <form action="{{ route('candidat.cv.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <h4 class="text-dark mb-3">Télécharger CV</h4>
+                                <input type="file" name="cv" id="cv" class="py-3">
+                                <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
+                                <!-- @if(!empty($curriculum)) -->
+                                <!-- @else -->
+                                <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
+                                <!-- @endif -->
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -412,6 +414,7 @@ color: #2D2F30;
                                             <option value="stabilite" @if(isset($curriculum->valeurs) && in_array('stabilite', json_decode($curriculum->valeurs))) selected @endif>la
                                                 stabilité</option>
                                         </select>
+                                        <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                     </div>
                                 </div>
                             </div>
@@ -482,6 +485,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const pond_cv = FilePond.create(candidatCv, {
         files: cv != null && cv.length > 0 ? 'storage' + cv : null,
         labelIdle: '<img class="mr-3" src="http://127.0.0.1:8000/plugins/images/candidat/cv-upload.png" alt="">+ Ajouter document',
+        labelFileProcessingComplete: 'Terminé',
+        labelTapToUndo: 'Cliquez pour remplacer',
+        labelTapToCancel: 'Cliquez pour annuler',
+        labelFileProcessing: 'Chargement...',
     });
 
     $("#niveau").select2({
@@ -501,6 +508,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    $('form').on('submit', function(){
+        var minimum = 5;
+
+        if($("#values_select").select2('data').length>=minimum){
+            $('#values_select_help').addClass('text-muted')
+            $('#values_select_help').removeClass('text-danger')
+            return true;
+        }else {
+            $('#values_select_help').addClass('text-danger')
+            $('#values_select_help').removeClass('text-muted')
+            return false;
+        }
+    })
 
     $('#edit-profile').click(function() {
         $('#preview-container').toggle()

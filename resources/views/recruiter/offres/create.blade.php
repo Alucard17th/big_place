@@ -101,11 +101,11 @@
                             <form action="{{route('recruiter.offer.add')}}" method="POST" enctype="multipart/form-data"
                                 id="add-offer-form">
                                 @csrf
-                                <!-- Field: Nom du projet ou de la campagne -->
+                               
                                 <div class="form-group">
-                                    <label for="project_campaign_name">Nom du projet ou de la campagne</label>
-                                    <input type="text" class="form-control" id="project_campaign_name"
-                                        name="project_campaign_name" required="">
+                                    <label for="company_name">Nom de l'entreprise</label>
+                                    <input type="text" class="form-control" id="company_name"
+                                        name="company_name" required="">
                                 </div>
 
                                 <!-- Field: Intitulé du poste recherché -->

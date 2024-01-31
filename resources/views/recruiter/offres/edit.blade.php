@@ -90,12 +90,12 @@
                             enctype="multipart/form-data" id="edit-offer-form">
                                 @csrf
                                 <input type="hidden" name="offer_id" value="{{$offer->id}}">
-                                <!-- Field: Nom du projet ou de la campagne -->
+
                                 <div class="form-group">
-                                    <label for="project_campaign_name">Nom du projet ou de la campagne
+                                    <label for="company_name">Nom de l'entreprise
                                         </label>
-                                    <input type="text" class="form-control" id="project_campaign_name"
-                                        name="project_campaign_name" value="{{$offer->project_campaign_name}}" required>
+                                    <input type="text" class="form-control" id="company_name"
+                                        name="company_name" value="{{$offer->company_name}}" required>
                                 </div>
 
                                 <!-- Field: Intitulé du poste recherché -->

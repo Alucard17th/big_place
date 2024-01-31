@@ -44,7 +44,7 @@
 
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h2 class="h5 mb-3">Nom du projet ou de la campagne : <span
+                                        <h2 class="h5 mb-3">Nom de l'entreprise : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
 
                                         <h5 class="h6 mb-3">Intitulé du poste : <span
@@ -140,10 +140,10 @@
             <div class="row">
                 <h4 class="offre-title col-12">
                     {{$offer->job_title}}</h4>
-                <div class="offre-status col-12">Status de l'offre :
-                    {{$offer->status}}</div>
-                <div class="offre-end-date col-12">Date de limitation de candidature :
-                    {{$offer->unpublish_date}}</div>
+                <div class="offre-status col-12">Type de contrat :
+                    {{$offer->contract_type}}</div>
+                <div class="offre-end-date col-12">Date de démarrage souhaitée :
+                    {{$offer->start_date}}</div>
             </div>
 
             <div class="row my-4">
@@ -161,7 +161,7 @@
                     Mon CV : 
                     <a href="{{asset('storage'.auth()->user()->curriculum[0]->cv)}}" class="" target="_blank">
                     <i class="las la-eye"></i>
-                        Voir
+                        Consulter 
                     </a>
                 </div>
             </div>
