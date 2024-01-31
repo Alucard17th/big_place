@@ -230,7 +230,8 @@ select {
                                                     <span
                                                         class="list-subtitle">{{getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise}}
                                                         ,
-                                                        {{getOfferByCandidatId($candidature->offer_id)->location_city}}</span>
+                                                        {{$candidature->offer()->first()->location_city}}
+                                                        </span>
                                                     <h5 class="list-time-subtitle">Déposé le
                                                         {{ \Carbon\Carbon::parse($candidature->created_at)->isoFormat('LL') }}
                                                     </h5>
@@ -249,7 +250,7 @@ select {
                                             <div class="">
                                                 <div class="d-flex justify-content-between">
                                                     <h4 class="offre-title">
-                                                        {{ getOfferByCandidatId($candidatures[0]->offer_id)->job_title }}
+                                                    {{$candidatures[0]->offer()->first()->job_title}}
                                                     </h4>
                                                 </div>
                                                 <div class="offre-subtitle my-1">
@@ -259,10 +260,12 @@ select {
                                                         class="entreprise-title">{{ getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise }}</span>
                                                     ,
                                                     <span
-                                                        class="entreprise-location">{{ getOfferByCandidatId($candidature->offer_id)->location_city }}</span>
+                                                        class="entreprise-location">
+                                                        {{$candidatures[0]->offer()->first()->location_city}}
+                                                    </span>
                                                 </div>
                                                 @php
-                                                $created_at = getOfferByCandidatId($candidature->offer_id)->created_at;
+                                                $created_at = $candidatures[0]->offer()->first()->created_at;
                                                 $formattedDate = \Carbon\Carbon::parse($created_at)->format('d-m-Y');
                                                 @endphp
                                                 <h5 class="offre-time-subtitle">Publiée le {{ $formattedDate }}</h5>
@@ -281,9 +284,10 @@ select {
                                                     logicielle des applications
                                                 </div>
                                                 <div class="offre-status">Status de l'offre :
-                                                    {{ getOfferByCandidatId($candidature->offer_id)->status }}</div>
+                                                    {{$candidatures[0]->offer()->first()->status}}
+                                                </div>
                                                 <div class="offre-end-date">Date de limitation de candidature :
-                                                    {{ \Carbon\Carbon::parse(getOfferByCandidatId($candidature->offer_id)->unpublish_date)->formatLocalized('%d-%m-%Y') }}
+                                                    {{ \Carbon\Carbon::parse($candidatures[0]->offer()->first()->unpublish_date)->formatLocalized('%d-%m-%Y') }}
                                                 </div>
 
                                                 <!-- <div class="card mt-5" style="height:100%;">
