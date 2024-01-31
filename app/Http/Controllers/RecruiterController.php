@@ -127,12 +127,14 @@ class RecruiterController extends Controller
             return \Response::json([]);
         }
 
-        $tags = Job::where('full_name', 'like', '%' . $term . '%')->get();
+        $tags = Job::where('full_name', 'like', '%' . $term . '%')
+        ->orWhere('code_ogr', 'like', '%' . $term . '%')
+        ->get();
 
         $formatted_tags = [];
 
         foreach ($tags as $tag) {
-            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name];
+            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name . ' (' . $tag->code_ogr . ')'];
         }
 
         return \Response::json($formatted_tags);
@@ -144,12 +146,14 @@ class RecruiterController extends Controller
             return \Response::json([]);
         }
 
-        $tags = Job::where('full_name', 'like', '%' . $term . '%')->get();
+        $tags = Job::where('full_name', 'like', '%' . $term . '%')
+        ->orWhere('code_ogr', 'like', '%' . $term . '%')
+        ->get();
 
         $formatted_tags = [];
 
         foreach ($tags as $tag) {
-            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name];
+            $formatted_tags[] = ['id' => $tag->full_name, 'text' => $tag->full_name . ' (' . $tag->code_ogr . ')'];
         }
 
         return \Response::json($formatted_tags);

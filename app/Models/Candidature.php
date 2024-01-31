@@ -18,5 +18,9 @@ class Candidature extends Model
     {
         return $this->belongsTo(User::class, 'candidat_id');
     }
+
+    public function offer(){
+        return $this->belongsTo(Offre::class, 'offer_id');
+    }
     
 }

@@ -225,7 +225,8 @@ select {
                                                 </div>
                                                 <div class="list-content ml-2">
                                                     <h4 class="list-title">
-                                                        {{getOfferByCandidatId($candidature->offer_id)->job_title}}</h4>
+                                                        {{$candidature->offer()->first()->job_title}}
+                                                    </h4>
                                                     <span
                                                         class="list-subtitle">{{getEntrepriseLogoByUserId($candidature->user_id)->nom_entreprise}}
                                                         ,

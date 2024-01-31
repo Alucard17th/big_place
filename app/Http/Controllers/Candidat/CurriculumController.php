@@ -36,7 +36,7 @@ class CurriculumController extends Controller
             ]
         );
 
-        toast('Curriculum uploaded','success')->autoClose(5000);
+        toast('Vos informations ont bien été enregistrées','success')->autoClose(5000);
 
         return redirect()->back();
     }

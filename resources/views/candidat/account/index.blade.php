@@ -117,7 +117,7 @@
                                                             id="change-avatar">
                                                             <!-- Détails -->
                                                             <i class="las la-edit"></i>
-                                                            Changer
+                                                            Modifier la photo de profil
                                                         </a>
                                                         <a href="{{ route('candidat.account.avatar.delete') }}"
                                                             type="button" class="bg-btn-four"
@@ -168,7 +168,7 @@
 
 
                                         <div class="col-6">
-                                            <button class="save-btn" type="submit">Enregistrer</button>
+                                            <button class="save-btn" type="submit">Modifier</button>
                                         </div>
 
                                     </div>
@@ -224,7 +224,7 @@
                                         </div>
 
                                         <div class="col-6">
-                                            <button class="save-btn" type="submit">Enregistrer</button>
+                                            <button class="save-btn" type="submit">Modifier</button>
                                         </div>
                                     </div>
                                 </form>
