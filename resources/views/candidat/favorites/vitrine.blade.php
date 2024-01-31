@@ -215,9 +215,9 @@ nav > ul.pagination > li > a{
                                 <div class="row w-100 align-items-center justify-content-center">
                                     <div class="col-3">
                                         @if(!isset($entreprise->logo) || $entreprise->logo == '')
-                                        <img src="https://placehold.co/150X150" alt="" style="border-radius: 15px">
+                                        <img class="img-fluid vitrine-logo mt-2" src="https://placehold.co/150X150" alt="" style="border-radius: 15px">
                                         @else
-                                        <img class="img-fluid vitrine-logo"
+                                        <img class="img-fluid vitrine-logo mt-2"
                                             src="{{isset($entreprise) ?  asset('storage'.$entreprise->logo) : '' }}" alt="logo">
                                         @endif
                                     </div>
