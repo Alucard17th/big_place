@@ -132,13 +132,15 @@ input, select{
                                             <td class="text-left">
                                                 @if($formation->subscribers >= $formation->max_participants)
                                                     <span class="text-danger">Inscription fermée.</span>
+                                                @else
+                                                    @if (!$formation->participants->pluck('id')->contains(Auth::id()) &&
+                                                    !$formation->subscribers > $formation->max_participants 
+                                                    
+                                                    )
+                                                    <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
+                                                    @endif
                                                 @endif
-                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) &&
-                                                 !$formation->subscribers > $formation->max_participants 
-                                                 
-                                                )
-                                                <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
-                                                @endif
+                                                
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>
                                             </td>
                                         </tr>
