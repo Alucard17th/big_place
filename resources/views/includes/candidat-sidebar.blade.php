@@ -22,7 +22,7 @@
                         Favoris</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'candidat-history') ? 'active' : '' }}">
+            <!-- <li class="{{ Str::contains(Request::url(), 'candidat-history') ? 'active' : '' }}">
                 <a href="/candidat-history" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/search.png')}}" alt=""> Mes Dernières
@@ -61,7 +61,7 @@
                             Proposées
                     </span>
                 </a>
-            </li>
+            </li> -->
             <li class="{{ Str::contains(Request::url(), 'candidat-candidatures') ? 'active' : '' }}">
                 <a href="/candidat-candidatures" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
@@ -69,7 +69,7 @@
                         Candidatures</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'candidat-cvredirect') ? 'active' : '' }}">
+            <!-- <li class="{{ Str::contains(Request::url(), 'candidat-cvredirect') ? 'active' : '' }}">
                 <a href="/candidat-cvredirect" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Ma Fiche
@@ -95,31 +95,6 @@
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/account.png')}}" alt=""> Mon Compte
                         </span>
-                </a>
-            </li>
-            <!-- <li class="{{ Str::contains(Request::url(), 'mon-calendrier') ? 'active' : '' }}">
-                <a href="/mon-calendrier" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/tasks.png')}}" alt=""> Mon Calendrier</span>
-                </a>
-            </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-offres') ? 'active' : '' }}">
-                <a href="/mes-offres" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/offers.png')}}" alt=""> Mes offres
-                        d'emploi</span>
-                </a>
-            </li>
-            <li class="{{ Str::contains(Request::url(), 'mes-factures') ? 'active' : '' }}">
-                <a href="/mes-factures-et-contrats" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/factures.png')}}" alt=""> Mes factures et
-                        contrats</span>
-                </a>
-            </li>
-            <li class="{{ Str::contains(Request::url(), 'mon-mot-de-passe') ? 'active' : '' }}">
-                <a href="/user/profile/change-password" class="d-flex justify-content-between align-items-center">
-                    <span class="d-flex align-items-center"><i class="la la-lock"></i> Mot de passe</span>
                 </a>
             </li> -->
             <li>
