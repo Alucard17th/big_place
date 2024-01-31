@@ -53,21 +53,20 @@
                                 @csrf
 
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <!-- Field: Nom du poste -->
                                         <div class="form-group">
                                             <label class="text-dark" for="job_title">Nom du poste</label>
                                             <input type="text" class="form-control" id="job_title" name="job_title" required>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <!-- Field: Durée de formation -->
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             <label class="text-dark" for="training_duration">Durée de formation</label>
                                             <input type="number" class="form-control" id="training_duration"
                                                 name="training_duration">
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="row">

@@ -28,7 +28,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <h1 class="mb-3">{{ $event->job_position }}</h1>
-                                        <h5 class="text-dark">Nom d'organisateur : <span class="text-muted">{{ $event->organizer_name }}</span></h5>
+                                        <h5 class="text-dark">Nom de l’entreprise : <span class="text-muted">{{ $event->organizer_name }}</span></h5>
                                     </div>
                                     <div class="col-md-4">
                                         <p class="text-center bg-light p-3 rounded">

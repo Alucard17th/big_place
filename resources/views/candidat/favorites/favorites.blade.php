@@ -182,11 +182,13 @@ input, select{
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">
+                                                @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
                                                     Vitrine de l'entreprise 
                                                 </a>
-                                                <a href="{{route('candidat.offers.show', $offer->id)}}" 
+                                                @endif
+                                                <a href="{{route('candidat.favorites.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
                                                 </a>

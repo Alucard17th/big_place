@@ -81,7 +81,7 @@
 
                                 <!-- Field: Organizer Name -->
                                 <div class="form-group">
-                                    <label for="organizer_name">Nom d'Organisateur</label>
+                                    <label for="organizer_name">Nom de l’entreprise</label>
                                     <input type="text" class="form-control" id="organizer_name" name="organizer_name"
                                         required value="{{ $event->organizer_name }}">
                                 </div>

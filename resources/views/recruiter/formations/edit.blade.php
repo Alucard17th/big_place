@@ -58,11 +58,11 @@
                                 </div>
 
                                 <!-- Field: Durée de formation -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="training_duration">Durée de formation</label>
                                     <input type="text" class="form-control" id="training_duration"
                                         name="training_duration" value="{{ $formation->training_duration }}">
-                                </div>
+                                </div> -->
 
                                 <!-- Field: Date de démarrage de la formation -->
                                 <div class="form-group">

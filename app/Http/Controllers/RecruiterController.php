@@ -1912,7 +1912,7 @@ class RecruiterController extends Controller
                 'description' => (string)$jobData->description,
                 'company_name' => (string)$jobData->company,
                 'url' => (string)$jobData->url,
-                'user_id' => 19,
+                // 'user_id' => 19,
                 'updated_at' => $jobData->date_updated ? $jobData->date_updated : now(),
                 'source' => 'Jooble',
                 // Add other fields accordingly

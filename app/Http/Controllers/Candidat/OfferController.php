@@ -86,6 +86,24 @@ class OfferController extends Controller
         return view('candidat.offers.show', compact('offer', 'routeName'));
     }
 
+    public function showForFavorite($id){
+        $offer = Offre::find($id);
+
+        $user = auth()->user();
+        $existingRecord = History::where('user_id', $user->id)
+        ->where('searchable', $id)
+        ->where('created_at', '>', Carbon::now()->subDay())
+        ->first();
+        if (!$existingRecord) {
+            $history = new History();
+            $history->user_id = $user->id;
+            $history->searchable = $id;
+            $history->save();
+        }
+
+        return view('candidat.favorites.show', compact('offer'));
+    }
+
     public function search(Request $request)
     {
         $searchTerm = $request->all();

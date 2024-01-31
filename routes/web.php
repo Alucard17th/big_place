@@ -300,6 +300,7 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-offers', [OfferController::class, 'index'])->name('candidat.offers');
     Route::get('/candidat-offers/search', [OfferController::class, 'search'])->name('candidat.offers.search');
     Route::get('/candidat-offers/show/{id}', [OfferController::class, 'show'])->name('candidat.offers.show');
+    Route::get('/candidat-offers/favorites/show/{id}', [OfferController::class, 'showForFavorite'])->name('candidat.favorites.offers.show');
 
     // EVENTS
     Route::get('/event/candidat/subscribe/{id}', [EventController::class, 'subscribeToEvent'])->name('candidat.event.subscribe');

@@ -24,7 +24,7 @@
                             <h3>Offre d'emploi - Détails</h3>
                         </div>
                         <div class="d-flex align-items-center">
-                            <a href="{{$routeName}}" class="bg-back-btn mr-2">
+                            <a href="/candidat-favoris" class="bg-back-btn mr-2">
                                 <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>

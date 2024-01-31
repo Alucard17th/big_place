@@ -58,13 +58,20 @@
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">
+                                                @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
                                                     Vitrine de l'entreprise 
                                                 </a>
+                                                @endif
                                                 <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
+                                                </a>
+                                                <a href="" 
+                                                type="button" class="bg-btn-eight mt-2 add-to-favorites" 
+                                                data-offer-id="{{$offer->id}}">
+                                                    Ajouter aux favoris
                                                 </a>
                                             </td>
                                         </tr>
@@ -177,6 +184,34 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = url;
         }
     }
+
+    // ADD UNIQUE FAVORITE
+    $('.add-to-favorites').on('click', function(event) {
+        event.preventDefault();
+        var offerId = $(this).data('offer-id');
+        console.log(offerId);
+        const data = {
+            selectedValues: [offerId]
+        };
+        fetch('{{ route('candidat.favorite.add') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response, e.g., show a success message
+            // refresh the current page
+            window.location.reload();
+        })
+        .catch(error => {
+            // Handle errors, e.g., show an error message
+            console.error(error);
+        });
+    })
 })
 </script>
 @endpush

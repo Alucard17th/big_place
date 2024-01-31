@@ -244,10 +244,6 @@ background: #13D527;
                                         </div>
 
                                         <div class="offre-desc my-4">
-                                            Durée de la Formation : {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} à  {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }} 
-                                        </div>
-
-                                        <div class="offre-desc my-4">
                                             Lieu et Adresse:  {{$formation->work_location}}
                                         </div>
 

@@ -108,7 +108,6 @@ input, select{
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th>Nom de la formation</th>
                                             <th>Entreprise</th>
-                                            <th>Durée de la formation</th>
                                             <th>Période de la formation</th>
                                             <th>Lieu</th>
                                             <th>Statut</th>
@@ -125,7 +124,6 @@ input, select{
                                         <tr>
                                             <td class="text-left">{{$formation->job_title}}</td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
-                                            <td class="text-left">{{$formation->training_duration}}</td>
                                             <td class="text-left">
                                                 {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                             </td>
@@ -135,7 +133,10 @@ input, select{
                                                 @if($formation->subscribers >= $formation->max_participants)
                                                     <span class="text-danger">Inscription fermée.</span>
                                                 @endif
-                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) && !$formation->subscribers >= $formation->max_participants)
+                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) &&
+                                                 !$formation->subscribers >= $formation->max_participants &&
+                                                 $formation->max_participants > 0
+                                                )
                                                 <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
                                                 @endif
                                                 <a href="{{ route('candidat.formation.show', $formation->id) }}" type="button" class="bg-btn-three proposez-rdv px-1">Consulter la formation</a>
@@ -178,9 +179,7 @@ input, select{
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th>Nom de la formation</th>
                                             <th>Entreprise</th>
-                                            <th>Durée de la formation</th>
                                             <th>Période de la formation</th>
-                                            <!-- <th>Statut de l'inscription</th> -->
                                             <th>Lieu</th>
                                             <th>Statut</th>
                                             <th>Action</th>
@@ -191,7 +190,6 @@ input, select{
                                         <tr>
                                             <td class="text-left">{{$formation->job_title}}</td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
-                                            <td class="text-left">{{$formation->training_duration}}</td>
                                             <td class="text-left">
                                                 {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                             </td>

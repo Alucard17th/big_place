@@ -242,10 +242,10 @@ background: #13D527;
                                         <div class="offre-desc my-4">
                                             Créateur de la Formation : {{getUserById($formation->user_id)->name}} 
                                         </div>
-
+<!-- 
                                         <div class="offre-desc my-4">
                                             Durée de la Formation : {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} à  {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }} 
-                                        </div>
+                                        </div> -->
 
                                         <div class="offre-desc my-4">
                                             Lieu et Adresse:  {{$formation->work_location}}

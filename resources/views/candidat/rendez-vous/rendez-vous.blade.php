@@ -176,17 +176,18 @@ input, select{
                                             <td class="text-left">{{$rdv->commentaire}}</td>
                                             <td class="text-left">
                                                 @if($rdv->status != 'Annulé')
-                                                <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-five">
-                                                    <!-- Détails -->
+                                                <!-- <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-five">
                                                     <i class="las la-video"></i>
                                                     Rejoindre
-                                                </a>
-                                                
-                                                <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2"
-                                                onclick="return confirm('Etes-vous sur de vouloir annuler ce rendez-vous ?');">
-                                                    <!-- Détails -->
-                                                    Annuler
-                                                </a>
+                                                </a> -->
+                                                    @if($rdv->status != 'Termine')
+                                                    <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2"
+                                                    onclick="return confirm('Etes-vous sur de vouloir annuler ce rendez-vous ?');">
+                                                        <!-- Détails -->
+                                                        Annuler
+                                                    </a>
+                                                    @endif
+
                                                 @endif
                                                 <button class="bg-btn-five add-comment-modal mt-2"
                                                     data-rdv-id="{{$rdv->id}}" data-rdv-commentaire="{{$rdv->commentaire}}">
@@ -220,7 +221,7 @@ input, select{
             </div>
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one" type="button" id="create-comment">Envoyer</button>
+                <button class="theme-btn btn-style-one" type="button" id="create-comment">Enregistrer</button>
             </div>
         </form>
         <a href="#" id="close-modal">Fermer</a>

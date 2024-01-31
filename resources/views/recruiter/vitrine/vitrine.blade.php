@@ -591,7 +591,7 @@ nav > ul.pagination > li > a{
                                     <table class="table table-sm table-bordered" id="data-table">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>Organisateur</th>
+                                                <th>Nom de l’entreprise</th>
                                                 <th>Poste</th>
                                                 <th>N° Max de Participants</th>
                                                 <th>Participants Inscrits</th>
