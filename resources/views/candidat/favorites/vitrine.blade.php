@@ -302,7 +302,7 @@ nav > ul.pagination > li > a{
                                     <li>Valeurs fortes : {{ $entreprise->valeurs_fortes }}</li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>
                                     <li>Fondateurs : 
-                                        @if(!is_null($entreprise->fondateurs) && count(json_decode($entreprise->fondateurs)) > 1)
+                                        @if(!is_null($entreprise->fondateurs))
                                             @foreach(json_decode($entreprise->fondateurs) as $fondateur)
                                                 {{ $fondateur }}
                                                 @if(!$loop->last)<span class="text-muted">,</span>@endif
