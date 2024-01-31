@@ -133,7 +133,7 @@ input, select{
                                                 @if($formation->subscribers >= $formation->max_participants)
                                                     <span class="text-danger">Inscription fermée.</span>
                                                 @endif
-                                                @if (!$formation->participants->pluck('id')->contains(Auth::id()) &&
+                                                @if (
                                                  !$formation->subscribers >= $formation->max_participants &&
                                                  $formation->max_participants > 0
                                                 )
