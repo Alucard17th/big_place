@@ -134,8 +134,8 @@ input, select{
                                                     <span class="text-danger">Inscription fermée.</span>
                                                 @else
                                                     @if (!$formation->participants->pluck('id')->contains(Auth::id()) &&
-                                                    !$formation->subscribers > $formation->max_participants 
-                                                    
+                                                        !$formation->subscribers > $formation->max_participants  &&
+                                                        $formation->max_participants > 0
                                                     )
                                                     <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" type="button" class="bg-btn-seven mb-2 px-2">Je participe</a>
                                                     @endif
