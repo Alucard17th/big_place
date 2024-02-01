@@ -505,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    $('form #create-cv-form').on('submit', function(){
+    $('#create-cv-form').on('submit', function(){
         var minimum = 5;
 
         if($("#values_select").select2('data').length>=minimum){
