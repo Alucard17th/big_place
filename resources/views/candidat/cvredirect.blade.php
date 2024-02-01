@@ -230,10 +230,6 @@ color: #2D2F30;
                                 <h4 class="text-dark mb-3">Télécharger CV</h4>
                                 <input type="file" name="cv" id="cv" class="py-3">
                                 <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
-                                <!-- @if(!empty($curriculum)) -->
-                                <!-- @else -->
-                                <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
-                                <!-- @endif -->
                             </form>
                         </div>
                     </div>
