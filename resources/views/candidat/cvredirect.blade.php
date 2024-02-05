@@ -122,6 +122,10 @@ color: #2D2F30;
     color: #000 !important;
     font-weight: 300 !important;
 }
+
+#create-cv-form > div:nth-child(4) > div.col-6.pr-1 > div > span{
+    width:98% !important;
+}
 </style>
 @endpush
 
@@ -299,7 +303,7 @@ color: #2D2F30;
                                         <input type="radio" id="use_select" checked> Utiliser Code ROME
                                     </label>
                                     <div class="form-group mb-2">
-                                        <select name="job_title" id="job_title" class="form-control">
+                                        <select name="job_title" id="job_title" class="form-control w-100" >
                                             <option value="" selected value="">Poste recherchés</option>
                                         </select>
                                     </div>
