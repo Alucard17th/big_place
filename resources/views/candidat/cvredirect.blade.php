@@ -224,16 +224,18 @@ color: #2D2F30;
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
-                        <div class="col-4">
+                        <div class="col-5">
                             <form action="{{ route('candidat.cv.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <h4 class="text-dark mb-3">Télécharger CV</h4>
                                 <input type="file" name="cv" id="cv" class="py-3">
-                                <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
-                                <!-- @if(!empty($curriculum)) -->
-                                <!-- @else -->
-                                <!-- Vous devez d'abord remplir le formulaire ci-dessus. -->
-                                <!-- @endif -->
+                                <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">
+                                    @if($curriculum != null && $curriculum->cv != null)
+                                    Modifier le CV
+                                    @else
+                                    Enregister le CV
+                                    @endif
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -292,7 +294,7 @@ color: #2D2F30;
                                     <!-- Prétentions salariales -->
                                     <div class="mb-3">
                                         <label for="pretentions" class="form-label text-dark">Prétentions
-                                            salariales</label>
+                                            salariales (Ke)</label>
                                         <input type="text" class="form-control" id="pretentions"
                                             value="{{isset($curriculum->pretentions_salariales) ? $curriculum->pretentions_salariales : ''}}"
                                             name="pretentions_salariales" required>
