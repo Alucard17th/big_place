@@ -21,14 +21,14 @@ class CurriculumController extends Controller
     public function curriculumStore(Request $request){
         $user = auth()->user();
 
-        $request->validate([
-            'phone' => [
-                'required',
-                'string',
-                'regex:/^\d{10}$/',
-                Rule::unique('curricula')->ignore($user->curriculum()->value('id')),
-            ],
-        ]);
+        // $request->validate([
+        //     'phone' => [
+        //         'required',
+        //         'string',
+        //         'regex:/^\d{10}$/',
+        //         Rule::unique('curricula')->ignore($user->curriculum()->value('id')),
+        //     ],
+        // ]);
 
         $curriculum = $user->curriculum()->updateOrCreate(
             // Search criteria to find the record to update
@@ -39,7 +39,8 @@ class CurriculumController extends Controller
                 'nom' => $request->nom,
                 'prenom' => $request->prenom,
                 'ville_domiciliation' => $request->ville_domiciliation,
-                'metier_recherche' => $request->metier_recherche,
+                // 'metier_recherche' => isset($request->job_title) ? $request->job_title  : '',
+                // 'custom_job' => isset($request->custom_job) ? $request->custom_job  : '',
                 'pretentions_salariales' => $request->pretentions_salariales,
                 'annees_experience' => $request->annees_experience,
                 'niveau' => $request->niveau,

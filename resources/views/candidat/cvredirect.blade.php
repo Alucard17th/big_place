@@ -285,7 +285,8 @@ color: #2D2F30;
                                     <div class="mb-3">
                                         <label for="phone" class="form-label text-dark">Numéro de téléphone</label>
                                         <input type="text" class="form-control" id="phone" name="phone"
-                                            value="{{ auth()->user()->phone }}"
+                                            value="{{ auth()->user()->phone }}" pattern="[0-9]{10}"
+                                            title="Veuillez entrer un numéro de téléphone à 10 chiffres"
                                             required>
                                     </div>
                                 </div>
@@ -293,13 +294,24 @@ color: #2D2F30;
                             </div>
 
                             <div class="row">
-                                <div class="col-6">
-                                    <!-- Métier recherché -->
-                                    <div class="mb-3">
-                                        <label for="metier" class="form-label text-dark">Métier recherché</label>
-                                        <select name="metier_recherche" id="metier_recherche" class="form-control w-100">
-                                            <option value="{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}" selected>{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}</option>
+                                <div class="col-6 pr-1">
+                                    <label>
+                                        <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                    </label>
+                                    <div class="form-group mb-2">
+                                        <select name="job_title" id="job_title" class="form-control">
+                                            <option value="" selected value="">Poste recherchés</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mb-2">
+                                        <label>
+                                            <input type="radio" id="use_input"> Utiliser Code Métier {{$curriculum->custom_job}}
+                                        </label>
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled
+                                        value="{{isset($curriculum->custom_job) ? $curriculum->custom_job : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -578,6 +590,60 @@ document.addEventListener('DOMContentLoaded', function() {
             cache: true
         },
     });
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#job_title").val([]).trigger('change');
+    });
+
+    $("#job_title").select2({
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
+            },
+            noResults: function() {
+                return 'Aucun metier correspondant.';
+            },
+            searching: function() {
+                return 'Chargement...';
+            }
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+    });
+
+   
+   
 
 })
 </script>

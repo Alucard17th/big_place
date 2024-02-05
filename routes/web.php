@@ -69,14 +69,14 @@ Route::get('/import-xml-offers', [RecruiterController::class, 'importXml'])->nam
 Auth::routes(['verify' => true]);
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'registerAsCandidat'])->name('home');
 Route::get('/a-propos', [HomeController::class, 'about'])->name('about');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/mag', [HomeController::class, 'mag'])->name('mag');
 Route::get('/support', [HomeController::class, 'support'])->name('support');
 Route::get('/parrainage', [HomeController::class, 'parrainage'])->name('parrainage');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])->name('register-as-candidat');
+// Route::get('/register-candidat', [HomeController::class, 'registerAsCandidat'])->name('register-as-candidat');
 Route::get('/register-employeur', [HomeController::class, 'registerAsRecruiter'])->name('register-as-recruiter');
 Route::get('/rgpd', [HomeController::class, 'rgpd'])->name('rgpd');
 

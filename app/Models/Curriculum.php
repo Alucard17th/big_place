@@ -23,7 +23,8 @@ class Curriculum extends Model
         'valeurs',
         'user_id',
         'cv',
-        'phone'
+        'phone',
+        'custom_job',
     ];
 
     public function user()
