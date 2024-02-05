@@ -170,11 +170,11 @@ color: #2D2F30;
                                 </div>
 
                                 <div class="col-8">
-                                    <h4 class="mb-3">{{$curriculum->nom}} {{$curriculum->prenom}}</h4>
+                                    <h4 class="mb-3">{{$curriculum->user->nom}} {{$curriculum->user->prenom}}</h4>
                                     <ul class="list-unstyled">
                                         <li class="text-dark">{{$curriculum->address}} {{$curriculum->ville_domiciliation}}</li>
                                         <li class="text-dark">Email : {{$curriculum->user->email}}</li>
-                                        <li class="text-dark">{{\Carbon\Carbon::parse($curriculum->user->birth_date)->diffInYears(\Carbon\Carbon::now())}} ans</li>
+                                        <li class="text-dark">Télephone : {{$curriculum->user->phone}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -224,12 +224,19 @@ color: #2D2F30;
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
-                        <div class="col-4">
+                        <div class="col-5">
                             <form action="{{ route('candidat.cv.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <h4 class="text-dark mb-3">Télécharger CV</h4>
-                                <input type="file" name="cv" id="cv" class="py-3">
-                                <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">Modifier le CV</button>
+                                <input type="file" name="cv" id="cv" class="py-3" 
+                                @if(empty($curriculum) && empty($curriculum->cv))  required @endif>
+                                <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">
+                                @if(!empty($curriculum) && $curriculum->cv != null && $curriculum->cv != '')    
+                                    Modifier le CV
+                                @else
+                                    Enregistrer le CV
+                                @endif
+                            </button>
                             </form>
                         </div>
                     </div>
@@ -272,6 +279,20 @@ color: #2D2F30;
                                             required>
                                     </div>
                                 </div>
+
+                                <div class="col-6">
+                                    <!-- Ville de domiciliation -->
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label text-dark">Numéro de téléphone</label>
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                            value="{{ auth()->user()->phone }}"
+                                            required>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
                                 <div class="col-6">
                                     <!-- Métier recherché -->
                                     <div class="mb-3">

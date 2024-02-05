@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use RahulHaque\Filepond\Facades\Filepond;
+use Illuminate\Validation\Rule;
+
 
 class CurriculumController extends Controller
 {
@@ -18,6 +20,16 @@ class CurriculumController extends Controller
 
     public function curriculumStore(Request $request){
         $user = auth()->user();
+
+        $request->validate([
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^\d{10}$/',
+                Rule::unique('curricula')->ignore($user->curriculum()->value('id')),
+            ],
+        ]);
+
         $curriculum = $user->curriculum()->updateOrCreate(
             // Search criteria to find the record to update
             ['user_id' => $user->id],
@@ -33,8 +45,13 @@ class CurriculumController extends Controller
                 'niveau' => $request->niveau,
                 'niveau_etudes' => $request->niveau_etudes,
                 'valeurs' => json_encode($request->valeurs),
+                'phone' => $request->phone,
             ]
         );
+
+        $user->update([
+            'phone' => $request->phone,
+        ]);
 
         toast('Vos informations ont bien été enregistrées','success')->autoClose(5000);
 
@@ -53,7 +70,8 @@ class CurriculumController extends Controller
         
                 // Values to update or create
                 [
-                    'cv' => $fileInfos['location']
+                    'cv' => $fileInfos['location'],
+                    'phone' => $user->phone,
                 ]
             );
 
