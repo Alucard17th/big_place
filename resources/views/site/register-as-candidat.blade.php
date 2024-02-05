@@ -63,7 +63,8 @@
 
                     <div class="form-group">
                         <label>Numéro de téléphone</label>
-                        <input type="text" name="phone" minlength="10" maxlength="10" placeholder="Numéro de téléphone"
+                        <input type="tel" name="phone" minlength="10" maxlength="10" 
+                        pattern="[0-9]{10}"
                             required>
                         <span class="invalid-feedback error error-phone"></span>
                     </div>
