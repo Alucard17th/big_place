@@ -69,14 +69,14 @@
                         Candidatures</span>
                 </a>
             </li>
-            <!-- <li class="{{ Str::contains(Request::url(), 'candidat-cvredirect') ? 'active' : '' }}">
+            <li class="{{ Str::contains(Request::url(), 'candidat-cvredirect') ? 'active' : '' }}">
                 <a href="/candidat-cvredirect" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/cvtheque.png')}}" alt=""> Ma Fiche
                         Candidat</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'candidat-documents') ? 'active' : '' }}">
+            <!-- <li class="{{ Str::contains(Request::url(), 'candidat-documents') ? 'active' : '' }}">
                 <a href="/candidat-documents" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/documents.png')}}" alt=""> Mes
@@ -89,14 +89,14 @@
                             src="{{asset('/plugins/images/recruiter-sidebar/stats.png')}}" alt=""> Mes
                         Statistiques</span>
                 </a>
-            </li>
+            </li> -->
             <li class="{{ Str::contains(Request::url(), 'candidat-account') ? 'active' : '' }}">
                 <a href="/candidat-account" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/account.png')}}" alt=""> Mon Compte
                         </span>
                 </a>
-            </li> -->
+            </li>
             <li>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                         class="la la-sign-out"></i>Se déconnecter</a>

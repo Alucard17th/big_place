@@ -131,7 +131,7 @@
                                             <div class="form-group mb-2">
                                                 <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                                     style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                                <select name="job_title" id="job_title" class="form-control">
+                                                <select name="job_title" id="job_title" class="form-control" required>
                                                     <option value="" selected value="">Poste recherchés</option>
                                                 </select>
                                             </div>
@@ -143,7 +143,7 @@
                                                     <input type="radio" id="use_input"> Utiliser Code Métier
                                                 </label>
                                                 <input name="custom_job" id="custom_job" class="form-control" 
-                                                placeholder="Métier" value="{{request('custom_job')}}" disabled>
+                                                placeholder="Métier" value="{{request('custom_job')}}" disabled required>
                                             </div>
                                         </div>
 
@@ -152,13 +152,13 @@
                                                 <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
                                                     style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
                                                 <input type="text" name="location_city" id="location_city" value="{{request('location_city')}}"
-                                                    class="form-control mb-2" placeholder="Ville / Département">
+                                                    class="form-control mb-2" placeholder="Ville / Département" required>
                                             </div>
                                         </div>
 
                                         <div class="col-6">
                                             <div class="form-group mb-2">
-                                                <select class="form-control" id="experience_level" name="experience_level">
+                                                <select class="form-control" id="experience_level" name="experience_level" required>
                                                     <option value="" selected>Année d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"
                                                         @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
@@ -179,7 +179,7 @@
 
                                         <div class="col-6 pr-1">
                                             <div class="form-group mb-2">
-                                                <select name="education_level" id="education_level" class="form-control">
+                                                <select name="education_level" id="education_level" class="form-control" required>
                                                     <option value="">Niveau d'études</option>
                                                     <option value="CAP/BEP" @if(request('education_level')=='CAP / BEP' ) selected @endif>CAP / BEP</option>
                                                     <option value="Bac" @if(request('education_level')=='Bac' ) selected @endif>Bac</option>
@@ -193,11 +193,11 @@
                                         <div class="col-6">
                                             <div class="form-group mb-2">
                                                 <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
-                                                    placeholder="Pretentions salariales">
+                                                    placeholder="Pretentions salariales" required>
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="form-group mb-2">
                                                 <select name="valeurs[]" id="values_select" class="" multiple >
                                                     <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
@@ -225,7 +225,7 @@
                                                 </select>
                                                 <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                     <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"

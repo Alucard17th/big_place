@@ -45,6 +45,8 @@
                                 </div>
 
                                 <div class="row">
+
+                                @if( env('BG_MODE')  != 'demo' )
                                     <div class="col-md-8">
                                         <h2 class="h5 mb-3">Nom de l'entreprise : <span
                                                 class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
@@ -105,18 +107,11 @@
                                         
                                         <h5 class="h6 mb-3">Avantages : <span
                                             class="text-muted">{{ $offer->benefits }}</span></h5>
-
+                                    @endif
                                         <h5 class="h6 mb-3">Descriptif du poste :
                                             <div class="offer-desc text-dark mt-2">
                                                 {!! $offer->description !!}
                                             </div>
-                                            <!-- @if ($offer->post_tasks != null)
-                                                @foreach (json_decode($offer->post_tasks) as $task)
-                                                <span class="text-muted">{{ $task }}</span>@if(!$loop->last)<span class="text-muted">,</span>@endif
-                                                @endforeach
-                                            @else
-                                            <span class="text-muted">-</span>
-                                            @endif -->
                                         </h5>   
                                         
                                     </div>

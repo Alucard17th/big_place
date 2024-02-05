@@ -66,7 +66,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 // 'password_confirmation' => ['required', 'string', 'min:8', 'confirmed'],
                 'company' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'numeric', 'digits:10'],
                 'siret' => ['required', 'string', 'max:255'],
                 'rgpd-consent' => ['accepted'],
             ], [
@@ -92,6 +92,8 @@ class RegisterController extends Controller
                 'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
                 'company.required' => 'Veuillez saisir le nom de l\'entreprise.',
                 'phone.required' => 'Veuillez saisir votre numéro de téléphone.',
+                'phone.numeric' => 'Veuillez saisir votre numéro correctement.',
+                'phone.digits' => 'Veuillez saisir 10 chiffres.',
                 'phone.min' => 'Le numéro de téléphone doit contenir au moins 10 chiffres.',
                 'phone.max' => 'Le numéro de téléphone ne peut pas dépasser 10 chiffres.',
                 'siret.required' => 'Veuillez saisir le numéro SIRET.',
@@ -105,7 +107,7 @@ class RegisterController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 // 'password_confirmation' => ['required', 'string', 'min:8', 'confirmed'],
-                'phone' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'numeric', 'digits:10'],
                 'rgpd-consent' => ['accepted'],
             ], [
                 // General validation errors
@@ -130,6 +132,8 @@ class RegisterController extends Controller
                 'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
                 'company.required' => 'Veuillez saisir le nom de l\'entreprise.',
                 'phone.required' => 'Veuillez saisir votre numéro de téléphone.',
+                'phone.numeric' => 'Veuillez saisir votre numéro correctement.',
+                'phone.digits' => 'Veuillez saisir 10 chiffres.',
                 'phone.min' => 'Le numéro de téléphone doit contenir au moins 10 chiffres.',
                 'phone.max' => 'Le numéro de téléphone ne peut pas dépasser 10 chiffres.',
                 'siret.required' => 'Veuillez saisir le numéro SIRET.',
@@ -153,7 +157,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'siret' => $data['siret'] ?? null,
-            'phone' => $data['phone'],
         ]);
 
         $user->assignRole($data['role']);
