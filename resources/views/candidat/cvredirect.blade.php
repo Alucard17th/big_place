@@ -312,10 +312,10 @@ color: #2D2F30;
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
-                                            <input type="radio" id="use_input"> Utiliser Code Métier {{$curriculum->custom_job}}
+                                            <input type="radio" id="use_input"> Utiliser Code Métier 
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled
-                                        value="{{isset($curriculum->custom_job) ? $curriculum->custom_job : ''}}">
+                                        value="{{isset($curriculum) ? $curriculum->custom_job : ''}}">
                                     </div>
                                 </div>
                             </div>
