@@ -36,12 +36,12 @@
                                 <div class="row my-4">
                                     <a class="theme-btn btn-style-one bg-btn text-white"
                                         id="open-apply-modal">Je Postule</a>
-                                    @if($offer->user_id != null)
+                                    <!-- @if($offer->user_id != null)
                                     <a href="{{route('candidat.vitrine.show', $offer->user_id)}}"
                                         class="bg-btn-three bg-btn ml-3"
                                         style="padding-left:25px !important;padding-right:25px !important;">Consulter
                                         la vitrine de l'entreprise</a>
-                                    @endif
+                                    @endif -->
                                 </div>
 
                                 <div class="row">

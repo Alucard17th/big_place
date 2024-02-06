@@ -96,6 +96,15 @@
     font-size: 16px !important;
 }
 
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
+    z-index: 9999; /* Ensure it's above all other elements */
+}
 
 </style>
 @endpush
@@ -122,6 +131,7 @@
                         <!-- SEARCH FORM -->
                         <div class="widget-title">
                             <div class="chosen-outer search-container">
+                            <div id="overlay"></div> 
                                 <form method="get" class="" action="{{route('candidat.offers.search')}}">
                                     <div class="row no-gutters">
                                         <div class="col-6 pr-1">
