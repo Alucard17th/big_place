@@ -208,7 +208,9 @@
                                             <div class="col-6">
                                                 <div class="form-group mb-2">
                                                     <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
-                                                        placeholder="Pretentions salariales" required>
+                                                        placeholder="Pretentions salariales" 
+                                                        pattern="\d+\s-\s\d+" title="Exemple: 1000 - 2000"
+                                                        required>
                                                 </div>
                                             </div>
 
@@ -344,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
         $("#job_title").val([]).trigger('change');
     });
-    
+
     const selectAllCheckbox = document.querySelector('.checkbox-all');
     const checkboxes = document.querySelectorAll('.checkbox-item');
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
