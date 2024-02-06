@@ -275,12 +275,12 @@
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">
-                                                @if($offer->user_id != null)
+                                                <!-- @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
                                                     Vitrine de l'entreprise 
                                                 </a>
-                                                @endif
+                                                @endif -->
                                                 <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
@@ -305,7 +305,28 @@
 
 @push('scripts')
 <script>
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#job_title").val([]).trigger('change');
+    });
 document.addEventListener('DOMContentLoaded', function() {
+    
+
     const selectAllCheckbox = document.querySelector('.checkbox-all');
     const checkboxes = document.querySelectorAll('.checkbox-item');
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
@@ -447,25 +468,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
 
-    $("#use_select").on("change", function() {
-        $("#select_container").toggle(this.checked);
-        $("#job_title").prop("disabled", !this.checked);
-        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
-        $("#custom_job").prop("disabled", this.checked);
-        $("#input_container").hide();  // Hide input container if select is checked
-        $("#use_input").prop("checked", false);  // Uncheck input checkbox
-        $("#custom_job").val("");
-    });
-
-    $("#use_input").on("change", function() {
-        $("#input_container").toggle(this.checked);
-        $("#custom_job").prop("disabled", !this.checked);
-        $("#job_title").prop("disabled", this.checked);
-        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
-        $("#select_container").hide();  // Hide select container if input is checked
-        $("#use_select").prop("checked", false);  // Uncheck select checkbox
-        $("#job_title").val([]).trigger('change');
-    });
+    
 
     var selectedMetier = getParameterByName('job_title');
     function getParameterByName(name, url) {

@@ -157,6 +157,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'siret' => $data['siret'] ?? null,
+            'phone' => $data['phone'],
         ]);
 
         $user->assignRole($data['role']);
