@@ -325,7 +325,7 @@ color: #2D2F30;
                                     <!-- Prétentions salariales -->
                                     <div class="mb-3">
                                         <label for="pretentions" class="form-label text-dark">Prétentions
-                                            salariales</label>
+                                            salariales (Ke)</label>
                                         <input type="text" class="form-control" id="pretentions"
                                             value="{{isset($curriculum->pretentions_salariales) ? $curriculum->pretentions_salariales : ''}}"
                                             name="pretentions_salariales" required>
