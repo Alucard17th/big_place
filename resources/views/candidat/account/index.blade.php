@@ -137,11 +137,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 <label class="text-dark" for="nom">Nom Complet</label>
                                                 <input type="text" class="form-control" name="name" id="name"
                                                     value="{{ $user->name }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="phone" class="form-label text-dark">Numéro de téléphone</label>
+                                                <input type="text" class="form-control" id="phone" name="phone"
+                                                    value="{{ auth()->user()->phone }}" pattern="[0-9]{10}"
+                                                    title="Veuillez entrer un numéro de téléphone à 10 chiffres"
+                                                    required>
                                             </div>
                                         </div>
                                         <!-- <div class="col-6">

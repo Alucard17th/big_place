@@ -104,6 +104,7 @@ class CandidatController extends Controller
         $user = auth()->user();
         $user->name = $request->name;
         $user->birth_date = $request->birth;
+        $user->phone = $request->phone;
 
         $userId = auth()->user()->id;
 
