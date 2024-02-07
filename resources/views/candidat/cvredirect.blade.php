@@ -188,9 +188,9 @@ color: #2D2F30;
                                     <div class="text-center">
                                         <h4 class="mb-3">
                                             @if(!empty($curriculum->metier_recherche))
-                                                $curriculum->metier_recherche
+                                                {{$curriculum->metier_recherche}}
                                             @else
-                                                $curriculum->custom_job
+                                                {{$curriculum->custom_job}}
                                             @endif
                                         </h4>
                                     </div>
