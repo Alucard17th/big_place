@@ -287,7 +287,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="values_select" name="valeurs[]" multiple>
                                             <option value="respect">Le respect</option>
@@ -315,7 +315,7 @@
                                         </select>
                                         <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                             <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"
