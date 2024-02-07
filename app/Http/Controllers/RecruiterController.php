@@ -902,7 +902,7 @@ class RecruiterController extends Controller
             'event_date' => $request->input('event_date'),
             'event_hour' => $request->input('event_hour'),
             'description' => $request->input('description'),
-            'statut' => 'Active',
+            'statut' => 'Actif',
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
 

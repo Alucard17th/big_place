@@ -143,7 +143,7 @@ input, select{
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-2 mr-1">
                                                 <label>
-                                                    <input type="radio" id="use_input" @if(request('custom_job')) checked @endif > Utiliser Métier
+                                                    <input type="radio" id="use_input" @if(request('custom_job')) checked @endif > Utiliser Code Métier
                                                 </label>
                                                 <input name="custom_job" id="custom_job" class="form-control w-100" placeholder="Métier" 
                                                 value="{{ request('custom_job') }}" >
@@ -160,7 +160,7 @@ input, select{
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-0 mr-1">
                                                 <select class="form-control pl-2" id="annees_experience" name="annees_experience" >
-                                                    <option value=""  selected>Année d'expérience</option>
+                                                    <option value=""  selected>Niveau d'expérience</option>
                                                     <option value="Débutant (0 – 2 ans)"  @if(request('annees_experience') == 'Débutant (0 – 2 ans)') selected @endif>Débutant (0 – 2 ans)</option>
                                                     <option value="Intermédiaire (2 – 5 ans)" @if(request('annees_experience') == 'Intermédiaire (2 – 5 ans)') selected @endif>Intermédiaire (2 – 5 ans)</option>
                                                     <option value="Confirmé (5 -10 ans)" @if(request('annees_experience') == 'Confirmé (5 -10 ans)') selected @endif>Confirmé (5 -10 ans)</option>
@@ -184,8 +184,8 @@ input, select{
 
                                         <div class="col-6 px-1">
                                             <div class="form-group mb-2 mr-1">
-                                                <input type="text" name="pretentions_salariales" placeholder="Niveau de salaire" id="pretentions_salariales"
-                                                    value="{{ request('pretentions_salariales') }}" class="" >
+                                                <input type="text" name="pretentions_salariales" placeholder="Pétentions salariales" id="pretentions_salariales"
+                                                    value="{{ request('pretentions_salariales') }}" class="" pattern="\d+\s-\s\d+" title="Exemple: 1000 - 2000">
                                             </div>
                                         </div>
 
@@ -268,7 +268,7 @@ input, select{
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column flex-wrap justify-content-center align-items-start">
                                                 @if($curriculum->cv != null && $curriculum->cv != '')
                                                 <button class="bg-btn-nine see-profile" data-url="{{ asset('storage'.$curriculum->cv) }}"
                                                 data-cvid="{{$curriculum->id}}">

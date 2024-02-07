@@ -179,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",

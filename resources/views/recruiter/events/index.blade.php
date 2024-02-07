@@ -123,7 +123,7 @@
                                             </td>
                                             
                                             @unlessrole('restricted')
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column flex-wrap justify-content-center align-items-start">
                                                 <a href="{{route('recruiter.events.show', $event->id)}}"
                                                     type="button" class="bg-btn-five">
                                                     <i class="las la-eye"></i>
@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",

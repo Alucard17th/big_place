@@ -177,7 +177,7 @@ class RegisterController extends Controller
         }
         
 
-        Mail::to($user->email)->send(new UserRegistered($emailDetails));
+        // Mail::to($user->email)->send(new UserRegistered($emailDetails));
 
         if($user){
             toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);

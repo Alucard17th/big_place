@@ -103,7 +103,6 @@
     color: #000 !important;
     font-size: 16px !important;
     font-weight: 400 !important;
-
 }
 
 .select2-search__field {
@@ -227,7 +226,7 @@
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
-                                            <input type="radio" id="use_input"> Utiliser Métier
+                                            <input type="radio" id="use_input"> Utiliser Code Métier
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
@@ -272,8 +271,8 @@
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <input type="text" name="pretentions_salariales" id="pretentions_salariales"
-                                            value="" class="form-control" placeholder="Pretentions salariales (ke)"
-                                            required>
+                                            value="" class="form-control" placeholder="Prétentions salariales (ke)"
+                                            pattern="\d+\s-\s\d+" title="Exemple: 1000 - 2000" required>
                                     </div>
                                 </div>
 

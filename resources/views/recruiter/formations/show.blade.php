@@ -217,38 +217,33 @@ background: #13D527;
                                         </div>
 
                                         <div class="offre-subtitle my-1">
+                                            @if(getEntrepriseLogoByUserId($formation->user_id) != null)
                                             <img src="{{asset('storage'.getEntrepriseLogoByUserId($formation->user_id)->logo)}}"
                                                 alt="" class="mr-2">
-                                            {{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}} ,
+                                            
+                                            {{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}
+                                            @endif
+                                             ,
                                             {{$formation->work_location}}
                                         </div>
 
                                         <h5 class="offre-time-subtitle">Publiée le
                                             {{ \Carbon\Carbon::parse($formation->created_at)->formatLocalized('%d-%m-%Y') }}</h5>
 
-                                        <!-- <div class="row my-4">
-                                            <a href="{{ route('candidat.formation.subscribe', $formation->id) }}" class="theme-btn btn-style-one bg-btn text-white">Participer à la formation</a>
-                                            <a href="{{route('candidat.vitrine.show', $formation->user_id)}}" class="bg-btn-three bg-btn ml-3" style="padding-left:25px !important;padding-right:25px !important;">Consulter la vitrine de l'entreprise</a>
-                                        </div> -->
-
-                                        <!-- <div class="offre-desc my-4">
-                                            Responsabilités : Développer et maintenir des applications Java
-                                            complexes Travailler en collaboration avec une équipe d'ingénieurs pour
-                                            concevoir et mettre en œuvre de nouvelles fonctionnalités Participer à
-                                            la conception et à la mise en œuvre de l'architecture logicielle des
-                                            applications
-                                        </div> -->
-
                                         <div class="offre-desc my-4">
                                             Créateur de la Formation : {{getUserById($formation->user_id)->name}} 
                                         </div>
-<!-- 
-                                        <div class="offre-desc my-4">
-                                            Durée de la Formation : {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} à  {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }} 
-                                        </div> -->
 
                                         <div class="offre-desc my-4">
                                             Lieu et Adresse:  {{$formation->work_location}}
+                                        </div>
+
+                                        <div class="offre-desc my-4">
+                                            Date de démarrage de la formation:  {{$formation->start_date}}
+                                        </div>
+                                        
+                                        <div class="offre-desc my-4">
+                                            Date de fin de la formation:  {{$formation->end_date}}
                                         </div>
 
                                         <div class="offre-desc my-4">
@@ -269,37 +264,6 @@ background: #13D527;
 
                                         <div class="offre-end-date">Date de fin d'inscription :
                                             {{$formation->end_date}}</div>
-
-                                        <!-- <div class="card mt-5" style="height:100%;">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-2 pr-0">
-                                                        <div class="entreprise-logo"><img
-                                                                src="{{asset('storage'.getEntrepriseLogoByUserId($formation->user_id)->logo)}}"
-                                                                alt=""></div>
-                                                    </div>
-                                                    <div class="col-7 pl-0">
-                                                        <div class="entreprise-name">
-                                                            {{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}
-                                                        </div>
-                                                        <div class="entreprise-info">
-                                                            {{getEntrepriseLogoByUserId($formation->user_id)->effectif}}
-                                                            Employés</div>
-                                                    </div>
-                                                    <div class="col-12 mt-3">
-                                                        <span class="entreprise-desc">
-                                                            Google est l'une des entreprises les plus influentes au
-                                                            monde.
-                                                            Elle est connue pour son moteur de recherche,
-                                                            mais elle propose également une gamme d'autres produits
-                                                            et services,
-                                                            notamment Gmail, Google Maps, YouTube, Google Cloud
-                                                            Platform et Google AI.
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
 
                                     </div>
                                 </div>
