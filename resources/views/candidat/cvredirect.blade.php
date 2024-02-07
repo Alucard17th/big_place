@@ -186,7 +186,13 @@ color: #2D2F30;
                             <div class="row mt-4">
                                 <div class="col-12">
                                     <div class="text-center">
-                                        <h4 class="mb-3">{{$curriculum->metier_recherche}}</h4>
+                                        <h4 class="mb-3">
+                                            @if(!empty($curriculum->metier_recherche))
+                                                $curriculum->metier_recherche
+                                            @else
+                                                $curriculum->custom_job
+                                            @endif
+                                        </h4>
                                     </div>
                                    
                                     <ul class="list-unstyled">
