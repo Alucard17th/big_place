@@ -174,7 +174,7 @@ color: #2D2F30;
                                 </div>
 
                                 <div class="col-8">
-                                    <h4 class="mb-3">{{$curriculum->user->nom}} {{$curriculum->user->prenom}}</h4>
+                                    <h4 class="mb-3">{{$curriculum->nom}} {{$curriculum->prenom}}</h4>
                                     <ul class="list-unstyled">
                                         <li class="text-dark">{{$curriculum->address}} {{$curriculum->ville_domiciliation}}</li>
                                         <li class="text-dark">Email : {{$curriculum->user->email}}</li>
