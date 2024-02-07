@@ -486,6 +486,7 @@ color: #2D2F30;
 @php
 if( isset($curriculum) ){
     $cv = $curriculum->cv;
+    $selectedMetierRome = $curriculum->metier_recherche;
 }else{
     $cv = [];
 }
@@ -654,8 +655,13 @@ document.addEventListener('DOMContentLoaded', function() {
         },
     });
 
-   
-   
+    var selectedMetier = @json($selectedMetierRome);
+    if(selectedMetier){
+        console.log('Selected Metier : ', selectedMetier);
+        $("#metier_recherche").append(new Option(selectedMetier, selectedMetier, true, true)).trigger('change');
+    }else{
+        console.log('Non Selected Metier : ', selectedMetier);
+    }
 
 })
 </script>
