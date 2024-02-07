@@ -175,8 +175,6 @@ class RegisterController extends Controller
                 'url' => route('home'),
             ];
         }
-        
-        // Mail::to($user->email)->send(new UserRegistered($emailDetails));
 
         if($user){
             toast('Votre inscription est effectuée avec succès','success')->autoClose(5000);
