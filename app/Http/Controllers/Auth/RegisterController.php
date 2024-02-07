@@ -176,7 +176,6 @@ class RegisterController extends Controller
             ];
         }
         
-
         // Mail::to($user->email)->send(new UserRegistered($emailDetails));
 
         if($user){
