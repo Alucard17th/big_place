@@ -147,7 +147,7 @@ class OfferController extends Controller
                         // Check if the submitted salary falls within the offer's salary interval
                         $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
                     }
-                    dd('here is n');
+                    dd('here is n', $minOfferSalary, $maxOfferSalary);
                 } else {
                     // If the offer's salary is a single value
                     $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
