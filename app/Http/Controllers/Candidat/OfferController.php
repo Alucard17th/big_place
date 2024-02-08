@@ -134,11 +134,13 @@ class OfferController extends Controller
             }
     
             if (!empty($searchTerm['brut_salary'])) {
-                [$minOfferSalary, $maxOfferSalary] = explode(' - ', $offer->brut_salary);
-                if(!empty($minOfferSalary) && !empty($maxOfferSalary)){
-                    $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
-                }else{
-                    $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
+                if(!empty($offer->brut_salary)){
+                    [$minOfferSalary, $maxOfferSalary] = explode(' - ', $offer->brut_salary);
+                    if(!empty($minOfferSalary) && !empty($maxOfferSalary)){
+                        $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
+                    }else{
+                        $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
+                    }
                 }
             }
     
