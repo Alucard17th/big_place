@@ -135,10 +135,20 @@ class OfferController extends Controller
     
             if (!empty($searchTerm['brut_salary'])) {
               
-                [$minOfferSalary, $maxOfferSalary] = explode(' - ', $offer->brut_salary);
-                if(!empty($minOfferSalary) && !empty($maxOfferSalary)){
-                    $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
-                }else{
+                // Explode the offer's brut salary to get minimum and maximum values
+                $salaryParts = explode(' - ', $offer->brut_salary);
+
+                if (count($salaryParts) === 2) {
+                    // Extract minimum and maximum salary values
+                    [$minOfferSalary, $maxOfferSalary] = $salaryParts;
+
+                    // Check if the extracted values are not empty
+                    if (!empty($minOfferSalary) && !empty($maxOfferSalary)) {
+                        // Check if the submitted salary falls within the offer's salary interval
+                        $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
+                    }
+                } else {
+                    // If the offer's salary is a single value
                     $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
                 }
             }
