@@ -306,7 +306,7 @@ color: #2D2F30;
                             <div class="row">
                                 <div class="col-6 pr-1">
                                     <label>
-                                        <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                        <input type="radio" id="use_select" @if($curriculum && $curriculum->metier_recherche != null ) checked @endif> Utiliser Code ROME
                                     </label>
                                     <div class="form-group mb-2">
                                         <select name="job_title" id="job_title" class="form-control w-100" >
@@ -318,7 +318,7 @@ color: #2D2F30;
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
-                                            <input type="radio" id="use_input"> Utiliser Code Métier 
+                                            <input type="radio" id="use_input" @if($curriculum && !$curriculum->metier_recherche != null ) checked @endif> Utiliser Code Métier 
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled
                                         value="{{isset($curriculum) ? $curriculum->custom_job : ''}}">
@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked
         $("#use_input").prop("checked", false);  // Uncheck input checkbox
-        $("#custom_job").val("");
+        // $("#custom_job").val("");
     });
 
     $("#use_input").on("change", function() {
@@ -622,7 +622,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
         $("#select_container").hide();  // Hide select container if input is checked
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
-        $("#job_title").val([]).trigger('change');
+        // $("#job_title").val([]).trigger('change');
     });
 
     $("#job_title").select2({
