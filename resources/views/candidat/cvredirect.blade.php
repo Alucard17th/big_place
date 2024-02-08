@@ -199,7 +199,7 @@ color: #2D2F30;
                                         <li>Niveau: {{$curriculum->niveau}}</li>
                                         <li>Nombre d'années d'expérience: {{$curriculum->annees_experience}} années</li>
                                         <li>Niveau d'études: {{$curriculum->niveau_etudes}}</li>
-                                        <li>Prétentions salariales: {{$curriculum->pretentions_salariales}}</li>
+                                        <li>Prétentions salariales (Ke): {{$curriculum->pretentions_salariales}}</li>
                                         <li>Valeurs: 
                                             @php 
                                             if($curriculum->valeurs != null){
