@@ -151,7 +151,6 @@ class OfferController extends Controller
                     // If the offer's salary is a single value
                     $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
                 }
-                dd($salaryParts);
             }
     
             if (!empty($searchTerm['education_level'])) {
