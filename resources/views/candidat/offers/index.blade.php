@@ -214,7 +214,7 @@
                                             <div class="col-6">
                                                 <div class="form-group mb-2">
                                                     <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
-                                                        placeholder="Pretentions salariales"  >
+                                                        placeholder="Pretentions salariales (Ke)"  >
                                                        
                                                         
                                                 </div>
