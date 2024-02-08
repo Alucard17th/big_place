@@ -134,7 +134,7 @@ class OfferController extends Controller
             }
     
             if (!empty($searchTerm['brut_salary'])) {
-                if(!empty($offer->brut_salary)){
+                if(strpos($searchTerm['brut_salary'], '-') !== false){
                     [$minOfferSalary, $maxOfferSalary] = explode(' - ', $offer->brut_salary);
                     if(!empty($minOfferSalary) && !empty($maxOfferSalary)){
                         $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
