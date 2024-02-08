@@ -335,7 +335,6 @@ color: #2D2F30;
                                         <input type="text" class="form-control" id="pretentions"
                                             value="{{isset($curriculum->pretentions_salariales) ? $curriculum->pretentions_salariales : ''}}"
                                             name="pretentions_salariales" 
-                                            pattern="\d+\s-\s\d+" title="Exemple: 1000 - 2000"
                                             required>
                                     </div>
                                 </div>

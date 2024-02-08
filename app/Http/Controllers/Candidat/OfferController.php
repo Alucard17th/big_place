@@ -135,7 +135,7 @@ class OfferController extends Controller
     
             if (!empty($searchTerm['brut_salary'])) {
               
-                // Explode the offer's brut salary to get minimum and maximum values
+                        // Explode the offer's brut salary to get minimum and maximum values
                 $salaryParts = explode(' - ', $offer->brut_salary);
 
                 if (count($salaryParts) === 2) {
@@ -151,6 +151,7 @@ class OfferController extends Controller
                     // If the offer's salary is a single value
                     $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
                 }
+                dd($salaryParts);
             }
     
             if (!empty($searchTerm['education_level'])) {
