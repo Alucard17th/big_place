@@ -141,12 +141,15 @@
                                         <div class="row no-gutters">
                                             <div class="col-6 pr-1">
                                                 <label>
-                                                    <input type="radio" id="use_select" checked> Utiliser Code ROME
+                                                    <input type="radio" id="use_select" @if(request()->url() === url('/candidat-offers') || request()->has('job_title')) checked @endif> Utiliser Code ROME
                                                 </label>
                                                 <div class="form-group mb-2">
                                                     <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                                         style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                                    <select name="job_title" id="job_title" class="form-control" required>
+                                                    <select name="job_title" id="job_title" class="form-control @if(!request('job_title')) greyed-out @endif" 
+                                                        @if(request()->url() === url('/candidat-offers') || request()->has('job_title')) required @endif
+                                                        @if(request('custom_job')) disabled @endif
+                                                    >
                                                         <option value="" selected value="">Poste recherchés</option>
                                                     </select>
                                                 </div>
@@ -155,10 +158,13 @@
                                             <div class="col-6">
                                                 <div class="form-group mb-2">
                                                     <label>
-                                                        <input type="radio" id="use_input"> Utiliser Code Métier
+                                                        <input type="radio" id="use_input" @if(request()->has('custom_job')) checked @endif> Utiliser Code Métier
                                                     </label>
-                                                    <input name="custom_job" id="custom_job" class="form-control" 
-                                                    placeholder="Métier" value="{{request('custom_job')}}" disabled required>
+                                                    <input name="custom_job" id="custom_job" class="form-control @if(!request('custom_job')) greyed-out @endif" 
+                                                    placeholder="Métier" value="{{request('custom_job')}}"  
+                                                        @if(request()->has('custom_job')) required @endif
+                                                        @if(!request()->has('custom_job')) disabled @endif
+                                                    >
                                                 </div>
                                             </div>
 
@@ -167,13 +173,13 @@
                                                     <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
                                                         style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
                                                     <input type="text" name="location_city" id="location_city" value="{{request('location_city')}}"
-                                                        class="form-control mb-2" placeholder="Ville / Département" required>
+                                                        class="form-control mb-2" placeholder="Ville / Département" >
                                                 </div>
                                             </div>
 
                                             <div class="col-6">
                                                 <div class="form-group mb-2">
-                                                    <select class="form-control" id="experience_level" name="experience_level" required>
+                                                    <select class="form-control" id="experience_level" name="experience_level" >
                                                         <option value="" selected>Année d'expérience</option>
                                                         <option value="Débutant (0 – 2 ans)"
                                                             @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
@@ -194,13 +200,13 @@
 
                                             <div class="col-6 pr-1">
                                                 <div class="form-group mb-2">
-                                                    <select name="education_level" id="education_level" class="form-control" required>
+                                                    <select name="education_level" id="education_level" class="form-control" >
                                                         <option value="">Niveau d'études</option>
                                                         <option value="CAP/BEP" @if(request('education_level')=='CAP / BEP' ) selected @endif>CAP / BEP</option>
                                                         <option value="Bac" @if(request('education_level')=='Bac' ) selected @endif>Bac</option>
                                                         <option value="Bac+2" @if(request('education_level')=='Bac+2' ) selected @endif>Bac + 2</option>
                                                         <option value="Bac+4" @if(request('education_level')=='Bac+4' ) selected @endif>Bac + 4</option>
-                                                        <option value="Bac+5 et plus" @if(request('education_level')=='Bac+5' ) selected @endif>Bac + 5 et plus</option>
+                                                        <option value="Bac+5 et plus" @if(request('education_level')=='Bac+5 et plus' ) selected @endif>Bac + 5 et plus</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -208,9 +214,9 @@
                                             <div class="col-6">
                                                 <div class="form-group mb-2">
                                                     <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
-                                                        placeholder="Pretentions salariales" 
-                                                        pattern="\d+\s-\s\d+" title="Exemple: 1000 - 2000"
-                                                        required>
+                                                        placeholder="Pretentions salariales"  >
+                                                       
+                                                        
                                                 </div>
                                             </div>
 
@@ -330,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $("#use_select").on("change", function() {
         $("#select_container").toggle(this.checked);
         $("#job_title").prop("disabled", !this.checked);
+        $("#job_title").prop("required", this.checked);
         $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked

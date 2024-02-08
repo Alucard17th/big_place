@@ -489,6 +489,7 @@ if( isset($curriculum) ){
     $selectedMetierRome = $curriculum->metier_recherche;
 }else{
     $cv = [];
+    $selectedMetierRome = '';
 }
 @endphp
 @endsection

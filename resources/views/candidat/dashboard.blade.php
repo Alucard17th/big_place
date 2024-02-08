@@ -222,7 +222,7 @@
                                     <div class="form-group mb-2">
                                         <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
                                             style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                        <select name="job_title" id="job_title" class="form-control">
+                                        <select name="job_title" id="job_title" class="form-control" required>
                                             <option value="" selected value="">Poste recherchés</option>
                                         </select>
                                     </div>
@@ -233,7 +233,7 @@
                                         <label>
                                             <input type="radio" id="use_input"> Utiliser Code Métier
                                         </label>
-                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" required disabled>
                                     </div>
                                 </div>
 
@@ -774,6 +774,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     $("#use_select").on("change", function() {
         $("#select_container").toggle(this.checked);
         $("#job_title").prop("disabled", !this.checked);
+        $("#job_title").prop("required", this.checked);
         $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
         $("#custom_job").prop("disabled", this.checked);
         $("#input_container").hide();  // Hide input container if select is checked

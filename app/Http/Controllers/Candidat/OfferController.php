@@ -126,7 +126,7 @@ class OfferController extends Controller
             }
 
             if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
-                $score += strpos($offer->rome_code, $searchTerm['custom_job']) !== false ? 10 : 0;
+                $score += strpos($offer->job_title, $searchTerm['custom_job']) !== false ? 10 : 0;
             }
     
             if (!empty($searchTerm['location_city'])) {
@@ -134,8 +134,12 @@ class OfferController extends Controller
             }
     
             if (!empty($searchTerm['brut_salary'])) {
-                [$minSalary, $maxSalary] = explode('-', str_replace(' ', '', $searchTerm['brut_salary']));
-                $score += ($offer->brut_salary >= $minSalary && $offer->brut_salary <= $maxSalary) ? 10 : 0;
+                [$minOfferSalary, $maxOfferSalary] = explode(' - ', $offer->brut_salary);
+                if(!empty($minOfferSalary) && !empty($maxOfferSalary)){
+                    $score += ($searchTerm['brut_salary'] >= $minOfferSalary && $searchTerm['brut_salary'] <= $maxOfferSalary) ? 10 : 0;
+                }else{
+                    $score += ($searchTerm['brut_salary'] == $offer->brut_salary) ? 10 : 0;
+                }
             }
     
             if (!empty($searchTerm['education_level'])) {
