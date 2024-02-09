@@ -213,6 +213,7 @@
                                                     actuel</label>
                                                 <input type="password" class="form-control" name="actual_password"
                                                     id="actual_password" value="" required>
+                                                <span toggle="#actual_password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -220,6 +221,8 @@
                                                 <label class="text-dark" for="password">Nouveau mot de passe</label>
                                                 <input type="password" class="form-control" name="password"
                                                     id="password" value="" required>
+                                                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -229,6 +232,7 @@
                                                     passe</label>
                                                 <input type="password" class="form-control" name="confirmed_password"
                                                     id="confirmed_password" value="" required>
+                                                <span toggle="#confirmed_password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                         </div>
 
@@ -268,7 +272,8 @@
                                             <div class="form-group">
                                                 <label class="text-dark" for="password">Mot de passe actuel</label>
                                                 <input type="password" class="form-control" name="password"
-                                                    id="password" value="" required>
+                                                    id="password_del" value="" required>
+                                                <span toggle="#password_del" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                             <div class="text-dark my-1 py-1">Cela supprimera votre compte</div>
                                             <button class="mt-3 delete-btn" type="submit"
