@@ -297,10 +297,31 @@ nav > ul.pagination > li > a{
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <label class="text-dark" for="valeurs_fortes">Valeurs Fortes</label>
-                                            <input type="text" class="form-control" name="valeurs_fortes"
-                                                id="valeurs_fortes"
-                                                value="{{ isset($entreprise) ? $entreprise->valeurs_fortes : ''}}">
+                                            <label class="text-dark" for="valeurs_fortes">Valeurs Fortes</label><br>
+                                            <select name="valeurs[]" id="values_select" class="w-100" multiple >
+                                                <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
+                                                <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
+                                                <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
+                                                <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
+                                                <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
+                                                <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
+                                                <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
+                                                <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
+                                                <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
+                                                <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
+                                                <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
+                                                <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
+                                                <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
+                                                <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
+                                                <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
+                                                <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
+                                                <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
+                                                <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
+                                                <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
+                                                <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
+                                                <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
+                                                <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -343,6 +364,14 @@ nav > ul.pagination > li > a{
                                             <input type="text" class="form-control" name="chiffre_affaire"
                                                 id="chiffre_affaire"
                                                 value="{{ isset($entreprise) ? $entreprise->chiffre_affaire : ''}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark" for="chiffre_affaire">Description de l'entreprise</label>
+                                            <textarea name="description" id="description" 
+                                            class="form-control" cols="30" rows="5">{{ isset($entreprise) ? $entreprise->description : ''}}</textarea>
                                         </div>
                                     </div>
 
@@ -759,7 +788,12 @@ $(document).ready(function() {
             value: input,
             text: input,
             };
+        },
+        render: {
+        option_create: function(data, escape) {
+            return '<div class="create">Rajouter <strong>' + escape(data.input) + '</strong>&hellip;</div>';
         }
+    }
     });
 
     offersBtn.on('click', function() {
@@ -818,6 +852,31 @@ $(document).ready(function() {
         $(this).addClass('active');
         // remove active class from inbox button
         $('#inbox-btn').removeClass('active');
+    })
+
+    $("#values_select").select2({
+        placeholder: "Vos valeurs",
+        maximumSelectionLength: 5,
+        language: {
+            maximumSelected: function(e) {
+                return "Vous ne pouvez sélectionner que jusqu'à 5 valeurs.";
+                // Replace this string with your custom error message
+            }
+        }
+    });
+    
+    $('form').on('submit', function(){
+        var minimum = 5;
+
+        if($("#values_select").select2('data').length>=minimum){
+            $('#values_select_help').addClass('text-muted')
+            $('#values_select_help').removeClass('text-danger')
+            return true;
+        }else {
+            $('#values_select_help').addClass('text-danger')
+            $('#values_select_help').removeClass('text-muted')
+            return false;
+        }
     })
 })
 </script>

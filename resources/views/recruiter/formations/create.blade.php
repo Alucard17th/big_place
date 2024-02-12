@@ -74,14 +74,17 @@
                                         <!-- Field: Date de démarrage de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="start_date">Date de démarrage de la formation</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date" oninput="validateDate(this, 'start_date')" required>
+                                            <input type="date" class="form-control" id="start_date" name="start_date" oninput="validateDate(this, 'start_date')" 
+                                            data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                            required>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <!-- Field: Date de fin de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="end_date">Date de fin de la formation</label>
-                                            <input type="date" class="form-control" id="end_date" name="end_date" oninput="validateDate(this, 'end_date')">
+                                            <input type="date" class="form-control" id="end_date" name="end_date" oninput="validateDate(this, 'end_date')"
+                                            data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +146,8 @@
                                             <label class="text-dark" for="registration_deadline">Date de fin d’inscription pour les
                                                 candidats</label>
                                             <input type="date" class="form-control" id="registration_deadline"
-                                                name="registration_deadline" oninput="validateDate(this, 'registration_deadline')">
+                                                name="registration_deadline" oninput="validateDate(this, 'registration_deadline')"
+                                                data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                                         </div>
                                     </div>
                                 </div>

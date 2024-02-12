@@ -273,7 +273,7 @@
                                 <!-- Field: Avantages proposés -->
                                 <div class="form-group">
                                     <label for="benefits">Avantages proposés</label>
-                                    <textarea class="form-control" id="benefits" name="benefits" rows="3" required>{{ $offer->benefits }}</textarea>
+                                    <textarea class="form-control" id="benefits" name="benefits" rows="3" >{{ $offer->benefits }}</textarea>
                                 </div>
 
                                 <!-- Field: Date de publication de l’offre -->
@@ -324,7 +324,7 @@
                                  <!-- Field: Couts de la diffusion -->
                                  <div class="form-group">
                                     <label for="advertising_costs">Coûts de la diffusion</label>
-                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" value="{{ $offer->advertising_costs }}" required>
+                                    <input type="text" class="form-control" id="advertising_costs" name="advertising_costs" value="{{ $offer->advertising_costs }}" disabled>
                                 </div>
 
                                 <div class="form-group">
@@ -381,91 +381,40 @@
         });
 
         $("#rome_code").select2({
-            placeholder: "Sélectionnez votre code Rome",
-        });
-
-        var currentPage = 1;
-    var isFetching = false; // Flag to track request status
-
-    async function getJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                $('#rome_code').append(options).trigger("change");
-                isFetching = false;
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
-            }
-        });
-    }
-
-    async function refreshJsonJobs() {
-        await $.ajax({
-            url: "/recruiter-dashboard/jobs?page=" + currentPage,
-            dataType: "json",
-            success: function(data) {
-                // Populate the Select2 dropdown with the received data
-                // var options = data.items.map(function(job) {
-                //     return new Option(job.full_name, job.id, false, false);
-                // });
-                var options = data.items.filter(function(job) {
-                    return job.full_name !== null; // Filter out jobs with null full_name
-                }).map(function(job) {
-                    return new Option(job.full_name, job.id, false, false);
-                });
-
-                const scrollTop = $('.select2-results__options').scrollTop();
-                $('#rome_code').append(options).trigger("change");
-
-                $('#rome_code').select2('close');
-                $('#rome_code').select2('open');
-                $('.select2-results__options').scrollTop(scrollTop + 1);
-
-                console.log(scrollTop);
-
-                isFetching = false;
+            noResults: function() {
+                return 'Aucun metier correspondant.';
             },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                isFetching = false;
+            searching: function() {
+                return 'Chargement...';
             }
-        });
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+    })
+    var selectedMetier =  @json($offer->rome_code);
+    if(selectedMetier){
+        $("#rome_code").append(new Option(selectedMetier, selectedMetier, true, true)).trigger('change');
     }
-
-    getJsonJobs();
-
-    $('#rome_code').on('select2:open', function() {
-        const resultsContainer = $('.select2-results__options');
-        resultsContainer.on('scroll', function() {
-            // This function will be called whenever the user scrolls the options list
-            console.log("scroll");
-            const scrollTop = $(this).scrollTop();
-            const scrollHeight = $(this).prop('scrollHeight');
-            const clientHeight = $(this).innerHeight();
-
-            // Check if the user has scrolled near the bottom:
-            if (scrollTop + clientHeight >= scrollHeight - 50 && !isFetching) {
-                // Trigger infinite scrolling or other actions as needed
-                console.log('Near the bottom!');
-                currentPage++;
-                isFetching = true;
-                refreshJsonJobs();
-            }
-        });
-    });
+        
 
         $('#desired_languages').on('change', function() {
             if (this.value.includes('Autre')) {

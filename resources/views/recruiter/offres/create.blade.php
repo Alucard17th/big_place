@@ -105,7 +105,7 @@
                                 <div class="form-group">
                                     <label for="company_name">Nom de l'entreprise</label>
                                     <input type="text" class="form-control" id="company_name"
-                                        name="company_name" required="">
+                                        name="company_name" required>
                                 </div>
 
                                 <!-- Field: Intitulé du poste recherché -->
@@ -127,7 +127,9 @@
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
                                     <input type="date" class="form-control" id="desired_start_date" name="start_date"
+                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
                                         required>
+                                       
                                 </div>
 
                                 <!-- Field: Localisation du poste (Ville et Code postal) -->
@@ -308,14 +310,16 @@
                                 <div class="form-group">
                                     <label for="publication_date">Date de publication de l’offre</label>
                                     <input type="date" class="form-control" id="publication_date"
-                                        name="publication_date" required>
+                                        name="publication_date" required
+                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                                 </div>
 
                                 <!-- Field: Dépublier l’offre le -->
                                 <div class="form-group">
                                     <label for="unpublish_date">Dépublier l’offre le</label>
                                     <input type="date" class="form-control" id="unpublish_date" name="unpublish_date"
-                                        required>
+                                        required
+                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                                 </div>
 
                                 <div class="form-group">

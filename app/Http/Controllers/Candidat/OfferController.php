@@ -125,8 +125,15 @@ class OfferController extends Controller
                 $score += strpos($offer->rome_code, $searchTerm['job_title']) !== false ? 10 : 0;
             }
 
+            // if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
+            //     $score += strpos($offer->rome_code, $searchTerm['custom_job']) !== false ? 10 : 0;
+            // }
+
             if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
-                $score += strpos($offer->rome_code, $searchTerm['custom_job']) !== false ? 10 : 0;
+                $searchTermLower = strtolower($searchTerm['custom_job']); // Convert search term to lowercase
+            
+                // Convert job title to lowercase and perform case-insensitive comparison
+                $score += strpos(strtolower($offer->job_title), $searchTermLower) !== false ? 10 : 0;
             }
     
             if (!empty($searchTerm['location_city'])) {

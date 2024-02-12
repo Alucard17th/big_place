@@ -202,7 +202,9 @@ class RecruiterController extends Controller
                 $score += strpos($curriculum->pretentions_salariales, $searchTerm['pretentions_salariales']) !== false ? 10 : 0;
             }
             if (!empty($searchTerm['valeurs']) && $searchTerm['valeurs'] != '') {
-                $score += in_array($searchTerm['valeurs'], json_decode($curriculum->valeurs, true)) ? 10 : 0;
+                // $score += in_array($searchTerm['valeurs'], json_decode($curriculum->valeurs, true)) ? 10 : 0;
+                $decodedValeurs = json_decode($curriculum->valeurs, true);
+                $score += is_array($decodedValeurs) && in_array($searchTerm['valeurs'], $decodedValeurs) ? 10 : 0;
             }
 
             // Calculate the matching percentage for the current curriculum
@@ -328,7 +330,13 @@ class RecruiterController extends Controller
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
         }
 
-        $message_body = 'une proposition de RDV vous a été envoyée par l’entreprise '.$entreprise->nom_entreprise.', 
+        if(isset($entreprise) && $entreprise != 'null'){
+            $emailName = $entreprise->nom_entreprise;
+        }else{
+            $emailName = $user->name;
+        }
+
+        $message_body = 'une proposition de RDV vous a été envoyée par l’entreprise '.$emailName.', 
         vous avez 24H pour valider le RDV, passé ce délai, l’entreprise pourra proposer ce RDV a un autre candidat';
         
         $confirmationUrl = '';
@@ -537,7 +545,8 @@ class RecruiterController extends Controller
     public function myVitrine(){
         $user = auth()->user();
         $entreprise = $user->entreprise->first();
-        $offers = $entreprise != null ? $entreprise->user->offers()->paginate(9) : null;
+        $offers = $entreprise != null ? $entreprise->user->offers()->orderBy('created_at', 'desc')->paginate(9) : null;
+
         return view('recruiter.vitrine.vitrine', compact('entreprise', 'offers'));
     }
     public function updateVitrine(Request $request){
@@ -549,12 +558,14 @@ class RecruiterController extends Controller
                 'date_creation' => $request->date_creation,
                 'domiciliation' => $request->domiciliation,
                 'siege_social' => $request->siege_social,
-                'valeurs_fortes' => $request->valeurs_fortes,
+                // 'valeurs_fortes' => $request->valeurs_fortes,
+                'valeurs_fortes' => json_encode($request->valeurs),
                 'nombre_implementations' => $request->nombre_implementations,
                 'effectif' => $request->effectif,
                 'fondateurs' => json_encode($request->fondateurs), 
                 'chiffre_affaire' => $request->chiffre_affaire,
-                'sector' => $request->sector
+                'sector' => $request->sector,
+                'description' => $request->description
             ]
         );
 
@@ -691,15 +702,19 @@ class RecruiterController extends Controller
     public function myOffers(){
         $user = auth()->user();
 
-        if($user->parent_entreprise_id == null){
+        if ($user->parent_entreprise_id == null) {
             // USER IS ADMIN
-            $offers = Offre::where('user_id', $user->id)->where('publish', 1)->get();
-            $draftOffers = Offre::where('user_id', $user->id)->where('publish', 0)->get();
-        }else{
+            $offers = Offre::where('user_id', $user->id)->where('publish', 1)
+                           ->orderBy('created_at', 'desc')->get();
+            $draftOffers = Offre::where('user_id', $user->id)->where('publish', 0)
+                                ->orderBy('created_at', 'desc')->get();
+        } else {
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $offers = Offre::where('user_id', $entreprise->user_id)->where('publish', 1)->get();
-            $draftOffers = Offre::where('user_id', $entreprise->user_id)->where('publish', 0)->get();
+            $offers = Offre::where('user_id', $entreprise->user_id)->where('publish', 1)
+                           ->orderBy('created_at', 'desc')->get();
+            $draftOffers = Offre::where('user_id', $entreprise->user_id)->where('publish', 0)
+                                ->orderBy('created_at', 'desc')->get();
         }
         
         return view('recruiter.offres.index', compact('offers', 'draftOffers'));
@@ -1201,13 +1216,13 @@ class RecruiterController extends Controller
 
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
-            $emails = $user->emails;
-            $receivedEmails = Email::where('receiver_id', $user->id)->get();
+            $emails = $user->emails()->orderBy('created_at', 'desc')->get();
+            $receivedEmails = Email::where('receiver_id', $user->id)->orderBy('created_at', 'desc')->get();
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
             $emails = $entreprise->user->emails;
-            $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->get();
+            $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->orderBy('created_at', 'desc')->get();
         }
         $draftEmails = $emails->where('draft', true)->where('trash', false);
         $deletedEmails = $emails->where('trash', true);
@@ -1220,6 +1235,7 @@ class RecruiterController extends Controller
         }
         return view('recruiter.emails.index', compact('emails', 'receivedEmails', 'receivers', 'draftEmails', 'deletedEmails'));
     }
+    
     public function getMyMail($id){
         $email = Email::find($id);
         return view('recruiter.emails.show', compact('email'));

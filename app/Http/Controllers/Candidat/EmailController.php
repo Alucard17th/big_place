@@ -12,9 +12,9 @@ class EmailController extends Controller
     //
     public function emails(){
         $user = auth()->user();
-        $emails = $user->emails;
+        $emails = $user->emails()->orderBy('created_at', 'desc')->get();;
 
-        $receivedEmails = Email::where('receiver_id', $user->id)->get();
+        $receivedEmails = Email::where('receiver_id', $user->id)->orderBy('created_at', 'desc')->get();
 
         $draftEmails = $emails->where('draft', true)->where('trash', false);
 

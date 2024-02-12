@@ -304,6 +304,7 @@
                                             <option value="generosite">La générosité</option>
                                             <option value="stabilite">La stabilité</option>
                                         </select>
+                                        <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                     </div>
                                 </div>
 
@@ -693,8 +694,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
                 let candidatId = event.candidat_it
                 console.log('ID Du Candidat est : ' + candidatId);
+                var dateParts = event.date.split('-');
+                var formattedDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
                 rdvs.push({
-                    title: 'Rendez vous le : ' + event.date,
+                    title: 'Rendez vous le : ' + dateParts[2] + '-'  + dateParts[1] + '-' + dateParts[0],
                     start: event.date + 'T' + event.heure,
                     backgroundColor: '#e7f6fd',
                     borderColor: '#e7f6fd',
@@ -842,6 +845,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     calendar.render();
+
+    $('form').on('submit', function(){
+        var minimum = 5;
+
+        if($("#values_select").select2('data').length>=minimum){
+            $('#values_select_help').addClass('text-muted')
+            $('#values_select_help').removeClass('text-danger')
+            return true;
+        }else {
+            $('#values_select_help').addClass('text-danger')
+            $('#values_select_help').removeClass('text-muted')
+            return false;
+        }
+    })
 });
 </script>
 @endpush

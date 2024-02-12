@@ -21,7 +21,8 @@ class Entreprise extends Model
         'chiffre_affaire',
         'user_id',
         'vues',
-        'sector'
+        'sector',
+        'description'
     ];
 
     public function user()

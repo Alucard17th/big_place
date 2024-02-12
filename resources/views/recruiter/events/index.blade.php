@@ -217,7 +217,8 @@
                     <!-- Field: Event Date -->
                     <div class="form-group">
                         <label class="text-dark" for="event_date">Date</label>
-                        <input type="date" class="form-control" id="event_date" name="event_date" required>
+                        <input type="date" class="form-control" id="event_date" name="event_date" required
+                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                     </div>
                 </div>
                 <div class="col-6">

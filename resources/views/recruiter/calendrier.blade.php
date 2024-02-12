@@ -234,8 +234,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         data.forEach(function(event) {
             let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
             let candidatId = event.candidat_it
+            var dateParts = event.date.split('-');
+
             rdvs.push({
-                title: 'Rendez vous le : ' + event.date,
+                title: 'Rendez vous le : ' + dateParts[2] + '-'  + dateParts[1] + '-' + dateParts[0],
                 start: event.date + 'T' + event.heure,
                 backgroundColor: '#e7f6fd',
                 borderColor: '#e7f6fd',
@@ -253,52 +255,52 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   })
 
-  await $.ajax({
-    url: "{{ route('getUserEvents') }}",
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-    console.log('EVENTS fetched successfully', data);
-        data.forEach(function(event) {
-            rdvs.push({
-                title: 'Evènement le : ' + event.event_date,
-                start: event.event_date + 'T' + event.event_hour,
-                backgroundColor: 'red',
-                borderColor: 'red',
-                extendedProps: {
-                    description: 'Poste proposé : ' + event.job_position
-                }
-            });
-        })
-    },
-    error: function() {
-      console.log('Error fetching events');
-    }
-  })
+//   await $.ajax({
+//     url: "{{ route('getUserEvents') }}",
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//     console.log('EVENTS fetched successfully', data);
+//         data.forEach(function(event) {
+//             rdvs.push({
+//                 title: 'Evènement le : ' + event.event_date,
+//                 start: event.event_date + 'T' + event.event_hour,
+//                 backgroundColor: 'red',
+//                 borderColor: 'red',
+//                 extendedProps: {
+//                     description: 'Poste proposé : ' + event.job_position
+//                 }
+//             });
+//         })
+//     },
+//     error: function() {
+//       console.log('Error fetching events');
+//     }
+//   })
 
-  await $.ajax({
-    url: "{{ route('getUserFormations') }}",
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-    console.log('Formations fetched successfully', data);
-        data.forEach(function(event) {
-            rdvs.push({
-                title: 'Formation le : ' + event.start_date,
-                start: event.start_date,
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                extendedProps: {
-                    description: event.job_title
-                }
-            });
+//   await $.ajax({
+//     url: "{{ route('getUserFormations') }}",
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//     console.log('Formations fetched successfully', data);
+//         data.forEach(function(event) {
+//             rdvs.push({
+//                 title: 'Formation le : ' + event.start_date,
+//                 start: event.start_date,
+//                 backgroundColor: 'blue',
+//                 borderColor: 'blue',
+//                 extendedProps: {
+//                     description: event.job_title
+//                 }
+//             });
           
-        })
-    },
-    error: function() {
-      console.log('Error fetching events');
-    }
-  })
+//         })
+//     },
+//     error: function() {
+//       console.log('Error fetching events');
+//     }
+//   })
 
     var today = new Date(); // Get current date
     var dd = String(today.getDate()).padStart(2, '0');

@@ -45,13 +45,14 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Nom projet</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
                                             <th>Type du contrat</th>
                                             <th>Salaire Brut</th>
                                             <th>Date de publication</th>
+                                            <th>Date de création</th>
                                             @unlessrole('restricted')
                                             <th>Actions</th>
                                             @endunlessrole
@@ -60,7 +61,7 @@
                                     <tbody>
                                         @foreach ($offers as $offer)
                                         <tr>
-                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->start_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}
@@ -71,9 +72,10 @@
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->publication_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}
                                             </td>
+                                            <td class="text-left">{{$offer->created_at}}</td>
 
                                             @unlessrole('restricted')
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-five ml-2">
                                                     <i class="las la-eye"></i>
                                                     Editer
@@ -124,13 +126,14 @@
                                 <table class="table table-sm table-bordered" id="data-table-draft">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Nom projet</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
                                             <th>Type du contrat</th>
                                             <th>Salaire Brut</th>
                                             <th>Date de publication</th>
+                                            <th>Date de création</th>
                                             @unlessrole('restricted')
                                             <th>Actions</th>
                                             @endunlessrole
@@ -139,7 +142,7 @@
                                     <tbody>
                                         @foreach ($draftOffers as $offer)
                                         <tr>
-                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</td>
@@ -147,9 +150,10 @@
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}</td>
+                                            <td class="text-left">{{$offer->created_at}}</td>
 
                                             @unlessrole('restricted')
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine ml-2">
                                                     <i class="las la-edit"></i>
                                                     Editer
@@ -276,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[7, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -298,6 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table-draft').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[7, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

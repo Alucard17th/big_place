@@ -246,14 +246,16 @@ input, select{
                 <div class="col-6">
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date début</label>
-                        <input class="form-control mb-2" type="date" name="start_date" id="start_date" required>
+                        <input class="form-control mb-2" type="date" name="start_date" id="start_date" required 
+                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date fin</label>
-                        <input class="form-control mb-2" type="date" name="end_date" id="end_date" required>
+                        <input class="form-control mb-2" type="date" name="end_date" id="end_date" required 
+                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
                     </div>
                 </div>
             </div>
