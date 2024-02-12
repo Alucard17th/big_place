@@ -170,6 +170,10 @@ nav > ul.pagination > li > a{
 .font-min{
     font-size: 13px;
 }
+
+#vitrine-form > div > div:nth-child(11) > div > span{
+    width:100% !important;
+}
 </style>
 @endpush
 
@@ -295,35 +299,7 @@ nav > ul.pagination > li > a{
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label class="text-dark" for="valeurs_fortes">Valeurs Fortes</label><br>
-                                            <select name="valeurs[]" id="values_select" class="w-100" multiple >
-                                                <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
-                                                <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
-                                                <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
-                                                <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
-                                                <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
-                                                <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
-                                                <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
-                                                <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
-                                                <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
-                                                <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
-                                                <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
-                                                <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
-                                                <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
-                                                <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
-                                                <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
-                                                <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
-                                                <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
-                                                <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
-                                                <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
-                                                <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
-                                                <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
-                                                <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                   
 
                                     <div class="col-4">
                                         <div class="form-group">
@@ -364,6 +340,37 @@ nav > ul.pagination > li > a{
                                             <input type="text" class="form-control" name="chiffre_affaire"
                                                 id="chiffre_affaire"
                                                 value="{{ isset($entreprise) ? $entreprise->chiffre_affaire : ''}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="text-dark" for="valeurs_fortes">Valeurs Fortes</label><br>
+                                            <select name="valeurs[]" id="values_select" class="w-100" multiple >
+                                                <option value="respect" @if(isset($entreprise->valeurs_fortes) && in_array("respect", json_decode($entreprise->valeurs_fortes))) selected @endif>Le respect</option>
+                                                <option value="adaptabilite" @if(isset($entreprise->valeurs_fortes) && in_array("adaptabilite", json_decode($entreprise->valeurs_fortes))) selected @endif>L’adaptabilité</option>
+                                                <option value="consideration" @if(isset($entreprise->valeurs_fortes) && in_array("consideration", json_decode($entreprise->valeurs_fortes))) selected @endif>la considération</option>
+                                                <option value="altruisme" @if(isset($entreprise->valeurs_fortes) && in_array("altruisme", json_decode($entreprise->valeurs_fortes))) selected @endif>l’altruisme</option>
+                                                <option value="assertivite" @if(isset($entreprise->valeurs_fortes) && in_array("assertivite", json_decode($entreprise->valeurs_fortes))) selected @endif>l’assertivité</option>
+                                                <option value="entraide" @if(isset($entreprise->valeurs_fortes) && in_array("entraide", json_decode($entreprise->valeurs_fortes))) selected @endif>l’entraide</option>
+                                                <option value="solidarite" @if(isset($entreprise->valeurs_fortes) && in_array("solidarite", json_decode($entreprise->valeurs_fortes))) selected @endif>la solidarité</option>
+                                                <option value="ecoute" @if(isset($entreprise->valeurs_fortes) && in_array("ecoute", json_decode($entreprise->valeurs_fortes))) selected @endif>l’écoute</option>
+                                                <option value="bienveillance" @if(isset($entreprise->valeurs_fortes) && in_array("bienveillance", json_decode($entreprise->valeurs_fortes))) selected @endif>la bienveillance</option>
+                                                <option value="empathie" @if(isset($entreprise->valeurs_fortes) && in_array("empathie", json_decode($entreprise->valeurs_fortes))) selected @endif>lempathie</option>
+                                                <option value="creativite" @if(isset($entreprise->valeurs_fortes) && in_array("creativite", json_decode($entreprise->valeurs_fortes))) selected @endif>la créativité</option>
+                                                <option value="justice" @if(isset($entreprise->valeurs_fortes) && in_array("justice", json_decode($entreprise->valeurs_fortes))) selected @endif>la justice</option>
+                                                <option value="tolerance" @if(isset($entreprise->valeurs_fortes) && in_array("tolerance", json_decode($entreprise->valeurs_fortes))) selected @endif>la tolérance</option>
+                                                <option value="equite" @if(isset($entreprise->valeurs_fortes) && in_array("equite", json_decode($entreprise->valeurs_fortes))) selected @endif>l’équité</option>
+                                                <option value="honnetete" @if(isset($entreprise->valeurs_fortes) && in_array("honnetete", json_decode($entreprise->valeurs_fortes))) selected @endif>l’honnêteté</option>
+                                                <option value="responsabilite" @if(isset($entreprise->valeurs_fortes) && in_array("responsabilite", json_decode($entreprise->valeurs_fortes))) selected @endif>la responsabilité</option>
+                                                <option value="loyaute" @if(isset($entreprise->valeurs_fortes) && in_array("loyaute", json_decode($entreprise->valeurs_fortes))) selected @endif>la loyauté</option>
+                                                <option value="determination" @if(isset($entreprise->valeurs_fortes) && in_array("determination", json_decode($entreprise->valeurs_fortes))) selected @endif>la détermination</option>
+                                                <option value="perseverance" @if(isset($entreprise->valeurs_fortes) && in_array("perseverance", json_decode($entreprise->valeurs_fortes))) selected @endif>la persévérance</option>
+                                                <option value="rigueur" @if(isset($entreprise->valeurs_fortes) && in_array("rigueur", json_decode($entreprise->valeurs_fortes))) selected @endif>la rigueur</option>
+                                                <option value="generosite" @if(isset($entreprise->valeurs_fortes) && in_array("generosite", json_decode($entreprise->valeurs_fortes))) selected @endif>la générosité</option>
+                                                <option value="stabilite" @if(isset($entreprise->valeurs_fortes) && in_array("stabilite", json_decode($entreprise->valeurs_fortes))) selected @endif>la stabilité</option>
+                                            </select>
+                                            <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                         </div>
                                     </div>
 
