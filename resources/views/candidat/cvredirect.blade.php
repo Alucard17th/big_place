@@ -320,7 +320,8 @@ color: #2D2F30;
                                         <label>
                                             <input type="radio" id="use_input" @if($curriculum && !$curriculum->metier_recherche != null ) checked @endif> Utiliser Code Métier 
                                         </label>
-                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" 
+                                         @if(isset($curriculum) && $curriculum->custom_job == '') disabled @endif
                                         value="{{isset($curriculum) ? $curriculum->custom_job : ''}}">
                                     </div>
                                 </div>
