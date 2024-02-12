@@ -230,7 +230,7 @@ color: #2D2F30;
         </div>
         @endif
         
-        <div class="row mt-3" id="editor-container" style="">
+        <div class="row mt-3" id="editor-container">
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
