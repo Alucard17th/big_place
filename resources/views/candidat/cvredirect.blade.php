@@ -158,7 +158,7 @@ color: #2D2F30;
         </div>
 
         @if(!empty($curriculum))
-        <div class="row" id="preview-container">
+        <div class="row" id="preview-container" style="display:none;">
             <div class="container">
                 <div class="card p-5 h-100">
                     <div class="row">
@@ -230,7 +230,7 @@ color: #2D2F30;
         </div>
         @endif
         
-        <div class="row mt-3" id="editor-container" style="@if(!empty($curriculum))display:none; @endif">
+        <div class="row mt-3" id="editor-container" style="">
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
