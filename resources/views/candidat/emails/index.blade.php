@@ -353,6 +353,8 @@ $(document).ready(function() {
         $('#draft-btn').removeClass('active');
 
         toggleDeleteButtons('data-table-inbox');
+        setActiveTabToLocalStorage('inbox-container');
+
     })
 
     $('#sent-btn').on('click', function() {
@@ -367,6 +369,8 @@ $(document).ready(function() {
         $('#draft-btn').removeClass('active');
 
         toggleDeleteButtons('data-table-sent');
+        setActiveTabToLocalStorage('sent-container');
+        
     })
 
     $('#deleted-btn').on('click', function() {
@@ -381,6 +385,8 @@ $(document).ready(function() {
         $('#draft-btn').removeClass('active');
 
         toggleDeleteButtons('data-table-deleted');
+        setActiveTabToLocalStorage('deleted-container');
+
     })
 
     $('#draft-btn').on('click', function() {
@@ -395,12 +401,15 @@ $(document).ready(function() {
         $('#deleted-btn').removeClass('active');
 
         toggleDeleteButtons('data-table-draft');
+        setActiveTabToLocalStorage('draft-container');
+
     })
 
 
     $('#data-table-inbox').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 3, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -424,6 +433,7 @@ $(document).ready(function() {
     $('#data-table-sent').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 3, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -447,6 +457,7 @@ $(document).ready(function() {
     $('#data-table-deleted').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 3, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -470,6 +481,7 @@ $(document).ready(function() {
     $('#data-table-draft').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 3, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -607,6 +619,40 @@ $(document).ready(function() {
             console.error(error);
         });
     })
+
+    // Function to get the active tab ID from local storage
+    function getActiveTab() {
+        return localStorage.getItem('activeTab');
+    }
+
+    // Function to store the active tab ID in local storage
+    function setActiveTabToLocalStorage(tabId) {
+        localStorage.setItem('activeTab', tabId);
+    }
+
+    function setActiveTab(tabId) {
+        let tabsContainer = document.getElementById('tabs-container');
+        $('.btn').removeClass('active');
+        if(tabId == 'inbox-container'){
+            $('#inbox-btn').addClass('active');
+        }else if(tabId == 'sent-container'){
+            $('#sent-btn').addClass('active');
+        }else if(tabId == 'draft-container'){
+            $('#draft-btn').addClass('active');
+        }else{
+            $('#deleted-btn').addClass('active');
+        }
+        $('.table-container').hide();
+        $('#' + tabId).show(); // Show the table container corresponding to the active tab
+        console.log('Display Tab', '#' + tabId  )
+        
+    }
+
+    // Set the active tab on page load
+    const activeTabId = getActiveTab();
+    if (activeTabId) {
+        setActiveTab(activeTabId);
+    } 
 
 })
 </script>

@@ -267,8 +267,13 @@ background: #13D527;
                                             Nombre de postes ouverts : {{$formation->open_positions}}
                                         </div>
 
-                                        <div class="offre-end-date">Date de fin d'inscription :
-                                            {{$formation->end_date}}</div>
+                                        <div class="offre-end-date my-4">Date de démarrage de la formation :
+                                            {{\Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }}
+                                        </div>
+
+                                        <div class="offre-end-date my-4">Date de fin d'inscription :
+                                            {{\Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
+                                        </div>
 
                                         <!-- <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">

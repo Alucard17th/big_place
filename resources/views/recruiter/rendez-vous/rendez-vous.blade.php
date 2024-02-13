@@ -179,7 +179,7 @@ input, select{
                                             <td class="text-left">{{$rdv->commentaire}}</td>
                                             
                                             @unlessrole('restricted')
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.rendez-vous.see', $rdv->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>

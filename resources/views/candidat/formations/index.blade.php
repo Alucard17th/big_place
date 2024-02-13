@@ -106,6 +106,7 @@ input, select{
                                     <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
+                                            <th class="d-none" >Crée Le</th>
                                             <th>Nom de la formation</th>
                                             <th>Entreprise</th>
                                             <th>Période de la formation</th>
@@ -122,6 +123,7 @@ input, select{
                                             $durationInDays = $startDate->diffInDays($endDate);
                                         @endphp
                                         <tr>
+                                            <td class="text-left d-none">{{$formation->created_at}}</td>
                                             <td class="text-left">{{$formation->job_title}}</td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
                                             <td class="text-left">
@@ -178,6 +180,7 @@ input, select{
                                     <thead class="thead-light">
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
+                                            <th class="d-none" >Crée Le</th>
                                             <th>Nom de la formation</th>
                                             <th>Entreprise</th>
                                             <th>Période de la formation</th>
@@ -189,6 +192,7 @@ input, select{
                                     <tbody>
                                         @foreach ($userFormations as $formation)
                                         <tr>
+                                            <td class="text-left d-none">{{$formation->created_at}}</td>
                                             <td class="text-left">{{$formation->job_title}}</td>
                                             <td class="text-left">{{getEntrepriseLogoByUserId($formation->user_id)->nom_entreprise}}</td>
                                             <td class="text-left">
@@ -234,6 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -253,6 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table-two').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

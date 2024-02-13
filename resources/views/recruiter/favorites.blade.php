@@ -169,18 +169,19 @@ input, select{
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column">
                                                 @if($curriculum->cv && $curriculum->cv != '')
                                                 <a href="{{ asset('storage'.$curriculum->cv) }}" type="button" class="bg-btn-nine" target="_blank">
-                                                    <i class="las la-eye mr-2"></i>Consulter le profil
+                                                    <i class="las la-eye mr-1"></i>Consulter le profil
                                                 </a>
+                                                @else
+                                                <span class="text-danger">Pas encore de CV</span>
                                                 @endif
                                                 @unlessrole('restricted')
                                                 <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
-                                                <br>
                                                 @endunlessrole
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->
-                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
+                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach

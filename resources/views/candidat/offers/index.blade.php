@@ -246,6 +246,7 @@
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
+                                            <th class="d-none" >Crée Le</th>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <th>Matching</th>
                                             @endif
@@ -255,6 +256,7 @@
                                             <th>Années d'expérience</th>
                                             <th>Niveau d'étude</th>
                                             <th>Niveau de salaire</th>
+                                            <th>Date de création</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -263,6 +265,7 @@
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
+                                                    <td class="text-left d-none">{{$offer->created_at}}</td>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <td>
                                                 <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 0) }} %</span>
@@ -274,6 +277,10 @@
                                             <td class="text-left">{{$offer->experience_level}}</td>
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->timestamp }}">
+                                                {{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}
+                                            </td>
+
                                             <td class="text-left">
                                                 @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
@@ -427,6 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

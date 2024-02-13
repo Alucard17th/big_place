@@ -14,7 +14,7 @@ class EventController extends Controller
     public function events(){
         $user = auth()->user();
         $myEvents = $user->participationEvents;
-        $events = Event::where('statut', 'Actif')->get();
+        $events = Event::all();
         // $events = Event::where('user_id', $user->id)->get();
         return view('candidat.events.index', compact('myEvents', 'events'));
     }

@@ -167,6 +167,7 @@ input, select{
                                             <th>Années d'expérience</th>
                                             <th>Niveau d'étude</th>
                                             <th>Niveau de salaire</th>
+                                            <th>Date de publication de l'offre</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -181,6 +182,8 @@ input, select{
                                             <td class="text-left">{{$offer->experience_level}}</td>
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->timestamp }}">{{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}</td>
+
                                             <td class="text-left">
                                                 @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 

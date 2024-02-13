@@ -116,6 +116,7 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="d-none">Crée Le</th>
                                             <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Adresse</th>
@@ -129,6 +130,7 @@
                                         @foreach ($events as $event)
 
                                         <tr>
+                                            <td class="text-left d-none">{{$event->created_at}}</td>
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
@@ -189,9 +191,10 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="table-outer">
-                                <table class="table table-sm table-bordered" id="data-table">
+                                <table class="table table-sm table-bordered" id="data-table-my">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="d-none" >Crée Le</th>
                                             <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Adresse</th>
@@ -204,6 +207,7 @@
                                     <tbody>
                                         @foreach ($myEvents as $event)
                                         <tr>
+                                            <td class="text-left d-none">{{$event->created_at}}</td>
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
@@ -287,6 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -305,6 +310,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     $('#data-table_filter input').before(
+        '<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
+
+    $('#data-table-my').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "order": [[0, "desc"]],
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+    $('#data-table-my_filter input').before(
         '<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
 

@@ -54,6 +54,7 @@
                                         <tr>
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th> -->
+                                            <th class="d-none">Crée le</th>
                                             <th>Nom du poste</th>
                                             <th>Nombre de jours de formation</th>
                                             <th>Période de formation</th>
@@ -76,6 +77,7 @@
                                             $durationInDays = $startDate->diffInDays($endDate);
                                         @endphp
                                         <tr>
+                                            <td class="d-none">{{$formation->created_at}}</td>
                                             <td>{{$formation->job_title}}</td>
                                             <td>{{$durationInDays}}</td>
                                             <td data-order="{{ \Carbon\Carbon::parse($formation->start_date)->format('Ymd') }}">
@@ -168,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

@@ -268,14 +268,14 @@ input, select{
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
                                             <td class="text-left">{{$curriculum->niveau}}</td>
                                             <td class="text-left">{{$curriculum->pretentions_salariales}}</td>
-                                            <td class="text-left">
+                                            <td class="text-left d-flex flex-column">
                                                 @if($curriculum->cv != null && $curriculum->cv != '')
-                                                <button class="bg-btn-nine see-profile" data-url="{{ asset('storage'.$curriculum->cv) }}"
+                                                <button class="bg-btn-nine see-profile text-left" data-url="{{ asset('storage'.$curriculum->cv) }}"
                                                 data-cvid="{{$curriculum->id}}">
-                                                    Consulter le profil
+                                                <i class="las la-eye mr-1"></i>Consulter le profil
                                                 </button>
                                                 @else
-                                                    Ce candidat n'a pas encore de CV
+                                                    <span class="text-danger">Pas encore de CV</span>
                                                 @endif
                                                 <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>

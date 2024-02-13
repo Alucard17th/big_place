@@ -56,9 +56,10 @@
                                             @if ($event->required_documents)
                                             <li class="">Documents requis:
                                                 {{ $event->required_documents }}</li>
+                                            
+                                            @endif
                                             <li class="">Decriptif de l'évenement:
                                                 {{ $event->description }}</li>
-                                            @endif
                                         </ul>
                                     </div>
                                     <!-- <div class="col-md-6">

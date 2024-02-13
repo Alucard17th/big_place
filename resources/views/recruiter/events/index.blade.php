@@ -81,6 +81,7 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="d-none">Crée Le</th>
                                             <th>Entreprise</th>
                                             <th>Poste</th>
                                             <th>N° Max de Participants</th>
@@ -97,6 +98,7 @@
                                     <tbody>
                                         @foreach ($events as $event)
                                         <tr>
+                                            <td class="text-left d-none">{{$event->created_at}}</td>
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->participants_count}}</td>
@@ -336,6 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

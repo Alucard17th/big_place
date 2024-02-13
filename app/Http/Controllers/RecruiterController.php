@@ -895,11 +895,11 @@ class RecruiterController extends Controller
 
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
-            $events = Event::where('user_id', $user->id)->get();
+            $events = Event::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $events = Event::where('user_id', $entreprise->user_id)->get();
+            $events = Event::where('user_id', $entreprise->user_id)->orderBy('created_at', 'desc')->get();
         }
         
         return view('recruiter.events.index', compact('events'));
@@ -917,7 +917,7 @@ class RecruiterController extends Controller
             'event_date' => $request->input('event_date'),
             'event_hour' => $request->input('event_hour'),
             'description' => $request->input('description'),
-            'statut' => 'Active',
+            'statut' => 'Actif',
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
 
