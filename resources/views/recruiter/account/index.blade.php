@@ -389,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 "previous": "Précédent",
             },
             "search": "",
+            "zeroRecords": "Aucun résultat trouvé.",
             "searchPlaceholder": "Rechercher...",
             // Add other language customization options if needed
         },

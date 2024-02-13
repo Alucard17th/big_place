@@ -102,20 +102,13 @@
                                         <div class="row mb-3">
                                             <div class="col-6">
                                                 <label for="week_start">Début:</label>
-                                                <select class="form-control" id="week_start" name="week_start">
-                                                    @foreach($offersByWeek as $key => $value)
-                                                        <option value="{{$key}}" @if(request()->get('week_start') == $key) selected @endif>{{$key}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="week" class="form-control" id="week_start" name="week_start" value="{{ request()->get('week_start') }}">
+                                                
                                             </div>
 
                                             <div class="col-6">
                                                 <label for="week_end">Fin:</label>
-                                                <select class="form-control" id="week_end" name="week_end">
-                                                    @foreach($offersByWeek as $key => $value)
-                                                        <option value="{{$key}}" @if(request()->get('week_end') == $key) selected @endif>{{$key}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="week" class="form-control" id="week_end" name="week_end" value="{{ request()->get('week_end') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -202,7 +195,7 @@
                         <div class="ls-widget">
                             <div class="tabs-box">
                                 <div class="widget-content">
-                                    <h3 class="py-4">Nombre de candidatures</h3>
+                                    <h3 class="py-4">Nombre total de candidatures reçues</h3>
                                     <!-- <div class="actions row">
                                         <div class="col-12 text-center">
                                             <button class="candidature-day active mr-3">Jours</button>

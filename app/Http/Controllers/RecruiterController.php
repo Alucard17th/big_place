@@ -1317,7 +1317,7 @@ class RecruiterController extends Controller
             $offersByDay[$dateString] = $groupedByDay->get($dateString, collect())->count();
         }
 
-        // dd($offersByDay);
+     
 
         // OFFERS BY WEEK
         $groupedByWeek = $offers->groupBy(function ($item) {
@@ -1593,7 +1593,36 @@ class RecruiterController extends Controller
                     ->count();
             }
 
+        }   
+
+        $formattedOffersByDay = [];
+
+        foreach ($offersByDay as $date => $value) {
+            // Convert the date string to a DateTime object
+            $dateTime = new \DateTime($date);
+            
+            // Format the date as "d-m-Y"
+            $formattedDate = $dateTime->format('d-m-Y');
+            
+            // Assign the formatted date to the new array
+            $formattedOffersByDay[$formattedDate] = $value;
         }
+        $offersByDay = $formattedOffersByDay;
+
+        $formattedCandidaturesByDay = [];
+
+        foreach ($candidaturesByDay as $date => $value) {
+            // Convert the date string to a DateTime object
+            $dateTime = new \DateTime($date);
+            
+            // Format the date as "d-m-Y"
+            $formattedDate = $dateTime->format('d-m-Y');
+            
+            // Assign the formatted date to the new array
+            $formattedCandidaturesByDay[$formattedDate] = $value;
+        }
+
+        $candidaturesByDay = $formattedCandidaturesByDay;
 
         // dd($offersByDay, $offersByWeek, $offersByMonth);
         return view('recruiter.stats.index', compact('candidaturesByMonth', 'candidaturesByWeek',  'candidaturesByDay', 'offersByMonth', 'offersByWeek', 'offersByDay', 'doneRdvs','refusedRdvs','pendingRdvs'));

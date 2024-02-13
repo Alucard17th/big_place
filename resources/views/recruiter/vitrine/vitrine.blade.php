@@ -516,14 +516,27 @@ nav > ul.pagination > li > a{
                             id="company-container">
                             <div class="col-12 mt-2 mb-1">
                                 <h4 class="text-dark">{{ $entreprise->nom_entreprise }}</h4>
-                                <p class="text-dark">{{ $entreprise->domiciliation }}, {{ $entreprise->siege_social }}</p>
+                                <p class="text-dark">{{ $entreprise->domiciliation }}<br> {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
-                                    <li>Date de création : {{ $entreprise->date_creation }}</li>
+                                    <li>Date de création : {{ \Carbon\Carbon::parse($entreprise->date_creation)->format('d-m-Y') }}</li>
                                     <!-- <li>{{ $entreprise->domiciliation }}</li> -->
-                                    <li>Valeurs fortes : {{ $entreprise->valeurs_fortes }}</li>
+                                    <li>Valeurs fortes : 
+                                        <ol class="ml-5">
+                                            @foreach(json_decode($entreprise->valeurs_fortes) as $key => $value)
+                                            <li >{{ ucfirst($value) }}</li>
+                                            @endforeach
+                                        </ol>
+                                    </li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>
-                                    <li>Fondateurs : {{ $entreprise->fondateurs }}</li>
+                                    <li>Fondateurs : 
+                                        <ul class="ml-5">
+                                            @foreach(json_decode($entreprise->fondateurs) as $key => $value)
+                                            <li >{{ ucfirst($value) }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
                                     <li>Chiffre d'affaires : {{ $entreprise->chiffre_affaire }}</li>
+                                    <li>Descriptif de l'acitivité : {{ $entreprise->description }}</li>  
                                 </ul>
                             </div>
                             <div class="col-12 py-2 mt-5">
@@ -655,7 +668,15 @@ nav > ul.pagination > li > a{
                                                 <td class="text-left">
                                                     {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
-                                                <td class="text-left">{{$event->statut}}</td>
+                                                <td>
+                                                    @if($event->statut == 'Active' || $event->statut == 'Actif')
+                                                    <span class="badge badge-success">Active</span>
+                                                    @elseif($event->statut == 'Suspendue')
+                                                    <span class="badge badge-warning">Suspendue</span>
+                                                    @else
+                                                    <span class="badge badge-danger">Inactive</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -677,7 +698,8 @@ nav > ul.pagination > li > a{
 @php
 if( isset($entreprise) ){
 $images = json_decode($entreprise->photos_locaux, true);
-$video = $entreprise->video;
+$videos = json_decode($entreprise->video, true);
+
 $logo = $entreprise->logo;
 $cover = $entreprise->cover;
 }else{
@@ -712,8 +734,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const images = @json($images);
     const logoUrl = @json($logo);
     const coverUrl = @json($cover);
-    const videoUrl = @json($video);
+    const videosUrl = @json($videos);
     const newArray = images ? images.map(str => str.replace('public', 'storage')) : [];
+    const newVideosArray = videosUrl ? videosUrl.map(str => str.replace('public', 'storage')) : [];
 
     FilePond.registerPlugin(FilePondPluginFileValidateSize);
     FilePond.setOptions({
@@ -750,6 +773,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pond_logo.removeFile();
     })
 
+    console.log('Images', newArray);
     const pond_photos = FilePond.create(photos_locaux, {
         files: newArray ? newArray.map(url => ({
             source: 'storage' + url
@@ -760,8 +784,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const pond_video = FilePond.create(video, {
         maxFileSize: '100MB',
         chunkUploads: true,
-        files: videoUrl ? 'storage' + videoUrl : null,
-        labelIdle: '<i class="las la-video"></i>Ajouter une vidéo',
+        files: newVideosArray ? newVideosArray.map(url => ({
+            source: 'storage' + url
+        })) : null,
+        labelIdle: '<i class="las la-video"></i>Ajouter des vidéos',
     });
     pond_video.on('processfile', (error, file) => {
         if (error) {

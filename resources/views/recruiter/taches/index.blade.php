@@ -169,7 +169,7 @@ input, select{
                                             <th>Nom de la tâche</th>
                                             <th>Date de début</th>
                                             <th>Date de fin</th>
-                                            <th>Heure de fin</th>
+                                            <th>Heure</th>
                                             <th>Statut</th>
                                             <th>Description</th>
                                             @unlessrole('restricted')
@@ -261,7 +261,7 @@ input, select{
             </div>
 
             <div class="form-group">
-                <label class="text-dark" for="candidate">Heure de fin</label>
+                <label class="text-dark" for="candidate">Heure</label>
                 <input class="form-control mb-2" type="time" name="hour" id="hour" required>
             </div>
 

@@ -163,7 +163,12 @@ input, select{
                                                 <button class="bg-btn-nine see-profile" data-url="{{ asset('storage'.$candidature->candidat->curriculum->first()->cv) }}"
                                                 data-cvid="{{$candidature->candidat->curriculum->first()->id}}"
                                                 data-candidatureid="{{$candidature->id}}">
-                                                    Consulter le profil
+                                                    Consulter le CV
+                                                </button>
+                                                <button class="bg-btn-eight see-candidat-btn"
+                                                data-cvid="{{$candidature->candidat->curriculum->first()->id}}"
+                                                data-fiche="{{$candidature->candidat->curriculum}}">
+                                                    Fiche Candidat
                                                 </button>
                                                 @else
                                                     Ce candidat n'a pas encore de CV
@@ -273,8 +278,14 @@ input, select{
             </div>
             
        </form>
-        
-        <a href="#"  class="custom-close-modal"></a>
+        <a href="#"  class="custom-close-modal">Fermer</a>
+    </div>
+
+    <div id="ex2" class="modal">
+        <div class="ex2-content">
+            
+        </div>
+        <a href="#"  class="custom-close-modal">Fermer</a>
     </div>
 </div>
 @endsection
@@ -594,6 +605,46 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#metier_recherche").prop("disabled", this.checked);
         $("#select_container").hide();  // Hide select container if input is checked
         $("#use_select").prop("checked", false);  // Uncheck select checkbox
+    });
+
+    const seeCandidatBtn = $('.see-candidat-btn');
+    seeCandidatBtn.on('click', function() {
+        event.preventDefault();
+        const cvidValue = $(this).data('cvid');
+        const ficheCandidat = $(this).data('fiche');
+
+        $('.ex2-content').empty();
+
+        // Iterate over the ficheCandidat array and generate HTML content
+        ficheCandidat.forEach(function(candidate) {
+            const htmlContent = `
+                <div class="candidate-info text-dark">
+                    <h2>${candidate.nom} ${candidate.prenom}</h2>
+                    <p class="text-dark"><strong>Ville de domiciliation:</strong> ${candidate.ville_domiciliation}</p>
+                    <p class="text-dark"><strong>Métier recherché:</strong> ${candidate.metier_recherche}</p>
+                    <p class="text-dark"><strong>Prétentions salariales:</strong> ${candidate.pretentions_salariales}</p>
+                    <p class="text-dark"><strong>Années d'expérience:</strong> ${candidate.annees_experience}</p>
+                    <p class="text-dark"><strong>Niveau:</strong> ${candidate.niveau}</p>
+                    <p class="text-dark"><strong>Niveau d'études:</strong> ${candidate.niveau_etudes}</p>
+                    <p class="text-dark"><strong>Valeurs:</strong> ${JSON.parse(candidate.valeurs).join(', ')}</p>
+                    <p class="text-dark"><strong>Téléphone:</strong> ${candidate.phone}</p>
+                </div>
+            `;
+
+            // Append the HTML content to the modal
+            $('.ex2-content').append(htmlContent);
+        });
+
+        $("#ex2").modal({
+            escapeClose: false,
+            clickClose: true,
+            showClose: false
+        });
+       
+    })
+    $('#close-modal, .custom-close-modal').click(function() {
+        console.log('Modal Should Be Closed');
+        $.modal.close();
     });
     
 });

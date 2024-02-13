@@ -154,20 +154,23 @@
                                 <!-- Field: Type de contrat -->
                                 <div class="form-group">
                                     <label for="contract_type">Type de contrat</label>
-                                    <select class="form-control" id="contract_type" name="contract_type" required>
-                                        <option>Type de contrat</option>
+                                    <select class="form-control" id="contract_type" name="contract_type" 
+                                    required data-placeholder="Type de contrat" data-parsley-errors-container="#contract_type_error_container">
+                                    <option></option>
                                         <option value="CDD">CDD</option>
                                         <option value="CDI">CDI</option>
                                         <option value="INTERIM">INTERIM</option>
                                     </select>
+                                    <div id="contract_type_error_container"></div>
                                 </div>
 
                                 <!-- Field: Horaires de travail -->
                                 <div class="form-group">
                                     <label for="work_schedule">Horaires de travail</label>
                                     <select class="form-control" id="work_schedule" name="work_schedule[]" multiple
-                                        required data-parsley-errors-container="#work_schedule_error_container">
-                                        <option value="Temps plein">Temps plein</option>
+                                        required data-parsley-errors-container="#work_schedule_error_container"
+                                        data-placeholder="Type de contrat">
+                                        <option></option>
                                         <option value="Temps partiel">Temps partiel</option>
                                         <option value="Horaires de nuit">Horaires de nuit</option>
                                         <option value="Samedi">Samedi</option>
@@ -182,24 +185,32 @@
                                 <!-- Field: Temps de travail -->
                                 <div class="form-group">
                                     <label for="weekly_hours">Temps de travail</label>
-                                    <select class="form-control" id="weekly_hours" name="weekly_hours" required>
-                                        <option>Temps de travail</option>
+                                    <select class="form-control" id="weekly_hours" name="weekly_hours"
+                                    data-placeholder="Temps de travail"
+                                    data-parsley-errors-container="#weekly_hours_error_container"
+                                    required>
+                                        <option></option>
                                         <option value="35H">35H</option>
                                         <option value="39H">39H</option>
                                         <option value="Autre">Autre</option>
                                     </select>
+                                    <div id="weekly_hours_error_container"></div>
                                 </div>
 
                                 <!-- Field: Niveau d’expérience -->
                                 <div class="form-group">
                                     <label for="experience_level">Niveau d’expérience</label>
-                                    <select class="form-control" id="experience_level" name="experience_level" required>
-                                        <option>Niveau d’expérience</option>
+                                    <select class="form-control" id="experience_level" name="experience_level" 
+                                    required
+                                    data-placeholder="Niveau d’expérience"
+                                    data-parsley-errors-container="#experience_level_error_container">
+                                        <option></option>
                                         <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
                                         <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
                                         <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
                                         <option value="Sénior (+ 10 ans)">Sénior (+ 10 ans)</option>
                                     </select>
+                                    <div id="experience_level_error_container"></div>
                                 </div>
 
                                 <!-- Field: Langues souhaitées -->
@@ -420,7 +431,7 @@ $(document).ready(function() {
     $("#desired_languages").select2({});
 
     $("#education_level").select2({
-        placeholder: "Horaire de travail",
+        placeholder: "Niveau d'éducation",
     });
 
     $("#industry_sector").select2({});
@@ -429,6 +440,18 @@ $(document).ready(function() {
 
     $("#work_schedule").select2({
         placeholder: "Horaire de travail",
+    });
+
+    $("#weekly_hours").select2({
+        placeholder: "Temps de travail",
+    });
+
+    $("#contract_type").select2({
+        placeholder: "Type de contrat",
+    });
+
+    $("#experience_level").select2({
+        placeholder: "Niveau d'expérience",
     });
 
 
