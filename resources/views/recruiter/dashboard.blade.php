@@ -227,7 +227,7 @@
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <label>
-                                            <input type="radio" id="use_input"> Utiliser Métier
+                                            <input type="radio" id="use_input"> Utiliser Code Métier
                                         </label>
                                         <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" disabled>
                                     </div>
