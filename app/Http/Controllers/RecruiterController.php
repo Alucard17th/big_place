@@ -185,9 +185,23 @@ class RecruiterController extends Controller
             if (!empty($searchTerm['metier_recherche']) && $searchTerm['metier_recherche'] != '') {
                 $score += strpos($curriculum->metier_recherche, $searchTerm['metier_recherche']) !== false ? 10 : 0;
             }
+            // if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
+            //     $searchTermLower = strtolower($searchTerm['custom_job']); // Convert search term to lowercase
+            
+            //     // Convert job title to lowercase and perform case-insensitive comparison
+            //     $score += strpos(strtolower($offer->job_title), $searchTermLower) !== false ? 10 : 0;
+            // }
+            
             if (!empty($searchTerm['custom_job']) && $searchTerm['custom_job'] != '') {
-                $score += strpos($curriculum->metier_recherche, $searchTerm['custom_job']) !== false ? 10 : 0;
+                $searchTermLower = strtolower($searchTerm['custom_job']); // Convert search term to lowercase
+                $searchTermLower = $this->removeAccents($searchTermLower); // Remove accents from search term
+
+                // Convert job title to lowercase and remove accents, then perform case-insensitive comparison
+                $offerJobTitleLower = strtolower($offer->job_title);
+                $offerJobTitleLower = $this->removeAccents($offerJobTitleLower);
+                $score += stripos($offerJobTitleLower, $searchTermLower) !== false ? 10 : 0;
             }
+
             if (!empty($searchTerm['ville_domiciliation']) && $searchTerm['ville_domiciliation'] != '') {
                 $score += (strpos($curriculum->ville_domiciliation, $searchTerm['ville_domiciliation']) !== false ||
                         strpos($curriculum->address, $searchTerm['ville_domiciliation']) !== false) ? 10 : 0;
@@ -222,6 +236,13 @@ class RecruiterController extends Controller
         });
 
         return view('recruiter.cvtheque', compact('curriculums', 'jobs', 'isSearch'));
+    }
+
+    function removeAccents($str) {
+        $accents = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ');
+        $noAccents = array('A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y');
+        $str = str_replace($accents, $noAccents, $str);
+        return $str;
     }
 
     // FAVORIS
