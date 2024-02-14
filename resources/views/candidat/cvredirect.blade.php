@@ -122,6 +122,10 @@ color: #2D2F30;
     color: #000 !important;
     font-weight: 300 !important;
 }
+
+#create-cv-form > div:nth-child(4) > div.col-6.pr-1 > div > span{
+    width:98% !important;
+}
 </style>
 @endpush
 
@@ -148,13 +152,13 @@ color: #2D2F30;
             <div class="col-md-12">
                 <button id="edit-profile">
                     <i class="las la-user-edit mr-1" style="font-size: 30px;"></i> 
-                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Modifier</span>
+                    <span id="edit-profile-span" style="font-size: 30px;font-width: 700;">Aperçu</span>
                 </button>
             </div>
         </div>
 
         @if(!empty($curriculum))
-        <div class="row" id="preview-container">
+        <div class="row" id="preview-container" style="display:none;">
             <div class="container">
                 <div class="card p-5 h-100">
                     <div class="row">
@@ -174,7 +178,7 @@ color: #2D2F30;
                                     <ul class="list-unstyled">
                                         <li class="text-dark">{{$curriculum->address}} {{$curriculum->ville_domiciliation}}</li>
                                         <li class="text-dark">Email : {{$curriculum->user->email}}</li>
-                                        <li class="text-dark">{{\Carbon\Carbon::parse($curriculum->user->birth_date)->diffInYears(\Carbon\Carbon::now())}} ans</li>
+                                        <li class="text-dark">Télephone : {{$curriculum->user->phone}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -182,14 +186,20 @@ color: #2D2F30;
                             <div class="row mt-4">
                                 <div class="col-12">
                                     <div class="text-center">
-                                        <h4 class="mb-3">{{$curriculum->metier_recherche}}</h4>
+                                        <h4 class="mb-3">
+                                            @if(!empty($curriculum->metier_recherche))
+                                                {{$curriculum->metier_recherche}}
+                                            @else
+                                                {{$curriculum->custom_job}}
+                                            @endif
+                                        </h4>
                                     </div>
                                    
                                     <ul class="list-unstyled">
                                         <li>Niveau: {{$curriculum->niveau}}</li>
                                         <li>Nombre d'années d'expérience: {{$curriculum->annees_experience}} années</li>
                                         <li>Niveau d'études: {{$curriculum->niveau_etudes}}</li>
-                                        <li>Prétentions salariales: {{$curriculum->pretentions_salariales}}</li>
+                                        <li>Prétentions salariales (Ke): {{$curriculum->pretentions_salariales}}</li>
                                         <li>Valeurs: 
                                             @php 
                                             if($curriculum->valeurs != null){
@@ -220,7 +230,7 @@ color: #2D2F30;
         </div>
         @endif
         
-        <div class="row mt-3" id="editor-container" style="@if(!empty($curriculum))display:none; @endif">
+        <div class="row mt-3" id="editor-container">
             <div class="col-12">
                 <div class="card" style="height:fit-content;">
                     <div class="card-body">
@@ -228,14 +238,15 @@ color: #2D2F30;
                             <form action="{{ route('candidat.cv.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <h4 class="text-dark mb-3">Télécharger CV</h4>
-                                <input type="file" name="cv" id="cv" class="py-3">
+                                <input type="file" name="cv" id="cv" class="py-3" 
+                                @if(empty($curriculum) && empty($curriculum->cv))  required @endif>
                                 <button type="submit" class="btn btn-primary mt-3" id="upload-cv-btn">
-                                    @if($curriculum != null && $curriculum->cv != null)
+                                @if(!empty($curriculum) && $curriculum->cv != null && $curriculum->cv != '')    
                                     Modifier le CV
-                                    @else
-                                    Enregister le CV
-                                    @endif
-                                </button>
+                                @else
+                                    Enregistrer le CV
+                                @endif
+                            </button>
                             </form>
                         </div>
                     </div>
@@ -278,13 +289,40 @@ color: #2D2F30;
                                             required>
                                     </div>
                                 </div>
+
                                 <div class="col-6">
-                                    <!-- Métier recherché -->
+                                    <!-- Ville de domiciliation -->
                                     <div class="mb-3">
-                                        <label for="metier" class="form-label text-dark">Métier recherché</label>
-                                        <select name="metier_recherche" id="metier_recherche" class="form-control w-100">
-                                            <option value="{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}" selected>{{isset($curriculum->metier_recherche) ? $curriculum->metier_recherche : ''}}</option>
+                                        <label for="phone" class="form-label text-dark">Numéro de téléphone</label>
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                            value="{{ auth()->user()->phone }}" pattern="[0-9]{10}"
+                                            title="Veuillez entrer un numéro de téléphone à 10 chiffres"
+                                            required>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 pr-1">
+                                    <label>
+                                        <input type="radio" id="use_select" @if($curriculum && $curriculum->metier_recherche != null ) checked @endif> Utiliser Code ROME
+                                    </label>
+                                    <div class="form-group mb-2">
+                                        <select name="job_title" id="job_title" class="form-control w-100" >
+                                            <option value="" selected value="">Poste recherchés</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mb-2">
+                                        <label>
+                                            <input type="radio" id="use_input" @if($curriculum && !$curriculum->metier_recherche != null ) checked @endif> Utiliser Code Métier 
+                                        </label>
+                                        <input name="custom_job" id="custom_job" class="form-control" placeholder="Métier" 
+                                         @if(isset($curriculum) && $curriculum->custom_job == '') disabled @endif
+                                        value="{{isset($curriculum) ? $curriculum->custom_job : ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -297,7 +335,8 @@ color: #2D2F30;
                                             salariales (Ke)</label>
                                         <input type="text" class="form-control" id="pretentions"
                                             value="{{isset($curriculum->pretentions_salariales) ? $curriculum->pretentions_salariales : ''}}"
-                                            name="pretentions_salariales" required>
+                                            name="pretentions_salariales" 
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -447,8 +486,10 @@ color: #2D2F30;
 @php
 if( isset($curriculum) ){
     $cv = $curriculum->cv;
+    $selectedMetierRome = $curriculum->metier_recherche;
 }else{
     $cv = [];
+    $selectedMetierRome = '';
 }
 @endphp
 @endsection
@@ -511,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    $('form').on('submit', function(){
+    $('#create-cv-form').on('submit', function(){
         var minimum = 5;
 
         if($("#values_select").select2('data').length>=minimum){
@@ -563,6 +604,65 @@ document.addEventListener('DOMContentLoaded', function() {
             cache: true
         },
     });
+
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        // $("#custom_job").val("");
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        // $("#job_title").val([]).trigger('change');
+    });
+
+    $("#job_title").select2({
+        placeholder: "Code ROME",
+        minimumInputLength: 2,
+        language: {
+            inputTooShort: function() {
+                return 'Veuillez entrer au moins 2 caractères.';
+            },
+            noResults: function() {
+                return 'Aucun metier correspondant.';
+            },
+            searching: function() {
+                return 'Chargement...';
+            }
+        },
+        ajax: {
+            url: '/recruiter-dashboard/jobs/search',
+            dataType: 'json',
+            data: function (params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+    });
+
+    var selectedMetier = @json($selectedMetierRome);
+    if(selectedMetier){
+        console.log('Selected Metier : ', selectedMetier);
+        $("#job_title").append(new Option(selectedMetier, selectedMetier, true, true)).trigger('change');
+    }else{
+        console.log('Non Selected Metier : ', selectedMetier);
+    }
 
 })
 </script>

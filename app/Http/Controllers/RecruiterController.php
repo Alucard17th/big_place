@@ -197,7 +197,7 @@ class RecruiterController extends Controller
                 $searchTermLower = $this->removeAccents($searchTermLower); // Remove accents from search term
 
                 // Convert job title to lowercase and remove accents, then perform case-insensitive comparison
-                $offerJobTitleLower = strtolower($offer->job_title);
+                $offerJobTitleLower = strtolower($curriculum->custom_job);
                 $offerJobTitleLower = $this->removeAccents($offerJobTitleLower);
                 $score += stripos($offerJobTitleLower, $searchTermLower) !== false ? 10 : 0;
             }
