@@ -1109,8 +1109,8 @@ default table
 ===========================*/
 
 .table-outer{
-    overflow-y: hidden;
-    overflow-x: auto;
+    /* overflow-y: hidden;
+    overflow-x: auto; */
 }
 
 .default-table{
@@ -18308,13 +18308,9 @@ Chat Widget
     transition:all 500ms ease;
 }
 
-#mm-0 > div.user-dashboard.bc-user-dashboard > div.dashboard-outer > div > div{
-    padding-left : 0px !important;
-    padding-right: 0px !important;
-}
 .ls-widget .widget-content {
     position: relative;
-    padding: 0px 3px 10px;
+    padding: 0px 30px 10px;
 }
 
 .ls-widget .widget-content p {

@@ -125,7 +125,7 @@
                                             </td>
                                             
                                             @unlessrole('restricted')
-                                            <td class="text-left d-flex flex-column w-100">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.events.show', $event->id)}}"
                                                     type="button" class="bg-btn-five">
                                                     <i class="las la-eye"></i>

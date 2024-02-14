@@ -193,7 +193,7 @@ input, select{
                                             </td>
                                             <td class="text-left">{{Str::limit($task->description, $limit = 30, $end = '...')}}</td>
                                             @unlessrole('restricted')
-                                            <td class="text-left d-flex flex-column w-100">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.tache.see', $task->id)}}" type="button" class="bg-btn-three">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
