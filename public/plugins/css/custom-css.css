@@ -2092,39 +2092,47 @@ h6 {
  */
  .bg-btn-three{
     border: 1px solid #000000;
-    padding: 2px 15px;
+    padding: 2px 2px;
     font-weight: 500;
     border-radius: 5px;
     background-color: #f2f2f2;
     color: #000 !important;
+    width: fit-content;
+    font-size:14px;
 }
 
 .bg-btn-four{
     border: 1px solid #FF0000;
-    padding: 2px 15px;
+    padding: 2px 2px;
     font-weight: 500;
     border-radius: 5px;
     background-color: #fff2f2;
     color: #FF0000 !important;
+    width: fit-content;
+    font-size:14px;
 }
 
 .bg-btn-five{
     border: 1px solid #5e9fc3;
-    padding: 2px 15px;
+    padding: 2px 2px;
     font-weight: 500;
     border-radius: 5px;
     background-color: #f2f7fa;
     color: #217bac !important;
+    width: fit-content;
+    font-size:14px;
 }
 
 .bg-btn-six{
     border: 1px solid #5e9fc3;
-    padding: 2px 15px;
+    padding: 2px 2px;
     font-weight: 500;
     border-radius: 5px;
     background-color: #f2f7fa;
     color: #217bac !important;
     border-radius: 30px;
+    width: fit-content;
+    font-size:14px;
 }
 
 .bg-btn-seven{
@@ -2136,10 +2144,12 @@ h6 {
     font-weight: 500;
     text-align: left;
     color: #0369A1 !important;
-    padding: 2px 15px;
+    padding: 2px 2px;
+    width: fit-content;
+    font-size:14px;
 }
 .bg-btn-eight{
-    padding: 2px 15px;
+    padding: 2px 2px;
     background: rgba(30, 148, 0, 0.05);
     border: 1px solid #ff8b00;
     border-radius: 6.71186px;
@@ -2147,9 +2157,11 @@ h6 {
     font-style: normal;
     font-weight: 500;
     color: #ff8b00;
+    width: fit-content;
+    font-size:14px;
 }
 .bg-btn-nine{
-    padding: 2px 15px;
+    padding: 2px 2px;
     background: rgba(30, 148, 0, 0.05);
     border: 1px solid #1E9400;
     border-radius: 6.71186px;
@@ -2157,6 +2169,8 @@ h6 {
     font-style: normal;
     font-weight: 500;
     color: #1E9400;
+    width: fit-content;
+    font-size:14px;
 }
 
 .bg-back-btn{

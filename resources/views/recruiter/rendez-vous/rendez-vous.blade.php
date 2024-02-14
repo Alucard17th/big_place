@@ -185,7 +185,7 @@ input, select{
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
-                                                <a href="{{route('recruiter.rendez-vous.cancel', $rdv->id)}}" type="button" class="bg-btn-four">
+                                                <a href="{{route('recruiter.rendez-vous.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2">
                                                     <!-- Détails -->
                                                     <i class="las la-trash"></i>
                                                     Annuler

@@ -141,11 +141,11 @@
                                             <tbody>
                                                 @foreach ($receivedEmails as $email)
                                                 <tr>
-                                                    <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    <td class="text-left"><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                         value="{{$email->id}}"></td>
-                                                    <td>{{getUserById($email->user_id)->name}}</td>
-                                                    <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                    <td data-order="{{ $email->created_at}}">
+                                                    <td class="text-left">{{getUserById($email->user_id)->name}}</td>
+                                                    <td class="text-left">{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                    <td class="text-left" data-order="{{ $email->created_at}}">
                                                         {{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                     </td>
                                                     <td class="text-left d-flex flex-column">
@@ -186,11 +186,11 @@
                                             <tbody>
                                                 @foreach ($emails as $email)
                                                 <tr>
-                                                    <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    <td class="text-left"><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                         value="{{$email->id}}"></td>
-                                                    <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                    <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                    <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
+                                                    <td class="text-left">{{getUserById($email->receiver_id)->name}}</td>
+                                                    <td class="text-left">{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                    <td class="text-left" data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                     <td class="text-left d-flex flex-column">
                                                         <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                             Consulter
@@ -229,11 +229,11 @@
                                             <tbody>
                                                 @foreach ($deletedEmails as $email)
                                                 <tr>
-                                                    <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    <td class="text-left"><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                         value="{{$email->id}}"></td>
-                                                    <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                    <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                    <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
+                                                    <td class="text-left">{{getUserById($email->receiver_id)->name}}</td>
+                                                    <td class="text-left">{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                    <td class="text-left" data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                     <td class="text-left d-flex flex-column">
                                                         <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                             Consulter
@@ -265,11 +265,11 @@
                                             <tbody>
                                                 @foreach ($draftEmails as $email)
                                                 <tr>
-                                                    <td><input class="checkbox-item" type="checkbox" name="selected" id=""
+                                                    <td class="text-left"><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                         value="{{$email->id}}"></td>
-                                                    <td>{{getUserById($email->receiver_id)->name}}</td>
-                                                    <td>{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
-                                                    <td data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
+                                                    <td class="text-left">{{getUserById($email->receiver_id)->name}}</td>
+                                                    <td class="text-left">{{$email->subject}} <br> {{Str::limit($email->message, 50)}}</td>
+                                                    <td class="text-left" data-order="{{ $email->created_at}}">{{ \Carbon\Carbon::parse($email->created_at)->formatLocalized('%d-%m-%Y à %H:%M') }}</td>
                                                     <td class="text-left d-flex flex-column">
                                                         <a href="{{route('recruiter.email.show', $email->id)}}" class="bg-btn-five">
                                                             Consulter

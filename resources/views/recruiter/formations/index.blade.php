@@ -78,23 +78,23 @@
                                         @endphp
                                         <tr>
                                             <td class="d-none">{{$formation->created_at}}</td>
-                                            <td>{{$formation->job_title}}</td>
-                                            <td>{{$durationInDays}}</td>
+                                            <td class="text-left">{{$formation->job_title}}</td>
+                                            <td class="text-left">{{$durationInDays}}</td>
                                             <td data-order="{{ \Carbon\Carbon::parse($formation->start_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                             </td>
-                                            <td>
+                                            <td class="text-left">
                                                 @if($formation->cdi_at_hiring == 1)
                                                     Oui
                                                 @else
                                                     Non
                                                 @endif
                                             </td>
-                                            <td>{{$formation->skills_acquired}}</td>
-                                            <td>{{$formation->open_positions}}</td>
-                                            <td>{{$formation->participants->count()}}</td>
-                                            <td>{{$formation->work_location}}</td>
-                                            <td>
+                                            <td class="text-left">{{$formation->skills_acquired}}</td>
+                                            <td class="text-left">{{$formation->open_positions}}</td>
+                                            <td class="text-left">{{$formation->participants->count()}}</td>
+                                            <td class="text-left">{{$formation->work_location}}</td>
+                                            <td class="text-left">
                                                 @if($formation->status == 'Active')
                                                     <span class="badge badge-success">Active</span>
                                                 @elseif($formation->status == 'Suspendue')
