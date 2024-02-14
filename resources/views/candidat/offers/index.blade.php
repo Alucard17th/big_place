@@ -96,6 +96,19 @@
     font-size: 16px !important;
 }
 
+#form-container {
+    position: relative; /* Ensure the overlay is positioned relative to this container */
+}
+
+#overlay {
+    position: absolute; /* Position the overlay relative to the form container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Transparent white */
+    z-index: 9999; /* Ensure it's above all other elements */
+}
 
 </style>
 @endpush
@@ -120,119 +133,131 @@
                     </div>
                     <div class="tabs-box">
                         <!-- SEARCH FORM -->
-                        <div class="widget-title">
-                            <div class="chosen-outer search-container">
-                                <form method="get" class="" action="{{route('candidat.offers.search')}}">
-                                    <div class="row no-gutters">
-                                        <div class="col-6 pr-1">
-                                            <label>
-                                                <input type="radio" id="use_select" checked> Utiliser Code ROME
-                                            </label>
-                                            <div class="form-group mb-2">
-                                                <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
-                                                    style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
-                                                <select name="job_title" id="job_title" class="form-control">
-                                                    <option value="" selected value="">Poste recherchés</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="form-group mb-2">
+                        <div id="form-container">
+                            <div class="widget-title">
+                                <div class="chosen-outer search-container">
+                                    <div id="overlay"></div> 
+                                    <form method="get" class="" action="{{route('candidat.offers.search')}}">
+                                        <div class="row no-gutters">
+                                            <div class="col-6 pr-1">
                                                 <label>
-                                                    <input type="radio" id="use_input"> Utiliser Code Métier
+                                                    <input type="radio" id="use_select" @if(request()->url() === url('/candidat-offers') || request()->has('job_title')) checked @endif> Utiliser Code ROME
                                                 </label>
-                                                <input name="custom_job" id="custom_job" class="form-control" 
-                                                placeholder="Métier" value="{{request('custom_job')}}" disabled>
+                                                <div class="form-group mb-2">
+                                                    <img src="{{asset('/plugins/images/dashboard/icons/search.png')}}" alt=""
+                                                        style="padding: 6px; min-width: 18px; position: absolute; z-index: 10;scale: 0.7;">
+                                                    <select name="job_title" id="job_title" class="form-control @if(!request('job_title')) greyed-out @endif" 
+                                                        @if(request()->url() === url('/candidat-offers') || request()->has('job_title')) required @endif
+                                                        @if(request('custom_job')) disabled @endif
+                                                    >
+                                                        <option value="" selected value="">Poste recherchés</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-6 pr-1">
-                                            <div class="form-group mb-2">
-                                                <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
-                                                    style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
-                                                <input type="text" name="location_city" id="location_city" value="{{request('location_city')}}"
-                                                    class="form-control mb-2" placeholder="Ville / Département">
+                                            <div class="col-6">
+                                                <div class="form-group mb-2">
+                                                    <label>
+                                                        <input type="radio" id="use_input" @if(request()->has('custom_job')) checked @endif> Utiliser Code Métier
+                                                    </label>
+                                                    <input name="custom_job" id="custom_job" class="form-control @if(!request('custom_job')) greyed-out @endif" 
+                                                    placeholder="Métier" value="{{request('custom_job')}}"  
+                                                        @if(request()->has('custom_job')) required @endif
+                                                        @if(!request()->has('custom_job')) disabled @endif
+                                                    >
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-6">
-                                            <div class="form-group mb-2">
-                                                <select class="form-control" id="experience_level" name="experience_level">
-                                                    <option value="" selected>Année d'expérience</option>
-                                                    <option value="Débutant (0 – 2 ans)"
-                                                        @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
-                                                        @endif>Débutant (0 – 2 ans)</option>
-                                                    <option value="Intermédiaire (2 – 5 ans)"
-                                                        @if(request('experience_level')=='Intermédiaire (2 – 5 ans)' ) selected
-                                                        @endif>Intermédiaire (2 – 5 ans)</option>
-                                                    <option value="Confirmé (5 -10 ans)"
-                                                        @if(request('experience_level')=='Confirmé (5 -10 ans)' ) selected
-                                                        @endif>Confirmé (5 -10 ans)</option>
-                                                    <option value="Sénior (+ 10 ans)"
-                                                        @if(request('experience_level')=='Sénior (+ 10 ans)' ) selected @endif>
-                                                        Sénior (+ 10 ans)</option>
-                                                </select>
-                                                <!-- <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience"> -->
+                                            <div class="col-6 pr-1">
+                                                <div class="form-group mb-2">
+                                                    <img src="{{asset('/plugins/images/dashboard/icons/location.png')}}" alt=""
+                                                        style="padding: 6px; min-width: 24px; position: absolute;scale: 0.7;">
+                                                    <input type="text" name="location_city" id="location_city" value="{{request('location_city')}}"
+                                                        class="form-control mb-2" placeholder="Ville / Département" >
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-6 pr-1">
-                                            <div class="form-group mb-2">
-                                                <select name="education_level" id="education_level" class="form-control">
-                                                    <option value="">Niveau d'études</option>
-                                                    <option value="CAP/BEP" @if(request('education_level')=='CAP / BEP' ) selected @endif>CAP / BEP</option>
-                                                    <option value="Bac" @if(request('education_level')=='Bac' ) selected @endif>Bac</option>
-                                                    <option value="Bac+2" @if(request('education_level')=='Bac+2' ) selected @endif>Bac + 2</option>
-                                                    <option value="Bac+4" @if(request('education_level')=='Bac+4' ) selected @endif>Bac + 4</option>
-                                                    <option value="Bac+5 et plus" @if(request('education_level')=='Bac+5' ) selected @endif>Bac + 5 et plus</option>
-                                                </select>
+                                            <div class="col-6">
+                                                <div class="form-group mb-2">
+                                                    <select class="form-control" id="experience_level" name="experience_level" >
+                                                        <option value="" selected>Année d'expérience</option>
+                                                        <option value="Débutant (0 – 2 ans)"
+                                                            @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
+                                                            @endif>Débutant (0 – 2 ans)</option>
+                                                        <option value="Intermédiaire (2 – 5 ans)"
+                                                            @if(request('experience_level')=='Intermédiaire (2 – 5 ans)' ) selected
+                                                            @endif>Intermédiaire (2 – 5 ans)</option>
+                                                        <option value="Confirmé (5 -10 ans)"
+                                                            @if(request('experience_level')=='Confirmé (5 -10 ans)' ) selected
+                                                            @endif>Confirmé (5 -10 ans)</option>
+                                                        <option value="Sénior (+ 10 ans)"
+                                                            @if(request('experience_level')=='Sénior (+ 10 ans)' ) selected @endif>
+                                                            Sénior (+ 10 ans)</option>
+                                                    </select>
+                                                    <!-- <input type="number" name="experience_level" id="experience_level"  value="" class="form-control mb-2" placeholder="Années d'expérience"> -->
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-6">
-                                            <div class="form-group mb-2">
-                                                <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
-                                                    placeholder="Pretentions salariales">
+                                            <div class="col-6 pr-1">
+                                                <div class="form-group mb-2">
+                                                    <select name="education_level" id="education_level" class="form-control" >
+                                                        <option value="">Niveau d'études</option>
+                                                        <option value="CAP/BEP" @if(request('education_level')=='CAP / BEP' ) selected @endif>CAP / BEP</option>
+                                                        <option value="Bac" @if(request('education_level')=='Bac' ) selected @endif>Bac</option>
+                                                        <option value="Bac+2" @if(request('education_level')=='Bac+2' ) selected @endif>Bac + 2</option>
+                                                        <option value="Bac+4" @if(request('education_level')=='Bac+4' ) selected @endif>Bac + 4</option>
+                                                        <option value="Bac+5 et plus" @if(request('education_level')=='Bac+5 et plus' ) selected @endif>Bac + 5 et plus</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-12">
-                                            <div class="form-group mb-2">
-                                                <select name="valeurs[]" id="values_select" class="" multiple >
-                                                    <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
-                                                    <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
-                                                    <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
-                                                    <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
-                                                    <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
-                                                    <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
-                                                    <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
-                                                    <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
-                                                    <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
-                                                    <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
-                                                    <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
-                                                    <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
-                                                    <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
-                                                    <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
-                                                    <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
-                                                    <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
-                                                    <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
-                                                    <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
-                                                    <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
-                                                    <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
-                                                    <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
-                                                    <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
-                                                </select>
-                                                <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
+                                            <div class="col-6">
+                                                <div class="form-group mb-2">
+                                                    <input type="text" name="brut_salary" value="{{request('brut_salary')}}" id="brut_salary" class="form-control"
+                                                        placeholder="Pretentions salariales (Ke)"  >
+                                                       
+                                                        
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                    <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"
-                                        id="search-btn">Chercher</button>
-                                </form>
+                                            <!-- <div class="col-12">
+                                                <div class="form-group mb-2">
+                                                    <select name="valeurs[]" id="values_select" class="" multiple >
+                                                        <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
+                                                        <option value="adaptabilite" @if(request()->has('valeurs') && in_array("adaptabilite", request('valeurs'))) selected @endif>L’adaptabilité</option>
+                                                        <option value="consideration" @if(request()->has('valeurs') && in_array("consideration", request('valeurs'))) selected @endif>la considération</option>
+                                                        <option value="altruisme" @if(request()->has('valeurs') && in_array("altruisme", request('valeurs'))) selected @endif>l’altruisme</option>
+                                                        <option value="assertivite" @if(request()->has('valeurs') && in_array("assertivite", request('valeurs'))) selected @endif>l’assertivité</option>
+                                                        <option value="entraide" @if(request()->has('valeurs') && in_array("entraide", request('valeurs'))) selected @endif>l’entraide</option>
+                                                        <option value="solidarite" @if(request()->has('valeurs') && in_array("solidarite", request('valeurs'))) selected @endif>la solidarité</option>
+                                                        <option value="ecoute" @if(request()->has('valeurs') && in_array("ecoute", request('valeurs'))) selected @endif>l’écoute</option>
+                                                        <option value="bienveillance" @if(request()->has('valeurs') && in_array("bienveillance", request('valeurs'))) selected @endif>la bienveillance</option>
+                                                        <option value="empathie" @if(request()->has('valeurs') && in_array("empathie", request('valeurs'))) selected @endif>lempathie</option>
+                                                        <option value="creativite" @if(request()->has('valeurs') && in_array("creativite", request('valeurs'))) selected @endif>la créativité</option>
+                                                        <option value="justice" @if(request()->has('valeurs') && in_array("justice", request('valeurs'))) selected @endif>la justice</option>
+                                                        <option value="tolerance" @if(request()->has('valeurs') && in_array("tolerance", request('valeurs'))) selected @endif>la tolérance</option>
+                                                        <option value="equite" @if(request()->has('valeurs') && in_array("equite", request('valeurs'))) selected @endif>l’équité</option>
+                                                        <option value="honnetete" @if(request()->has('valeurs') && in_array("honnetete", request('valeurs'))) selected @endif>l’honnêteté</option>
+                                                        <option value="responsabilite" @if(request()->has('valeurs') && in_array("responsabilite", request('valeurs'))) selected @endif>la responsabilité</option>
+                                                        <option value="loyaute" @if(request()->has('valeurs') && in_array("loyaute", request('valeurs'))) selected @endif>la loyauté</option>
+                                                        <option value="determination" @if(request()->has('valeurs') && in_array("determination", request('valeurs'))) selected @endif>la détermination</option>
+                                                        <option value="perseverance" @if(request()->has('valeurs') && in_array("perseverance", request('valeurs'))) selected @endif>la persévérance</option>
+                                                        <option value="rigueur" @if(request()->has('valeurs') && in_array("rigueur", request('valeurs'))) selected @endif>la rigueur</option>
+                                                        <option value="generosite" @if(request()->has('valeurs') && in_array("generosite", request('valeurs'))) selected @endif>la générosité</option>
+                                                        <option value="stabilite" @if(request()->has('valeurs') && in_array("stabilite", request('valeurs'))) selected @endif>la stabilité</option>
+                                                    </select>
+                                                    <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+                                        <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"
+                                            id="search-btn">Chercher</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        
 
                         <button type="button" class="btn-style-one bg-btn px-0 mb-2 ml-2 d-none add-to-favorites">Ajouter aux
                             favoris</button>
@@ -246,7 +271,6 @@
                                         <tr>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
-                                            <th class="d-none" >Crée Le</th>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <th>Matching</th>
                                             @endif
@@ -256,7 +280,6 @@
                                             <th>Années d'expérience</th>
                                             <th>Niveau d'étude</th>
                                             <th>Niveau de salaire</th>
-                                            <th>Date de création</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -265,7 +288,6 @@
                                         <tr>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
-                                                    <td class="text-left d-none">{{$offer->created_at}}</td>
                                             @if(isset($isSearch) && $isSearch == true)
                                             <td>
                                                 <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 0) }} %</span>
@@ -277,17 +299,13 @@
                                             <td class="text-left">{{$offer->experience_level}}</td>
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
-                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->timestamp }}">
-                                                {{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}
-                                            </td>
-
                                             <td class="text-left">
-                                                @if($offer->user_id != null)
+                                                <!-- @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
                                                     Vitrine de l'entreprise 
                                                 </a>
-                                                @endif
+                                                @endif -->
                                                 <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
@@ -312,7 +330,30 @@
 
 @push('scripts')
 <script>
+    
 document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("overlay").remove();
+    $("#use_select").on("change", function() {
+        $("#select_container").toggle(this.checked);
+        $("#job_title").prop("disabled", !this.checked);
+        $("#job_title").prop("required", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
+        $("#custom_job").prop("disabled", this.checked);
+        $("#input_container").hide();  // Hide input container if select is checked
+        $("#use_input").prop("checked", false);  // Uncheck input checkbox
+        $("#custom_job").val("");
+    });
+
+    $("#use_input").on("change", function() {
+        $("#input_container").toggle(this.checked);
+        $("#custom_job").prop("disabled", !this.checked);
+        $("#job_title").prop("disabled", this.checked);
+        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
+        $("#select_container").hide();  // Hide select container if input is checked
+        $("#use_select").prop("checked", false);  // Uncheck select checkbox
+        $("#job_title").val([]).trigger('change');
+    });
+
     const selectAllCheckbox = document.querySelector('.checkbox-all');
     const checkboxes = document.querySelectorAll('.checkbox-item');
     const addToFavoritesButton = document.querySelector('.add-to-favorites');
@@ -434,7 +475,6 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
-        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -455,25 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
 
-    $("#use_select").on("change", function() {
-        $("#select_container").toggle(this.checked);
-        $("#job_title").prop("disabled", !this.checked);
-        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", !this.checked);
-        $("#custom_job").prop("disabled", this.checked);
-        $("#input_container").hide();  // Hide input container if select is checked
-        $("#use_input").prop("checked", false);  // Uncheck input checkbox
-        $("#custom_job").val("");
-    });
-
-    $("#use_input").on("change", function() {
-        $("#input_container").toggle(this.checked);
-        $("#custom_job").prop("disabled", !this.checked);
-        $("#job_title").prop("disabled", this.checked);
-        $("#mm-0 > div.user-dashboard.bc-user-dashboard > div > div:nth-child(2) > div:nth-child(1) > div > div > form > div > div:nth-child(1) > div:nth-child(2) > span > span.selection > span").toggleClass("greyed-out", this.checked);
-        $("#select_container").hide();  // Hide select container if input is checked
-        $("#use_select").prop("checked", false);  // Uncheck select checkbox
-        $("#job_title").val([]).trigger('change');
-    });
+    
 
     var selectedMetier = getParameterByName('job_title');
     function getParameterByName(name, url) {
