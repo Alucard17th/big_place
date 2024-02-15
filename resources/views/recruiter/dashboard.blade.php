@@ -247,7 +247,7 @@
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="annees_experience" name="annees_experience"
                                             required>
-                                            <option value="" selected>Années d'éxpérience</option>
+                                            <option value="" selected>Années d'expérience</option>
                                             <option value="Débutant (0 – 2 ans)">Débutant (0 – 2 ans)</option>
                                             <option value="Intermédiaire (2 – 5 ans)">Intermédiaire (2 – 5 ans)</option>
                                             <option value="Confirmé (5 -10 ans)">Confirmé (5 -10 ans)</option>
