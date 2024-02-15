@@ -311,8 +311,6 @@ $(document).ready(function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
     
     document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
     

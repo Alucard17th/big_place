@@ -87,13 +87,18 @@
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="start_date">Début:</label>
-                                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request()->get('start_date') }}">
+                                                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ request()->get('start_date') }}"
+                                                    >
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
                                                     <label for="end_date">Fin:</label>
-                                                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request()->get('end_date') }}">
+                                                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ request()->get('end_date') }}"
+                                                    data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                                                    data-parsley-errors-container="#custom-error-message-end"
+                                                    >
+                                                    <div id="custom-error-message-end"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -109,8 +114,12 @@
 
                                             <div class="col-6">
                                                 <label for="week_end">Fin:</label>
-                                                <input type="week" class="form-control" id="week_end" name="week_end" value="{{ request()->get('week_end') }}">
+                                                <input type="week" class="form-control" id="week_end" name="week_end" value="{{ request()->get('week_end') }}"
+                                                data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                                                data-parsley-errors-container="#custom-error-message-end-week">
                                             </div>
+                                            <div id="custom-error-message-end-week"></div>
+
                                         </div>
                                     </div>
 
@@ -123,8 +132,11 @@
 
                                             <div class="col-6">
                                                 <label for="month_end">Fin:</label>
-                                                <input type="month" class="form-control" id="month_end" name="month_end" value="{{ request()->get('month_end') }}">
+                                                <input type="month" class="form-control" id="month_end" name="month_end" value="{{ request()->get('month_end') }}"
+                                                data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                                                data-parsley-errors-container="#custom-error-message-end-month">
                                             </div>
+                                            <div id="custom-error-message-end-month"></div>
                                         </div>
                                     </div>
 
@@ -249,6 +261,51 @@ $(document).ready(function() {
             return field.$element.attr('data-parsley-errors-container') || field;
         },
     });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+
+    document.getElementById("week_start").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("week_end").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("week_end").setCustomValidity('WWW');
+    });
+
+    document.getElementById("week_end").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("week_start").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
 });
 </script>
 
