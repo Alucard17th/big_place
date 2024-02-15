@@ -126,11 +126,13 @@
                                 <!-- Field: Date de prise de poste souhaitée -->
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
-                                    <input type="date" class="form-control" id="desired_start_date" name="start_date"
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-errors-container="#custom-error-message"
                                         data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
                                         required>
-                                       
                                 </div>
+                                <div id="custom-error-message"></div>
 
                                 <!-- Field: Localisation du poste (Ville et Code postal) -->
                                 <div class="form-group">
@@ -322,16 +324,23 @@
                                     <label for="publication_date">Date de publication de l’offre</label>
                                     <input type="date" class="form-control" id="publication_date"
                                         name="publication_date" required
-                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-errors-container="#custom-error-message-publish">
                                 </div>
+                                <div id="custom-error-message-publish"></div>
+
 
                                 <!-- Field: Dépublier l’offre le -->
                                 <div class="form-group">
                                     <label for="unpublish_date">Dépublier l’offre le</label>
                                     <input type="date" class="form-control" id="unpublish_date" name="unpublish_date"
                                         required
-                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date de publication."
+                                        data-parsley-errors-container="#custom-error-message-unpublish"
+                                    >
                                 </div>
+                                <div id="custom-error-message-unpublish"></div>
+
 
                                 <div class="form-group">
                                     <label for="other_language">Tâches à effectuer (séparées par une virgule)</label>
@@ -404,6 +413,34 @@ $(document).ready(function() {
             return field.$element.attr('data-parsley-errors-container') || field;
         },
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("publication_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("unpublish_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("unpublish_date").setCustomValidity('WWW');
+    });
+
+    document.getElementById("unpublish_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("publication_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
 });
 </script>
 
@@ -517,9 +554,9 @@ $(document).ready(function() {
         document.getElementById("add-offer-form").submit();
     });
 
-    document.getElementById("desired_start_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("unpublish_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("desired_start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("unpublish_date").min = new Date().toISOString().slice(0, 10);
 
 })
 </script>

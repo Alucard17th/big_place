@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
     #add-formation-form > h4{
     font-family: 'Jost';
@@ -74,18 +75,25 @@
                                         <!-- Field: Date de démarrage de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="start_date">Date de démarrage de la formation</label>
-                                            <input type="date" class="form-control" id="start_date" name="start_date" oninput="validateDate(this, 'start_date')" 
-                                            data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                            <input type="date" class="form-control" id="start_date" name="start_date"
+                                                data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                                data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                                data-parsley-errors-container="#custom-error-message"
                                             required>
                                         </div>
+                                        <div id="custom-error-message"></div>
+                                        
                                     </div>
                                     <div class="col-6">
                                         <!-- Field: Date de fin de la formation -->
                                         <div class="form-group">
                                             <label class="text-dark" for="end_date">Date de fin de la formation</label>
-                                            <input type="date" class="form-control" id="end_date" name="end_date" oninput="validateDate(this, 'end_date')"
-                                            data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                                            <input type="date" class="form-control" id="end_date" name="end_date" 
+                                                data-parsley-min-message="La date doit être égale ou supérieure à la date de démarrage."
+                                                data-parsley-errors-container="#custom-error-message-end"
+                                                required>
                                         </div>
+                                        <div id="custom-error-message-end"></div>
                                     </div>
                                 </div>
 
@@ -146,9 +154,11 @@
                                             <label class="text-dark" for="registration_deadline">Date de fin d’inscription pour les
                                                 candidats</label>
                                             <input type="date" class="form-control" id="registration_deadline"
-                                                name="registration_deadline" oninput="validateDate(this, 'registration_deadline')"
-                                                data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                                                name="registration_deadline" 
+                                                data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                                data-parsley-errors-container="#custom-error-message-end-subscription" required>
                                         </div>
+                                        <div id="custom-error-message-end-subscription"></div>
                                     </div>
                                 </div>
 
@@ -189,31 +199,46 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-        document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
-        document.getElementById("registration_deadline").min = new Date().toISOString().slice(0, 10);
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-formation-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    document.getElementById("registration_deadline").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
 
-        function validateDate(input, type) {
-            // Get the entered date value
-            const enteredDate = new Date(input.value);
-
-            // Get the current date
-            const currentDate = new Date();
-
-            // Set the minimum date based on the current date
-            const minDate = currentDate.toISOString().slice(0, 10);
-
-            // Check if the entered date is earlier than the minimum date
-            if (enteredDate < currentDate) {
-                // If so, update the input value to the minimum date
-                input.value = minDate;
-            }
-
-            // Set the min attribute to restrict the calendar selection
-            input.min = minDate;
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
         }
-    })
+    });
+    
+});
 </script>
 @endpush

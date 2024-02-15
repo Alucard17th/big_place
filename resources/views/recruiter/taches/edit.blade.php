@@ -54,14 +54,22 @@
                                 <div class="form-group">
                                     <label for="date_debut">Date de début</label>
                                     <input type="date" class="form-control" name="date_debut" id="date_debut"
-                                        value="{{ $task->start_date }}">
+                                        value="{{ $task->start_date }}"
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-errors-container="#custom-error-message"
+                                        required>
                                 </div>
+                                <div id="custom-error-message"></div>
+
 
                                 <div class="form-group">
                                     <label for="date_fin">Date de fin</label>
                                     <input type="date" class="form-control" name="date_fin" id="date_fin"
-                                        value="{{ $task->due_date }}">
+                                        value="{{ $task->due_date }}"
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                                        data-parsley-errors-container="#custom-error-message-end" required> 
                                 </div>
+                                <div id="custom-error-message-end"></div>
 
                                 <div class="form-group">
                                     <label class="text-dark" for="candidate">Heure de fin</label>
@@ -107,6 +115,34 @@ $(document).ready(function() {
             return field.$element.attr('data-parsley-errors-container') || field;
         },
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
 });
 </script>
 <script>

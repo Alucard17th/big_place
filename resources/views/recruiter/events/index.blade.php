@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -297,6 +298,19 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-event-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('#add-event');

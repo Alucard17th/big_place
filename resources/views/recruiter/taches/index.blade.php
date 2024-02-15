@@ -247,16 +247,20 @@ input, select{
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date début</label>
                         <input class="form-control mb-2" type="date" name="start_date" id="start_date" required 
-                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                        data-parsley-errors-container="#custom-error-message">
                     </div>
+                    <div id="custom-error-message"></div>
                 </div>
 
                 <div class="col-6">
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date fin</label>
                         <input class="form-control mb-2" type="date" name="end_date" id="end_date" required 
-                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui.">
+                        data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                        data-parsley-errors-container="#custom-error-message-end">
                     </div>
+                    <div id="custom-error-message-end"></div>
                 </div>
             </div>
 
@@ -307,6 +311,35 @@ $(document).ready(function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     $('#add-task').click(function() {
         // Send the data 
         $("#ex1").modal({
@@ -321,10 +354,9 @@ document.addEventListener('DOMContentLoaded', function() {
         $.modal.close();
     });
 
-    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
 })
 </script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
    // new DataTable('#data-table');

@@ -522,9 +522,11 @@ nav > ul.pagination > li > a{
                                     <!-- <li>{{ $entreprise->domiciliation }}</li> -->
                                     <li>Valeurs fortes : 
                                         <ol class="ml-5">
+                                            @if(isset($entreprise->valeurs_fortes) && count(json_decode($entreprise->valeurs_fortes)) > 0)
                                             @foreach(json_decode($entreprise->valeurs_fortes) as $key => $value)
                                             <li >{{ ucfirst($value) }}</li>
                                             @endforeach
+                                            @endif
                                         </ol>
                                     </li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>

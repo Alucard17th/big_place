@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -70,7 +71,7 @@
                         <div class="widget-content">
                             <!-- TABLE VIEW -->
                             <div class="col-12">
-                                <form method="GET" action="">
+                                <form method="GET" action="" id="filter-form">
                                     @csrf
                                     <div class="form-group">
                                         <label for="start_date">Groupé par:</label>
@@ -236,6 +237,20 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#filter-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
 
 <script>
 $(document).ready(function() {
