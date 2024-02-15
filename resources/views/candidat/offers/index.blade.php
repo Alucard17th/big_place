@@ -220,7 +220,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-12">
+                                            <div class="col-12">
                                                 <div class="form-group mb-2">
                                                     <select name="valeurs[]" id="values_select" class="" multiple >
                                                         <option value="respect" @if(request()->has('valeurs') && in_array("respect", request('valeurs'))) selected @endif>Le respect</option>
@@ -248,7 +248,7 @@
                                                     </select>
                                                     <small id="values_select_help" class="form-text text-muted">Veuillez sélectionner exactement 5 valeurs</small>
                                                 </div>
-                                            </div> -->
+                                            </div>
 
                                         </div>
                                         <button type="submit" class="theme-btn btn-style-one my-2 w-100 rounded-pill py-3"
@@ -300,12 +300,12 @@
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">
-                                                <!-- @if($offer->user_id != null)
+                                                @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 
                                                 type="button" class="bg-btn-three">
                                                     Vitrine de l'entreprise 
                                                 </a>
-                                                @endif -->
+                                                @endif
                                                 <a href="{{route('candidat.offers.show', $offer->id)}}" 
                                                 type="button" class="bg-btn-five mt-2">
                                                     Consulter l'offre
