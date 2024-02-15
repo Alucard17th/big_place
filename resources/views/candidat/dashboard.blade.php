@@ -249,7 +249,7 @@
                                 <div class="col-6">
                                     <div class="form-group mb-2">
                                         <select class="form-control" id="experience_level" name="experience_level">
-                                            <option value="" selected>Année d'expérience</option>
+                                            <option value="" selected>Années d'expérience</option>
                                             <option value="Débutant (0 – 2 ans)"
                                                 @if(request('experience_level')=='Débutant (0 – 2 ans)' ) selected
                                                 @endif>Débutant (0 – 2 ans)</option>
