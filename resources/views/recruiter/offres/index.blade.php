@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -45,7 +46,7 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Nom projet</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
@@ -60,7 +61,7 @@
                                     <tbody>
                                         @foreach ($offers as $offer)
                                         <tr>
-                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->start_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}
@@ -73,25 +74,25 @@
                                             </td>
 
                                             @unlessrole('restricted')
-                                            <td class="text-left">
-                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-five ml-2">
+                                            <td class="text-left d-flex flex-column">
+                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-five">
                                                     <i class="las la-eye"></i>
                                                     Editer
                                                 </a>
                                                
-                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
 
-                                                <a href="{{route('recruiter.offers.show.candidatures', $offer->id)}}" type="button" class="bg-btn-nine ml-2 mt-2">
+                                                <a href="{{route('recruiter.offers.show.candidatures', $offer->id)}}" type="button" class="bg-btn-nine mt-2">
                                                 <i class="las la-eye"></i>
                                                     Voir les candidatures
                                                 </a>
                                                 
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
-                                                class="bg-btn-four ml-2 mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                class="bg-btn-four mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
@@ -124,7 +125,7 @@
                                 <table class="table table-sm table-bordered" id="data-table-draft">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th>Nom projet</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Poste</th>
                                             <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
@@ -139,7 +140,7 @@
                                     <tbody>
                                         @foreach ($draftOffers as $offer)
                                         <tr>
-                                            <td class="text-left">{{$offer->project_campaign_name}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</td>
@@ -149,18 +150,18 @@
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}</td>
 
                                             @unlessrole('restricted')
-                                            <td class="text-left">
-                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine ml-2">
+                                            <td class="text-left d-flex flex-column">
+                                                <a href="{{route('recruiter.offers.show', $offer->id)}}" type="button" class="bg-btn-nine">
                                                     <i class="las la-edit"></i>
                                                     Editer
                                                 </a>
-                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three ml-2 mt-2">
+                                                <a href="{{route('recruiter.offers.edit', $offer->id)}}" type="button" class="bg-btn-three mt-2">
                                                     <i class="las la-edit"></i>
                                                     Modifier
                                                 </a>
                                                 @role('recruiter')
                                                 <a href="{{route('recruiter.offers.delete', $offer->id)}}" type="button" 
-                                                class="bg-btn-four ml-2 mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
+                                                class="bg-btn-four mt-2"  onclick="return confirm('Etes vous sur de vouloir supprimer cette offre?')">
                                                     <i class="las la-trash"></i>
                                                     Supprimer
                                                 </a>
@@ -219,6 +220,8 @@
 
 @push('scripts')
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+
+
 <script>
 $('.open-schedule-modal').click(function() {
     // get data attribute receiver email from button

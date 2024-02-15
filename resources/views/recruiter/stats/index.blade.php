@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -184,14 +185,6 @@
                             <div class="tabs-box">
                                 <div class="widget-content">
                                     <h3 class="py-4">Nombre d'offres publiées</h3>
-                                    <!-- <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <button class="offer-day active mr-3">Jours</button>
-                                            <button class="offer-week">Semaine</button>
-                                            <button class="offer-month">Mois</button>
-                                        </div>
-                                    </div> -->
-                                    <!-- <canvas id="offres-chart" class="" width="600" height="500"></canvas> -->
                                     <div id="chart-offers"> </div>
                                 </div>
                             </div>
@@ -203,14 +196,6 @@
                             <div class="tabs-box">
                                 <div class="widget-content">
                                     <h3 class="py-4">Nombre de candidatures</h3>
-                                    <!-- <div class="actions row">
-                                        <div class="col-12 text-center">
-                                            <button class="candidature-day active mr-3">Jours</button>
-                                            <button class="candidature-week mr-3">Semaine</button>
-                                            <button class="candidature-month">Mois</button>
-                                        </div>
-                                    </div> -->
-                                    <!-- <canvas id="candidatures-chart" class="" width="600" height="500"></canvas> -->
                                     <div id="chart-candidatures"> </div>
                                 </div>
                             </div>
@@ -224,8 +209,6 @@
                                     <h3 class="py-4">Rendez-vous</h3>
                                     <div class="actions row">
                                         <div class="col-12 text-center">
-                                            <!-- <button class="rdv-day active mr-3">Jours</button>
-                                            <button class="rdv-month">Mois</button> -->
                                         </div>
                                     </div>
                                     <div id="rdvs-chart" class="" width="600" height="500"></div>
@@ -243,6 +226,82 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+
+document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+document.getElementById("end_date").addEventListener("input", function() {
+    var endDate = new Date(this.value);
+    var startDate = new Date(document.getElementById("start_date").value);
+    
+    if (endDate < startDate) {
+        // Set a custom validation message
+        this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+    } else {
+        // Reset the custom validation message
+        this.setCustomValidity('');
+    }
+});
+
+document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+document.getElementById("end_date").addEventListener("input", function() {
+    var endDate = new Date(this.value);
+    var startDate = new Date(document.getElementById("start_date").value);
+    
+    if (endDate < startDate) {
+        // Set a custom validation message
+        this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+    } else {
+        // Reset the custom validation message
+        this.setCustomValidity('');
+    }
+});
+
+document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+document.getElementById("end_date").addEventListener("input", function() {
+    var endDate = new Date(this.value);
+    var startDate = new Date(document.getElementById("start_date").value);
+    
+    if (endDate < startDate) {
+        // Set a custom validation message
+        this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+    } else {
+        // Reset the custom validation message
+        this.setCustomValidity('');
+    }
+});
+</script>
 
 <script>
 $(document).ready(function() {

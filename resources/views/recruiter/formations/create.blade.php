@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 #add-formation-form>h4 {
     font-family: 'Jost';
@@ -73,7 +74,10 @@
                                             <label class="text-dark" for="start_date">Date de démarrage de la
                                                 formation</label>
                                             <input type="date" class="form-control" id="start_date" name="start_date"
-                                                oninput="validateDate(this, 'start_date')" required>
+                                                data-parsley-errors-container="#custom-error-message-start" 
+                                                data-parsley-min-message="La date ne peut pas être antérieure à aujourd'hui."
+                                               required>
+                                            <div id="custom-error-message-start"></div>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -81,7 +85,10 @@
                                         <div class="form-group">
                                             <label class="text-dark" for="end_date">Date de fin de la formation</label>
                                             <input type="date" class="form-control" id="end_date" name="end_date"
-                                                oninput="validateDate(this, 'end_date')">
+                                                data-parsley-errors-container="#custom-error-message" 
+                                                data-parsley-min-message="La date de fin ne peut pas être antérieure à la date de début."
+                                                required>
+                                            <div id="custom-error-message"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -149,7 +156,11 @@
                                                 candidats</label>
                                             <input type="date" class="form-control" id="registration_deadline"
                                                 name="registration_deadline"
-                                                oninput="validateDate(this, 'registration_deadline')">
+                                                data-parsley-errors-container="#custom-error-message-end-deadline" 
+                                                data-parsley-min-message="La date ne peut pas être antérieure à aujourd'hui."
+                                            required>
+                                            <div id="custom-error-message-end-deadline"></div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -193,70 +204,49 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/i18n/fr.js"></script>
+
 <script>
-function validateDate(input) {
-    // Regular expression to match the date format "dd/mm/yyyy"
-    const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
-
-    // Check if the entered date matches the desired format
-    if (!dateFormat.test(input.value)) {
-        // If not, display an error message
-        input.setCustomValidity("Veuillez entrer une date au format jj/mm/aaaa.");
-        console.log(input.value)
-        return false; // Return false to indicate invalid date format
-    }
-
-    // Split the entered date into day, month, and year
-    const parts = input.value.split('/');
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10); // Months are one-based
-    const year = parseInt(parts[2], 10);
-
-    // Check if the entered date is a valid date
-    const enteredDate = new Date(year, month - 1, day); // Months are zero-based
-
-    // Get the current date
-    const currentDate = new Date();
-
-    // Check if the entered date is earlier than the current date
-    if (enteredDate < currentDate) {
-        // If so, display an error message
-        input.setCustomValidity("La date ne peut pas être antérieure à la date actuelle.");
-        return false; // Return false to indicate invalid date
-    }
-
-    // Clear any previous validation message
-    input.setCustomValidity("");
-
-    return true; // Return true to indicate valid date
-}
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-formation-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+        locale: 'fr'
+    });
+});
+</script>
+<script>
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
     document.getElementById("registration_deadline").min = new Date().toISOString().slice(0, 10);
     
+    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    
     document.getElementById("start_date").addEventListener("change", function() {
-        const startDateValue = this.value;
-        document.getElementById("end_date").min = startDateValue; // Set min attribute of end_date to start_date value
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
     });
-    // Validate the form on submit
-    document.getElementById('add-formation-form').addEventListener('submit', function(event) {
-        // Check all date inputs in the form
-        const dateInputs = document.querySelectorAll('input[type="date"]');
-        let isValid = true;
 
-        dateInputs.forEach(function(input) {
-            if (!validateDate(input)) {
-                isValid = false;
-            }
-        });
-
-        // Prevent form submission if any date is invalid
-        if (!isValid) {
-            event.preventDefault();
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
         }
     });
+    
 });
 </script>
 @endpush

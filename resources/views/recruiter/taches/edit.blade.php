@@ -48,19 +48,27 @@
                                 <div class="form-group">
                                     <label for="nom_task">Nom de la tâche</label>
                                     <input type="text" class="form-control" name="nom_task" id="nom_task"
-                                        value="{{ $task->title }}">
+                                        value="{{ $task->title }}" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="date_debut">Date de début</label>
                                     <input type="date" class="form-control" name="date_debut" id="date_debut"
-                                        value="{{ $task->start_date }}">
+                                        value="{{ $task->start_date }}"
+                                        data-parsley-errors-container="#custom-error-message-start" 
+                                        data-parsley-min-message="La date ne peut pas être antérieure à aujourd'hui."
+                                    required>
+                                    <div id="custom-error-message-start"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="date_fin">Date de fin</label>
                                     <input type="date" class="form-control" name="date_fin" id="date_fin"
-                                        value="{{ $task->due_date }}">
+                                        value="{{ $task->due_date }}"
+                                        data-parsley-errors-container="#custom-error-message" 
+                                        data-parsley-min-message="La date de fin ne peut pas être antérieure à la date de début."
+                                    required>
+                                    <div id="custom-error-message"></div>
                                 </div>
 
                                 <div class="form-group">
@@ -75,7 +83,7 @@
 
                                 <div class="form-group">
                                     <label for="status">Statut</label>
-                                        <select class="form-control" name="status" id="status">
+                                        <select class="form-control" name="status" id="status" required>
                                             <option value="0" @if($task->completed == '0') selected @endif>En cours</option>
                                             <option value="1" @if($task->completed == '1') selected @endif>Terminée</option>
                                         </select>
@@ -113,7 +121,26 @@ $(document).ready(function() {
     // when document is ready 
     $(document).ready(function() {
         document.getElementById("date_debut").min = new Date().toISOString().slice(0, 10);
-        document.getElementById("date_fin").min = new Date().toISOString().slice(0, 10);
+        // document.getElementById("date_fin").min = new Date().toISOString().slice(0, 10);
+        
+        document.getElementById("date_debut").addEventListener("change", function() {
+            var startDate = new Date(this.value);
+            document.getElementById("date_fin").min = startDate.toISOString().slice(0, 10);
+            document.getElementById("date_fin").setCustomValidity('WWW');
+        });
+
+        document.getElementById("date_fin").addEventListener("input", function() {
+            var endDate = new Date(this.value);
+            var startDate = new Date(document.getElementById("date_debut").value);
+            
+            if (endDate < startDate) {
+                // Set a custom validation message
+                this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+            } else {
+                // Reset the custom validation message
+                this.setCustomValidity('');
+            }
+        });
     })
 </script>
 @endpush

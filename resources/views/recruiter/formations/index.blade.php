@@ -102,7 +102,7 @@
                                                 @endif
                                             </td>
                                             
-                                            <td class="text-left d-flex flex-column" style="width:8vw;">
+                                            <td class="text-left d-flex flex-column">
                                                 <a href="{{route('recruiter.formation.show', $formation->id)}}" class="bg-btn-five">
                                                     <i class="las la-eye"></i>
                                                     Editer

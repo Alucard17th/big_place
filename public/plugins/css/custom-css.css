@@ -2097,6 +2097,8 @@ h6 {
     border-radius: 5px;
     background-color: #f2f2f2;
     color: #000 !important;
+    display: flex;
+    align-items: center;
 }
 
 .bg-btn-four{
@@ -2106,6 +2108,8 @@ h6 {
     border-radius: 5px;
     background-color: #fff2f2;
     color: #FF0000 !important;
+    display: flex;
+    align-items: center;
 }
 
 .bg-btn-five{
@@ -2115,6 +2119,8 @@ h6 {
     border-radius: 5px;
     background-color: #f2f7fa;
     color: #217bac !important;
+    display: flex;
+    align-items: center;
 }
 
 .bg-btn-six{
@@ -2125,6 +2131,8 @@ h6 {
     background-color: #f2f7fa;
     color: #217bac !important;
     border-radius: 30px;
+    display: flex;
+    align-items: center;
 }
 
 .bg-btn-seven{
@@ -2137,6 +2145,8 @@ h6 {
     text-align: left;
     color: #0369A1 !important;
     padding: 2px 15px;
+    display: flex;
+    align-items: center;
 }
 .bg-btn-eight{
     padding: 2px 15px;
@@ -2147,6 +2157,8 @@ h6 {
     font-style: normal;
     font-weight: 500;
     color: #ff8b00;
+    display: flex;
+    align-items: center;
 }
 .bg-btn-nine{
     padding: 2px 15px;
@@ -2157,6 +2169,8 @@ h6 {
     font-style: normal;
     font-weight: 500;
     color: #1E9400;
+    display: flex;
+    align-items: center;
 }
 
 .bg-back-btn{

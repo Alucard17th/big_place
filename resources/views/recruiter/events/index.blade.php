@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -217,7 +218,11 @@
                     <!-- Field: Event Date -->
                     <div class="form-group">
                         <label class="text-dark" for="event_date">Date</label>
-                        <input type="date" class="form-control" id="event_date" name="event_date" required>
+                        <input type="date" class="form-control" id="event_date" name="event_date" required
+                            data-parsley-errors-container="#custom-error-message-start" 
+                            data-parsley-min-message="La date ne peut pas être antérieure à aujourd'hui.">
+                        <div id="custom-error-message-start"></div>
+
                     </div>
                 </div>
                 <div class="col-6">
@@ -294,6 +299,18 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-event-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.querySelector('#add-event');
