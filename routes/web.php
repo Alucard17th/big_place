@@ -3,6 +3,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ChatController;
 
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\Candidat\CurriculumController;
@@ -266,10 +267,10 @@ Route::group(['middleware' => ['role:candidat', 'checkCurriculum']], function ()
     Route::get('/candidat-creneau/confirm/{id}', [CandidatController::class, 'confirmCreneau'])->name('candidat.creneau.confirm');
 
     // TODO
-    Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
-    Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
+    // Route::get('/candidat-historique', [HistoryController::class, 'historique'])->name('candidat.historique');
+    // Route::get('/candidat-administrateur', [AccountController::class, 'administrateur'])->name('candidat.administrateur');
     // Route::get('/candidat-stats', [StatsController::class, 'stats'])->name('candidat.stats');
-    Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
+    // Route::get('/candidat-evenements', [EvenementController::class, 'evenements'])->name('candidat.evenements');
 
     // FAVORITES
     Route::post('/candidat/favortie/add', [FavoritesController::class, 'addToFavorites'])->name('candidat.favorite.add');
@@ -371,6 +372,9 @@ Route::get('/user', function() {
         $user
     );
 });
+
+// CHAT ROUTES
+Route::resource('/chat', ChatController::class);
 
 
 Auth::routes();

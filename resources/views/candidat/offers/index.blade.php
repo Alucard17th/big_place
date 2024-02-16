@@ -276,6 +276,7 @@
                                             @endif
                                             <th>Nom de l'entreprise</th>
                                             <th>Titre de l'offre</th>
+                                            <th>Date de publication de l’offre</th>
                                             <th>Ville / département</th>
                                             <th>Années d'expérience</th>
                                             <th>Niveau d'étude</th>
@@ -295,6 +296,7 @@
                                             @endif
                                             <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
+                                            <td class="text-left">{{$offer->publication_date}}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>
                                             <td class="text-left">{{$offer->education_level}}</td>
