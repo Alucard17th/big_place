@@ -113,7 +113,7 @@
                                         data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
                                         data-parsley-errors-container="#custom-error-message"
                                         data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
-                                        required>>
+                                        required>
                                 </div>
                                 <div id="custom-error-message"></div>
 
@@ -203,9 +203,11 @@
                                 <div class="form-group">
                                     <label for="desired_languages">Langues souhaitées</label>
                                     <select class="form-control" id="desired_languages" name="desired_languages[]" multiple required>
+                                        <option value="Allemand" @if(in_array('Allemand', json_decode($offer->desired_languages))) selected @endif>Allemand</option>
                                         <option value="Anglais" @if(in_array('Anglais', json_decode($offer->desired_languages))) selected @endif>Anglais</option>
-                                        <option value="Espagnol" @if(in_array('Espagnol', json_decode($offer->desired_languages))) selected @endif>Espagnol</option>
                                         <option value="Arabe" @if(in_array('Arabe', json_decode($offer->desired_languages))) selected @endif>Arabe</option>
+                                        <option value="Espagnol" @if(in_array('Espagnol', json_decode($offer->desired_languages))) selected @endif>Espagnol</option>
+                                        <option value="Français" @if(in_array('Français', json_decode($offer->desired_languages))) selected @endif>Français</option>
                                         <option value="Mandarin" @if(in_array('Mandarin', json_decode($offer->desired_languages))) selected @endif>Mandarin</option>
                                         <option value="Russe" @if(in_array('Russe', json_decode($offer->desired_languages))) selected @endif>Russe</option>
                                         <option value="Autre" @if(in_array('Autre', json_decode($offer->desired_languages))) selected @endif>Autre</option>

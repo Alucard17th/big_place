@@ -269,6 +269,7 @@
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="text-left d-none">Crée le</th>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
                                             @if(isset($isSearch) && $isSearch == true)
@@ -287,6 +288,7 @@
                                     <tbody>
                                         @foreach ($offers as $offer)
                                         <tr>
+                                            <td class="text-left d-none">{{$offer->created_at}}</td>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
                                             @if(isset($isSearch) && $isSearch == true)
@@ -477,6 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
