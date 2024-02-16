@@ -374,7 +374,7 @@ Route::get('/user', function() {
 });
 
 // CHAT ROUTES
-Route::resource('/chat', ChatController::class);
+// Route::resource('/chat', ChatController::class);
 
 
 Auth::routes();
