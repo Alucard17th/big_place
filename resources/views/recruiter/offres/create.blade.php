@@ -127,9 +127,9 @@
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date"
-                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui et à la date de la publication de l'offre."
                                         data-parsley-errors-container="#custom-error-message"
-                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui et à la date de la publication de l'offre."
                                         required>
                                 </div>
                                 <div id="custom-error-message"></div>
@@ -173,6 +173,7 @@
                                         required data-parsley-errors-container="#work_schedule_error_container"
                                         data-placeholder="Type de contrat">
                                         <option></option>
+                                        <option value="Temps plein">Temps plein</option>
                                         <option value="Temps partiel">Temps partiel</option>
                                         <option value="Horaires de nuit">Horaires de nuit</option>
                                         <option value="Samedi">Samedi</option>
@@ -197,6 +198,10 @@
                                         <option value="Autre">Autre</option>
                                     </select>
                                     <div id="weekly_hours_error_container"></div>
+                                </div>
+                                <div class="form-group" id="other_weekly_hours_field" style="display: none">
+                                    <label for="other_weekly_hours">Ajouter le temps de travail souhaité</label>
+                                    <input type="text" class="form-control" id="other_weekly_hours" name="other_weekly_hours">
                                 </div>
 
                                 <!-- Field: Niveau d’expérience -->
@@ -302,7 +307,7 @@
                                             Habillement / Chaussure / Maroquineries</option>
                                         <option value="Transports / Logistique">Transports / Logistique</option>
                                         <option value="Travaux publics">Travaux publics</option>
-                                        <option value="Autres">Autres</option>
+                                        <option value="Autre">Autre</option>
                                     </select>
                                     <div id="industry_sector_error_container"></div>
 
@@ -417,8 +422,19 @@ $(document).ready(function() {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    let publicationDateInput = document.getElementById("publication_date");
+    let startDateInput = document.getElementById("start_date");
+
+    // Set the minimum value of the start_date input to the value of the publication_date input
+    startDateInput.min = publicationDateInput.value;
+
+    // Add an event listener to the publication_date input to update the minimum value of the start_date input dynamically
+    publicationDateInput.addEventListener("input", function() {
+        startDateInput.min = publicationDateInput.value;
+    });
+
     document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
     
     document.getElementById("publication_date").min = new Date().toISOString().slice(0, 10);
     
@@ -545,6 +561,17 @@ $(document).ready(function() {
             $('#other_sectors_field').hide();
             $('#other_sectors').val(''); // Clear the input field if "Autre" is no longer selected
             $('#other_sectors').prop('required', false);
+        }
+    });
+
+    $('#weekly_hours').on('change', function() {
+        if (this.value.includes('Autre')) {
+            $('#other_weekly_hours_field').show();
+            $('#other_weekly_hours').prop('required', true); // Make the input required
+        } else {
+            $('#other_weekly_hours_field').hide();
+            $('#other_weekly_hours').val(''); // Clear the input field if "Autre" is no longer selected
+            $('#other_weekly_hours').prop('required', false);
         }
     });
 

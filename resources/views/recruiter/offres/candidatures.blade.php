@@ -165,16 +165,17 @@ input, select{
                                                 data-candidatureid="{{$candidature->id}}">
                                                     Consulter le CV
                                                 </button>
-                                                <button class="bg-btn-eight see-candidat-btn"
+                                                <button class="bg-btn-eight see-candidat-btn mt-2"
                                                 data-cvid="{{$candidature->candidat->curriculum->first()->id}}"
-                                                data-fiche="{{$candidature->candidat->curriculum}}">
+                                                data-fiche="{{$candidature->candidat->curriculum}}"
+                                                data-email="{{$candidature->candidat->email}}">
                                                     Fiche Candidat
                                                 </button>
                                                 @else
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
-                                                <a type="button" class="bg-btn-three proposez-rdv" data-cvid="{{$candidature->candidat->curriculum->first()->id}}">Proposez un rendez-vous</a>
-                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
+                                                <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$candidature->candidat->curriculum->first()->id}}">Proposez un rendez-vous</a>
+                                                <a href=""  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -610,29 +611,49 @@ document.addEventListener('DOMContentLoaded', function() {
     const seeCandidatBtn = $('.see-candidat-btn');
     seeCandidatBtn.on('click', function() {
         event.preventDefault();
-        const cvidValue = $(this).data('cvid');
-        const ficheCandidat = $(this).data('fiche');
-
+        let cvidValue = $(this).data('cvid');
+        let ficheCandidat = $(this).data('fiche');
+        let email = $(this).data('email');
+        console.log(email);
         $('.ex2-content').empty();
-
-        // Iterate over the ficheCandidat array and generate HTML content
         ficheCandidat.forEach(function(candidate) {
-            const htmlContent = `
-                <div class="candidate-info text-dark">
-                    <h2>${candidate.nom} ${candidate.prenom}</h2>
-                    <p class="text-dark"><strong>Ville de domiciliation:</strong> ${candidate.ville_domiciliation}</p>
-                    <p class="text-dark"><strong>Métier recherché:</strong> ${candidate.metier_recherche}</p>
-                    <p class="text-dark"><strong>Prétentions salariales:</strong> ${candidate.pretentions_salariales}</p>
-                    <p class="text-dark"><strong>Années d'expérience:</strong> ${candidate.annees_experience}</p>
-                    <p class="text-dark"><strong>Niveau:</strong> ${candidate.niveau}</p>
-                    <p class="text-dark"><strong>Niveau d'études:</strong> ${candidate.niveau_etudes}</p>
-                    <p class="text-dark"><strong>Valeurs:</strong> ${JSON.parse(candidate.valeurs).join(', ')}</p>
-                    <p class="text-dark"><strong>Téléphone:</strong> ${candidate.phone}</p>
+            let valeursArray = Array.isArray(candidate.valeurs) ? candidate.valeurs : JSON.parse(candidate.valeurs);
+            let htmlContent = `
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-12 text-center mb-5 pb-5 pt-2"><h2>Fiche Candidat</h2></div>
+                        <div class="col-4 text-center">
+                            <img src="${candidate.avatar}" alt="" style="width: 200px; height: 200px;border-radius: 50%;">
+                        </div>
+                        <div class="col-8">
+                            <h4 class="mb-3">${candidate.nom} ${candidate.prenom}</h4>
+                            <ul class="list-unstyled">
+                                <li class="text-dark">${candidate.address != null ? candidate.address : ''} ${candidate.ville_domiciliation}</li>
+                                <li class="text-dark">Email : ${email}</li>
+                                <li class="text-dark">Télephone : ${candidate.phone}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h4 class="mb-3">${candidate.metier_recherche}</h4>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li>Niveau: ${candidate.niveau}</li>
+                                <li>Nombre d'années d'expérience: ${candidate.annees_experience} années</li>
+                                <li>Niveau d'études: ${candidate.niveau_etudes}</li>
+                                <li>Prétentions salariales (Ke): ${candidate.pretentions_salariales}</li>
+                                <li>Valeurs: ${valeursArray.join(', ')}</li>
+                            </ul>
+                        </div>
+                    </div>
+                   
                 </div>
             `;
 
-            // Append the HTML content to the modal
-            $('.ex2-content').append(htmlContent);
+            // Replace the existing content of .ex2-content with the new HTML content
+            $('.ex2-content').replaceWith(htmlContent);
         });
 
         $("#ex2").modal({
@@ -642,6 +663,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
        
     })
+
     $('#close-modal, .custom-close-modal').click(function() {
         console.log('Modal Should Be Closed');
         $.modal.close();

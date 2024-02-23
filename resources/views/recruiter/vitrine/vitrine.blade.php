@@ -542,8 +542,8 @@ nav > ul.pagination > li > a{
                                 </ul>
                             </div>
                             <div class="col-12 py-2 mt-5">
-                                <button type="button" class="btn active" id="inbox-btn">Images</button>
-                                <button type="button" class="btn" id="sent-btn">Vidéos</button>
+                                <button type="button" class="btn active" id="inbox-btn">Images de l'entreprise</button>
+                                <button type="button" class="btn" id="sent-btn">Vidéos de l'entreprise</button>
                             </div>
 
                             @if(isset($entreprise->photos_locaux) && count(json_decode($entreprise->photos_locaux)) > 0)
@@ -582,6 +582,7 @@ nav > ul.pagination > li > a{
                                     <table class="table table-sm table-bordered" id="data-table">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th class="d-none">Crée le</th>
                                                 <th>Nom du poste</th>
                                                 <th>Nombre de jours de formation</th>
                                                 <th>Période de formation</th>
@@ -595,12 +596,13 @@ nav > ul.pagination > li > a{
                                         </thead>
                                         <tbody>
                                             @foreach ($entreprise->user->formations as $formation)
-                                            @php
-                                            $startDate = \Carbon\Carbon::parse($formation->start_date);
-                                            $endDate = \Carbon\Carbon::parse($formation->end_date);
-                                            $durationInDays = $startDate->diffInDays($endDate);
-                                            @endphp
+                                                @php
+                                                $startDate = \Carbon\Carbon::parse($formation->start_date);
+                                                $endDate = \Carbon\Carbon::parse($formation->end_date);
+                                                $durationInDays = $startDate->diffInDays($endDate);
+                                                @endphp
                                             <tr>
+                                                <td class="d-none">{{$formation->created_at}}</td>
                                                 <td>{{$formation->job_title}}</td>
                                                 <td>{{$durationInDays}}</td>
                                                 <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }}
@@ -639,9 +641,10 @@ nav > ul.pagination > li > a{
                                     <h3>Mes évènemements / jobdatings</h3>
                                 </div>
                                 <div class="table-outer">
-                                    <table class="table table-sm table-bordered" id="data-table">
+                                    <table class="table table-sm table-bordered" id="data-table-2">
                                         <thead class="thead-light">
                                             <tr>
+                                                <th class="d-none">Crée le</th>
                                                 <th>Nom de l’entreprise</th>
                                                 <th>Poste</th>
                                                 <th>N° Max de Participants</th>
@@ -655,6 +658,7 @@ nav > ul.pagination > li > a{
                                         <tbody>
                                             @foreach ($entreprise->user->events as $event)
                                             <tr>
+                                            <td class="d-none">{{$event->created_at}}</td>
                                                 <td class="text-left">{{$event->organizer_name}}</td>
                                                 <td class="text-left">{{$event->job_position}}</td>
                                                 <td class="text-left">{{$event->participants_count}}</td>
@@ -913,6 +917,49 @@ $(document).ready(function() {
             return false;
         }
     })
+
+    $('#data-table').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "order": [[0, "desc"]],
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
+
+
+    $('#data-table-2').DataTable({
+        "info": false, // Hide "Showing X to Y of Z entries"
+        "searching": true,
+        "order": [[0, "desc"]],
+        "language": {
+            "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "paginate": {
+                "first": "Premier",
+                "last": "Dernier",
+                "next": "Suivant",
+                "previous": "Précédent",
+            },
+            "search": "",
+            "searchPlaceholder": "Rechercher...",
+            "zeroRecords": "Aucun résultat trouvé.",
+            // Add other language customization options if needed
+        },
+        // "pagingType": "full_numbers",
+    });
 })
 </script>
 @endpush

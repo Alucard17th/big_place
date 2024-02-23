@@ -276,12 +276,12 @@
                                             <th>Matching</th>
                                             @endif
                                             <th>Nom de l'entreprise</th>
-                                            <th>Titre de l'offre</th>
-                                            <th>Date de publication de l’offre</th>
+                                            <th>Poste</th>
+                                            <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
-                                            <th>Années d'expérience</th>
-                                            <th>Niveau d'étude</th>
-                                            <th>Niveau de salaire</th>
+                                            <th>Type du contrat</th>
+                                            <th>Salaire brut</th>
+                                            <th>Date de publication</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -289,20 +289,30 @@
                                         @foreach ($offers as $offer)
                                         <tr>
                                             <td class="text-left d-none">{{$offer->created_at}}</td>
+
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
+
                                             @if(isset($isSearch) && $isSearch == true)
                                             <td>
                                                 <span class="matching-percentage badge badge-success">{{ number_format($offer->matching_percentage, 0) }} %</span>
                                             </td>
                                             @endif
+
                                             <td class="text-left">{{$offer->company_name}}</td>
+
                                             <td class="text-left">{{$offer->job_title}}</td>
-                                            <td class="text-left">{{$offer->publication_date}}</td>
+                                                
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->formatLocalized('%d-%m-%Y') }}</td>
+                                            
                                             <td class="text-left">{{$offer->location_city}}</td>
-                                            <td class="text-left">{{$offer->experience_level}}</td>
-                                            <td class="text-left">{{$offer->education_level}}</td>
+
+                                            <td class="text-left">{{$offer->contract_type}}</td>
+
                                             <td class="text-left">{{$offer->brut_salary}}</td>
+
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
+                                            
                                             <td class="text-left">
                                                 @if($offer->user_id != null)
                                                 <a href="{{route('candidat.vitrine.show', $offer->user_id)}}" 

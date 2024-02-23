@@ -135,6 +135,10 @@
                                                     Annuler
                                                 </a>
                                                 @endif
+                                                <a type="button" class="bg-btn-seven mt-2 docs-modal-btn" data-required-docs="{{$formation->uploaded_documents}}">
+                                                    <i class="las la-download"></i>
+                                                    Documents
+                                                </a>
                                                     @role('recruiter')
                                                     <a href="{{route('recruiter.formation.delete', $formation->id)}}" 
                                                     onclick="return confirm('Etes vous sur de vouloir supprimer cette formation?')" class="bg-btn-four mt-2 px-1">
@@ -160,6 +164,14 @@
         </div>
     </div>
 
+    <div id="docs-modal" class="modal">
+        <h4 class="text-dark">Documents requis pour la participation:</h4>
+
+        <ul id="modal-docs-list" class="my-4 text-dark p-3">
+        </ul>
+        <a href="#" id="close-modal">Fermer</a>
+        <a href="#" class="custom-close-modal"></a>
+    </div>
   
 </div>
 @endsection
@@ -189,6 +201,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('#data-table_filter input').before('<i class="las la-search" style="padding: 10px; min-width: 40px; position: absolute;"></i>');
 
+    const docModalBtn = document.querySelectorAll('.docs-modal-btn');
+    docModalBtn.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const requiredDocs = $(this).data('requiredDocs')
+            const docsList = document.getElementById("modal-docs-list");
+            console.log('REquired DOcs: ', requiredDocs)
+            // const docsArray = requiredDocs.split(",");
+            docsList.innerHTML = '';
+            requiredDocs.forEach(doc => {
+                const listItem = document.createElement("li");
+                listItem.textContent = doc.trim(); // Trim whitespace
+                docsList.appendChild(listItem);
+            });
+            // Use the retrieved value
+            console.log("Required documents:", requiredDocs);
+            $("#docs-modal").modal({
+                escapeClose: false,
+                clickClose: true,
+                showClose: false
+            });
+        })
+    })
+
+    $('#close-modal, .custom-close-modal').click(function(event) {
+        event.preventDefault();
+        $.modal.close();
+    });
 })
 </script>
 @endpush

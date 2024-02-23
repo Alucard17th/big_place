@@ -47,7 +47,7 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <h2 class="h5 mb-3">Nom de l'entreprise : <span
-                                                class="text-muted">{{ $offer->project_campaign_name }}</span></h2>
+                                                class="text-muted">{{ $offer->company_name }}</span></h2>
 
                                         <h5 class="h6 mb-3">Intitulé du poste : <span
                                                 class="text-muted">{{ $offer->job_title }}</span></h5>
@@ -140,12 +140,9 @@
             <h4 class="text-dark mb-3">Postuler </h4>
 
             <div class="row">
-                <h4 class="offre-title col-12">
-                    {{$offer->job_title}}</h4>
-                <div class="offre-status col-12">Type de contrat :
-                    {{$offer->contract_type}}</div>
-                <div class="offre-end-date col-12">Date de démarrage souhaitée :
-                    {{$offer->start_date}}</div>
+                <h4 class="offre-title col-12">{{$offer->job_title}}</h4>
+                <div class="offre-status col-12">Type de contrat : {{$offer->contract_type}}</div>
+                <div class="offre-end-date col-12">Date de démarrage souhaitée : {{ \Carbon\Carbon::parse($offer->start_date)->format('d-m-Y') }}</div>
             </div>
 
             <div class="row my-4">
@@ -157,7 +154,7 @@
                     Email : {{auth()->user()->email}}
                 </div>
                 <div class="col-12 offre-desc">
-                    Date de naissance : {{auth()->user()->birth_date}}
+                    Date de naissance : {{ \Carbon\Carbon::parse(auth()->user()->birth_date)->format('d-m-Y') }}
                 </div>
                 <div class="col-12 offre-desc">
                     Mon CV : 

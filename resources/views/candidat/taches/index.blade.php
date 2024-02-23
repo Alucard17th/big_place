@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 .modal a.custom-close-modal {
     position: absolute;
@@ -237,15 +238,23 @@ input, select{
                 <div class="col-6">
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date début</label>
-                        <input class="form-control mb-2" type="date" name="start_date" id="start_date" required>
+                        <input class="form-control mb-2" type="date" name="start_date" id="start_date" 
+                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                        data-parsley-errors-container="#custom-error-message"
+                        required>
                     </div>
+                    <div id="custom-error-message"></div>
                 </div>
 
                 <div class="col-6">
                     <div class="form-group">
                         <label class="text-dark" for="candidate">Date fin</label>
-                        <input class="form-control mb-2" type="date" name="end_date" id="end_date" required>
+                        <input class="form-control mb-2" type="date" name="end_date" id="end_date" 
+                            data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                            data-parsley-errors-container="#custom-error-message-end"
+                        required>
                     </div>
+                    <div id="custom-error-message-end"></div>
                 </div>
             </div>
 
@@ -279,10 +288,52 @@ input, select{
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-task-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    
     document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("start_date").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("end_date").setCustomValidity('WWW');
+    });
+
+    document.getElementById("end_date").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("start_date").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    //document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    //document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
 
     $('#add-task').click(function() {
         // Send the data 

@@ -159,14 +159,16 @@ input, select{
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="text-left d-none">Crée le</th>
                                             <th><input class="checkbox-all" type="checkbox" name="selecte-all" id="">
                                             </th>
                                             <th>Nom de l'entreprise</th>
                                             <th>Titre de l'offre</th>
+                                            <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
                                             <th>Années d'expérience</th>
                                             <th>Niveau d'étude</th>
-                                            <th>Niveau de salaire</th>
+                                            <th>Salaire brut</th>
                                             <th>Date de publication de l'offre</th>
                                             <th>Actions</th>
                                         </tr>
@@ -174,15 +176,17 @@ input, select{
                                     <tbody>
                                         @foreach ($favorites as $offer)
                                         <tr>
+                                            <td class="text-left d-none">{{$offer->created_at}}</td>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
                                             <td class="text-left">{{getEntrepriseByUserId($offer->user_id)}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
                                             <td class="text-left">{{$offer->experience_level}}</td>
                                             <td class="text-left">{{$offer->education_level}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
-                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->timestamp }}">{{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->publication_date)->timestamp }}">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}</td>
 
                                             <td class="text-left">
                                                 @if($offer->user_id != null)
@@ -364,6 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",

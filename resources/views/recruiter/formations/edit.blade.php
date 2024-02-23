@@ -128,7 +128,7 @@
                                     <input type="date" class="form-control" id="registration_deadline"
                                         name="registration_deadline" value="{{ $formation->registration_deadline }}"
                                         data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
-                                        data-parsley-errors-container="#custom-error-message-end-subscription" required>>
+                                        data-parsley-errors-container="#custom-error-message-end-subscription" required>
                                 </div>
                                 <div id="custom-error-message-end-subscription"></div>
 

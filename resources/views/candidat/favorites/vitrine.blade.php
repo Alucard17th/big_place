@@ -180,6 +180,16 @@ nav > ul.pagination > li > a{
 .font-min{
     font-size: 13px;
 }
+
+.tab-btn {
+    font-family: 'Jost';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #202124;
+    border-bottom: 7px solid transparent;
+    transition: all 0.3s ease;
+}
 </style>
 @endpush
 
@@ -299,22 +309,32 @@ nav > ul.pagination > li > a{
                                 <p class="text-dark">{{ $entreprise->domiciliation }} <br> {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
                                     <li>Date de création : {{ $entreprise->date_creation }}</li>
-                                    <li>Valeurs fortes : {{ $entreprise->valeurs_fortes }}</li>
+                                    <li>Valeurs fortes : 
+                                        <ol class="ml-5">
+                                            @if(isset($entreprise->valeurs_fortes) && count(json_decode($entreprise->valeurs_fortes)) > 0)
+                                            @foreach(json_decode($entreprise->valeurs_fortes) as $key => $value)
+                                            <li >{{ ucfirst($value) }}</li>
+                                            @endforeach
+                                            @endif
+                                        </ol>
+                                    </li>
                                     <li>Nombre d'implantations : {{ $entreprise->nombre_implementations }}</li>
                                     <li>Fondateurs : 
                                         @if(!is_null($entreprise->fondateurs) && (is_array(json_decode($entreprise->fondateurs)) || is_object(json_decode($entreprise->fondateurs))))
-                                            @foreach(json_decode($entreprise->fondateurs) as $fondateur)
-                                                {{ $fondateur }}
-                                                @if(!$loop->last)<span class="text-muted">,</span>@endif
+                                        <ul class="ml-5">
+                                            @foreach(json_decode($entreprise->fondateurs) as $key => $value)
+                                            <li >{{ ucfirst($value) }}</li>
                                             @endforeach
+                                        </ul>
                                         @endif
                                     </li>
                                     <li>Chiffre d'affaires : {{ $entreprise->chiffre_affaire }}</li>
+                                    <li>Descriptif de l'acitivité : {{ $entreprise->description }}</li> 
                                 </ul>
                             </div>
                             <div class="col-12 py-2 mt-5">
-                                <button type="button" class="btn active" id="inbox-btn">Images</button>
-                                <button type="button" class="btn" id="sent-btn">Vidéos</button>
+                                <button type="button" class="btn active" id="inbox-btn">Photos de l'entreprise</button>
+                                <button type="button" class="btn" id="sent-btn">Vidéos de l'entreprise</button>
                             </div>
 
                             @if(isset($entreprise->photos_locaux) && count(json_decode($entreprise->photos_locaux)) > 0)

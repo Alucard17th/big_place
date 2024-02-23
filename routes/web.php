@@ -205,7 +205,7 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mon-calendrier', [RecruiterController::class, 'myCalendar'])->name('recruiter.calendrier');
 
     // CANDIDATURE
-    Route::get('/mes-candidatures', [RecruiterController::class, 'myCandidatures'])->name('recruiter.candidatures');
+    Route::get('/mes-candidatures/{id}', [RecruiterController::class, 'myCandidatures'])->name('recruiter.candidatures');
     Route::post('/mes-candidatures/update-status', [RecruiterController::class, 'updateCandidatureStatus'])->name('recruiter.candidature.updateStatus');
 
     // HISTORIQUE
@@ -222,9 +222,10 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     
     // USERS
     Route::post('/compte-administrateur/create-user', [AdminController::class, 'createUser'])->name('recruiter.user.create');
+    Route::get('/getUserCandidatures/{id}/{candidatureId}', [RecruiterController::class, 'getUserCandidatures'])->name('recruiter.candidat.get.curriculum');
     
     //TCHAT 
-    Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
+    // Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
 });
 
 
@@ -374,7 +375,7 @@ Route::get('/user', function() {
 });
 
 // CHAT ROUTES
-// Route::resource('/chat', ChatController::class);
+Route::resource('/chat', ChatController::class);
 
 
 Auth::routes();

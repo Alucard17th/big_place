@@ -15,7 +15,8 @@ class FormationController extends Controller
      */
     public function index(){
         //
-        $formations = Formation::where('status', 'Active')->get();
+        // $formations = Formation::where('status', 'Active')->get();
+        $formations = Formation::all();
         $userFormations = auth()->user()->participationFormations;
         return view('candidat.formations.index', compact('formations', 'userFormations'));
     }

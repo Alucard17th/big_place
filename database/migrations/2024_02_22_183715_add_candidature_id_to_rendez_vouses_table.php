@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCustomJobToCurriculumTable extends Migration
+class AddCandidatureIdToRendezVousesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddCustomJobToCurriculumTable extends Migration
      */
     public function up()
     {
-        Schema::table('curriculum', function (Blueprint $table) {
+        Schema::table('rendez_vouses', function (Blueprint $table) {
             //
-            $table->string('custom_job')->nullable();
+            $table->string('candidature_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCustomJobToCurriculumTable extends Migration
      */
     public function down()
     {
-        Schema::table('curriculum', function (Blueprint $table) {
+        Schema::table('rendez_vouses', function (Blueprint $table) {
             //
         });
     }

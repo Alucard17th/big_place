@@ -223,7 +223,7 @@ input, select{
             </div>
 
             <div class="form-group">
-                <button class="theme-btn btn-style-one" type="button" id="create-comment">Envoyer</button>
+                <button class="theme-btn btn-style-one" type="button" id="create-comment">Enregistrer</button>
             </div>
         </form>
         <a href="#" id="close-modal">Fermer</a>

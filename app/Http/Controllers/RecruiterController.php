@@ -197,6 +197,7 @@ class RecruiterController extends Controller
                 $searchTermLower = $this->removeAccents($searchTermLower); // Remove accents from search term
 
                 // Convert job title to lowercase and remove accents, then perform case-insensitive comparison
+             
                 $offerJobTitleLower = strtolower($curriculum->custom_job);
                 $offerJobTitleLower = $this->removeAccents($offerJobTitleLower);
                 $score += stripos($offerJobTitleLower, $searchTermLower) !== false ? 10 : 0;
@@ -755,7 +756,7 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = json_encode($request->input('work_schedule'));
-        $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->weekly_hours = $request->input('weekly_hours') == 'Autre' ? $request->input('other_weekly_hours') : $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
         $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
@@ -763,7 +764,7 @@ class RecruiterController extends Controller
 
         $offer->education_level = $request->input('education_level');
         $offer->brut_salary = $request->input('brut_salary');
-        $offer->industry_sector = $request->input('industry_sector') == 'Autres' ? $request->input('other_sectors') : $request->input('industry_sector');
+        $offer->industry_sector = $request->input('industry_sector') == 'Autre' ? $request->input('other_sectors') : $request->input('industry_sector');
         $offer->benefits = $request->input('benefits');
         $offer->publication_date = $request->input('publication_date');
         $offer->unpublish_date = $request->input('unpublish_date');
@@ -788,7 +789,8 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = json_encode($request->input('work_schedule'));
-        $offer->weekly_hours = $request->input('weekly_hours');
+        // $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->weekly_hours = $request->input('weekly_hours') == 'Autre' ? $request->input('other_weekly_hours') : $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
         $offer->desired_languages = $request->input('desired_languages') != null && in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
@@ -821,7 +823,8 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = json_encode($request->input('work_schedule'));
-        $offer->weekly_hours = $request->input('weekly_hours');
+        // $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->weekly_hours = $request->input('weekly_hours') == 'Autre' ? $request->input('other_weekly_hours') : $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
 
         if($request->input('desired_languages') != null && count($request->input('desired_languages')) > 0){
@@ -866,7 +869,8 @@ class RecruiterController extends Controller
         $offer->rome_code = $request->input('rome_code');
         $offer->contract_type = $request->input('contract_type');
         $offer->work_schedule = $request->input('work_schedule');
-        $offer->weekly_hours = $request->input('weekly_hours');
+        // $offer->weekly_hours = $request->input('weekly_hours');
+        $offer->weekly_hours = $request->input('weekly_hours') == 'Autre' ? $request->input('other_weekly_hours') : $request->input('weekly_hours');
         $offer->experience_level = $request->input('experience_level');
         $offer->desired_languages = in_array('Autre', $request->input('desired_languages')) ? json_encode(explode(',', $request->input('other_language')))
          : json_encode($request->input('desired_languages'));
@@ -1650,24 +1654,28 @@ class RecruiterController extends Controller
     }
 
     // CANDIDATURE
-    public function myCandidatures(){
+    public function myCandidatures($id){
         $user = auth()->user();
-        
-        if($user->parent_entreprise_id == null){
-            // USER IS ADMIN
-            $candidatures = $user->candidatures;
-        }else{
-            // OTHER TEAM MEMBERS
-            $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $candidatures = $entreprise->user->candidatures;
-        }
+        $offre = Offre::find($id);
 
-        foreach ($candidatures as $candidature) {
-            $candidatUser = User::find($candidature->candidat_id);
-            $candidature->candidat_name = $candidatUser->name;
-        }
+        $candidatures = Candidature::where('offer_id',$offre->id)->with('user')->get();
+        // dd($candidatures);
 
-        return view('recruiter.candidatures.index', compact('candidatures'));
+        // if($user->parent_entreprise_id == null){
+        //     // USER IS ADMIN
+        //     $candidatures = $user->candidatures;
+        // }else{
+        //     // OTHER TEAM MEMBERS
+        //     $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
+        //     $candidatures = $entreprise->user->candidatures;
+        // }
+
+        // foreach ($candidatures as $candidature) {
+        //     $candidatUser = User::find($candidature->candidat_id);
+        //     $candidature->candidat_name = $candidatUser->name;
+        // }
+
+        return view('recruiter.candidatures.index', compact('candidatures', 'offre'));
     }
     public function updateCandidatureStatus(Request $request){
         $candidature  = Candidature::find($request->candidatureId);
@@ -2049,5 +2057,12 @@ class RecruiterController extends Controller
 
     //     return response()->json(['message' => 'Offers imported successfully.'], 200);
     // }
+
+    public function getUserCandidatures($id, $candidatureId){
+        $curriculum = Curriculum::where('user_id', $id)->get();
+        $rdv = RendezVous::where('candidature_id', $candidatureId)->get();
+        $response = compact('curriculum', 'rdv');
+        return response()->json($response);
+    }
 
 }

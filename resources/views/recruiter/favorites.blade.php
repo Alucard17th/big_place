@@ -181,7 +181,7 @@ input, select{
                                                 <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
                                                 @endunlessrole
                                                 <!-- <a type="button" class="bg-btn-four mt-2 px-4">Annuler le rendez-vous</a> -->
-                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2">Tchatter</a>
+                                                <a href=""  type="button" class="bg-btn-seven mt-2">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach

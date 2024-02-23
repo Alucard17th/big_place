@@ -182,10 +182,15 @@
                                 <div class="form-group">
                                     <label for="weekly_hours">Temps de travail</label>
                                     <select class="form-control" id="weekly_hours" name="weekly_hours" required>
+                                        <option></option>
                                         <option value="35H" {{ $offer->weekly_hours === '35H' ? 'selected' : '' }}>35H</option>
                                         <option value="39H" {{ $offer->weekly_hours === '39H' ? 'selected' : '' }}>39H</option>
                                         <option value="Autre" {{ $offer->weekly_hours === 'Autre' ? 'selected' : '' }}>Autre</option>
                                     </select>
+                                </div>
+                                <div class="form-group" id="other_weekly_hours_field" style="@if(in_array($offer->weekly_hours, ['35H', '39H'])) display: none @endif">
+                                    <label for="other_weekly_hours">Ajouter le temps de travail souhaité</label>
+                                    <input type="text" class="form-control" id="other_weekly_hours" name="other_weekly_hours" value="{{ $offer->weekly_hours }}">
                                 </div>
 
                                 <!-- Field: Niveau d’expérience -->
@@ -269,7 +274,7 @@
                                         <option value="Textile / Habillement / Chaussure / Maroquineries" @if('Textile / Habillement / Chaussure / Maroquineries' == $offer->industry_sector) selected @endif>Textile / Habillement / Chaussure / Maroquineries</option>
                                         <option value="Transports / Logistique" @if('Transports / Logistique' == $offer->industry_sector) selected @endif>Transports / Logistique</option>
                                         <option value="Travaux publics" @if('Travaux publics' == $offer->industry_sector) selected @endif>Travaux publics</option>
-                                        <option value="Autres" @if('Autres' == $offer->industry_sector) selected @endif>Autres</option>
+                                        <option value="Autre" @if('Autre' == $offer->industry_sector) selected @endif>Autre</option>
                                     </select>
                                 </div>
 
@@ -428,6 +433,10 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#education_level").select2({
         });
 
+        $("#weekly_hours").select2({
+            placeholder: "Temps de travail",
+        });
+
         $("#industry_sector").select2({
         });
 
@@ -492,6 +501,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 $('#other_sectors_field').hide();
                 $('#other_sectors').val('');  // Clear the input field if "Autre" is no longer selected
                 $('#other_sectors').prop('required', false);
+            }
+        });
+
+        $('#weekly_hours').on('change', function() {
+            if (this.value.includes('Autre')) {
+                $('#other_weekly_hours_field').show();
+                $('#other_weekly_hours').prop('required', true); // Make the input required
+            } else {
+                $('#other_weekly_hours_field').hide();
+                $('#other_weekly_hours').val(''); // Clear the input field if "Autre" is no longer selected
+                $('#other_weekly_hours').prop('required', false);
             }
         });
 

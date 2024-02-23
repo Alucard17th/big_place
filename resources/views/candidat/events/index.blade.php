@@ -134,7 +134,9 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->format('Y-m-d H:i:s') }}">
+                                                {{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}
+                                            </td>
                                             <td>{{$event->statut}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)
@@ -211,7 +213,9 @@
                                             <td class="text-left">{{$event->organizer_name}}</td>
                                             <td class="text-left">{{$event->job_position}}</td>
                                             <td class="text-left">{{$event->event_address}}</td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->format('Y-m-d H:i:s') }}">
+                                                {{ \Carbon\Carbon::parse($event->event_date)->formatLocalized('%d-%m-%Y') }} - {{$event->event_hour}}
+                                            </td>
                                             <td>{{$event->statut}}</td>
                                             <td class="text-left">
                                                 @if($event->free_entry == 1)

@@ -108,7 +108,7 @@ input, select{
                                             <!-- <th><input class="checkbox-all" type="checkbox" name="selecte-all" id=""></th> -->
                                             <th class="d-none" >Crée Le</th>
                                             <th>Nom de la formation</th>
-                                            <th>Entreprise</th>
+                                            <th>Nom de l'entreprise</th>
                                             <th>Période de la formation</th>
                                             <th>Lieu</th>
                                             <th>Statut</th>
@@ -130,7 +130,17 @@ input, select{
                                                 {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }} au {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                             </td>
                                             <td class="text-left">{{$formation->work_location}}</td>
-                                            <td class="text-left">{{$formation->status}}</td>
+                                            <td class="text-left">
+                                                @if($formation->status == 'Active')
+                                                Active
+                                                @elseif($formation->status == 'Suspendue')
+                                                Suspendue
+                                                @elseif($formation->status == 'Ferme')
+                                                Fermée
+                                                @elseif($formation->status == 'Termine')
+                                                Terminée
+                                                @endif
+                                            </td>
                                             <td class="text-left">
                                                 @if($formation->subscribers >= $formation->max_participants)
                                                     <span class="text-danger">Inscription fermée.</span>

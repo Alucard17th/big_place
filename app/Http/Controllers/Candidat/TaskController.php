@@ -45,6 +45,7 @@ class TaskController extends Controller
         $task->completed = $request->status;
         $task->due_date = $request->date_fin;
         $task->start_date = $request->date_debut;
+        $task->hour = $request->hour;
         $task->save();
         toast('Tâche modifiée','success')->autoClose(5000);
         return redirect()->route('candidat.tasks');

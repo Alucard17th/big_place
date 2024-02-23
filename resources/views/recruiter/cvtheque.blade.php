@@ -262,7 +262,7 @@ input, select{
                                             </td>
                                             @endif
                                             <td class="text-left">
-                                                {{$curriculum->nom}} {{$curriculum->prenom}}
+                                                {{$curriculum->user->name}}
                                             </td>
                                             <td class="text-left">{{$curriculum->ville_domiciliation}}</td>
                                             <td class="text-left">{{$curriculum->annees_experience}}</td>
@@ -278,7 +278,7 @@ input, select{
                                                     <span class="text-danger">Pas encore de CV</span>
                                                 @endif
                                                 <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$curriculum->id}}">Proposez un rendez-vous</a>
-                                                <a href="{{route('recruiter.admin.chat')}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
+                                                <a href="/chat?receiver={{$curriculum->user_id}}&receiverName={{$curriculum->user->name}}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach

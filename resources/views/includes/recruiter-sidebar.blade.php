@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li class="{{ Str::contains(Request::url(), 'mes-candidatures') ? 'active' : '' }}">
-                <a href="" class="d-flex justify-content-between align-items-center">
+                <a href="/mes-candidatures" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/gestion-candidature.png')}}" alt=""> Gestion des
                         candidatures</span>

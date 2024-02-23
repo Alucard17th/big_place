@@ -240,7 +240,7 @@ background: #13D527;
                                         </div> -->
 
                                         <div class="offre-desc my-4">
-                                            Créateur de la Formation : {{getUserById($formation->user_id)->name}} 
+                                            Nom de l'entreprise : {{getUserById($formation->user_id)->name}} 
                                         </div>
 <!-- 
                                         <div class="offre-desc my-4">
@@ -277,6 +277,14 @@ background: #13D527;
 
                                         <div class="offre-end-date my-4">Date de fin d'inscription :
                                             {{\Carbon\Carbon::parse($formation->registration_deadline)->formatLocalized('%d-%m-%Y') }}
+                                        </div>
+
+                                        <div class="offre-end-date my-4">Documents :
+                                            @foreach (json_decode($formation->uploaded_documents, true) ?? [] as $document)
+                                            <li class="my-2">
+                                                <a href="{{ url(str_replace('public', 'storage', $document)) }}" target="_blank">{{ pathinfo($document, PATHINFO_BASENAME) }}</a>
+                                            </li>
+                                            @endforeach
                                         </div>
 
                                         <!-- <div class="card mt-5" style="height:100%;">

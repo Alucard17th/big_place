@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css" rel="stylesheet">
 <style>
 #edit-task-form>div>label,
 #edit-task-form>div.row>div>div>label,
@@ -70,13 +71,28 @@
                                 <div class="form-group">
                                     <label for="date_debut">Date de début</label>
                                     <input type="date" class="form-control" name="date_debut" id="date_debut"
-                                        value="{{ $task->start_date }}">
+                                        value="{{ $task->start_date }}"
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-errors-container="#custom-error-message"
+                                        required>
                                 </div>
+                                
+                                <div id="custom-error-message"></div>
+
 
                                 <div class="form-group">
                                     <label for="date_fin">Date de fin</label>
                                     <input type="date" class="form-control" name="date_fin" id="date_fin"
-                                        value="{{ $task->due_date }}">
+                                        value="{{ $task->due_date }}"
+                                        data-parsley-min-message="La date doit être égale ou supérieure à la date de début."
+                                        data-parsley-errors-container="#custom-error-message-end"
+                                    required>
+                                </div>
+                                <div id="custom-error-message-end"></div>
+
+                                <div class="form-group">
+                                    <label class="text-dark" for="hour">Heure</label>
+                                    <input class="form-control mb-2" type="time" name="hour" id="hour" required>
                                 </div>
 
                                 <div class="form-group">
@@ -94,10 +110,52 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+<script src="{{ asset('plugins/js/parsley-fr.js') }}"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize Parsley with custom error messages
+    $('#add-task-form').parsley({
+        errorsContainer: function (field) {
+            // Use the data-parsley-errors-container attribute if available, else use the default behavior
+            return field.$element.attr('data-parsley-errors-container') || field;
+        },
+    });
+});
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
-    document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("date_debut").min = new Date().toISOString().slice(0, 10);
+    
+    document.getElementById("date_debut").addEventListener("change", function() {
+        var startDate = new Date(this.value);
+        document.getElementById("date_fin").min = startDate.toISOString().slice(0, 10);
+        document.getElementById("date_fin").setCustomValidity('WWW');
+    });
+
+    document.getElementById("date_fin").addEventListener("input", function() {
+        var endDate = new Date(this.value);
+        var startDate = new Date(document.getElementById("date_debut").value);
+        
+        if (endDate < startDate) {
+            // Set a custom validation message
+            this.setCustomValidity('La date de fin doit être postérieure ou égale à la date de début.');
+        } else {
+            // Reset the custom validation message
+            this.setCustomValidity('');
+        }
+    });
+    
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // document.getElementById("start_date").min = new Date().toISOString().slice(0, 10);
+    // document.getElementById("end_date").min = new Date().toISOString().slice(0, 10);
 })
 </script>
 @endpush

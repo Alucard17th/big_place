@@ -42,4 +42,8 @@ class Offre extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function candidatures(){
+        return $this->hasMany(Candidature::class, 'offer_id');
+    }
 }
