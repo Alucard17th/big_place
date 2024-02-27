@@ -308,7 +308,7 @@ nav > ul.pagination > li > a{
                                 <h4 class="text-dark">{{ $entreprise->nom_entreprise }}</h4>
                                 <p class="text-dark">{{ $entreprise->domiciliation }} <br> {{ $entreprise->siege_social }}</p>
                                 <ul class="list-unstyled text-dark">
-                                    <li>Date de création : {{ $entreprise->date_creation }}</li>
+                                    <li>Date de création : {{ \Carbon\Carbon::parse($entreprise->date_creation)->format('d-m-Y') }}</li>
                                     <li>Valeurs fortes : 
                                         <ol class="ml-5">
                                             @if(isset($entreprise->valeurs_fortes) && count(json_decode($entreprise->valeurs_fortes)) > 0)

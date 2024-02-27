@@ -38,7 +38,11 @@
                                             @if ($event->free_entry)
                                             <span class="text-white badge bg-success">Entrée gratuite</span>
                                             @else
-                                            <span class="text-white badge bg-info">Entrée payante</span>
+                                            <span class="text-white badge bg-info">Entrée payante
+                                                <div>
+                                                    Prix de l'entré : {{ $event->entry_price }}   Euro      
+                                                </div>
+                                            </span>
                                             @endif
                                         </p>
                                     </div>
@@ -60,6 +64,14 @@
                                             @endif
                                             <li class="">Decriptif de l'évenement:
                                                 {{ $event->description }}</li>
+                                            <li>
+                                                Liste des participants : 
+                                                <ol class="pl-5">
+                                                    @foreach($event->participants as $participant)
+                                                        <li>{{$participant->name}}</li>
+                                                    @endforeach
+                                                </ol>
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- <div class="col-md-6">

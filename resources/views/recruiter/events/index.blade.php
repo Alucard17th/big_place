@@ -240,7 +240,7 @@
             </div>
 
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <!-- Field: Free Entry -->
                     <div>
                         <label class="text-dark" for="participants_count">Entrée</label>
@@ -249,8 +249,12 @@
                         <input class="form-check-input" type="checkbox" id="free_entry" name="free_entry">
                         <label class="form-check-label" for="free_entry">Gratuite</label>
                     </div>
+                    <div class="form-group" id="price_field">
+                        <label class="form-check-label" for="entry_price">Prix de l'entré</label>
+                        <input class="form-control" type="text" id="entry_price" name="entry_price" required>
+                    </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <!-- Field: Participants Count -->
                     <div class="form-group">
                         <label class="text-dark" for="participants_count">Limite de participants</label>
@@ -378,6 +382,39 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = url;
         }
     }
+
+    // Get references to the checkbox and price field
+    const freeEntryCheckbox = document.getElementById('free_entry');
+    const priceField = document.getElementById('price_field');
+    const priceInput = document.getElementById('entry_price');
+
+    // Function to set the required attribute on the price input
+    function setPriceRequired(required) {
+        if (required) {
+            priceInput.setAttribute('required', '');
+        } else {
+            priceInput.removeAttribute('required');
+        }
+    }
+
+    // Function to toggle the visibility of the price field and set the required attribute accordingly
+    function togglePriceField() {
+        if (freeEntryCheckbox.checked) {
+            // Hide the price field and remove the required attribute
+            priceField.style.display = 'none';
+            setPriceRequired(false);
+        } else {
+            // Show the price field and set the required attribute
+            priceField.style.display = 'block';
+            setPriceRequired(true);
+        }
+    }
+
+    // Add event listener to checkbox
+    freeEntryCheckbox.addEventListener('change', togglePriceField);
+
+    // Call togglePriceField initially to set the initial state
+    togglePriceField();
 
 })
 </script>

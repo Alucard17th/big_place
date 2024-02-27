@@ -122,6 +122,11 @@
                                     <label class="form-check-label" for="free_entry">Gratuit</label>
                                 </div>
 
+                                <div class="form-group" id="price_field">
+                                    <label class="form-check-label" for="entry_price">Prix de l'entré</label>
+                                    <input class="form-control" type="text" id="entry_price" name="entry_price" value="{{ $event->entry_price }}" required>
+                                </div>
+
                                 <!-- Field: Digital Badge Download -->
                                 <div class="form-group">
                                     <button class="bg-back-btn" type="button" id="badge-modal">Spécimen du badge</button>
@@ -208,6 +213,39 @@
         event.preventDefault();
         $.modal.close();
     });
+
+    // Get references to the checkbox and price field
+    const freeEntryCheckbox = document.getElementById('free_entry');
+    const priceField = document.getElementById('price_field');
+    const priceInput = document.getElementById('entry_price');
+
+    // Function to set the required attribute on the price input
+    function setPriceRequired(required) {
+        if (required) {
+            priceInput.setAttribute('required', '');
+        } else {
+            priceInput.removeAttribute('required');
+        }
+    }
+
+    // Function to toggle the visibility of the price field and set the required attribute accordingly
+    function togglePriceField() {
+        if (freeEntryCheckbox.checked) {
+            // Hide the price field and remove the required attribute
+            priceField.style.display = 'none';
+            setPriceRequired(false);
+        } else {
+            // Show the price field and set the required attribute
+            priceField.style.display = 'block';
+            setPriceRequired(true);
+        }
+    }
+
+    // Add event listener to checkbox
+    freeEntryCheckbox.addEventListener('change', togglePriceField);
+
+    // Call togglePriceField initially to set the initial state
+    togglePriceField();
 })
 </script>
 <script>

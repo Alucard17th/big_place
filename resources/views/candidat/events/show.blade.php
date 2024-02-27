@@ -38,7 +38,11 @@
                                             @if ($event->free_entry)
                                             <span class="text-white badge bg-success">Entrée gratuite</span>
                                             @else
-                                            <span class="text-white badge bg-info">Entrée payante</span>
+                                            <span class="text-white badge bg-info">Entrée payante
+                                                <div>
+                                                    Prix de l'entré : {{ $event->entry_price }}   Euro      
+                                                </div>
+                                            </span>
                                             @endif
                                         </p>
                                     </div>

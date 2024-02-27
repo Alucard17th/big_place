@@ -180,7 +180,7 @@ input, select{
                                                     <i class="las la-video"></i>
                                                     Rejoindre
                                                 </a> -->
-                                                    @if($rdv->status != 'Termine')
+                                                    @if($rdv->status != 'Terminé')
                                                     <a href="{{route('candidat.rdv.cancel', $rdv->id)}}" type="button" class="bg-btn-four mt-2"
                                                     onclick="return confirm('Etes-vous sur de vouloir annuler ce rendez-vous ?');">
                                                         <!-- Détails -->

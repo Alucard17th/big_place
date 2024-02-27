@@ -153,7 +153,7 @@
                                                 </a>
                                                 @endif
                                                 <a href="{{route('candidat.event.show', $event->id)}}"
-                                                    type="button" class="bg-btn-five">
+                                                    type="button" class="bg-btn-five mt-2">
                                                     Consulter l'événement
                                                 </a>
                                                 <a href="{{route('candidat.vitrine.show', $event->user_id)}}"

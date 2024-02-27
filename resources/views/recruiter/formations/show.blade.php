@@ -287,6 +287,15 @@ background: #13D527;
                                             @endforeach
                                         </div>
 
+                                        <div class="offre-end-date my-4">
+                                            Liste des participants : 
+                                            <ol class="pl-5">
+                                                @foreach($formation->participants as $participant)
+                                                    <li>{{$participant->name}}</li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
+
                                         <!-- <div class="card mt-5" style="height:100%;">
                                             <div class="card-body">
                                                 <div class="row">

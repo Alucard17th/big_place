@@ -943,6 +943,7 @@ class RecruiterController extends Controller
             'event_hour' => $request->input('event_hour'),
             'description' => $request->input('description'),
             'statut' => 'Actif',
+            'entry_price' => $request->input('entry_price'),
             'user_id' => auth()->user()->id, // Assuming you have authentication
         ]);
 
@@ -973,6 +974,7 @@ class RecruiterController extends Controller
         $event->event_date = $request->input('event_date');
         $event->event_hour = $request->input('event_hour');
         $event->description = $request->input('description');
+        $event->entry_price = $request->input('entry_price');
         $event->save();
 
         toast('Evenement modifié','success')->autoClose(5000);

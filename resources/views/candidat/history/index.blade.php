@@ -51,10 +51,10 @@
                                     <tbody>
                                         @foreach ($offers as $offer)
                                         <tr>
-                                            <td class="text-left d-none">{{$offer->created_at}}</td>
+                                            <td class="text-left d-none" data-order="{{$offer->created_at}}">{{$offer->created_at}}</td>
                                             <td><input class="checkbox-item" type="checkbox" name="selected" id=""
                                                     value="{{$offer->id}}"></td>
-                                            <td class="text-left">{{getEntrepriseByUserId($offer->user_id)}}</td>
+                                            <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>

@@ -276,12 +276,12 @@
                                             <th>Matching</th>
                                             @endif
                                             <th>Nom de l'entreprise</th>
-                                            <th>Poste</th>
+                                            <th>Titre de l'offre</th>
+                                            <th>Date de publication</th>
                                             <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
                                             <th>Type du contrat</th>
                                             <th>Salaire brut</th>
-                                            <th>Date de publication</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -302,6 +302,8 @@
                                             <td class="text-left">{{$offer->company_name}}</td>
 
                                             <td class="text-left">{{$offer->job_title}}</td>
+                                            
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
                                                 
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             
@@ -311,7 +313,6 @@
 
                                             <td class="text-left">{{$offer->brut_salary}}</td>
 
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             
                                             <td class="text-left">
                                                 @if($offer->user_id != null)

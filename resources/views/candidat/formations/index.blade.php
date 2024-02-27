@@ -132,13 +132,11 @@ input, select{
                                             <td class="text-left">{{$formation->work_location}}</td>
                                             <td class="text-left">
                                                 @if($formation->status == 'Active')
-                                                Active
+                                                    <span class="badge badge-success">Active</span>
                                                 @elseif($formation->status == 'Suspendue')
-                                                Suspendue
-                                                @elseif($formation->status == 'Ferme')
-                                                Fermée
-                                                @elseif($formation->status == 'Termine')
-                                                Terminée
+                                                    <span class="badge badge-warning">Suspendue</span>
+                                                @else
+                                                    <span class="badge badge-danger">Inactive</span>
                                                 @endif
                                             </td>
                                             <td class="text-left">

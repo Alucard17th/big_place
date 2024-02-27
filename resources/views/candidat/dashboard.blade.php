@@ -627,8 +627,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 console.log('RDVS', event);
                 let rdvType = event.is_type_presentiel ? 'Présentiel' : 'Distanciel';
                 let candidatId = event.candidat_it
+                var dateParts = event.date.split('-');
                 rdvs.push({
-                    title: 'Rendez vous le : ' + event.date,
+                    title: 'Rendez vous le : ' + dateParts[2] + '-'  + dateParts[1] + '-' + dateParts[0],
                     start: event.date + 'T' + event.heure,
                     backgroundColor: 'pink',
                     borderColor: 'pink',

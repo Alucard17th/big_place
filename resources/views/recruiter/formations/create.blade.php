@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById("start_date").addEventListener("change", function() {
         var startDate = new Date(this.value);
         document.getElementById("end_date").min = startDate.toISOString().slice(0, 10);
-        document.getElementById("end_date").setCustomValidity('WWW');
+        document.getElementById("end_date").setCustomValidity('La date de fin de formation doit être inférieure ou égale à la date de démarrage');
     });
 
     document.getElementById("end_date").addEventListener("input", function() {
