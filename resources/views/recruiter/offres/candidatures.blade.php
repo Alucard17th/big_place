@@ -168,7 +168,8 @@ input, select{
                                                 <button class="bg-btn-eight see-candidat-btn mt-2"
                                                 data-cvid="{{$candidature->candidat->curriculum->first()->id}}"
                                                 data-fiche="{{$candidature->candidat->curriculum}}"
-                                                data-email="{{$candidature->candidat->email}}">
+                                                data-email="{{$candidature->candidat->email}}"
+                                                data-avatar="{{$candidature->candidat->avatar}}">
                                                     Fiche Candidat
                                                 </button>
                                                 @else
@@ -614,16 +615,19 @@ document.addEventListener('DOMContentLoaded', function() {
         let cvidValue = $(this).data('cvid');
         let ficheCandidat = $(this).data('fiche');
         let email = $(this).data('email');
+        let avatar = $(this).data('avatar');
         console.log(email);
         $('.ex2-content').empty();
         ficheCandidat.forEach(function(candidate) {
+            console.log(candidate);
+            let modifiedAvatarUrl = avatar.replace("public", "storage");
             let valeursArray = Array.isArray(candidate.valeurs) ? candidate.valeurs : JSON.parse(candidate.valeurs);
             let htmlContent = `
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-12 text-center mb-5 pb-5 pt-2"><h2>Fiche Candidat</h2></div>
                         <div class="col-4 text-center">
-                            <img src="${candidate.avatar}" alt="" style="width: 200px; height: 200px;border-radius: 50%;">
+                            <img src="/${modifiedAvatarUrl}" alt="" style="width: 150px; height: 150px;border-radius: 50%;">
                         </div>
                         <div class="col-8">
                             <h4 class="mb-3">${candidate.nom} ${candidate.prenom}</h4>

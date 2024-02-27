@@ -62,6 +62,7 @@ class CurriculumController extends Controller
     public function saveCvFile(Request $request){
         $user = auth()->user();
         $curriculum = $user->curriculum()->first();
+
         if($request->has('cv')) {
             $fileInfos = Filepond::field($request->cv)->moveTo('/uploads/'.$user->id.'/cv_'.uniqid());
 
@@ -81,6 +82,9 @@ class CurriculumController extends Controller
                 'file' => $fileInfos['location'],
                 'type' => 'cv',
             ]);
+
+            $user->phone = $request->phone;
+            $user->save();
         }else{
             $curriculum->cv = null;
             $curriculum->save();

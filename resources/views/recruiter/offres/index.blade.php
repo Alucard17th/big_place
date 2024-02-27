@@ -72,7 +72,9 @@
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->publication_date)->format('Ymd') }}">
                                                 {{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}
                                             </td>
-                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}</td>
+                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}">
+                                                {{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}
+                                            </td>
 
                                             @unlessrole('restricted')
                                             <td class="text-left d-flex flex-column">

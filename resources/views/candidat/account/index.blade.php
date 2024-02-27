@@ -120,7 +120,7 @@
                                                             Modifier la photo de profil
                                                         </a>
                                                         <a href="{{ route('candidat.account.avatar.delete') }}"
-                                                            type="button" class="bg-btn-four"
+                                                            type="button" class="bg-btn-four mt-2"
                                                             onclick="return confirm('Etes-vous sur de vouloir supprimer votre photo ?');">
                                                             <!-- Détails -->
                                                             <i class="las la-trash"></i>

@@ -94,9 +94,9 @@
                 <div class="ex-content2">
                     <div class="row">
                         <div class="col-12 d-flex">
-                            <a type="button" class="bg-btn-three proposez-rdv mr-2">Proposez un rendez-vous</a>
-                            <button class="bg-btn-nine see-profile text-left mr-2" data-url="" data-cvid="">Consulter le CV</button>
-                            <a href=""  type="button" class="bg-btn-seven px-4">Tchatter</a>
+                            <!-- <a type="button" class="bg-btn-three proposez-rdv mr-2">Proposez un rendez-vous</a> -->
+                            <!-- <button class="bg-btn-nine see-profile text-left mr-2" data-url="" data-cvid="">Consulter le CV</button> -->
+                            <!-- <a href=""  type="button" class="bg-btn-seven px-4">Tchatter</a> -->
                         </div>
                     </div>
                     
@@ -106,7 +106,7 @@
                                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Rendez-vous</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Commentaires</a>
+                                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">Echanges RH</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -122,7 +122,7 @@
                             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                                 <div class="row mt-4">
                                     <div class="col-12">
-                                        <h2>Commentaires</h2>
+                                        <h2>Echanges RH</h2>
                                         <hr>
                                         <div class="ex-avis-candidature-content pt-5">
                                             <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="2" placeholder="Ajouter un commentaire..."></textarea>
@@ -253,7 +253,7 @@
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
             + candidature.user.name + '<br/>' 
             + candidature.title + '<br/>' 
-            + 'Envoyée le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
             userid : candidature.user.id,
         }));
 
@@ -262,7 +262,7 @@
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
             + candidature.user.name + '<br/>' 
             + candidature.title + '<br/>' 
-            + 'Envoyée le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
             userid : candidature.user.id,
         }));
 
@@ -271,7 +271,7 @@
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
             + candidature.user.name + '<br/>' 
             + candidature.title + '<br/>' 
-            + 'Envoyée le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
             userid : candidature.user.id,
         }));
 
@@ -280,7 +280,7 @@
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
             + candidature.user.name + '<br/>' 
             + candidature.title + '<br/>' 
-            + 'Envoyée le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
             userid : candidature.user.id,
         }));
 
@@ -289,7 +289,7 @@
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
             + candidature.user.name + '<br/>' 
             + candidature.title + '<br/>' 
-            + 'Envoyée le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
             userid : candidature.user.id,
         }));
 

@@ -1002,7 +1002,7 @@ class RecruiterController extends Controller
     }
     public function getUserEvents(){
         $user = auth()->user();
-        $events = $user->events()->where('statut', 'active')->get();
+        $events = $user->events()->get();
         return response()->json($events);
     }
     public function getUserById($id){

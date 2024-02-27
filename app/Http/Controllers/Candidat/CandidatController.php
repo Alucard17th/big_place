@@ -445,6 +445,21 @@ class CandidatController extends Controller
 
         }
 
+       
+
+        foreach ($candidaturesByDay as $date => $value) {
+            // Convert the date string to a DateTime object
+            $dateTime = new \DateTime($date);
+            
+            // Format the date as "d-m-Y"
+            $formattedDate = $dateTime->format('d-m-Y');
+            
+            // Assign the formatted date to the new array
+            $formattedCandidaturesByDay[$formattedDate] = $value;
+        }
+
+        $candidaturesByDay = $formattedCandidaturesByDay;
+
         return view('candidat.stats.index', compact('doneRdvs', 'refusedRdvs', 'pendingRdvs',
         'doneCandidatures', 'refusedCandidatures', 'pendingCandidatures',
         'candidaturesByDay', 'candidaturesByMonth'));
