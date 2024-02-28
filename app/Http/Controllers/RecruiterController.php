@@ -1657,29 +1657,20 @@ class RecruiterController extends Controller
     }
 
     // CANDIDATURE
-    public function myCandidatures($id){
+    public function myCandidatures(Request $request){
         $user = auth()->user();
-        $offre = Offre::find($id);
-
-        $candidatures = Candidature::where('offer_id',$offre->id)->with('user')->get();
-        // dd($candidatures);
-
-        // if($user->parent_entreprise_id == null){
-        //     // USER IS ADMIN
-        //     $candidatures = $user->candidatures;
-        // }else{
-        //     // OTHER TEAM MEMBERS
-        //     $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-        //     $candidatures = $entreprise->user->candidatures;
-        // }
-
-        // foreach ($candidatures as $candidature) {
-        //     $candidatUser = User::find($candidature->candidat_id);
-        //     $candidature->candidat_name = $candidatUser->name;
-        // }
 
         $offers = Offre::where('user_id', $user->id)->where('publish', 1)
         ->orderBy('created_at', 'desc')->get();
+
+        if($request->id == 'all'){
+            $offre = null;
+            $offerIds = $offers->pluck('id');
+            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires')->get();
+        }else{
+            $offre = Offre::find($request->id);
+            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires')->get();
+        }
 
         return view('recruiter.candidatures.index', compact('candidatures', 'offre', 'offers'));
     }
