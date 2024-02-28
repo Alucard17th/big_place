@@ -22,5 +22,10 @@ class Candidature extends Model
     public function offer(){
         return $this->belongsTo(Offre::class, 'offer_id');
     }
+
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class, 'candidature_id');
+    }
     
 }

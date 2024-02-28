@@ -43,6 +43,11 @@
         color:#000;
     }
 
+    .kanban-board{
+        margin-left:6px !important;
+        margin-right:6px !important;
+    }
+
     .kanban-board .kanban-drag {
         padding:5px !important;
         background: #fbfbfb !important;
@@ -51,6 +56,26 @@
     .kanban-item{
         border: 1px solid #dee2e6 !important;
         border-radius: 5px !important;
+    }
+
+    .exchanges-comments{
+        height: 50vh;
+        overflow: auto;
+    }
+
+    .comment{
+        padding: 5px 5px 5px 5px; 
+        background: aliceblue;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+    .comment-user, .comment-date{
+        font-size: 12px;
+    }
+
+    .kanban-item:hover {
+        cursor: pointer;
+        border: 1px solid #22218c !important;
     }
 </style>
 @endpush
@@ -75,10 +100,38 @@
                     </div>
                     
                     <div class="tabs-box">
-                        <h5 class="pl-5">{{$offre->job_title}}</h5>
+                        <h5 class="pl-5">
+                            @if($offre != null)
+                            {{$offre->job_title}}
+                            @endif
+                        </h5>
+
+                        <div class="row px-5 mt-3">
+                            <div class="col-3">
+                                <form action="{{ route('recruiter.candidatures.post') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="id">Sélection de l'offre</label>
+                                        <select name="id" class="form-control">
+                                            <option value="all" @if($offre == null) selected @endif>Toutes les offres</option>
+                                           
+                                            @foreach($offers as $offer)
+                                                <option value="{{ $offer->id }}" @if($offre != null && $offer->id == $offre->id) selected @endif>{{ $offer->job_title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="bg-btn-five">Rechercher</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                         <!-- SEARCH FORM -->
                         <div id="demo1" class="py-5" style="overflow-x: auto;"></div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -92,15 +145,7 @@
             
             <div class="col-6">
                 <div class="ex-content2">
-                    <div class="row">
-                        <div class="col-12 d-flex">
-                            <!-- <a type="button" class="bg-btn-three proposez-rdv mr-2">Proposez un rendez-vous</a> -->
-                            <!-- <button class="bg-btn-nine see-profile text-left mr-2" data-url="" data-cvid="">Consulter le CV</button> -->
-                            <!-- <a href=""  type="button" class="bg-btn-seven px-4">Tchatter</a> -->
-                        </div>
-                    </div>
-                    
-                    <div class="container mt-5">
+                    <div class="container">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Rendez-vous</a>
@@ -124,9 +169,14 @@
                                     <div class="col-12">
                                         <h2>Echanges RH</h2>
                                         <hr>
-                                        <div class="ex-avis-candidature-content pt-5">
-                                            <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="2" placeholder="Ajouter un commentaire..."></textarea>
-                                            <button type="button" class="bg-btn-five mt-3 px-4">Ajouter</button>
+                                        <div class="exchanges-comments">
+                                            
+                                        </div>
+                                        <div class="ex-avis-candidature-content mt-1">
+                                            <form action="">
+                                                <textarea class="form-control" name="commentaire" id="commentaire" cols="30" rows="2" placeholder="Ajouter un commentaire..."></textarea>
+                                                <button type="button" class="bg-btn-five mt-3 px-4" id="add-avis">Ajouter</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -246,6 +296,8 @@
         const candidature = @json($candidatures);
         const offer = @json($offre);
         console.log(candidature);
+
+        var candidatureId = '';
         // from this array get objects where status is 'refused'
         // const coming = candidature.filter((candidature) => candidature.status === 'coming');
         const coming = candidature.filter((candidature) => candidature.status === 'coming').map((candidature) => ({
@@ -275,15 +327,6 @@
             userid : candidature.user.id,
         }));
 
-        const reflection = candidature.filter((candidature) => candidature.status === 'reflection').map((candidature) => ({
-            id: candidature.id,
-            title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
-            + candidature.user.name + '<br/>' 
-            + candidature.title + '<br/>' 
-            + 'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
-            userid : candidature.user.id,
-        }));
-
         const done = candidature.filter((candidature) => candidature.status === 'done').map((candidature) => ({
             id: candidature.id,
             title:'<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' 
@@ -298,33 +341,27 @@
         boards  :[
             {
                 'id' : 'coming',
-                'title'  : 'Entretiens programmés',
+                'title'  : '<span class="text-info"><i class="fas fa-circle"></i></span> Entretiens programmés',
                 'class' : 'coming',
                 'item'  : coming
             },
             {
                 'id' : 'done',
-                'title'  : 'Entretiens effectués',
+                'title'  : '<span class="text-success"><i class="fas fa-circle"></i></span> Entretiens effectués',
                 'class' : 'done',
                 'item'  : done
             },
             {
                 'id' : 'refused',
-                'title'  : 'Candidats refusés',
+                'title'  : '<span class="text-danger"><i class="fas fa-circle"></i></span> Candidats refusés',
                 'class' : 'refused',
                 'item'  : refused
             },
             {
                 'id' : 'waiting',
-                'title'  : 'En attente de validation',
+                'title'  : '<span class="text-warning"><i class="fas fa-circle"></i></span> En attente de validation',
                 'class' : 'waiting',
                 'item'  : waiting
-            },
-            {
-                'id' : 'reflection',
-                'title'  : 'En réflection',
-                'class' : 'reflection',
-                'item'  : reflection
             }
         ],
         dropEl: function(el, target, source, sibling) {
@@ -356,7 +393,7 @@
             })
         },
         click : function (el) {
-            var candidatureId = $(el).attr("data-eid");
+            candidatureId = $(el).attr("data-eid");
             var candidatureUserId = $(el).attr("data-userid");
             console.log("Candidature ID:", candidatureId);
             console.log("User ID:", candidatureUserId);
@@ -370,10 +407,12 @@
                 success: function(data) {
                     console.log('data');
                     console.log(data);
+
                     let rdv = data.rdv[0];
+                    let candidature = data.candidature[0];
+
                     data = data.curriculum[0];
                    
-                    console.log(rdv);
                     let valeursArray = Array.isArray(data.valeurs) ? data.valeurs : JSON.parse(data.valeurs);
 
                     let htmlContent = `
@@ -420,6 +459,25 @@
                     </div>`;
                     $('.ex-rdv-content').replaceWith(rdvContent);
 
+                    $('.exchanges-comments').empty();
+                    candidature.commentaires.forEach(function(comment) {
+                        // Create a new <div> element to hold the comment content
+                        var commentDiv = document.createElement('div');
+                        // Set the class attribute for the <div>
+                        commentDiv.className = 'comment';
+                        // Parse the created_at timestamp and format it
+                        var createdAt = new Date(comment.created_at);
+                        var formattedDate = createdAt.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+                        // Set the text content of the <div> to the comment content and formatted date
+                        commentDiv.innerHTML = `<div class="comment-info">
+                            <div class="comment-user"> ${comment.user.name} </div>
+                            <div class="comment-date"> ${formattedDate} </div>
+                            <div class="comment-content">${comment.content}</div>
+                            </div>`;
+                        // Append the comment <div> to the parent element with class 'exchanges-comments'
+                        document.querySelector('.exchanges-comments').appendChild(commentDiv);
+                    });
+
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
@@ -452,6 +510,48 @@
         });
 
         selectedCandidates.push(cvidValue);
+    })
+
+    $('#add-avis').on('click', function(event) {
+        event.preventDefault();
+        const avisValue = $('#commentaire').val();
+        console.log(avisValue);
+
+        $.ajax({
+            url: "{{route('recruiter.candidature.add.comment')}}",
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token in headers
+            },
+            data: {
+                candidatureId: candidatureId,
+                commentaire: avisValue,
+            },
+            success: function(data) {
+                console.log(data)
+
+                let comment = data;
+
+                 // Create a new <div> element to hold the comment content
+                 var commentDiv = document.createElement('div');
+                // Set the class attribute for the <div>
+                commentDiv.className = 'comment';
+                // Parse the created_at timestamp and format it
+                var createdAt = new Date(comment.created_at);
+                var formattedDate = createdAt.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'});
+                // Set the text content of the <div> to the comment content and formatted date
+                commentDiv.innerHTML = `<div class="comment-info">
+                    <div class="comment-user"> ${comment.user.name} </div>
+                    <div class="comment-date"> ${formattedDate} </div>
+                    <div class="comment-content">${comment.content}</div>
+                    </div>`;
+                // Append the comment <div> to the parent element with class 'exchanges-comments'
+                document.querySelector('.exchanges-comments').appendChild(commentDiv);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        })
     })
 
 })

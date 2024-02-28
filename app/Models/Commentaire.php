@@ -9,6 +9,17 @@ class Commentaire extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'content',
+        'candidature_id',
+        'user_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function candidature()
     {
         return $this->belongsTo(Candidature::class, 'candidature_id');

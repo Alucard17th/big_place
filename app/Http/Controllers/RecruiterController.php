@@ -17,6 +17,7 @@ use App\Models\Candidature;
 use App\Models\History;
 use App\Models\User;
 use App\Models\Document;
+use App\Models\Commentaire;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use App\Mail\EntrepriseRdvInvitation;
@@ -1677,8 +1678,42 @@ class RecruiterController extends Controller
         //     $candidature->candidat_name = $candidatUser->name;
         // }
 
-        return view('recruiter.candidatures.index', compact('candidatures', 'offre'));
+        $offers = Offre::where('user_id', $user->id)->where('publish', 1)
+        ->orderBy('created_at', 'desc')->get();
+
+        return view('recruiter.candidatures.index', compact('candidatures', 'offre', 'offers'));
     }
+    public function myCandidaturesPost(Request $request){
+        $user = auth()->user();
+
+        $offers = Offre::where('user_id', $user->id)->where('publish', 1)
+        ->orderBy('created_at', 'desc')->get();
+
+        if($request->id == 'all'){
+            $offre = null;
+            $offerIds = $offers->pluck('id');
+            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires')->get();
+        }else{
+            $offre = Offre::find($request->id);
+            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires')->get();
+        }
+
+        return view('recruiter.candidatures.index', compact('candidatures', 'offre', 'offers'));
+    }
+
+    public function addCommentaireCandidature(Request $request){
+        $candidature = Candidature::find($request->candidatureId);
+        $commentaire = $candidature->commentaires()->create([
+            'content' => $request->commentaire,
+            'candidature_id' => $request->candidatureId,
+            'user_id' => auth()->user()->id
+        ]);
+
+        $commentaireWithUser = Commentaire::with('user')->find($commentaire->id);
+      
+        return response()->json($commentaireWithUser);
+    }
+
     public function updateCandidatureStatus(Request $request){
         $candidature  = Candidature::find($request->candidatureId);
         $candidature->status = $request->status;
@@ -2063,7 +2098,8 @@ class RecruiterController extends Controller
     public function getUserCandidatures($id, $candidatureId){
         $curriculum = Curriculum::where('user_id', $id)->get();
         $rdv = RendezVous::where('candidature_id', $candidatureId)->get();
-        $response = compact('curriculum', 'rdv');
+        $candidature = Candidature::find($candidatureId)->with('commentaires.user')->get();
+        $response = compact('curriculum', 'rdv', 'candidature');
         return response()->json($response);
     }
 

@@ -206,7 +206,9 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
 
     // CANDIDATURE
     Route::get('/mes-candidatures/{id}', [RecruiterController::class, 'myCandidatures'])->name('recruiter.candidatures');
+    Route::post('/mes-candidatures/', [RecruiterController::class, 'myCandidaturesPost'])->name('recruiter.candidatures.post');
     Route::post('/mes-candidatures/update-status', [RecruiterController::class, 'updateCandidatureStatus'])->name('recruiter.candidature.updateStatus');
+    Route::post('/mes-candidatures/add-comment', [RecruiterController::class, 'addCommentaireCandidature'])->name('recruiter.candidature.add.comment');
 
     // HISTORIQUE
     Route::get('/historique', [RecruiterController::class, 'getSearchHistory'])->name('recruiter.historique');
