@@ -27,5 +27,10 @@ class Candidature extends Model
     {
         return $this->hasMany(Commentaire::class, 'candidature_id');
     }
+
+    public function rendezvous()
+    {
+        return $this->hasMany(RendezVous::class, 'candidature_id');
+    }
     
 }

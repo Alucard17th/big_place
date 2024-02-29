@@ -20,6 +20,7 @@ class ChatController extends Controller
     public function index()
     {
         //
+        $redirectUrl = request('redirectUrl');
         $receiverId = request('receiver');
         $userIds = [];
         $messages = Message::where('from', auth()->user()->id)->orWhere('to', auth()->user()->id)->get();

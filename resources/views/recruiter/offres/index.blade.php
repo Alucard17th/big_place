@@ -152,7 +152,7 @@
                                             <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->format('d-m-Y') }}</td>
-                                            <td class="text-left" data-order="{{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}">
+                                            <td class="text-left" data-order="{{$offer->created_at}}">
                                                 {{ \Carbon\Carbon::parse($offer->created_at)->format('d-m-Y') }}
                                             </td>
 

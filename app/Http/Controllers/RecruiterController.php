@@ -1666,10 +1666,10 @@ class RecruiterController extends Controller
         if($request->id == 'all'){
             $offre = null;
             $offerIds = $offers->pluck('id');
-            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires')->get();
+            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires', 'rendezvous')->get();
         }else{
             $offre = Offre::find($request->id);
-            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires')->get();
+            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires', 'rendezvous')->get();
         }
 
         return view('recruiter.candidatures.index', compact('candidatures', 'offre', 'offers'));
@@ -1683,10 +1683,10 @@ class RecruiterController extends Controller
         if($request->id == 'all'){
             $offre = null;
             $offerIds = $offers->pluck('id');
-            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires')->get();
+            $candidatures = Candidature::whereIn('offer_id', $offerIds)->with('user', 'commentaires', 'rendezvous')->get();
         }else{
             $offre = Offre::find($request->id);
-            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires')->get();
+            $candidatures = Candidature::where('offer_id',$offre->id)->with('user', 'commentaires', 'rendezvous')->get();
         }
 
         return view('recruiter.candidatures.index', compact('candidatures', 'offre', 'offers'));
@@ -1703,6 +1703,14 @@ class RecruiterController extends Controller
         $commentaireWithUser = Commentaire::with('user')->find($commentaire->id);
       
         return response()->json($commentaireWithUser);
+    }
+
+    public function addObservationCandidature(Request $request){
+        $candidature = Candidature::find($request->candidatureId);
+        $candidature->observation = $request->observation;
+        $candidature->save();
+
+        return response()->json($candidature);
     }
 
     public function updateCandidatureStatus(Request $request){
