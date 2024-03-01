@@ -40,10 +40,10 @@
                                             </th>
                                             <th>Nom de l'entreprise</th>
                                             <th>Titre de l'offre</th>
-                                            <th>Date de publication de l'offre</th>
+                                            <th>Date de publication</th>
+                                            <th>Date de prise de poste</th>
                                             <th>Ville / département</th>
-                                            <th>Années d'expérience</th>
-                                            <th>Niveau d'étude</th>
+                                            <th>Type du contrat</th>
                                             <th>Salaire brut</th>
                                             <th>Actions</th>
                                         </tr>
@@ -57,9 +57,9 @@
                                             <td class="text-left">{{$offer->company_name}}</td>
                                             <td class="text-left">{{$offer->job_title}}</td>
                                             <td class="text-left">{{ \Carbon\Carbon::parse($offer->publication_date)->formatLocalized('%d-%m-%Y') }}</td>
+                                            <td class="text-left">{{ \Carbon\Carbon::parse($offer->start_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left">{{$offer->location_city}}</td>
-                                            <td class="text-left">{{$offer->experience_level}}</td>
-                                            <td class="text-left">{{$offer->education_level}}</td>
+                                            <td class="text-left">{{$offer->contract_type}}</td>
                                             <td class="text-left">{{$offer->brut_salary}}</td>
                                             <td class="text-left">
                                                 @if($offer->user_id != null)

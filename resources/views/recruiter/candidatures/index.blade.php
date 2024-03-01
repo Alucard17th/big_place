@@ -21,8 +21,6 @@
     width: 75vw;
 }
 
-
-
 .kanban-board-header.coming {
     background-color: #fff;
 }
@@ -84,7 +82,7 @@
     border: 1px solid #22218c !important;
 }
 
-.active {
+#kanbanBtn.active, #tableBtn.active {
     background-color: #f5f5f5;
     border-bottom: 7px solid #0369A1 !important;
 }
@@ -104,7 +102,6 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <a href="{{ route('recruiter.dashboard') }}" class="bg-back-btn mr-2">
-                                <!-- <i class="las la-arrow-left" style="font-size:38px"></i> -->
                                 Retour
                             </a>
                         </div>
@@ -118,12 +115,13 @@
                         </h5>
 
                         <div class="row px-5 mt-3">
-                            <div class="col-3">
-                                <form action="{{ route('recruiter.candidatures.post') }}" method="POST">
+                            <div class="col-9">
+                                <form action="{{ route('recruiter.candidatures.post') }}" method="POST"
+                                class="d-flex align-items-end justify-content-start w-100">
                                     @csrf
-                                    <div class="form-group">
+                                    <div class="form-group w-50">
                                         <label for="id">Sélection de l'offre</label>
-                                        <select name="id" class="form-control">
+                                        <select name="id" class="form-control w-100">
                                             <option value="all" @if($offre==null) selected @endif>Toutes les offres
                                             </option>
 
@@ -135,12 +133,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="bg-btn-five">Rechercher</button>
+                                        <button type="submit" class="bg-btn-five ml-2">Rechercher</button>
                                     </div>
                                 </form>
-                            </div>
-
-                            <div class="col-6">
                             </div>
 
                             <div class="col-3">
@@ -405,10 +400,8 @@ $(document).ready(function() {
     // get the php array as json data
     const candidature = @json($candidatures);
     const offer = @json($offre);
-    console.log(candidature);
-
     var candidatureId = '';
-    // from this array get objects where status is 'refused'
+
     // const coming = candidature.filter((candidature) => candidature.status === 'coming');
     const coming = candidature.filter((candidature) => candidature.status === 'coming').map((candidature) => ({
         id: candidature.id,
@@ -481,12 +474,8 @@ $(document).ready(function() {
             candidatureId = $(el).attr("data-eid");
             if (source === target) {
                 // same column
-                console.log('Candidature : ', candidatureId)
-                console.log('Target Status : ', targetId)
             } else {
                 // different column
-                console.log('Candidature : ', candidatureId)
-                console.log('Target Status : ', targetId)
             }
 
             $.ajax({
@@ -506,8 +495,6 @@ $(document).ready(function() {
         click: function(el) {
             candidatureId = $(el).attr("data-eid");
             var candidatureUserId = $(el).attr("data-userid");
-            console.log("Candidature ID:", candidatureId);
-            console.log("User ID:", candidatureUserId);
             $('.ex-content').empty();
             // $('.ex-content2').empty();
             $('.ex-rdv-content').empty();
@@ -516,9 +503,6 @@ $(document).ready(function() {
                 url: "/getUserCandidatures/" + candidatureUserId + "/" + candidatureId,
                 type: "GET",
                 success: function(data) {
-                    console.log('data');
-                    console.log(data);
-
                     let rdv = data.rdv[0];
                     let candidature = data.candidature[0];
 
@@ -557,7 +541,6 @@ $(document).ready(function() {
                                     </ul>
                                 </div>
                             </div>
-                        
                         </div>`;
 
                     $('.ex-content').replaceWith(htmlContent);
@@ -615,12 +598,10 @@ $(document).ready(function() {
 
     $('#close-modal, .custom-close-modal').click(function(e) {
         e.preventDefault();
-        console.log('Modal Should Be Closed');
         $.modal.close();
     });
 
     $('.proposez-rdv').on('click', function(event) {
-        console.log('SQUAD')
         event.preventDefault();
         const cvidValue = $(this).data('cvid');
         $("#ex-rdv").modal({
@@ -628,14 +609,12 @@ $(document).ready(function() {
             clickClose: true,
             showClose: false
         });
-
         selectedCandidates.push(cvidValue);
     })
 
     $('#add-avis').on('click', function(event) {
         event.preventDefault();
         const avisValue = $('#commentaire').val();
-        console.log(avisValue);
 
         $.ajax({
             url: "{{route('recruiter.candidature.add.comment')}}",
@@ -648,10 +627,7 @@ $(document).ready(function() {
                 commentaire: avisValue,
             },
             success: function(data) {
-                console.log(data)
-
                 let comment = data;
-
                 // Create a new <div> element to hold the comment content
                 var commentDiv = document.createElement('div');
                 // Set the class attribute for the <div>
@@ -712,7 +688,6 @@ $(document).ready(function() {
         const observation = $(this).data('observation');
         $('#candidature_id').val(id);
         $('#observation').val(observation);
-        console.log('Candidature ID:', id);
         $("#ex-observation").modal({
             escapeClose: false,
             clickClose: true,
@@ -722,9 +697,7 @@ $(document).ready(function() {
 
     $('.submit-observation').click(function() {
         const id = $('#candidature_id').val();
-        console.log('Candidature ID:', id);
         const observation = $('#observation').val();
-        console.log('Observation:', observation);
 
         $.ajax({
             url: "{{route('recruiter.candidature.add.observation')}}",
@@ -737,8 +710,8 @@ $(document).ready(function() {
                 observation: observation,
             },
             success: function(data) {
-                console.log(data)
-
+                // reload the page
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.log(xhr.responseText);

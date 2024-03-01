@@ -1710,6 +1710,7 @@ class RecruiterController extends Controller
         $candidature->observation = $request->observation;
         $candidature->save();
 
+        toast()->success('Observation ajoutée avec succès');
         return response()->json($candidature);
     }
 
