@@ -166,6 +166,7 @@ input, select{
                                 <table class="table table-sm table-bordered" id="data-table">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th class="d-none">Crée le</th>
                                             <th>Nom de la tâche</th>
                                             <th>Date de début</th>
                                             <th>Date de fin</th>
@@ -180,6 +181,7 @@ input, select{
                                     <tbody>
                                         @foreach ($tasks as $task)
                                         <tr>
+                                            <td class="text-left d-none">{{$task->created_at}}</td>
                                             <td class="text-left">{{$task->title}}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($task->start_date)->format('Ymd') }}">{{ \Carbon\Carbon::parse($task->start_date)->formatLocalized('%d-%m-%Y') }}</td>
                                             <td class="text-left" data-order="{{ \Carbon\Carbon::parse($task->due_date)->format('Ymd') }}">{{ \Carbon\Carbon::parse($task->due_date)->formatLocalized('%d-%m-%Y') }}</td>
@@ -200,7 +202,7 @@ input, select{
                                                     Modifier
                                                 </a>
                                                 @if($task->completed == '0')
-                                                <a href="{{route('recruiter.task.complete', $task->id)}}" type="button" class="bg-btn-five">
+                                                <a href="{{route('recruiter.task.complete', $task->id)}}" type="button" class="bg-btn-five mt-2">
                                                     <!-- Détails -->
                                                     <i class="las la-edit"></i>
                                                     Terminé
@@ -273,7 +275,7 @@ input, select{
                 <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
-                    <option value="1">Terminér</option>
+                    <option value="1">Terminée</option>
                 </select>
             </div>
 
@@ -361,6 +363,7 @@ document.addEventListener('DOMContentLoaded', function() {
    $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
+        "order": [[0, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -399,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Define a custom search function for exact match
         $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
             var selectedValue = $('#status').val().trim().toLowerCase();
-            var columnValue = data[3].toLowerCase(); // Assuming "Statut" is the fourth column
+            var columnValue = data[5].toLowerCase(); // Assuming "Statut" is the fourth column
 
             // Perform an exact match
             return selectedValue === '' || columnValue === selectedValue;

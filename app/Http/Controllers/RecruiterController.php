@@ -980,7 +980,7 @@ class RecruiterController extends Controller
 
         toast('Evenement modifié','success')->autoClose(5000);
 
-        return redirect()->back();
+        return redirect()->route('recruiter.events');
     }
     public function MyEventsShow($id){
         $event = Event::find($id);
@@ -995,7 +995,7 @@ class RecruiterController extends Controller
     }
     public function getUserRdvs(){
         $user = auth()->user();
-        $rdvs = $user->rendezvous;
+        $rdvs = $user->rendezvous()->whereNotNull('candidat_it')->get();
         return response()->json($rdvs);
     }
     public function getUserFormations(){

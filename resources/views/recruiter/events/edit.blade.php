@@ -251,7 +251,7 @@
 <script>
     // when document is ready 
     $(document).ready(function() {
-        document.getElementById("event_date").min = new Date().toISOString().slice(0, 10);
+        //document.getElementById("event_date").min = new Date().toISOString().slice(0, 10);
     })
 </script>
 @endpush

@@ -72,7 +72,7 @@
                                 <div id="custom-error-message-end"></div>
 
                                 <div class="form-group">
-                                    <label class="text-dark" for="candidate">Heure de fin</label>
+                                    <label class="text-dark" for="candidate">Heure</label>
                                     <input class="form-control mb-2" type="time" name="hour" id="hour" value="{{ $task->hour }}" required>
                                 </div>
 

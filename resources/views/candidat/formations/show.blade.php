@@ -276,7 +276,7 @@ background: #13D527;
                                         </div>
                                        
                                         <div class="offre-end-date my-4">Date de fin d'inscription :
-                                            {{\Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
+                                            {{\Carbon\Carbon::parse($formation->registration_deadline)->formatLocalized('%d-%m-%Y') }}
                                         </div>
 
                                         <div class="offre-end-date my-4">Documents :

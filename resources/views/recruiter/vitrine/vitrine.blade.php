@@ -202,7 +202,7 @@ nav > ul.pagination > li > a{
         <div class="row" id="editor-container" style="display:none">
             <div class="col-lg-12">
                 <div class="ls-widget">
-                    <div class="tabs-box p-4">
+                    <div class="tabs-box">
                         <h3 class="text-dark">Fiche entreprise</h3>
                         <div class="widget-content">
                             <form action="{{ route('recruiter.update.vitrine') }}" method="POST"
@@ -579,7 +579,7 @@ nav > ul.pagination > li > a{
                                     <h3>Mes formations proposées</h3>
                                 </div>
                                 <div class="table-outer">
-                                    <table class="table table-sm table-bordered" id="data-table">
+                                    <table class="table table-sm table-bordered" id="data-table" style="width:100% !important;">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th class="d-none">Crée le</th>
@@ -641,7 +641,7 @@ nav > ul.pagination > li > a{
                                     <h3>Mes évènemements / jobdatings</h3>
                                 </div>
                                 <div class="table-outer">
-                                    <table class="table table-sm table-bordered" id="data-table-2">
+                                    <table class="table table-bordered" id="data-table-2" style="width:100% !important;">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th class="d-none">Crée le</th>

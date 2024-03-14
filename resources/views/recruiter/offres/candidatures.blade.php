@@ -176,7 +176,7 @@ input, select{
                                                     Ce candidat n'a pas encore de CV
                                                 @endif
                                                 <a type="button" class="bg-btn-three proposez-rdv mt-2" data-cvid="{{$candidature->candidat->curriculum->first()->id}}">Proposez un rendez-vous</a>
-                                                <a href=""  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
+                                                <a href="/chat?receiver={{$candidature->candidat->id}}&receiverName={{$candidature->candidat->name}}&redirectUrl={{ url()->current() }}"  type="button" class="bg-btn-seven mt-2 px-4">Tchatter</a>
                                             </td>
                                         </tr>
                                         @endforeach
