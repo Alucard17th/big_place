@@ -40,7 +40,7 @@
                                             @else
                                             <span class="text-white badge bg-info">Entrée payante
                                                 <div>
-                                                    Prix de l'entré : {{ $event->entry_price }}   Euro      
+                                                    Prix de l'entrée : {{ $event->entry_price }}   Euro      
                                                 </div>
                                             </span>
                                             @endif

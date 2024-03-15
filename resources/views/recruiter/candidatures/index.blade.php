@@ -186,8 +186,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-left">
-                                                    {{ \Carbon\Carbon::parse($candidature->rendezvous[0]->date)->formatLocalized('%d-%m-%Y') }}
-                                                </td>
+                                                    {{$candidature->rendezvous != null ? \Carbon\Carbon::parse($candidature->rendezvous[0]->date)->formatLocalized('%d-%m-%Y') : ''}}
                                                 <td class="text-left">
                                                     {{$candidature->observation}}
                                                 </td>

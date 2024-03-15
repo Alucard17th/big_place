@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div class="form-group" id="price_field">
-                                    <label class="form-check-label" for="entry_price">Prix de l'entré</label>
+                                    <label class="form-check-label" for="entry_price">Prix de l'entrée</label>
                                     <input class="form-control" type="text" id="entry_price" name="entry_price" value="{{ $event->entry_price }}" required>
                                 </div>
 

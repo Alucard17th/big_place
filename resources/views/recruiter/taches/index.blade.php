@@ -271,13 +271,13 @@ input, select{
                 <input class="form-control mb-2" type="time" name="hour" id="hour" required>
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label class="text-dark" for="candidate">Statut</label>
                 <select class="form-control" name="status" id="status">
                     <option value="0" selected="">En cours</option>
                     <option value="1">Terminée</option>
                 </select>
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label class="text-dark" for="candidate">Description</label>

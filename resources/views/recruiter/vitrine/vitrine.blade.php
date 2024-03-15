@@ -574,7 +574,7 @@ nav > ul.pagination > li > a{
 
                         <div class="row justify-content-left align-items-left px-3" style="display:none"
                             id="news-container">
-                            <div class="col-12 mt-5" id="table-formations">
+                            <div class="col-12 mt-5 bg-white" id="table-formations">
                                 <div class="d-flex my-4">
                                     <h3>Mes formations proposées</h3>
                                 </div>
@@ -595,7 +595,7 @@ nav > ul.pagination > li > a{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($entreprise->user->formations as $formation)
+                                            @foreach ($entreprise->user->formations->take(10) as $formation)
                                                 @php
                                                 $startDate = \Carbon\Carbon::parse($formation->start_date);
                                                 $endDate = \Carbon\Carbon::parse($formation->end_date);
@@ -636,7 +636,7 @@ nav > ul.pagination > li > a{
                                 </div>
                             </div>
 
-                            <div class="col-12 mt-5" id="table-jobdatings">
+                            <div class="col-12 mt-5 bg-white" id="table-jobdatings">
                                 <div class="d-flex my-4">
                                     <h3>Mes évènemements / jobdatings</h3>
                                 </div>
@@ -656,7 +656,7 @@ nav > ul.pagination > li > a{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($entreprise->user->events as $event)
+                                            @foreach ($entreprise->user->events->take(10) as $event)
                                             <tr>
                                             <td class="d-none">{{$event->created_at}}</td>
                                                 <td class="text-left">{{$event->organizer_name}}</td>

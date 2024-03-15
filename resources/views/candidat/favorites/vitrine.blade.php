@@ -364,7 +364,7 @@ nav > ul.pagination > li > a{
 
                         <div class="row justify-content-left align-items-left px-3" style="display:none"
                             id="news-container">
-                            <div class="col-12 mt-5" id="table-formations">
+                            <div class="col-12 mt-5 bg-white" id="table-formations">
                                 <div class="d-flex my-4">
                                     <h3>Les formations proposées</h3>
                                 </div>
@@ -424,7 +424,7 @@ nav > ul.pagination > li > a{
                                 </div>
                             </div>
 
-                            <div class="col-12 mt-5" id="table-jobdatings">
+                            <div class="col-12 mt-5 bg-white" id="table-jobdatings">
                                 <div class="d-flex my-4">
                                     <h3>Les évènemements / jobdatings</h3>
                                 </div>

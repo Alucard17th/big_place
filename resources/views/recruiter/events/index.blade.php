@@ -250,7 +250,7 @@
                         <label class="form-check-label" for="free_entry">Gratuite</label>
                     </div>
                     <div class="form-group" id="price_field">
-                        <label class="form-check-label" for="entry_price">Prix de l'entré</label>
+                        <label class="form-check-label" for="entry_price">Prix de l'entrée</label>
                         <input class="form-control" type="text" id="entry_price" name="entry_price" required>
                     </div>
                 </div>

@@ -332,7 +332,7 @@
                                         name="publication_date" required
                                         data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
                                         data-parsley-errors-container="#custom-error-message-publish">
-                                    <small class="form-text text-danger">La date doit etre supérieure à la date de publication de l’offre.</small>
+                                    <small class="form-text text-danger">La date doit être supérieure à la date de publication de l’offre.</small>
                                 </div>
                                 <div id="custom-error-message-publish"></div>
 
