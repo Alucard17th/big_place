@@ -216,7 +216,7 @@
                                     <div class="draft table-container" style="display: none" id="draft-container">
                                         <table class="table table-sm table-bordered" id="data-table-draft">
                                             <thead class="thead-light">
-                                                <tr class="@if(threadHasUnreadEmail($thread)) unread @else read @endif">
+                                               <tr>
                                                     <!-- <th>
                                                         <input type="checkbox" class="select-all-checkbox" data-table="inbox">
                                                     </th> -->
