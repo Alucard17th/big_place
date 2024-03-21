@@ -602,7 +602,7 @@ nav > ul.pagination > li > a{
                                                 $durationInDays = $startDate->diffInDays($endDate);
                                                 @endphp
                                             <tr>
-                                                <td class="d-none" data-order="{{ \Carbon\Carbon::parse($formation->created_at)->format('Ymd') }}">{{$formation->created_at}}</td>
+                                                <td class="d-none">{{$formation->created_at}}</td>
                                                 <td>{{$formation->job_title}}</td>
                                                 <td>{{$durationInDays}}</td>
                                                 <td data-order="{{ \Carbon\Carbon::parse($formation->start_date)->format('Ymd') }}">
@@ -922,7 +922,7 @@ $(document).ready(function() {
     $('#data-table').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
-        "order": [[0, "desc"]],
+        "order": [[ 0, "desc" ]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -934,7 +934,6 @@ $(document).ready(function() {
             },
             "search": "",
             "searchPlaceholder": "Rechercher...",
-            "zeroRecords": "Aucun résultat trouvé.",
             // Add other language customization options if needed
         },
         // "pagingType": "full_numbers",
