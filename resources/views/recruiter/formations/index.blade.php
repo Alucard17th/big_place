@@ -136,7 +136,7 @@
                                                 </a>
                                                 @endif
                                                 <a type="button" class="bg-btn-seven mt-2 docs-modal-btn" data-required-docs="{{$formation->uploaded_documents}}">
-                                                    <i class="las la-download"></i>
+                                                    <i class="las la-eye"></i>
                                                     Documents
                                                 </a>
                                                     @role('recruiter')

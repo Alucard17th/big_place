@@ -595,7 +595,7 @@ nav > ul.pagination > li > a{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($entreprise->user->formations->take(10) as $formation)
+                                            @foreach ($entreprise->user->formations as $formation)
                                                 @php
                                                 $startDate = \Carbon\Carbon::parse($formation->start_date);
                                                 $endDate = \Carbon\Carbon::parse($formation->end_date);
@@ -646,7 +646,7 @@ nav > ul.pagination > li > a{
                                         <thead class="thead-light">
                                             <tr>
                                                 <th class="d-none">Crée le</th>
-                                                <th>Nom de l’entreprise</th>
+                                                <th>Entreprise</th>
                                                 <th>Poste</th>
                                                 <th>N° Max de Participants</th>
                                                 <th>Participants Inscrits</th>
@@ -657,9 +657,9 @@ nav > ul.pagination > li > a{
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($entreprise->user->events->take(10) as $event)
+                                            @foreach ($entreprise->user->events as $event)
                                             <tr>
-                                                <td class="d-none" data-order="{{ \Carbon\Carbon::parse($event->created_at)->format('Ymd') }}">{{$event->created_at}}</td>
+                                                <td class="d-none" data-order="{{ $event->created_at }}">{{$event->created_at}}</td>
                                                 <td class="text-left">{{$event->organizer_name}}</td>
                                                 <td class="text-left">{{$event->job_position}}</td>
                                                 <td class="text-left">{{$event->participants_count}}</td>
