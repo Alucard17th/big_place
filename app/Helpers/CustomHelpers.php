@@ -175,3 +175,18 @@ if (!function_exists('getUserCvById')) {
         }
     }
 }
+
+if (!function_exists('threadHasUnreadEmail')) {
+    function threadHasUnreadEmail($thread)
+    {
+        foreach ($thread->emails as $email) {
+            if($email->user_id != auth()->id()) {
+                if (!$email->is_read) {
+                    return true;
+                }
+            }
+           
+        }
+        return false;
+    }
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Candidat;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Email;
+use App\Models\Thread;
 use App\Models\User;
 
 class EmailController extends Controller
@@ -46,10 +47,16 @@ class EmailController extends Controller
         $user = auth()->user();
         // Create an Email model for each selected receiver
         foreach ($receivers as $receiverId) {
+            $thread = new Thread();
+            $thread->user_id = $user->id;
+            $thread->participant_id = $receiverId;
+            $thread->save();
+
             $email = new Email([
                 'subject' => $subject,
                 'message' => $message,
                 'receiver_id' => $receiverId,
+                'thread_id' => $thread->id,
                 // Add other fields as needed
             ]);
 

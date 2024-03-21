@@ -289,6 +289,7 @@ background: #13D527;
 
                                         <div class="offre-end-date my-4">
                                             Liste des participants : 
+                                            <button onclick="downloadParticipantList()">Télécharger</button>
                                             <ol class="pl-5">
                                                 @foreach($formation->participants as $participant)
                                                     <li>{{$participant->name}}</li>
@@ -342,6 +343,31 @@ background: #13D527;
 
 @push('scripts')
 <script>
+    function downloadParticipantList() {
+    var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
+            "xmlns:w='urn:schemas-microsoft-com:office:word' "+
+            "xmlns='http://www.w3.org/TR/REC-html40'>"+
+            "<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+    var footer = "</body></html>";
+
+     // Get the participant list HTML
+    var participantListHTML = "<ol>";
+    document.querySelectorAll('.pl-5 li').forEach(function(item) {
+        participantListHTML += "<li>" + item.textContent + "</li>";
+    });
+    participantListHTML += "</ol>";
+
+    // Concatenate participant list HTML to the sourceHTML
+    var sourceHTML = header + participantListHTML + footer;
+    
+    var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    var fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = 'Liste-des-participants-de-{{ $formation->job_title }}.doc';
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+}
 document.addEventListener('DOMContentLoaded', function() {
 
 

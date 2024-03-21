@@ -22,6 +22,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Mail\SendRdvInvitation;
 use App\Mail\EntrepriseRdvInvitation;
 use App\Mail\RendezVousDateOrHourChanged;
+use App\Mail\EventCancelEmail;
+use App\Mail\FormationCancelEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use RahulHaque\Filepond\Facades\Filepond;
@@ -1041,6 +1043,13 @@ class RecruiterController extends Controller
         $event = Event::find($id);
         $event->statut = 'Annulé';
         $event->save();
+        if($event->participants != null && count($event->participants) > 0){
+            foreach($event->participants as $participant){
+                Mail::to($participant->email)->send(new EventCancelEmail($participant, $event));
+            }
+        }
+        // Mail::to($participant->email)->send(new RendezVousDateOrHourChanged($emailData));
+        
         toast('Evenement annulé.','success')->autoClose(5000);
         return redirect()->back();
     }
@@ -1227,6 +1236,13 @@ class RecruiterController extends Controller
         $formation = Formation::find($id);
         $formation->status = 'Ferme';
         $formation->save();
+        
+        if($formation->participants != null && count($formation->participants) > 0){
+            foreach($formation->participants as $participant){
+                // Mail::to($participant->email)->send(new FormationCancelEmail($participant, $formation));
+            }
+        }
+
         toast('Formation fermée','success')->autoClose(5000);
         return redirect()->back();
     }
@@ -1242,14 +1258,16 @@ class RecruiterController extends Controller
     public function myMails(){
         $user = auth()->user();
 
+        // dd($user->threads[0]->emails);
+
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
-            $emails = $user->emails()->orderBy('created_at', 'desc')->get();
+            $emails = $user->threads->emails()->orderBy('created_at', 'desc')->get();
             $receivedEmails = Email::where('receiver_id', $user->id)->orderBy('created_at', 'desc')->get();
         }else{
             // OTHER TEAM MEMBERS
             $entreprise = Entreprise::where('id', $user->parent_entreprise_id)->first();
-            $emails = $entreprise->user->emails;
+            $emails = $entreprise->user->threads->emails;
             $receivedEmails = Email::where('receiver_id', $entreprise->user->id)->orderBy('created_at', 'desc')->get();
         }
         $draftEmails = $emails->where('draft', true)->where('trash', false);

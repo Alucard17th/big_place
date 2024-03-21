@@ -127,4 +127,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Message::class, 'user_id');
     }
+
+    public function threads()
+    {
+        return $this->hasMany(Thread::class, 'user_id');
+    }
 }

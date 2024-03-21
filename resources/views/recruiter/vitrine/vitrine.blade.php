@@ -602,10 +602,11 @@ nav > ul.pagination > li > a{
                                                 $durationInDays = $startDate->diffInDays($endDate);
                                                 @endphp
                                             <tr>
-                                                <td class="d-none">{{$formation->created_at}}</td>
+                                                <td class="d-none" data-order="{{ \Carbon\Carbon::parse($formation->created_at)->format('Ymd') }}">{{$formation->created_at}}</td>
                                                 <td>{{$formation->job_title}}</td>
                                                 <td>{{$durationInDays}}</td>
-                                                <td>{{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }}
+                                                <td data-order="{{ \Carbon\Carbon::parse($formation->start_date)->format('Ymd') }}">
+                                                    {{ \Carbon\Carbon::parse($formation->start_date)->formatLocalized('%d-%m-%Y') }}
                                                     au
                                                     {{ \Carbon\Carbon::parse($formation->end_date)->formatLocalized('%d-%m-%Y') }}
                                                 </td>
@@ -658,7 +659,7 @@ nav > ul.pagination > li > a{
                                         <tbody>
                                             @foreach ($entreprise->user->events->take(10) as $event)
                                             <tr>
-                                            <td class="d-none">{{$event->created_at}}</td>
+                                                <td class="d-none" data-order="{{ \Carbon\Carbon::parse($event->created_at)->format('Ymd') }}">{{$event->created_at}}</td>
                                                 <td class="text-left">{{$event->organizer_name}}</td>
                                                 <td class="text-left">{{$event->job_position}}</td>
                                                 <td class="text-left">{{$event->participants_count}}</td>
@@ -671,7 +672,7 @@ nav > ul.pagination > li > a{
                                                     Non
                                                     @endif
                                                 </td>
-                                                <td class="text-left">
+                                                <td class="text-left" data-order="{{ \Carbon\Carbon::parse($event->event_date)->format('Ymd') }}">
                                                     {{ \Carbon\Carbon::parse($event->event_date . ' ' . $event->event_hour)->formatLocalized('%d-%m-%Y à %H:%M') }}
                                                 </td>
                                                 <td>

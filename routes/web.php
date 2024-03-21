@@ -4,6 +4,7 @@ use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ThreadController;
 
 use App\Http\Controllers\Candidat\CandidatController;
 use App\Http\Controllers\Candidat\CurriculumController;
@@ -187,15 +188,14 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     Route::get('/mes-formations/delete/{id}', [RecruiterController::class, 'myFormationsDelete'])->name('recruiter.formation.delete');
     
     // EMAILS 
-    Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
-    Route::get('/mes-mails/create', [RecruiterController::class, 'createMail'])->name('recruiter.email.create');
-    Route::get('/mon-mail/show/{id}', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
-    Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
-    Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
-    Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
-    Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
-    Route::get('/mes-mails/destroy/{id}', [RecruiterController::class, 'myMailsDestroy'])->name('recruiter.emails.destroy');
-    Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
+    // Route::get('/mes-mails', [RecruiterController::class, 'myMails'])->name('recruiter.mails');
+    // Route::get('/mon-mail/show/{id}', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
+    // Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
+    // Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
+    // Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
+    // Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
+    // Route::get('/mes-mails/destroy/{id}', [RecruiterController::class, 'myMailsDestroy'])->name('recruiter.emails.destroy');
+    // Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
     
 
     // STATS
@@ -231,6 +231,22 @@ Route::group(['middleware' => ['role:recruiter|limited|restricted']], function (
     // Route::get('/chat', [RecruiterController::class, 'chat'])->name('recruiter.admin.chat');
 });
 
+
+// THREADS AND EMAILS
+Route::get('/mes-mails', [ThreadController::class, 'index'])->name('recruiter.mails');
+Route::get('/mes-mails/{id}', [ThreadController::class, 'show'])->name('recruiter.mails.show');
+Route::get('/mes-mails-create', [ThreadController::class, 'create'])->name('recruiter.mails.create');
+Route::post('/mes-mails-store', [ThreadController::class, 'store'])->name('recruiter.mails.store');
+Route::post('/mes-mails-store-draft', [ThreadController::class, 'storeAsDraft'])->name('recruiter.mails.store.draft');
+Route::post('/mes-mails/reply', [ThreadController::class, 'reply'])->name('recruiter.emails.reply');
+
+Route::get('/mon-mail/show/{id}', [RecruiterController::class, 'getMyMail'])->name('recruiter.email.show');
+Route::post('/email/recruiter/store', [EmailController::class, 'store'])->name('recruiter.email.store');
+Route::post('/email/recruiter/draft', [EmailController::class, 'draft'])->name('recruiter.email.draft');
+Route::get('/mes-mails/show/{id}', [RecruiterController::class, 'myMailsShow'])->name('recruiter.emails.show');
+Route::get('/mes-mails/delete/{id}', [RecruiterController::class, 'myMailsDelete'])->name('recruiter.emails.delete');
+Route::get('/mes-mails/destroy/{id}', [RecruiterController::class, 'myMailsDestroy'])->name('recruiter.emails.destroy');
+Route::post('/mes-mails/ajax-delete', [RecruiterController::class, 'myMailsAjaxDelete'])->name('recruiter.emails.ajax.delete');
 
 Route::post('/mon-curriculum', [CurriculumController::class, 'curriculumStore'])->name('candidat.curriculum.store');
 Route::post('/mon-curriculum/cv/store', [CurriculumController::class, 'saveCvFile'])->name('candidat.cv.store');

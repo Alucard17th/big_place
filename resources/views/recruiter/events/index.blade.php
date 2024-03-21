@@ -162,7 +162,7 @@
                                                 @endif
 
                                                 <a type="button" class="bg-btn-seven mt-2 docs-modal-btn" data-required-docs="{{$event->required_documents}}">
-                                                    <i class="las la-download"></i>
+                                                    <i class="las la-file"></i>
                                                     Documents
                                                 </a>
                                                 @role('recruiter')

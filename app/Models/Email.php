@@ -15,11 +15,18 @@ class Email extends Model
         'message',
         'receiver_id',
         'draft',
-        'trash'
+        'trash',
+        'thread_id',
+        'is_read',
     ];
     
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'email_id');
     }
 }

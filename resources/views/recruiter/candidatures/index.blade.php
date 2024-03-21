@@ -41,6 +41,10 @@
     background-color: #fff;
 }
 
+.kanban-board-header.accepted {
+    background-color: #fff;
+}
+
 .kanban-title-board {
     color: #000;
 }
@@ -441,31 +445,46 @@ $(document).ready(function() {
         userid: candidature.user.id,
     }));
 
+    const accepted = candidature.filter((candidature) => candidature.status === 'accepted').map((candidature) => ({
+        id: candidature.id,
+        title: '<img src="https://i.pravatar.cc/300" width="50" height="50" class="rounded-circle mr-2" />' +
+            candidature.user.name + '<br/>' +
+            candidature.title + '<br/>' +
+            'Postulé le ' + new Date(candidature.created_at).toLocaleDateString('en-GB'),
+        userid: candidature.user.id,
+    }));
+
     var kanban1 = new jKanban({
         element: '#demo1',
         boards: [{
                 'id': 'coming',
-                'title': '<span class="text-info"><i class="fas fa-circle"></i></span> Entretiens programmés',
+                'title': '<span class="text-secondary"><i class="fas fa-circle"></i></span>Entretiens programmés',
                 'class': 'coming',
                 'item': coming
             },
             {
                 'id': 'done',
-                'title': '<span class="text-success"><i class="fas fa-circle"></i></span> Entretiens effectués',
+                'title': '<span class="text-info"><i class="fas fa-circle"></i></span>Entretiens effectués',
                 'class': 'done',
                 'item': done
             },
             {
                 'id': 'refused',
-                'title': '<span class="text-danger"><i class="fas fa-circle"></i></span> Candidats refusés',
+                'title': '<span class="text-danger"><i class="fas fa-circle"></i></span>Candidats refusés',
                 'class': 'refused',
                 'item': refused
             },
             {
                 'id': 'waiting',
-                'title': '<span class="text-warning"><i class="fas fa-circle"></i></span> En attente de validation',
+                'title': '<span class="text-warning"><i class="fas fa-circle"></i></span>En attente de validation',
                 'class': 'waiting',
                 'item': waiting
+            },
+            {
+                'id': 'accepted',
+                'title': '<span class="text-success"><i class="fas fa-circle"></i></span>Candidats validés',
+                'class': 'accepted',
+                'item': accepted
             }
         ],
         dropEl: function(el, target, source, sibling) {
@@ -655,11 +674,23 @@ $(document).ready(function() {
             }
         })
     })
-
+    const activeView = getActiveView();
     const kanbanBtn = document.getElementById('kanbanBtn');
     const tableBtn = document.getElementById('tableBtn');
     const kanbanView = document.querySelector('.kanban-view');
     const tableView = document.querySelector('.table-view');
+
+    if(activeView === 'kanban') {
+        kanbanBtn.classList.add('active');
+        tableBtn.classList.remove('active');
+        kanbanView.style.display = 'block';
+        tableView.style.display = 'none';
+    }else{
+        kanbanBtn.classList.remove('active');
+        tableBtn.classList.add('active');
+        kanbanView.style.display = 'none';
+        tableView.style.display = 'block';
+    }
 
     // Add click event listener to the kanban button
     kanbanBtn.addEventListener('click', function() {
@@ -670,6 +701,9 @@ $(document).ready(function() {
 
         kanbanBtn.classList.add('active');
         tableBtn.classList.remove('active');
+
+        // save the active view to local storage
+        localStorage.setItem('activeView', 'kanban');
     });
 
     // Add click event listener to the table button
@@ -681,6 +715,7 @@ $(document).ready(function() {
 
         tableBtn.classList.add('active');
         kanbanBtn.classList.remove('active');
+        localStorage.setItem('activeView', 'table');
     });
 
     $('.add-observation-btn').click(function() {
@@ -710,6 +745,8 @@ $(document).ready(function() {
                 observation: observation,
             },
             success: function(data) {
+                // save the current active tab in local storage
+                localStorage.setItem('activeView', 'table');
                 // reload the page
                 location.reload();
             },
@@ -718,6 +755,10 @@ $(document).ready(function() {
             }
         })
     })
+
+    function getActiveView() {
+        return localStorage.getItem('activeView');
+    }
 
 })
 </script>
