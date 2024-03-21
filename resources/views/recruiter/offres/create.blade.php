@@ -129,7 +129,7 @@
                                     <input type="date" class="form-control" id="start_date" name="start_date"
                                         data-parsley-min-message="La date doit être supérieure ou égale à la date du jour."
                                         data-parsley-errors-container="#custom-error-message"
-                                        data-parsley-error-message="La date doit être supérieure ou égale à la date du jour."
+                                        
                                         required>
                                     <small class="form-text text-muted">La date doit être supérieure ou égale à la date du jour.</small>
                                 </div>
