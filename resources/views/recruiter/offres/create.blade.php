@@ -127,9 +127,9 @@
                                 <div class="form-group">
                                     <label for="desired_start_date">Date de prise de poste souhaitée</label>
                                     <input type="date" class="form-control" id="start_date" name="start_date"
-                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui et à la date de la publication de l'offre."
+                                        data-parsley-min-message="La date doit être supérieure ou égale à la date du jour."
                                         data-parsley-errors-container="#custom-error-message"
-                                        data-parsley-error-message="La date doit être égale ou supérieure à la date d'aujourd'hui et à la date de la publication de l'offre."
+                                        data-parsley-error-message="La date doit être supérieure ou égale à la date du jour."
                                         required>
                                     <small class="form-text text-danger">La date doit être supérieure ou égale à la date du jour.</small>
                                 </div>
@@ -330,9 +330,9 @@
                                     <label for="publication_date">Date de publication de l’offre</label>
                                     <input type="date" class="form-control" id="publication_date"
                                         name="publication_date" required
-                                        data-parsley-min-message="La date doit être égale ou supérieure à la date d'aujourd'hui."
+                                        data-parsley-min-message="La date doit être supérieure ou égale à la date du jour"
                                         data-parsley-errors-container="#custom-error-message-publish">
-                                    <small class="form-text text-danger">La date doit être supérieure à la date de publication de l’offre.</small>
+                                    <small class="form-text text-danger">La date doit être supérieure ou égale à la date du jour.</small>
                                 </div>
                                 <div id="custom-error-message-publish"></div>
 
@@ -342,10 +342,10 @@
                                     <label for="unpublish_date">Dépublier l’offre le</label>
                                     <input type="date" class="form-control" id="unpublish_date" name="unpublish_date"
                                         required
-                                        data-parsley-min-message="La date doit être égale ou supérieure à la date de publication."
+                                        data-parsley-min-message="la date doit etre supérieure ou égale à la date de publication de l’offre."
                                         data-parsley-errors-container="#custom-error-message-unpublish"
                                     >
-                                    <small class="form-text text-danger">L'année ne doit pas dépassé l'année en cours.</small>
+                                    <small class="form-text text-danger">La date doit etre supérieure ou égale à la date de publication de l’offre.</small>
                                 </div>
                                 <div id="custom-error-message-unpublish"></div>
 
