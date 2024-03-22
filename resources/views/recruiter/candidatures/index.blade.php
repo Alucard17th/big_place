@@ -567,15 +567,15 @@ $(document).ready(function() {
 
                     if (rdv) {
                         let rdvContent = `<div>
-                                                <div>Date : ${rdv.date} </div>
-                                                <div>Heure : ${rdv.heure}</div>
-                                                <div>Type : ${rdv.is_type_distanciel ? 'Distanciel' : 'Présentiel'}</div>
-                                                ${rdv.is_type_distanciel ? '' : '<div>Adresse : ' + rdv.address + '</div>'}
-                                            </div>`;
+                            <div>Date : ${rdv.date} </div>
+                            <div>Heure : ${rdv.heure}</div>
+                            <div>Type : ${rdv.is_type_distanciel ? 'Distanciel' : 'Présentiel'}</div>
+                            ${rdv.is_type_distanciel ? '' : '<div>Adresse : ' + rdv.address + '</div>'}
+                        </div>`;
                                             
                         $('.ex-rdv-content').replaceWith(rdvContent);
                     } else {
-                        console.error("Error: 'rdv' object is undefined.");
+                        $('.ex-rdv-content').replaceWith('<div>Aucun rendez-vous.</div>');
                     }
 
                     $('.exchanges-comments').empty();

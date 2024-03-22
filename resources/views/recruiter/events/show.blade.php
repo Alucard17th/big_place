@@ -1,6 +1,11 @@
 @extends('layouts.dashboard')
 @push('styles')
 <style>
+.btn-download{
+    font-size: 16px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
 </style>
 @endpush
 
@@ -40,7 +45,7 @@
                                             @else
                                             <span class="text-white badge bg-info">Entrée payante
                                                 <div>
-                                                    Prix de l'entrée : {{ $event->entry_price }}   Euro      
+                                                    Prix de l'entrée : {{ $event->entry_price }}   Euros    
                                                 </div>
                                             </span>
                                             @endif
@@ -66,7 +71,7 @@
                                                 {{ $event->description }}</li>
                                             <li>
                                                 Liste des participants : 
-                                                <button onclick="downloadParticipantList()">Télécharger</button>
+                                                <button class="btn-download" onclick="downloadParticipantList()">Télécharger</button>
                                                 <ol class="pl-5">
                                                     @foreach($event->participants as $participant)
                                                         <li>{{$participant->name}}</li>

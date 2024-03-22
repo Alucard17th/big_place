@@ -181,6 +181,12 @@ background: #13D527;
     color:#302ea7;
     font-size: 30px;
 }
+
+.btn-download{
+    font-size: 16px;
+    border: 1px solid black;
+    padding: 5px 10px;
+}
 </style>
 @endpush
 
@@ -289,7 +295,7 @@ background: #13D527;
 
                                         <div class="offre-end-date my-4">
                                             Liste des participants : 
-                                            <button onclick="downloadParticipantList()">Télécharger</button>
+                                            <button class="btn-download" onclick="downloadParticipantList()">Télécharger</button>
                                             <ol class="pl-5">
                                                 @foreach($formation->participants as $participant)
                                                     <li>{{$participant->name}}</li>

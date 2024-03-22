@@ -417,7 +417,7 @@ class RecruiterController extends Controller
         foreach($participants as $participant){
             // Send Emails TO all the participant 
             $recipient = User::find($participant);
-            Mail::to($recipient->email)->send(new SendRdvInvitation($emailDetails));
+            // Mail::to($recipient->email)->send(new SendRdvInvitation($emailDetails));
             $email = Email::create([
                 'user_id' => auth()->user()->id,
                 'subject' => 'Rendez-vous',
@@ -443,7 +443,7 @@ class RecruiterController extends Controller
             'address' => $request->address != '' ? $request->address : 'A distance'
         ];
 
-        Mail::to($user->email)->send(new EntrepriseRdvInvitation($entrepriseEmailDetails));
+        // Mail::to($user->email)->send(new EntrepriseRdvInvitation($entrepriseEmailDetails));
 
         return response()->json([
             'status' => 'success',
