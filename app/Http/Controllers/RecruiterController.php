@@ -2116,7 +2116,7 @@ class RecruiterController extends Controller
     public function getUserCandidatures($id, $candidatureId){
         $curriculum = Curriculum::where('user_id', $id)->get();
         $rdv = RendezVous::where('candidature_id', $candidatureId)->get();
-        $candidature = Candidature::find($candidatureId)->with('commentaires.user')->get();
+        $candidature = Candidature::where('id', $candidatureId)->with('commentaires.user')->get();
         $response = compact('curriculum', 'rdv', 'candidature');
         return response()->json($response);
     }
