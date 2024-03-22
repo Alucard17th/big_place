@@ -527,8 +527,9 @@ $(document).ready(function() {
 
                     data = data.curriculum[0];
 
-                    // let valeursArray = Array.isArray(data.valeurs) ? data.valeurs : JSON.parse(data.valeurs);
-                    let valeursArray = Array.isArray(valeursArray) ? valeursArray.join(', ') : '';
+                    let valeursArray = Array.isArray(data.valeurs) ? data.valeurs : JSON.parse(data.valeurs);
+                    let valeursString = Array.isArray(valeursArray) ? valeursArray.join(', ') : '';
+
                     let htmlContent = `
                         <div class="col-md-12">
                             <div class="row">
@@ -555,7 +556,7 @@ $(document).ready(function() {
                                         <li>Nombre d'années d'expérience: ${data.annees_experience} années</li>
                                         <li>Niveau d'études: ${data.niveau_etudes}</li>
                                         <li>Prétentions salariales (Ke): ${data.pretentions_salariales}</li>
-                                        <li>Valeurs: ${valeursArray.join(', ')}</li>
+                                        <li>Valeurs: ${valeursString}</li>
                                     </ul>
                                 </div>
                             </div>
