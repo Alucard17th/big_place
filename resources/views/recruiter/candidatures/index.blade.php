@@ -527,8 +527,8 @@ $(document).ready(function() {
 
                     data = data.curriculum[0];
 
-                    let valeursArray = Array.isArray(data.valeurs) ? data.valeurs : JSON.parse(data.valeurs);
-
+                    // let valeursArray = Array.isArray(data.valeurs) ? data.valeurs : JSON.parse(data.valeurs);
+                    let valeursArray = Array.isArray(valeursArray) ? valeursArray.join(', ') : '';
                     let htmlContent = `
                         <div class="col-md-12">
                             <div class="row">
