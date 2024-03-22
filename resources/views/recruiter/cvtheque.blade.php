@@ -619,6 +619,103 @@ document.addEventListener('DOMContentLoaded', function() {
         sendRdv(selectedCandidates);
     })
 
+    // function sendRdv(selectedValues) {
+    //     if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
+    //             // make the button disabled
+    //             createRendezVousButton.disabled = true;
+    //             // show the loading 
+    //             createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+    //             // Create a FormData object to store the form data
+
+    //             const crenau1Date = document.getElementById('crenau_1_date').value;
+    //             const crenau1Time = document.getElementById('crenau_1_time').value;
+    //             const crenau2Date = document.getElementById('crenau_2_date').value;
+    //             const crenau2Time = document.getElementById('crenau_2_time').value;
+    //             const crenau3Date = document.getElementById('crenau_3_date').value;
+    //             const crenau3Time = document.getElementById('crenau_3_time').value;
+    //             const isTypePresentiel = document.getElementById('is_type_presentiel').checked;
+    //             const isTypeDistanciel = document.getElementById('is_type_distanciel').checked;
+    //             const address = document.getElementById('rdv_address').value;
+
+    //             console.log(crenau1Date, crenau1Time, crenau2Date, crenau2Time, crenau3Date, crenau3Time);
+    //             return; // Stop form submission
+
+    //             if (crenau1Date == '' || crenau1Time == '' || crenau2Date == '' || crenau2Time == '' || crenau3Date == '' || crenau3Time == '') {
+    //                 // Display error message for missing date/time fields
+    //                 alert('Veuillez remplir tous les champs de date et heure.');
+    //                 return; // Stop form submission
+    //             }
+
+    //             const formData = new FormData();
+    //             formData.append('crenau_1_date', crenau1Date);
+    //             formData.append('crenau_1_time', crenau1Time);
+    //             formData.append('crenau_2_date', crenau2Date);
+    //             formData.append('crenau_2_time', crenau2Time);
+    //             formData.append('crenau_3_date', crenau3Date);
+    //             formData.append('crenau_3_time', crenau3Time);
+    //             formData.append('is_type_presentiel', isTypePresentiel);
+    //             formData.append('is_type_distanciel', isTypeDistanciel);
+    //             formData.append('selectedValues', JSON.stringify(selectedValues));
+    //             formData.append('address', address);
+
+    //             // Add the form fields to the formData
+    //             // formData.append('crenau_1_date', document.getElementById('crenau_1_date').value);
+    //             // formData.append('crenau_1_time', document.getElementById('crenau_1_time').value);
+    //             // formData.append('crenau_2_date', document.getElementById('crenau_2_date').value);
+    //             // formData.append('crenau_2_time', document.getElementById('crenau_2_time').value);
+    //             // formData.append('crenau_3_date', document.getElementById('crenau_3_date').value);
+    //             // formData.append('crenau_3_time', document.getElementById('crenau_3_time').value);
+    //             // formData.append('is_type_presentiel', document.getElementById('is_type_presentiel').checked);
+    //             // formData.append('is_type_distanciel', document.getElementById('is_type_distanciel').checked);
+    //             // formData.append('selectedValues', JSON.stringify(selectedValues));
+    //             // formData.append('address', document.getElementById('rdv_address').value);
+
+    //             // Send the data using AJAX
+    //             fetch('{{ route('recruiter.invite.candidates') }}', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': '{{ csrf_token() }}', // Include CSRF token
+    //                 },
+    //                 body: formData, // Use formData as the body
+    //             })
+    //                 .then(response => response.json())
+    //                 .then(data => {
+    //                     // Handle the response, e.g., show a success message
+    //                     // refresh the current page
+                    
+    //                     creanuea_1_msg.innerHTML = '';
+    //                     creanuea_2_msg.innerHTML = '';
+    //                     creanuea_3_msg.innerHTML = '';
+    //                     for (const key in data.errors) {
+    //                         if (data.errors.hasOwnProperty(key)) {
+    //                             const errorMessage = data.errors[key];
+    //                             const element = document.querySelector(`#creanuea_${parseInt(key) + 1}_msg`);
+    //                             if (element) {
+    //                                 // Update the inner HTML of the corresponding element
+    //                                 element.innerHTML = 'Erreur: ' + errorMessage;
+    //                             }
+    //                         }
+    //                     }
+
+    //                     console.log(data.status);
+    //                         if(data.status == 'success'){
+    //                             $('.alert-success').show();
+    //                         }
+    //                         createRendezVousButton.disabled = false;
+    //     // show the loading 
+    //     createRendezVousButton.innerHTML = 'Envoyer';
+
+    //                 })
+    //                 .catch(error => {
+    //                     // Handle errors, e.g., show an error message
+    //                     console.error(error);
+    //                 });
+    //     }else {
+    //         // Show an error message to inform the user to select at least one checkbox
+    //         alert('Veuillez choisir au moins un type de RDV');
+    //     }
+        
+    // }
     function sendRdv(selectedValues) {
         if (document.getElementById('is_type_presentiel').checked || document.getElementById('is_type_distanciel').checked) {
                 // make the button disabled
@@ -626,7 +723,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // show the loading 
                 createRendezVousButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
                 // Create a FormData object to store the form data
-
                 const crenau1Date = document.getElementById('crenau_1_date').value;
                 const crenau1Time = document.getElementById('crenau_1_time').value;
                 const crenau2Date = document.getElementById('crenau_2_date').value;
@@ -637,12 +733,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isTypeDistanciel = document.getElementById('is_type_distanciel').checked;
                 const address = document.getElementById('rdv_address').value;
 
-                console.log(crenau1Date, crenau1Time, crenau2Date, crenau2Time, crenau3Date, crenau3Time);
-                return; // Stop form submission
-
                 if (crenau1Date == '' || crenau1Time == '' || crenau2Date == '' || crenau2Time == '' || crenau3Date == '' || crenau3Time == '') {
                     // Display error message for missing date/time fields
                     alert('Veuillez remplir tous les champs de date et heure.');
+                    createRendezVousButton.disabled = false;
+                    createRendezVousButton.innerHTML = 'Envoyer';
                     return; // Stop form submission
                 }
 
@@ -657,18 +752,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.append('is_type_distanciel', isTypeDistanciel);
                 formData.append('selectedValues', JSON.stringify(selectedValues));
                 formData.append('address', address);
-
-                // Add the form fields to the formData
-                // formData.append('crenau_1_date', document.getElementById('crenau_1_date').value);
-                // formData.append('crenau_1_time', document.getElementById('crenau_1_time').value);
-                // formData.append('crenau_2_date', document.getElementById('crenau_2_date').value);
-                // formData.append('crenau_2_time', document.getElementById('crenau_2_time').value);
-                // formData.append('crenau_3_date', document.getElementById('crenau_3_date').value);
-                // formData.append('crenau_3_time', document.getElementById('crenau_3_time').value);
-                // formData.append('is_type_presentiel', document.getElementById('is_type_presentiel').checked);
-                // formData.append('is_type_distanciel', document.getElementById('is_type_distanciel').checked);
-                // formData.append('selectedValues', JSON.stringify(selectedValues));
-                // formData.append('address', document.getElementById('rdv_address').value);
 
                 // Send the data using AJAX
                 fetch('{{ route('recruiter.invite.candidates') }}', {
@@ -696,14 +779,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                 }
                             }
                         }
-
-                        console.log(data.status);
-                            if(data.status == 'success'){
-                                $('.alert-success').show();
-                            }
-                            createRendezVousButton.disabled = false;
-        // show the loading 
-        createRendezVousButton.innerHTML = 'Envoyer';
+                      
+                        if(data.status == 'success'){
+                            $('.alert-success').show();
+                        }
+                        createRendezVousButton.disabled = false;
+                        // show the loading 
+                        createRendezVousButton.innerHTML = 'Envoyer';
 
                     })
                     .catch(error => {
@@ -713,8 +795,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }else {
             // Show an error message to inform the user to select at least one checkbox
             alert('Veuillez choisir au moins un type de RDV');
+            createRendezVousButton.disabled = false;
+            createRendezVousButton.innerHTML = 'Envoyer';
         }
-        
     }
 
     $("#use_select").on("change", function() {
