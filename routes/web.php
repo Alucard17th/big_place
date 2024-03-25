@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecruiterController;
 use App\Http\Controllers\AdminController;
@@ -46,7 +46,6 @@ use App\Imports\JobImport;
 Route::get('/excel-import', function () {
     set_time_limit(0);
     $data = json_decode(file_get_contents(storage_path('app/code_metier.json')));
-    // dd($data);
     foreach ($data->metier as $item) {
         print_r($item->Metier);
         echo'<br>';
@@ -397,4 +396,4 @@ Route::get('/user', function() {
 Route::resource('/chat', ChatController::class);
 
 
-Auth::routes();
+Auth::routes(); -->
