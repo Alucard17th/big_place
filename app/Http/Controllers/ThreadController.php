@@ -49,6 +49,7 @@ class ThreadController extends Controller
     public function show($id){
         $user = auth()->user();
         $thread = Thread::find($id);
+        $thread->emails()->where('receiver_id', $user->id)->update(['is_read' => true]);
         return view('recruiter.threads.show', compact('thread'));
     }
   
@@ -90,8 +91,7 @@ class ThreadController extends Controller
         // }else{
         //     return redirect()->route('recruiter.mails');
         // }
-        return redirect()->back();
-        // return redirect()->back();
+        return redirect()->route('recruiter.mails');
     }
 
     public function storeAsDraft(Request $request){

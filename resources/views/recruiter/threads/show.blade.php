@@ -31,7 +31,6 @@
                                 <div class="d-flex align-items-center">
                                     <h5 class="mr-3">Objet : </h5>    
                                     <h4 >{{ $email->subject }}</h4>
-                                    <p >{{ $email->is_read == 0 ? '(non lu)' : '(lu)' }}</p>
                                 </div>
 
                                 @if($email->user_id == auth()->user()->id)

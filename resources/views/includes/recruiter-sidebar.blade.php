@@ -103,6 +103,12 @@
                         contrats</span>
                 </a>
             </li>
+            <li class="{{ Str::contains(Request::url(), 'chat') ? 'active' : '' }}">
+                <a href="/chat" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-3"
+                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes Chats</span>
+                </a>
+            </li>
             <li class="{{ Str::contains(Request::url(), '/mes-stats') ? 'active' : '' }}">
                 <a href="/mes-stats" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"

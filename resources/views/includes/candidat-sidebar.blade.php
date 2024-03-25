@@ -29,8 +29,8 @@
                         Recherches</span>
                 </a>
             </li>
-            <li class="{{ Str::contains(Request::url(), 'candidat-emails') ? 'active' : '' }}">
-                <a href="/candidat-emails" class="d-flex justify-content-between align-items-center">
+            <li class="{{ Str::contains(Request::url(), 'mes-mails') ? 'active' : '' }}">
+                <a href="/mes-mails" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes Emails</span>
                 </a>
@@ -81,6 +81,12 @@
                     <span class="d-flex align-items-center"><img class="mr-3"
                             src="{{asset('/plugins/images/recruiter-sidebar/documents.png')}}" alt=""> Mes
                         documents</span>
+                </a>
+            </li>
+            <li class="{{ Str::contains(Request::url(), 'chat') ? 'active' : '' }}">
+                <a href="/chat" class="d-flex justify-content-between align-items-center">
+                    <span class="d-flex align-items-center"><img class="mr-3"
+                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes Chats</span>
                 </a>
             </li>
             <li class="{{ Str::contains(Request::url(), 'candidat-stats') ? 'active' : '' }}">
