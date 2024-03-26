@@ -214,6 +214,7 @@ select {
                             <!-- TABLE VIEW -->
                             <div class="row">
                                 <div class="col-5" style="border-right: 1px solid #0000005c;">
+                                @if(count($candidatures) > 0)
                                     <ul class="list-group">
                                         @foreach ($candidatures as $key => $candidature)
                                         <a class="candidature-link" data-candidature-id="{{ $candidature->id }}">
@@ -240,6 +241,7 @@ select {
                                         @endforeach
                                     </ul>
                                     <div class="pagination mt-3">{{ $candidatures->links() }}</div>
+                                @endif
                                 </div>
                                 <div class="vr"></div>
                                 @if(count($candidatures) > 0)
