@@ -86,7 +86,7 @@
             <li class="{{ Str::contains(Request::url(), 'chat') ? 'active' : '' }}">
                 <a href="/chat" class="d-flex justify-content-between align-items-center">
                     <span class="d-flex align-items-center"><img class="mr-3"
-                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mes Chats</span>
+                            src="{{asset('/plugins/images/recruiter-sidebar/emails.png')}}" alt=""> Mon Chat</span>
                 </a>
             </li>
             <li class="{{ Str::contains(Request::url(), 'candidat-stats') ? 'active' : '' }}">

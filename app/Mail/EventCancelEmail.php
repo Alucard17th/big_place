@@ -33,7 +33,7 @@ class EventCancelEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.event_cancel')
+        return $this->view('emails.event-cancel')
         ->with([
             'user' => $this->user,
             'event' => $this->event

@@ -1029,6 +1029,11 @@ class RecruiterController extends Controller
         $event = Event::find($id);
         $event->statut = 'Suspendu';
         $event->save();
+        if($event->participants != null && count($event->participants) > 0){
+            foreach($event->participants as $participant){
+                Mail::to($participant->email)->send(new EventCancelEmail($participant, $event));
+            }
+        }
         toast('Evenement Suspendu','success')->autoClose(5000);
         return redirect()->back();
     }
@@ -1222,6 +1227,11 @@ class RecruiterController extends Controller
         $formation = Formation::find($id);
         $formation->status = 'Suspendue';
         $formation->save();
+        if($formation->participants != null && count($formation->participants) > 0){
+            foreach($formation->participants as $participant){
+                Mail::to($participant->email)->send(new FormationCancelEmail($participant, $formation));
+            }
+        }
         toast('Formation suspendue','success')->autoClose(5000);
         return redirect()->back();
     }
@@ -1239,7 +1249,7 @@ class RecruiterController extends Controller
         
         if($formation->participants != null && count($formation->participants) > 0){
             foreach($formation->participants as $participant){
-                // Mail::to($participant->email)->send(new FormationCancelEmail($participant, $formation));
+                Mail::to($participant->email)->send(new FormationCancelEmail($participant, $formation));
             }
         }
 
