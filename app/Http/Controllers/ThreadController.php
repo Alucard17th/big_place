@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Email;
 use App\Models\Thread;
 use App\Models\User;
+use App\Models\Entreprise;
 
 class ThreadController extends Controller
 {

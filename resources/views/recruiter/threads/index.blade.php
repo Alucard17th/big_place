@@ -141,9 +141,6 @@
                                         <table class="table table-sm table-bordered" id="data-table-inbox">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <!-- <th>
-                                                        <input type="checkbox" class="select-all-checkbox" data-table="inbox">
-                                                    </th> -->
                                                     <th>Nom</th>
                                                     <th>Message</th>
                                                     <th>Date</th>
@@ -179,9 +176,6 @@
                                         <table class="table table-sm table-bordered" id="data-table-sent">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <!-- <th>
-                                                        <input type="checkbox" class="select-all-checkbox" data-table="inbox">
-                                                    </th> -->
                                                     <th>Nom</th>
                                                     <th>Message</th>
                                                     <th>Date</th>
@@ -192,7 +186,7 @@
                                                 @foreach ($threads as $thread)
                                                 <tr class="@if(threadHasUnreadEmail($thread)) unread @else read @endif">
                                                     <td>
-                                                        {{ $thread->user->name }}
+                                                        {{ $thread->participant->name }}
                                                     </td>
                                                     <td>
                                                         @if(!empty($thread->emails[0]))
@@ -363,9 +357,7 @@ $(document).ready(function() {
     $('#data-table-inbox').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
-        "order": [
-            [3, "desc"]
-        ],
+        "order": [[2, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -391,9 +383,7 @@ $(document).ready(function() {
     $('#data-table-sent').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
-        "order": [
-            [3, "desc"]
-        ],
+        "order": [[2, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
@@ -418,9 +408,7 @@ $(document).ready(function() {
     $('#data-table-deleted').DataTable({
         "info": false, // Hide "Showing X to Y of Z entries"
         "searching": true,
-        "order": [
-            [3, "desc"]
-        ],
+        "order": [[3, "desc"]],
         "language": {
             "lengthMenu": "Afficher _MENU_ entrées", // Edit this line to customize the text
             "info": "Showing _START_ to _END_ of _TOTAL_ entries",
