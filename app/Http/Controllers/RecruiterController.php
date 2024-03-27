@@ -417,7 +417,7 @@ class RecruiterController extends Controller
         foreach($participants as $participant){
             // Send Emails TO all the participant 
             $recipient = User::find($participant);
-            // Mail::to($recipient->email)->send(new SendRdvInvitation($emailDetails));
+            Mail::to($recipient->email)->send(new SendRdvInvitation($emailDetails));
             $email = Email::create([
                 'user_id' => auth()->user()->id,
                 'subject' => 'Rendez-vous',

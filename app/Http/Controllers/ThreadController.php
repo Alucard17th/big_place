@@ -14,8 +14,6 @@ class ThreadController extends Controller
     public function index(){
         $user = auth()->user();
 
-        // dd($user->threads);
-
         if($user->parent_entreprise_id == null){
             // USER IS ADMIN
             $threads = $user->threads->where('draft', false);
@@ -29,17 +27,8 @@ class ThreadController extends Controller
             $draftThreads = $user->threads->where('draft', true);
         }
 
-        // dd($threads->where('draft', true), $receivedThreads);
-
-        // $draftEmails = $emails->where('draft', true)->where('trash', false);
-
         // $deletedEmails = $emails->where('trash', true);
-
-        // $emails = $emails->where('trash', false)->where('draft', false);
-
-        // $receivedEmails = $receivedEmails->where('trash', false)->where('draft', false);
-        
-        // $receivers = User::all();
+     
         // if($deletedEmails->count() >= 20){
         //     toast('Vous avez atteint la limite de 20 mails supprimés, veuillez vider votre corbeille.','error')->autoClose(5000);
         // }

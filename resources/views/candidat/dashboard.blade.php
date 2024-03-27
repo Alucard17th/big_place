@@ -705,9 +705,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         events: rdvs,
         locale: initialLocaleCode,
         eventClick: function(info) {
-            alert('Event: ' + info.event.title);
-            alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-            alert('View: ' + info.view.type);
+            // alert('Event: ' + info.event.title);
+            // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+            // alert('View: ' + info.view.type);
         },
         eventMouseEnter: async function(info) {
             var tooltip = document.getElementById('custom-tooltip');
